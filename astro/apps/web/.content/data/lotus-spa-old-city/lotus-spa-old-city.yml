@@ -1,0 +1,63 @@
+name: Lotus Spa Old City
+name_th: โลตัส สปา คูเมือง
+description: Thai, foot and oil massage by experienced therapists. In Old City, Chiang Mai.
+description_th: นวดแผนไทย นวดเท้า และนวดน้ำมัน โดยหมอนวดมีประสบการณ์ ที่คูเมือง
+source_url: ''
+category: massage
+tags:
+- sample
+- budget
+- open-late
+- northern-thai
+featured: false
+status: approved
+sample: true
+city: chiang-mai
+area: old-city
+address: 54/11 Moo 1, Old City, Chiang Mai 50200
+geo:
+  lat: 18.78865
+  lng: 98.99006
+location:
+  address: 54/11 Moo 1, Old City, Chiang Mai 50200
+  city: Chiang Mai
+  country: TH
+  latitude: 18.78865
+  longitude: 98.99006
+phone: "+66800001098"
+line_id: '@sample-lotusspaoldcity'
+whatsapp: "+66800001098"
+hours:
+  mon: []
+  tue:
+  - 10:00-22:00
+  wed:
+  - 10:00-22:00
+  thu:
+  - 10:00-22:00
+  fri:
+  - 10:00-22:00
+  sat:
+  - 10:00-22:00
+  sun:
+  - 10:00-22:00
+price_band: 1
+rating: 4.6
+rating_count: 93
+claimed: false
+amenities:
+  air-con: true
+  walk-ins: true
+  card-accepted: true
+  english-spoken: true
+updated_by: import
+updated_at: "2026-09-01 08:45"
+markdown: '> **SAMPLE listing.** This business is invented for development and design review. Do not publish.
+
+
+  Thai, foot and oil massage by experienced therapists. In Old City, Chiang Mai.
+
+
+  One hour Thai massage from ฿300. Family run since 2009.
+
+  '

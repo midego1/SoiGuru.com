@@ -1,0 +1,61 @@
+name: Baan Suan Guesthouse Lam Plai Mat
+name_th: บ้านสวน เกสต์เฮาส์ ลำปลายมาศ
+description: Clean rooms, friendly staff and a quiet location. In Town centre, Lam Plai Mat.
+description_th: ห้องพักสะอาด พนักงานเป็นมิตร ทำเลเงียบสงบ ที่ตัวเมือง
+source_url: ''
+category: hotels
+tags:
+- sample
+- isan
+featured: true
+status: approved
+sample: true
+city: lam-plai-mat
+area: town
+address: 134/20 Moo 8, Town centre, Buriram 31130
+geo:
+  lat: 15.02768
+  lng: 102.8407
+location:
+  address: 134/20 Moo 8, Town centre, Buriram 31130
+  city: Lam Plai Mat
+  country: TH
+  latitude: 15.02768
+  longitude: 102.8407
+phone: "+66800001179"
+line_id: '@sample-baansuanguesthouse'
+hours:
+  mon:
+  - 00:00-24:00
+  tue:
+  - 00:00-24:00
+  wed:
+  - 00:00-24:00
+  thu:
+  - 00:00-24:00
+  fri:
+  - 00:00-24:00
+  sat:
+  - 00:00-24:00
+  sun:
+  - 00:00-24:00
+price_band: 1
+rating: 4.2
+rating_count: 337
+claimed: false
+amenities:
+  pool: true
+  wifi: true
+  parking: true
+  breakfast: false
+updated_by: import
+updated_at: "2026-10-03 08:30"
+markdown: '> **SAMPLE listing.** This business is invented for development and design review. Do not publish.
+
+
+  Clean rooms, friendly staff and a quiet location. In Town centre, Lam Plai Mat.
+
+
+  Rooms from ฿1500 / night. Thai and English spoken.
+
+  '

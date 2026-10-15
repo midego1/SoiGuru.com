@@ -1,0 +1,59 @@
+name: Pretty Nails Klong Muang
+name_th: พริตตี้ เนล คลองม่วง
+description: Manicure, pedicure, gel colour and nail art. In Klong Muang, Krabi.
+description_th: ทำเล็บมือ เล็บเท้า สีเจล และเพ้นท์เล็บ ที่คลองม่วง
+source_url: ''
+category: nail-salons
+tags:
+- sample
+- local-favourite
+featured: true
+status: approved
+sample: true
+city: krabi
+area: klong-muang
+address: 245/2 Moo 4, Klong Muang, Krabi 81180
+geo:
+  lat: 8.05818
+  lng: 98.75824
+location:
+  address: 245/2 Moo 4, Klong Muang, Krabi 81180
+  city: Krabi
+  country: TH
+  latitude: 8.05818
+  longitude: 98.75824
+phone: "+66800001085"
+hours:
+  mon:
+  - 11:00-21:00
+  tue:
+  - 11:00-21:00
+  wed:
+  - 11:00-21:00
+  thu:
+  - 11:00-21:00
+  fri:
+  - 11:00-21:00
+  sat:
+  - 11:00-21:00
+  sun:
+  - 11:00-21:00
+price_band: 1
+rating: 4.3
+rating_count: 195
+claimed: false
+amenities:
+  air-con: true
+  card-accepted: true
+  gel-acrylic: true
+updated_by: import
+updated_at: "2026-10-12 18:00"
+markdown: '> **SAMPLE listing.** This business is invented for development and design review. Do not publish.
+
+
+  Manicure, pedicure, gel colour and nail art. In Klong Muang, Krabi.
+
+
+  Gel colour from ฿120. Thai and English spoken.
+
+  '

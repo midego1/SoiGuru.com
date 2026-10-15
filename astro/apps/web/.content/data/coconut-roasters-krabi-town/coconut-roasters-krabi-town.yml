@@ -1,0 +1,61 @@
+name: Coconut Roasters Krabi Town
+name_th: โคโคนัท โรสเตอร์ เมืองกระบี่
+description: Coffee, fruit shakes and a small breakfast menu. In Krabi Town, Krabi.
+description_th: กาแฟ น้ำผลไม้ปั่น และเมนูอาหารเช้า ที่เมืองกระบี่
+source_url: ''
+category: cafes
+tags:
+- sample
+- local-favourite
+featured: false
+status: approved
+sample: true
+city: krabi
+area: krabi-town
+address: 39/14 Moo 3, Krabi Town, Krabi 81180
+geo:
+  lat: 8.06938
+  lng: 98.91489
+location:
+  address: 39/14 Moo 3, Krabi Town, Krabi 81180
+  city: Krabi
+  country: TH
+  latitude: 8.06938
+  longitude: 98.91489
+phone: "+66800001049"
+line_id: '@sample-coconutroasterskra'
+hours:
+  mon:
+  - 09:00-19:00
+  tue:
+  - 09:00-19:00
+  wed:
+  - 09:00-19:00
+  thu:
+  - 09:00-19:00
+  fri:
+  - 09:00-19:00
+  sat:
+  - 09:00-19:00
+  sun:
+  - 09:00-19:00
+price_band: 1
+rating: 4.2
+rating_count: 257
+claimed: true
+amenities:
+  air-con: true
+  card-accepted: true
+  vegetarian: true
+  parking: true
+updated_by: owner
+updated_at: "2026-10-04 08:45"
+markdown: '> **SAMPLE listing.** This business is invented for development and design review. Do not publish.
+
+
+  Coffee, fruit shakes and a small breakfast menu. In Krabi Town, Krabi.
+
+
+  Latte ฿300, breakfast sets from ฿900. Booking by LINE recommended in high season.
+
+  '

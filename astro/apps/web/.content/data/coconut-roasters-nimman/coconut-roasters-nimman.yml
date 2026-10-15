@@ -1,0 +1,60 @@
+name: Coconut Roasters Nimman
+name_th: โคโคนัท โรสเตอร์ นิมมาน
+description: Coffee, fruit shakes and a small breakfast menu. In Nimman, Chiang Mai.
+description_th: กาแฟ น้ำผลไม้ปั่น และเมนูอาหารเช้า ที่นิมมาน
+source_url: ''
+category: cafes
+tags:
+- sample
+- family-friendly
+- local-favourite
+- northern-thai
+featured: false
+status: approved
+sample: true
+city: chiang-mai
+area: nimman
+address: 86/12 Moo 3, Nimman, Chiang Mai 50200
+geo:
+  lat: 18.7984
+  lng: 98.96872
+location:
+  address: 86/12 Moo 3, Nimman, Chiang Mai 50200
+  city: Chiang Mai
+  country: TH
+  latitude: 18.7984
+  longitude: 98.96872
+phone: "+66800001112"
+whatsapp: "+66800001112"
+hours:
+  mon:
+  - 08:00-18:00
+  tue:
+  - 08:00-18:00
+  wed:
+  - 08:00-18:00
+  thu:
+  - 08:00-18:00
+  fri:
+  - 08:00-18:00
+  sat:
+  - 08:00-18:00
+  sun:
+  - 08:00-18:00
+price_band: 2
+rating: 3.9
+rating_count: 176
+claimed: false
+amenities:
+  vegetarian: true
+updated_by: import
+updated_at: "2026-10-07 14:30"
+markdown: '> **SAMPLE listing.** This business is invented for development and design review. Do not publish.
+
+
+  Coffee, fruit shakes and a small breakfast menu. In Nimman, Chiang Mai.
+
+
+  Latte ฿60, breakfast sets from ฿1200. Family run since 2009.
+
+  '

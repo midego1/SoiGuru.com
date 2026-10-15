@@ -6,6 +6,8 @@ copyright_year: 2026
 company_website: https://soiguru.com
 app_url: https://soiguru.com
 site_url: https://soiguru.com
+claim_url: https://soiguru.midego.net/claim
+# contact_email: set to show "Report wrong info" (pending from Michiel)
 content_table: false
 pagination:
   type: standard
@@ -38,6 +40,3 @@ custom_footer:
     path: /pages/terms-of-service
   - label: footer.PRIVACY_POLICY
     path: /pages/privacy-policy
-# SoiGuru (Astro): where "Claim this listing" and the Owner tab go, and where
-# "Report wrong info" e-mails are sent. Both optional; the buttons hide without them.
-claim_url: https://soiguru.midego.net/claim

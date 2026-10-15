@@ -1,0 +1,60 @@
+name: Lotus Spa Night Bazaar
+name_th: โลตัส สปา ไนท์บาซาร์
+description: Thai, foot and oil massage by experienced therapists. In Night Bazaar, Chiang Mai.
+description_th: นวดแผนไทย นวดเท้า และนวดน้ำมัน โดยหมอนวดมีประสบการณ์ ที่ไนท์บาซาร์
+source_url: ''
+category: massage
+tags:
+- sample
+- open-late
+- northern-thai
+featured: false
+status: approved
+sample: true
+city: chiang-mai
+area: night-bazaar
+address: 117/13 Moo 1, Night Bazaar, Chiang Mai 50200
+geo:
+  lat: 18.79125
+  lng: 99.00355
+location:
+  address: 117/13 Moo 1, Night Bazaar, Chiang Mai 50200
+  city: Chiang Mai
+  country: TH
+  latitude: 18.79125
+  longitude: 99.00355
+phone: "+66800001131"
+whatsapp: "+66800001131"
+hours:
+  mon:
+  - 09:00-21:00
+  tue:
+  - 09:00-21:00
+  wed:
+  - 09:00-21:00
+  thu:
+  - 09:00-21:00
+  fri:
+  - 09:00-21:00
+  sat:
+  - 09:00-21:00
+  sun: []
+price_band: 3
+rating: 4.8
+rating_count: 378
+claimed: false
+amenities:
+  english-spoken: true
+  card-accepted: true
+  air-con: false
+updated_by: import
+updated_at: "2026-08-02 11:00"
+markdown: '> **SAMPLE listing.** This business is invented for development and design review. Do not publish.
+
+
+  Thai, foot and oil massage by experienced therapists. In Night Bazaar, Chiang Mai.
+
+
+  One hour Thai massage from ฿250. Thai and English spoken.
+
+  '

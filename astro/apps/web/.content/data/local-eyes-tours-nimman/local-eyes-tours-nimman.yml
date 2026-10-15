@@ -1,0 +1,59 @@
+name: Local Eyes Tours Nimman
+name_th: โลคอล อายส์ ทัวร์ นิมมาน
+description: Day trips and private tours with a local guide. In Nimman, Chiang Mai.
+description_th: ทริปไปเช้าเย็นกลับและทัวร์ส่วนตัวกับไกด์ท้องถิ่น ที่นิมมาน
+source_url: ''
+category: tours
+tags:
+- sample
+- family-friendly
+- northern-thai
+featured: false
+status: approved
+sample: true
+city: chiang-mai
+area: nimman
+address: 189/6 Moo 6, Nimman, Chiang Mai 50200
+geo:
+  lat: 18.80165
+  lng: 98.97047
+location:
+  address: 189/6 Moo 6, Nimman, Chiang Mai 50200
+  city: Chiang Mai
+  country: TH
+  latitude: 18.80165
+  longitude: 98.97047
+phone: "+66800001116"
+line_id: '@sample-localeyestoursnimm'
+hours:
+  mon:
+  - 07:00-19:00
+  tue:
+  - 07:00-19:00
+  wed:
+  - 07:00-19:00
+  thu:
+  - 07:00-19:00
+  fri:
+  - 07:00-19:00
+  sat:
+  - 07:00-19:00
+  sun: []
+price_band: 1
+rating: 4.7
+rating_count: 150
+claimed: false
+amenities:
+  english-spoken: true
+  hotel-pickup: true
+updated_by: import
+updated_at: "2026-08-07 18:15"
+markdown: '> **SAMPLE listing.** This business is invented for development and design review. Do not publish.
+
+
+  Day trips and private tours with a local guide. In Nimman, Chiang Mai.
+
+
+  Day trips from ฿150 per person. Family run since 2009.
+
+  '

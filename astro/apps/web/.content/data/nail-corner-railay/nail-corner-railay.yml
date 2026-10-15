@@ -1,0 +1,61 @@
+name: Nail Corner Railay
+name_th: เนล คอร์เนอร์ ไร่เลย์
+description: Manicure, pedicure, gel colour and nail art. In Railay, Krabi.
+description_th: ทำเล็บมือ เล็บเท้า สีเจล และเพ้นท์เล็บ ที่ไร่เลย์
+source_url: ''
+category: nail-salons
+tags:
+- sample
+- local-favourite
+featured: false
+status: approved
+sample: true
+city: krabi
+area: railay
+address: 104/9 Moo 9, Railay, Krabi 81180
+geo:
+  lat: 8.00449
+  lng: 98.84346
+location:
+  address: 104/9 Moo 9, Railay, Krabi 81180
+  city: Krabi
+  country: TH
+  latitude: 8.00449
+  longitude: 98.84346
+phone: "+66800001037"
+line_id: '@sample-nailcornerrailay'
+whatsapp: "+66800001037"
+hours:
+  mon:
+  - 11:00-21:00
+  tue:
+  - 11:00-21:00
+  wed:
+  - 11:00-21:00
+  thu:
+  - 11:00-21:00
+  fri:
+  - 11:00-21:00
+  sat:
+  - 11:00-21:00
+  sun:
+  - 11:00-21:00
+price_band: 2
+rating: 4.3
+rating_count: 50
+claimed: true
+amenities:
+  air-con: true
+  walk-ins: true
+  card-accepted: false
+updated_by: owner
+updated_at: "2026-09-07 19:15"
+markdown: '> **SAMPLE listing.** This business is invented for development and design review. Do not publish.
+
+
+  Manicure, pedicure, gel colour and nail art. In Railay, Krabi.
+
+
+  Gel colour from ฿250. Card and QR payment accepted.
+
+  '

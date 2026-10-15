@@ -1,0 +1,58 @@
+name: Happy Bike Rental Krabi Town
+name_th: แฮปปี้ ไบค์ เช่ารถ เมืองกระบี่
+description: Automatic scooters by the day, week or month. In Krabi Town, Krabi.
+description_th: เช่ารถมอเตอร์ไซค์ออโต้ รายวัน รายสัปดาห์ หรือรายเดือน ที่เมืองกระบี่
+source_url: ''
+category: scooter-rental
+tags:
+- sample
+- budget
+featured: false
+status: approved
+sample: true
+city: krabi
+area: krabi-town
+address: 48/4 Moo 8, Krabi Town, Krabi 81180
+geo:
+  lat: 8.06731
+  lng: 98.91602
+location:
+  address: 48/4 Moo 8, Krabi Town, Krabi 81180
+  city: Krabi
+  country: TH
+  latitude: 8.06731
+  longitude: 98.91602
+phone: "+66800001059"
+whatsapp: "+66800001059"
+hours:
+  mon:
+  - 09:00-19:00
+  tue:
+  - 09:00-19:00
+  wed: []
+  thu:
+  - 09:00-19:00
+  fri:
+  - 09:00-19:00
+  sat:
+  - 09:00-19:00
+  sun:
+  - 09:00-19:00
+price_band: 3
+rating: 4.3
+rating_count: 12
+claimed: false
+amenities:
+  card-accepted: true
+  english-spoken: true
+updated_by: import
+updated_at: "2026-08-01 13:00"
+markdown: '> **SAMPLE listing.** This business is invented for development and design review. Do not publish.
+
+
+  Automatic scooters by the day, week or month. In Krabi Town, Krabi.
+
+
+  From ฿60 / day. Passport copy required. Family run since 2009.
+
+  '

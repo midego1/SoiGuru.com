@@ -1,0 +1,62 @@
+name: Sabai Sabai Massage Nimman
+name_th: สบาย สบาย นวด นิมมาน
+description: Thai, foot and oil massage by experienced therapists. In Nimman, Chiang Mai.
+description_th: นวดแผนไทย นวดเท้า และนวดน้ำมัน โดยหมอนวดมีประสบการณ์ ที่นิมมาน
+source_url: ''
+category: massage
+tags:
+- sample
+- spa
+- budget
+- northern-thai
+featured: false
+status: approved
+sample: true
+city: chiang-mai
+area: nimman
+address: 229/13 Moo 8, Nimman, Chiang Mai 50200
+geo:
+  lat: 18.80364
+  lng: 98.9714
+location:
+  address: 229/13 Moo 8, Nimman, Chiang Mai 50200
+  city: Chiang Mai
+  country: TH
+  latitude: 18.80364
+  longitude: 98.9714
+phone: "+66800001115"
+line_id: '@sample-sabaisabaimassagen'
+whatsapp: "+66800001115"
+hours:
+  mon: []
+  tue:
+  - 11:00-23:00
+  wed:
+  - 11:00-23:00
+  thu:
+  - 11:00-23:00
+  fri:
+  - 11:00-23:00
+  sat:
+  - 11:00-23:00
+  sun:
+  - 11:00-23:00
+price_band: 1
+rating: 4.3
+rating_count: 410
+claimed: false
+amenities:
+  walk-ins: true
+  card-accepted: true
+  english-spoken: true
+updated_by: import
+updated_at: "2026-09-07 20:15"
+markdown: '> **SAMPLE listing.** This business is invented for development and design review. Do not publish.
+
+
+  Thai, foot and oil massage by experienced therapists. In Nimman, Chiang Mai.
+
+
+  One hour Thai massage from ฿80. Booking by LINE recommended in high season.
+
+  '
