@@ -440,8 +440,40 @@ export class ItemGitService {
       if (extItem.images?.length) itemData.images = extItem.images;
       if (extItem.markdown) itemData.markdown = extItem.markdown;
 
+      // Keep keys this service does not manage. Data repos may carry their own item fields
+      // (SoiGuru: city, area, geo, hours, amenities, phone, LINE…); readItems() drops them, so
+      // without this an admin save would erase them. Managed keys always take the new value,
+      // and a managed key that is unset now is removed rather than kept from the old file.
+      const managedKeys = new Set([
+        ...Object.keys(itemData),
+        'deleted_at',
+        'location',
+        'brand',
+        'brand_logo_url',
+        'images',
+        'markdown',
+      ]);
+      let existing: Record<string, unknown> = {};
+      try {
+        const parsed = yaml.parse(await fs.readFile(itemFile, 'utf-8'));
+        if (parsed && typeof parsed === 'object' && !Array.isArray(parsed)) {
+          existing = parsed as Record<string, unknown>;
+        }
+      } catch {
+        // New item, or unreadable file: nothing to keep.
+      }
+      // Keep the file's key order so a save only diffs the fields that changed.
+      const merged: Record<string, unknown> = {};
+      for (const [key, value] of Object.entries(existing)) {
+        const next = managedKeys.has(key) ? itemData[key] : value;
+        if (next !== undefined) merged[key] = next;
+      }
+      for (const [key, value] of Object.entries(itemData)) {
+        if (value !== undefined && !(key in merged)) merged[key] = value;
+      }
+
       // Write item data
-      const content = yaml.stringify(itemData);
+      const content = yaml.stringify(merged);
       await fs.writeFile(itemFile, content, 'utf-8');
     } catch (error) {
       console.error('❌ Error writing item file:', error);
