@@ -7,6 +7,10 @@ sidebar_position: 99
 
 # Documentation & Specs Change Log
 
+## 2026-10-15
+
+- `spec-054` `apps/web/app/[locale]/(soiguru)` `apps/web/lib/soiguru` `apps/web/components/soiguru`: SoiGuru city screens ported from the TheKrabiGuide design system: city landing at `/` (the item listing stays at `/discover`), CityHome `/<city>`, CategoryResults `/<city>/<category|area>` with a server-rendered OpenStreetMap tile map, ListingPage `/<city>/<area>/<slug>` with LocalBusiness JSON-LD; open status computed in Asia/Bangkok; EN/TH strings. `apps/web/proxy.ts` now decodes the session JWT through `decodeAuthJsToken` in every guard (the Dokploy secure-cookie patch) ([spec 054](spec/054-soiguru-city-screens/spec.md), PR #1).
+
 ## 2026-10-05
 
 - `deps` `apps/web` `apps/docs` `Dockerfile` `.github/workflows`: security dependency bump for the `pnpm audit --prod` advisories (3 critical / 82 high on `develop` to 0 critical / 1 high; the one left, `braces`, has no patched release). Direct bumps: `@auth/drizzle-adapter` and `@auth/supabase-adapter` 1.11.3 (drops the second `@auth/core` 0.41.1 copy), `axios` 1.20.0, `nodemailer` 10.0.14, `@trigger.dev/sdk` 4.7.2, Docusaurus 3.10.2 (the ejected `SiteMetadata` re-diffed: upstream dropped `keyboardFocusedClassName`; `EJECTED_THEME_CLASSIC` is now `3.10`), `cheerio` 1.2.0; vulnerable transitive packages refreshed inside their parents' ranges, plus three scoped `pnpm.overrides` (`lodash-es`, `serialize-javascript`, `ws`) where the parent pins a vulnerable version. Node moves to 26 everywhere together (both Dockerfiles, which now install corepack because Node 25+ no longer bundles it; every workflow; `engines`; `@types/node`; the documented floor). No API change (PR #1080).
