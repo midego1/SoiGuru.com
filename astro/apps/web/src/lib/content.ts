@@ -47,6 +47,7 @@ let _initPromise: Promise<void> | null = null;
 
 /** Adapter instance (reused across loads) */
 let _adapter: Awaited<ReturnType<typeof createAdapter>> | null = null;
+let _adapterInit: Promise<Awaited<ReturnType<typeof createAdapter>>> | null = null;
 
 /** Sync manager (created after adapter init) */
 let _syncManager: SyncManager | null = null;
@@ -60,8 +61,17 @@ let _syncManager: SyncManager | null = null;
  *
  * @throws {Error} With guidance on setting DATA_REPOSITORY / GH_TOKEN env vars
  */
-async function getAdapter() {
-	if (_adapter) return _adapter;
+function getAdapter() {
+	// Memoize the in-flight init so concurrent callers share it instead of seeing an
+	// adapter that exists but has not finished init() yet.
+	_adapterInit ??= initAdapter().catch((err) => {
+		_adapterInit = null;
+		throw err;
+	});
+	return _adapterInit;
+}
+
+async function initAdapter() {
 
 	let adapterConfig;
 	try {
@@ -77,10 +87,10 @@ async function getAdapter() {
 	}
 
 	try {
-		_adapter = createAdapter(adapterConfig);
-		await _adapter.init(adapterConfig);
+		const adapter = createAdapter(adapterConfig);
+		await adapter.init(adapterConfig);
+		_adapter = adapter;
 	} catch (err) {
-		_adapter = null;
 		throw new Error(
 			`[content] Failed to initialize data adapter. ` +
 			`Could not clone or access the data repository. Check that:\n` +
