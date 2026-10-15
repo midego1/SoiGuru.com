@@ -51,6 +51,7 @@ import { getBaseUrl } from '@/lib/utils/url-cleaner';
 import { generateHreflangAlternates } from '@/lib/seo/hreflang';
 import { DEFAULT_LOCALE } from '@/lib/constants';
 import { analyticsConfig } from '@/lib/config/config-service';
+import { getCities } from '@/lib/soiguru/content';
 
 const appUrl = getBaseUrl();
 
@@ -149,6 +150,9 @@ export default async function RootLayout({
 	// Read location settings server-side
 	const locationSettings = getLocationSettings();
 
+	// SoiGuru city screens draw their own top bar and bottom nav.
+	const soiguruCityIds = [...(await getCities()).map((c) => c.id), 'cities'];
+
 	// Locale-detection strategy. `client-banner` (default) shows a small
 	// dismissible banner suggesting the visitor's browser language while
 	// keeping `/` edge-cacheable. `none` disables auto-detection entirely.
@@ -212,7 +216,7 @@ export default async function RootLayout({
 							<Providers config={config}>
 								{/* Global navigation loading bar */}
 								<NavigationLoadingBar />
-								<ConditionalLayout>{children}</ConditionalLayout>
+								<ConditionalLayout chromelessSegments={soiguruCityIds}>{children}</ConditionalLayout>
 								{/* Settings Modal - Shared by header button */}
 								<SettingsModal />
 								{/* AI chat launcher (Spec 023). Returns null when `aiChat.enabled` is false. */}
