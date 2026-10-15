@@ -33,7 +33,7 @@ const { config } = data;
     wide
     noindex
 >
-    <TopBar back={{ href: `/${city.id}`, label: `Back to ${city.name}` }} title="Search · ค้นหา" subtitle={city.name} />
+    <TopBar back={{ href: `/${city.id}`, label: `Back to ${city.name}` }} title="Search · ค้นหา" subtitle={city.name} nav={{ city, active: 'search', ownerHref: claimUrl(config) }} />
     <main>
         <div class="sg-search-wrap"><SearchBar city={city} /></div>
         <CategoryResults city={city} listings={cityListings(data, city)} noun="places" ownerHref={claimUrl(config)} search />

@@ -46,7 +46,7 @@ const owner = claimUrl(config);
     timeZone={city.timezone}
     jsonLd={[breadcrumbJsonLd(siteUrl, [[config.company_name, '/'], [city.name, `/${city.id}`]])]}
 >
-    <TopBar city={city} />
+    <TopBar city={city} nav={{ city, active: 'home', ownerHref: owner }} />
     <main>
         <div class="sg-header">
             <div class="tkg-small tkg-muted sg-context">
@@ -72,7 +72,7 @@ const owner = claimUrl(config);
             </div>
         </section>
 
-        <section class="tkg-section" data-open-now data-limit="3">
+        <section class="tkg-section sg-open-now" data-open-now data-limit="3" data-limit-wide="6">
             <div class="tkg-section-h">
                 <h2>
                     <span data-th={`เปิดอยู่ตอนนี้ใน${area?.name_th ?? area?.name ?? city.name_th ?? city.name}`}>Open now in {area?.name ?? city.name}</span>

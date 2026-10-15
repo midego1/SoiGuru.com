@@ -3,6 +3,10 @@ title: "Change Log"
 sidebar_label: "Change Log"
 ---
 
+## 2026-10-15 — SoiGuru desktop layout
+
+Every SoiGuru screen now has a desktop layout at 960px and up (top-bar navigation instead of bottom tabs, a 1200px column, wider grids, listing page split into business + sticky contact column). Spec: `.specify/features/soiguru-design.md` § Desktop layout.
+
 ## 2026-10-15 — Optional DATA_REPOSITORY_BRANCH for the content clone
 
 New optional env var `DATA_REPOSITORY_BRANCH`. When set, `apps/web/scripts/clone-content.ts` clones that branch (`git clone --branch <b> --single-branch`) and `resolveAdapterConfig` in `@ever-works/adapters` passes it to the git adapter as `branch`, which already supported it. This lets the content live on a branch of the website repo (SoiGuru keeps it on an orphan `data` branch of `midego1/SoiGuru.com`). Unset keeps the old behaviour (remote default branch). Branch names are validated against `[\w./-]+` before reaching the shell. Ported from `midego1/directory-web-minimal-template#2`.

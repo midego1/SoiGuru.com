@@ -52,7 +52,7 @@ const siteUrl = (Astro.site?.href ?? '').replace(/\/$/, '');
     wide
     jsonLd={[breadcrumbJsonLd(siteUrl, [[config.company_name, '/'], [city.name, `/${city.id}`], [title, path]])]}
 >
-    <TopBar back={{ href: `/${city.id}`, label: `Back to ${city.name}` }} title={titleTh ? `${title} · ${titleTh}` : title} subtitle={subtitle}>
+    <TopBar back={{ href: `/${city.id}`, label: `Back to ${city.name}` }} title={titleTh ? `${title} · ${titleTh}` : title} subtitle={subtitle} nav={{ city, ownerHref: claimUrl(config) }}>
         <a class="tkg-iconbtn" href={`/${city.id}/search`} aria-label="Search">
             <Icon name="search" />
         </a>

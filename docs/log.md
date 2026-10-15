@@ -10,6 +10,7 @@ sidebar_position: 99
 ## 2026-10-15
 
 - `astro`: the SoiGuru Astro site (static, Cloudflare Pages) now lives in this repo as its own pnpm workspace under `astro/`, copied from `midego1/directory-web-minimal-template` branch `design/soiguru`, so both A/B builds share one repo. See [`054-soiguru-astro-site`](spec/054-soiguru-astro-site/spec.md).
+- `astro`: desktop layout for the SoiGuru Astro screens (960px and up: top-bar navigation, 1200px column, wider grids, two-column listing page). See [`054-soiguru-astro-site`](spec/054-soiguru-astro-site/spec.md) (#2).
 
 ## 2026-10-05
 

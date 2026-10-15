@@ -76,170 +76,176 @@ const trail: [string, string][] = [
         titleTh={listing.name_th}
         subtitle={[category?.name, area?.name].filter(Boolean).join(' · ')}
         subtitleTh={[category?.name_th, area?.name_th].filter(Boolean).join(' · ') || undefined}
+        nav={{ city, ownerHref: claimUrl(config) }}
     >
         <button type="button" class="tkg-iconbtn" aria-label="Share" data-share={`${siteUrl}${listing.url}`} data-share-title={listing.name}>
             <Icon name="external" />
         </button>
     </TopBar>
 
-    <main>
-        {
-            listing.images.length > 0 && (
-                <div class="tkg-strip" style="position:relative">
-                    <div class="sg-strip-photo"><ListingPhoto listing={listing} index={0} size={260} loading="eager" /></div>
-                    {listing.images.length > 1 && (
-                        <div class="tkg-strip-side">
-                            <ListingPhoto listing={listing} index={1} size={130} />
-                            {listing.images.length > 2 && <ListingPhoto listing={listing} index={2} size={130} />}
-                        </div>
-                    )}
-                    <span class="tkg-strip-count">
-                        <Icon name="camera" />
-                        {listing.images.length} {listing.images.length === 1 ? 'photo' : 'photos'}
-                    </span>
-                </div>
-            )
-        }
-
-        <div class="sg-title-block" data-listing={listing.slug} data-lat={listing.geo?.lat} data-lng={listing.geo?.lng} data-boat={area?.boat_only ? '1' : undefined}>
-            <div class="tkg-hstack" style="gap:8px;align-items:center">
-                <h1 class="tkg-title">{listing.name}</h1>
-                {
-                    listing.claimed && (
-                        <span class="tkg-badge">
-                            <Icon name="shield" />
-                            Verified owner
-                        </span>
-                    )
-                }
-                {listing.sample && <span class="tkg-badge tkg-badge-outline">Sample listing</span>}
-            </div>
-            {subTitle && <div class="tkg-body tkg-muted" style="margin-top:2px">{subTitle}</div>}
-            <div class="tkg-hstack" style="margin-top:8px;gap:12px">
-                <OpenStatus listing={listing} large />
-                {
-                    listing.rating !== undefined && (
-                        <span class="tkg-rating">
-                            <Icon name="star" />
-                            {listing.rating.toFixed(1)}
-                            {listing.rating_count !== undefined && <span class="tkg-muted sg-regular">({listing.rating_count})</span>}
-                        </span>
-                    )
-                }
-                {price && <span class="tkg-small tkg-muted">{price}</span>}
-            </div>
+    <main class="sg-listing">
+        <!-- Phones: one column in the order of a visitor's questions (CSS `order`).
+             Desktop: the business on the left, contact, hours and map in a sticky right column. -->
+        <div class="sg-listing-main">
             {
-                listing.address && (
-                    <div class="tkg-small tkg-muted" style="margin-top:8px">
-                        <Icon name="pin" class="tkg-i-16" /> {listing.address}
-                        <span data-distance data-walk></span>
-                    </div>
-                )
-            }
-            {
-                listing.updated_at && (
-                    <div class="tkg-small tkg-muted" style="margin-top:2px" data-updated-at={listing.updated_at} data-updated-by={listing.updated_by}>
-                        {provenance} on {formatDate(listing.updated_at)}
-                    </div>
-                )
-            }
-        </div>
-
-        <ContactBar listing={listing} />
-
-        <HoursTable listing={listing} />
-
-        {
-            listing.amenities.length > 0 && (
-                <section class="tkg-section">
-                    <div class="tkg-section-h">
-                        <h2>
-                            Good to know<small>สิ่งอำนวยความสะดวก</small>
-                        </h2>
-                    </div>
-                    <div class="tkg-amenities">
-                        {listing.amenities.map((a) =>
-                            a.available ? (
-                                <div>
-                                    <Icon name="check" />
-                                    <span data-th={a.name_th}>{a.name}</span>
-                                </div>
-                            ) : (
-                                <div class="tkg-no">
-                                    <Icon name="close" />
-                                    <span data-th={a.name_th ? `ไม่มี${a.name_th}` : undefined}>No {a.name.charAt(0).toLowerCase() + a.name.slice(1)}</span>
-                                </div>
-                            ),
+                listing.images.length > 0 && (
+                    <div class="tkg-strip" style="position:relative">
+                        <div class="sg-strip-photo"><ListingPhoto listing={listing} index={0} size={260} loading="eager" /></div>
+                        {listing.images.length > 1 && (
+                            <div class="tkg-strip-side">
+                                <ListingPhoto listing={listing} index={1} size={130} />
+                                {listing.images.length > 2 && <ListingPhoto listing={listing} index={2} size={130} />}
+                            </div>
                         )}
+                        <span class="tkg-strip-count">
+                            <Icon name="camera" />
+                            {listing.images.length} {listing.images.length === 1 ? 'photo' : 'photos'}
+                        </span>
                     </div>
-                </section>
-            )
-        }
-
-        <section class="tkg-section">
-            <div class="tkg-section-h"><h2>About</h2></div>
-            <p class="tkg-body tkg-pad" style="margin:0">{listing.description}</p>
-            {listing.description_th && <p class="tkg-body tkg-pad tkg-muted tkg-th" lang="th" style="margin:8px 0 0">{listing.description_th}</p>}
-        </section>
-
-        {
-            listing.geo && (
-                <section class="tkg-section">
-                    <div class="tkg-section-h">
-                        <h2>
-                            Where{listing.address && <small>{listing.address}</small>}
-                        </h2>
-                        <a href={directionsUrl(listing.geo)} target="_blank" rel="noopener">
-                            Directions
-                        </a>
-                    </div>
-                    <div class="tkg-pad">
-                        <StaticMap point={listing.geo} />
-                    </div>
-                </section>
-            )
-        }
-
-        <ClaimBox listing={listing} href={claimUrl(config, listing)} />
-
-        {
-            nearby.length > 0 && (
-                <section class="tkg-section" data-open-now data-limit="2">
-                    <div class="tkg-section-h">
-                        <h2>Nearby · open now</h2>
-                        {category && <a href={`/${city.id}/${area?.id ?? ''}`}>More</a>}
-                    </div>
-                    <div class="tkg-rows">
-                        {nearby.map(({ l, d }, i) => (
-                            <ListingCard listing={l} compact distance={d} hidden={i >= 2} />
-                        ))}
-                    </div>
-                    <p class="sg-empty" data-open-empty hidden>
-                        Nothing nearby is open right now.
-                    </p>
-                </section>
-            )
-        }
-
-        <div class="sg-report">
-            {
-                report && (
-                    <a class="tkg-btn tkg-btn-ghost" href={report}>
-                        <Icon name="flag" />
-                        Report wrong info · แจ้งข้อมูลผิด
-                    </a>
                 )
             }
-            <div class="tkg-small tkg-muted">
-                Listing {listing.slug}
-                {report && (
-                    <>
-                        {' · '}
-                        <a href={report}>Suggest an edit</a>
-                    </>
-                )}
+
+            <div class="sg-title-block" data-listing={listing.slug} data-lat={listing.geo?.lat} data-lng={listing.geo?.lng} data-boat={area?.boat_only ? '1' : undefined}>
+                <div class="tkg-hstack" style="gap:8px;align-items:center">
+                    <h1 class="tkg-title">{listing.name}</h1>
+                    {
+                        listing.claimed && (
+                            <span class="tkg-badge">
+                                <Icon name="shield" />
+                                Verified owner
+                            </span>
+                        )
+                    }
+                    {listing.sample && <span class="tkg-badge tkg-badge-outline">Sample listing</span>}
+                </div>
+                {subTitle && <div class="tkg-body tkg-muted" style="margin-top:2px">{subTitle}</div>}
+                <div class="tkg-hstack" style="margin-top:8px;gap:12px">
+                    <OpenStatus listing={listing} large />
+                    {
+                        listing.rating !== undefined && (
+                            <span class="tkg-rating">
+                                <Icon name="star" />
+                                {listing.rating.toFixed(1)}
+                                {listing.rating_count !== undefined && <span class="tkg-muted sg-regular">({listing.rating_count})</span>}
+                            </span>
+                        )
+                    }
+                    {price && <span class="tkg-small tkg-muted">{price}</span>}
+                </div>
+                {
+                    listing.address && (
+                        <div class="tkg-small tkg-muted" style="margin-top:8px">
+                            <Icon name="pin" class="tkg-i-16" /> {listing.address}
+                            <span data-distance data-walk></span>
+                        </div>
+                    )
+                }
+                {
+                    listing.updated_at && (
+                        <div class="tkg-small tkg-muted" style="margin-top:2px" data-updated-at={listing.updated_at} data-updated-by={listing.updated_by}>
+                            {provenance} on {formatDate(listing.updated_at)}
+                        </div>
+                    )
+                }
+            </div>
+
+            {
+                listing.amenities.length > 0 && (
+                    <section class="tkg-section sg-amenities-sec">
+                        <div class="tkg-section-h">
+                            <h2>
+                                Good to know<small>สิ่งอำนวยความสะดวก</small>
+                            </h2>
+                        </div>
+                        <div class="tkg-amenities">
+                            {listing.amenities.map((a) =>
+                                a.available ? (
+                                    <div>
+                                        <Icon name="check" />
+                                        <span data-th={a.name_th}>{a.name}</span>
+                                    </div>
+                                ) : (
+                                    <div class="tkg-no">
+                                        <Icon name="close" />
+                                        <span data-th={a.name_th ? `ไม่มี${a.name_th}` : undefined}>No {a.name.charAt(0).toLowerCase() + a.name.slice(1)}</span>
+                                    </div>
+                                ),
+                            )}
+                        </div>
+                    </section>
+                )
+            }
+
+            <section class="tkg-section sg-about-sec">
+                <div class="tkg-section-h"><h2>About</h2></div>
+                <p class="tkg-body tkg-pad" style="margin:0">{listing.description}</p>
+                {listing.description_th && <p class="tkg-body tkg-pad tkg-muted tkg-th" lang="th" style="margin:8px 0 0">{listing.description_th}</p>}
+            </section>
+
+            {
+                nearby.length > 0 && (
+                    <section class="tkg-section sg-nearby-sec" data-open-now data-limit="2">
+                        <div class="tkg-section-h">
+                            <h2>Nearby · open now</h2>
+                            {category && <a href={`/${city.id}/${area?.id ?? ''}`}>More</a>}
+                        </div>
+                        <div class="tkg-rows">
+                            {nearby.map(({ l, d }, i) => (
+                                <ListingCard listing={l} compact distance={d} hidden={i >= 2} />
+                            ))}
+                        </div>
+                        <p class="sg-empty" data-open-empty hidden>
+                            Nothing nearby is open right now.
+                        </p>
+                    </section>
+                )
+            }
+
+            <div class="sg-report">
+                {
+                    report && (
+                        <a class="tkg-btn tkg-btn-ghost" href={report}>
+                            <Icon name="flag" />
+                            Report wrong info · แจ้งข้อมูลผิด
+                        </a>
+                    )
+                }
+                <div class="tkg-small tkg-muted">
+                    Listing {listing.slug}
+                    {report && (
+                        <>
+                            {' · '}
+                            <a href={report}>Suggest an edit</a>
+                        </>
+                    )}
+                </div>
             </div>
         </div>
+        <aside class="sg-listing-side" aria-label="Contact, hours and map">
+            <ContactBar listing={listing} />
+
+            <HoursTable listing={listing} />
+
+            {
+                listing.geo && (
+                    <section class="tkg-section sg-where-sec">
+                        <div class="tkg-section-h">
+                            <h2>
+                                Where{listing.address && <small>{listing.address}</small>}
+                            </h2>
+                            <a href={directionsUrl(listing.geo)} target="_blank" rel="noopener">
+                                Directions
+                            </a>
+                        </div>
+                        <div class="tkg-pad">
+                            <StaticMap point={listing.geo} />
+                        </div>
+                    </section>
+                )
+            }
+
+            <ClaimBox listing={listing} href={claimUrl(config, listing)} />
+        </aside>
     </main>
 
     {

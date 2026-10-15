@@ -426,3 +426,203 @@ html[data-lang='th'] body {
         scroll-behavior: auto !important;
     }
 }
+
+/* listing page: one column on phones, in the order of a visitor's questions */
+.sg-listing {
+    display: flex;
+    flex-direction: column;
+}
+.sg-listing-main,
+.sg-listing-side {
+    display: contents;
+}
+.sg-listing .tkg-strip {
+    order: 1;
+}
+.sg-listing .sg-title-block {
+    order: 2;
+}
+.sg-listing .sg-contact-wrap {
+    order: 3;
+}
+.sg-listing .sg-hours-sec {
+    order: 4;
+}
+.sg-listing .sg-amenities-sec {
+    order: 5;
+}
+.sg-listing .sg-about-sec {
+    order: 6;
+}
+.sg-listing .sg-where-sec {
+    order: 7;
+}
+.sg-listing .sg-claim-sec {
+    order: 8;
+}
+.sg-listing .sg-nearby-sec {
+    order: 9;
+}
+.sg-listing .sg-report {
+    order: 10;
+}
+
+/* desktop-only pieces, hidden on phones */
+.sg-desk-only,
+.sg-topnav {
+    display: none;
+}
+
+/*
+ * Desktop (960px and up). The design is phone first and only specifies the results
+ * screen for wide windows (list 420px + map). The other screens extend it the same way:
+ * a 1200px content column, top-bar links instead of the bottom tabs, wider grids, and
+ * the listing split into the business (left) and a sticky contact column (right).
+ */
+@media (min-width: 960px) {
+    html,
+    .sg-page {
+        background: var(--surface-100);
+    }
+    .sg-page {
+        max-width: none;
+        border-inline: 0;
+    }
+    .sg-page:not(.sg-page-wide) > .tkg-topbar {
+        padding-inline: max(var(--space-4), calc((100% - 1200px) / 2 + var(--space-4)));
+    }
+    .sg-page:not(.sg-page-wide) > main {
+        width: 100%;
+        max-width: 1200px;
+        margin: 0 auto;
+        padding-bottom: var(--space-12, 48px);
+    }
+    .sg-desk-only {
+        display: inline-flex;
+    }
+    .tkg-topbar .tkg-brand.sg-desk-only {
+        margin-right: var(--space-2);
+    }
+    .sg-topnav {
+        display: flex;
+        align-items: center;
+        gap: var(--space-1);
+    }
+    .sg-topnav a {
+        padding: var(--space-2) var(--space-3);
+        border-radius: var(--radius-pill);
+        color: var(--ink);
+        font-weight: 500;
+        font-size: 15px;
+        line-height: 20px;
+        text-decoration: none;
+    }
+    .sg-topnav a:hover {
+        background: var(--surface-200);
+    }
+    .sg-topnav a[aria-current='page'] {
+        color: var(--sea);
+        background: var(--sea-tint);
+    }
+    .sg-nav,
+    .tkg-bottombar {
+        display: none;
+    }
+
+    /* landing and city home */
+    .sg-header {
+        margin: var(--space-6) var(--space-4) 0;
+        padding: var(--space-8, 32px);
+        border: 1px solid var(--line);
+        border-radius: var(--radius-lg);
+    }
+    .sg-header .tkg-display {
+        font-size: 40px;
+        line-height: 46px;
+    }
+    .sg-header .sg-search-form {
+        max-width: 720px;
+    }
+    .tkg-cats {
+        grid-template-columns: repeat(8, 1fr);
+    }
+    .sg-open-now .tkg-list {
+        display: grid;
+        grid-template-columns: repeat(3, minmax(0, 1fr));
+    }
+    .tkg-chiprow {
+        flex-wrap: wrap;
+        overflow: visible;
+    }
+    .sg-cities {
+        display: grid;
+        grid-template-columns: repeat(3, minmax(0, 1fr));
+        gap: var(--space-3);
+        padding: 0 var(--space-4);
+        background: none;
+        border: 0;
+    }
+    .sg-cities .tkg-row {
+        background: var(--surface);
+        border: 1px solid var(--line);
+        border-radius: var(--radius-lg);
+    }
+
+    /* listing page: business left, sticky contact column right */
+    .sg-listing {
+        display: grid;
+        grid-template-columns: minmax(0, 1fr) 380px;
+        gap: var(--space-6);
+        align-items: start;
+        padding: var(--space-6) var(--space-4) 0;
+    }
+    .sg-listing-main,
+    .sg-listing-side {
+        display: block;
+        min-width: 0;
+    }
+    .sg-listing .tkg-strip {
+        height: 400px;
+        border-radius: var(--radius-lg);
+        overflow: hidden;
+    }
+    .sg-listing .sg-title-block {
+        background: none;
+        border: 0;
+        padding: var(--space-5, 20px) 0 0;
+    }
+    .sg-listing .sg-title-block .tkg-title {
+        font-size: 32px;
+        line-height: 38px;
+    }
+    .sg-listing-main .tkg-section-h,
+    .sg-listing-main .tkg-pad,
+    .sg-listing-main .tkg-amenities,
+    .sg-listing-main .sg-report {
+        padding-inline: 0;
+    }
+    .sg-listing-main .tkg-amenities {
+        grid-template-columns: repeat(3, 1fr);
+    }
+    .sg-listing-main .tkg-rows .tkg-card {
+        border-inline: 0;
+    }
+    .sg-listing-side {
+        position: sticky;
+        top: calc(56px + var(--space-6));
+        background: var(--surface);
+        border: 1px solid var(--line);
+        border-radius: var(--radius-lg);
+        box-shadow: var(--shadow-card);
+        padding-bottom: var(--space-4);
+        overflow: hidden;
+    }
+    .sg-listing-side .sg-contact-wrap {
+        padding-top: var(--space-4);
+    }
+    .sg-listing-side .sg-hours-sec,
+    .sg-listing-side .sg-where-sec,
+    .sg-listing-side .sg-claim-sec {
+        padding-top: var(--space-4);
+    }
+}

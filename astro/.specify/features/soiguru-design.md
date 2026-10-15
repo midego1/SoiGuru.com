@@ -41,6 +41,15 @@ Category and area ids share the second URL segment; `soiguru-data` keeps them di
 - **Language**: EN / ไทย toggle remembered on the device; swaps every `[data-th]` text and the status sentences.
 - **Structured data**: `LocalBusiness` subtype per category with `openingHoursSpecification`, `geo`, `address`, `priceRange`, `aggregateRating`, `amenityFeature`; `BreadcrumbList` on city, results and listing pages.
 
+## Desktop layout (960px and up)
+
+The design is phone first: one 640px column, and only CategoryResults has a wide version (list 420px on the left, map filling the rest). Desktop visitors saw a phone column in the middle of the screen, so every screen now extends to desktop in the same style:
+
+- Top bar spans the window; its content sits in a 1200px column. Home / Search / For owners links (`TopNav`) replace the bottom tabs, which are hidden. Back-mode bars also show the SoiGuru wordmark.
+- Landing and CityHome: the header becomes a bordered card with a 40px display title, categories sit in one row of 8, the "Open now" list is a 3-column grid showing 6 (`data-limit-wide`), area chips wrap, cities are a 3-column grid.
+- ListingPage: two columns. Left: photos, title, good to know (3 columns), about, nearby, report. Right: a sticky card with the contact buttons, hours, map and claim box. The sticky Directions bar is hidden (Directions is in the contact card). On phones the page keeps its single column in the original order through CSS `order`.
+- CategoryResults and search keep the design's wide layout.
+
 ## Not in this pass
 
 ClaimFlow and OwnerDashboard (need accounts; Next.js only), the Filters sheet (price, rating, has LINE…), "Search this area", the photo gallery, Saved, Thai URL prefix (`/th/…`), official LINE/WhatsApp marks, a self-hosted map style. See `docs/questions.md` Q30.
