@@ -9,6 +9,10 @@ loadEnvConfig(process.cwd());
 
 const token = process.env.GH_TOKEN;
 const url = process.env.DATA_REPOSITORY;
+// Optional branch of the content repo (e.g. a `data` branch inside the website repo).
+// Unset = the remote default branch.
+const branch = process.env.DATA_REPOSITORY_BRANCH && process.env.DATA_REPOSITORY_BRANCH.trim();
+const refOptions = branch ? { ref: branch } : {};
 
 if (!url) {
   console.warn("Warning: 'DATA_REPOSITORY' environment variable is missing.");
@@ -41,6 +45,7 @@ async function main() {
       dir: dest,
       author: { name: "website" },
       singleBranch: true,
+      ...refOptions,
     };
 
     if (token) {
@@ -59,6 +64,7 @@ async function main() {
     url,
     dir: dest,
     singleBranch: true,
+      ...refOptions,
   }
 
   if (token) {
