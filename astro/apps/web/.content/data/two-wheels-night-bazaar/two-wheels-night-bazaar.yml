@@ -1,0 +1,60 @@
+name: Two Wheels Night Bazaar
+name_th: ทู วีลส์ ไนท์บาซาร์
+description: Automatic scooters by the day, week or month. In Night Bazaar, Chiang Mai.
+description_th: เช่ารถมอเตอร์ไซค์ออโต้ รายวัน รายสัปดาห์ หรือรายเดือน ที่ไนท์บาซาร์
+source_url: ''
+category: scooter-rental
+tags:
+- sample
+- budget
+- northern-thai
+featured: true
+status: approved
+sample: true
+city: chiang-mai
+area: night-bazaar
+address: 110/15 Moo 7, Night Bazaar, Chiang Mai 50200
+geo:
+  lat: 18.79127
+  lng: 99.00353
+location:
+  address: 110/15 Moo 7, Night Bazaar, Chiang Mai 50200
+  city: Chiang Mai
+  country: TH
+  latitude: 18.79127
+  longitude: 99.00353
+phone: "+66800001134"
+line_id: '@sample-twowheelsnightbaza'
+whatsapp: "+66800001134"
+hours:
+  mon:
+  - 08:00-20:00
+  tue:
+  - 08:00-20:00
+  wed:
+  - 08:00-20:00
+  thu:
+  - 08:00-20:00
+  fri:
+  - 08:00-20:00
+  sat:
+  - 08:00-20:00
+  sun: []
+price_band: 1
+rating: 4.2
+rating_count: 261
+claimed: false
+amenities:
+  card-accepted: true
+  helmet-included: true
+updated_by: import
+updated_at: "2026-10-09 14:30"
+markdown: '> **SAMPLE listing.** This business is invented for development and design review. Do not publish.
+
+
+  Automatic scooters by the day, week or month. In Night Bazaar, Chiang Mai.
+
+
+  From ฿300 / day. Passport copy required. Card and QR payment accepted.
+
+  '

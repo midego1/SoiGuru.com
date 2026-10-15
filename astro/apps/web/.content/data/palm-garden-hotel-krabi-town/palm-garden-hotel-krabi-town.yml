@@ -1,0 +1,59 @@
+name: Palm Garden Hotel Krabi Town
+name_th: ปาล์ม การ์เด้น โฮเทล เมืองกระบี่
+description: Clean rooms, friendly staff and a quiet location. In Krabi Town, Krabi.
+description_th: ห้องพักสะอาด พนักงานเป็นมิตร ทำเลเงียบสงบ ที่เมืองกระบี่
+source_url: ''
+category: hotels
+tags:
+- sample
+featured: false
+status: approved
+sample: true
+city: krabi
+area: krabi-town
+address: 9/10 Moo 1, Krabi Town, Krabi 81180
+geo:
+  lat: 8.06762
+  lng: 98.92041
+location:
+  address: 9/10 Moo 1, Krabi Town, Krabi 81180
+  city: Krabi
+  country: TH
+  latitude: 8.06762
+  longitude: 98.92041
+phone: "+66800001069"
+hours:
+  mon:
+  - 00:00-24:00
+  tue:
+  - 00:00-24:00
+  wed:
+  - 00:00-24:00
+  thu:
+  - 00:00-24:00
+  fri:
+  - 00:00-24:00
+  sat:
+  - 00:00-24:00
+  sun:
+  - 00:00-24:00
+price_band: 1
+rating: 4.8
+rating_count: 76
+claimed: true
+amenities:
+  breakfast: true
+  air-con: true
+  sea-view: true
+  pool: true
+updated_by: owner
+updated_at: "2026-09-08 16:30"
+markdown: '> **SAMPLE listing.** This business is invented for development and design review. Do not publish.
+
+
+  Clean rooms, friendly staff and a quiet location. In Krabi Town, Krabi.
+
+
+  Rooms from ฿3500 / night. Thai and English spoken.
+
+  '

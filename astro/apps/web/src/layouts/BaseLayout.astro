@@ -1,0 +1,136 @@
+---
+/**
+ * BaseLayout — Root layout for all pages.
+ *
+ * Provides HTML document structure, meta tags, header, and footer.
+ * Integrates with plugin-seo for Open Graph and JSON-LD structured data.
+ * Uses SiteHeader and SiteFooter from @ever-works/ui for consistent layout.
+ */
+import type { SiteConfig, NavLinkItem } from '@ever-works/core';
+import { generateMetaTags } from '@ever-works/plugin-seo';
+import type { PageMeta } from '@ever-works/plugin-seo';
+import SiteHeader from '@ever-works/ui/astro/SiteHeader.astro';
+import SiteFooter from '@ever-works/ui/astro/SiteFooter.astro';
+import MobileMenu from '@ever-works/ui/preact/MobileMenu';
+import '../styles/global.css';
+import '../styles/theme.css';
+
+interface Props {
+    /** Page title (appended to site name) */
+    title: string;
+    /** Meta description for SEO */
+    description?: string;
+    /** Site configuration */
+    config: SiteConfig;
+    /** Optional canonical URL */
+    canonicalUrl?: string;
+    /** Optional Open Graph image */
+    ogImage?: string;
+    /** Page type for structured data */
+    pageType?: 'website' | 'article' | 'product';
+    /**
+     * Optional URL of a Markdown twin of this page. When set, advertised
+     * via `<link rel="alternate" type="text/markdown">` so AI agents can
+     * fetch the clean Markdown version of the page without parsing HTML.
+     */
+    markdownMirrorUrl?: string;
+}
+
+const { title, description, config, canonicalUrl, ogImage, pageType = 'website', markdownMirrorUrl } = Astro.props;
+const siteTitle = `${title} | ${config.company_name}`;
+const metaDescription = description || `${config.company_name} — Browse ${config.items_name}`;
+
+// Generate SEO meta tags via plugin
+const pageMeta: PageMeta = {
+    title: siteTitle,
+    description: metaDescription,
+    url: canonicalUrl || Astro.url.href,
+    image: ogImage,
+    type: pageType,
+};
+
+const metaTags = generateMetaTags(pageMeta, {});
+
+/**
+ * Default nav items used when config.custom_header is not set.
+ * Sites can override via config.custom_header in .works/works.yml.
+ */
+const defaultNavItems = [
+    { label: 'Home', href: '/' },
+    { label: 'Categories', href: '/categories' },
+    { label: 'Tags', href: '/tags' },
+    { label: 'Collections', href: '/collections' },
+    { label: 'Comparisons', href: '/comparisons' },
+];
+
+/** Resolve nav items: prefer config.custom_header, fall back to defaults */
+const navItems = (config.custom_header ?? defaultNavItems).map((item: NavLinkItem | { label: string; href: string }) => ({
+    label: item.label,
+    href: item.href,
+}));
+
+/** Footer links from config.custom_footer (empty if not configured) */
+const footerLinks: NavLinkItem[] = config.custom_footer ?? [];
+---
+
+<!doctype html>
+<html lang="en" data-component="root">
+    <head>
+        <meta charset="utf-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1" />
+        <meta name="generator" content={Astro.generator} />
+        <title>{siteTitle}</title>
+
+        {/* Standard + OG + Twitter meta tags from SEO plugin */}
+        {metaTags.map((tag) => {
+            if (tag.key === 'property') {
+                return <meta property={tag.value} content={tag.content} />;
+            }
+            return <meta name={tag.value} content={tag.content} />;
+        })}
+
+        {canonicalUrl && <link rel="canonical" href={canonicalUrl} />}
+        {config.logo?.favicon && <link rel="icon" href={config.logo.favicon} />}
+
+        {/* Feed autodiscovery — RSS 2.0, Atom 1.0, JSON Feed 1.1 */}
+        <link rel="alternate" type="application/rss+xml" title={`${config.company_name} RSS Feed`} href="/rss.xml" />
+        <link rel="alternate" type="application/atom+xml" title={`${config.company_name} Atom Feed`} href="/atom.xml" />
+        <link rel="alternate" type="application/feed+json" title={`${config.company_name} JSON Feed`} href="/feed.json" />
+
+        {/* Markdown twin for AI agents (per llmstxt.org per-page mirror convention) */}
+        {markdownMirrorUrl && (
+            <link rel="alternate" type="text/markdown" title="Markdown version" href={markdownMirrorUrl} />
+        )}
+
+        <slot name="head" />
+    </head>
+    <body data-component="body">
+        <SiteHeader config={config} nav={navItems}>
+            <MobileMenu client:load items={navItems} />
+        </SiteHeader>
+
+        <main id="main-content" data-component="main">
+            <slot />
+        </main>
+
+        <SiteFooter config={config}>
+            {footerLinks.length > 0 && (
+                <nav data-part="footer-nav" aria-label="Footer navigation">
+                    <ul class="flex flex-wrap gap-4 text-sm text-muted-foreground">
+                        {footerLinks.map((link) => (
+                            <li>
+                                <a
+                                    href={link.href}
+                                    class="hover:text-foreground transition-colors"
+                                    {...(link.external ? { target: '_blank', rel: 'noopener noreferrer' } : {})}
+                                >
+                                    {link.label}
+                                </a>
+                            </li>
+                        ))}
+                    </ul>
+                </nav>
+            )}
+        </SiteFooter>
+    </body>
+</html>

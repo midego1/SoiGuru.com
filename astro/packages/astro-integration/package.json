@@ -1,0 +1,35 @@
+{
+    "name": "@ever-works/astro-integration",
+    "version": "0.1.0",
+    "description": "Astro integration that bridges the Ever Works plugin system into Astro's build lifecycle",
+    "type": "module",
+    "exports": {
+        ".": "./src/index.ts",
+        "./webhook-endpoint": "./src/webhook-endpoint.ts"
+    },
+    "files": [
+        "src"
+    ],
+    "scripts": {
+        "typecheck": "tsc --noEmit",
+        "lint": "eslint src/",
+        "lint:fix": "eslint src/ --fix",
+        "test": "vitest run",
+        "test:coverage": "vitest run --coverage"
+    },
+    "dependencies": {
+        "@ever-works/core": "workspace:*",
+        "@ever-works/plugins": "workspace:*",
+        "@ever-works/sync": "workspace:*"
+    },
+    "devDependencies": {
+        "@ever-works/eslint-config": "workspace:*",
+        "@types/node": "^25.6.0",
+        "astro": "^6.1.9",
+        "typescript": "^6.0.3",
+        "vitest": "^4.1.5"
+    },
+    "peerDependencies": {
+        "astro": "^6.1.9"
+    }
+}

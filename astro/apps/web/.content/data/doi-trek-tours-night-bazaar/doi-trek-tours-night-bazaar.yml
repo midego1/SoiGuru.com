@@ -1,0 +1,60 @@
+name: Doi Trek Tours Night Bazaar
+name_th: ดอย เทรค ทัวร์ ไนท์บาซาร์
+description: Day trips and private tours with a local guide. In Night Bazaar, Chiang Mai.
+description_th: ทริปไปเช้าเย็นกลับและทัวร์ส่วนตัวกับไกด์ท้องถิ่น ที่ไนท์บาซาร์
+source_url: ''
+category: tours
+tags:
+- sample
+- family-friendly
+- northern-thai
+featured: false
+status: approved
+sample: true
+city: chiang-mai
+area: night-bazaar
+address: 32/6 Moo 9, Night Bazaar, Chiang Mai 50200
+geo:
+  lat: 18.79107
+  lng: 99.00133
+location:
+  address: 32/6 Moo 9, Night Bazaar, Chiang Mai 50200
+  city: Chiang Mai
+  country: TH
+  latitude: 18.79107
+  longitude: 99.00133
+phone: "+66800001133"
+hours:
+  mon:
+  - 08:00-18:00
+  tue:
+  - 08:00-18:00
+  wed:
+  - 08:00-18:00
+  thu:
+  - 08:00-18:00
+  fri:
+  - 08:00-18:00
+  sat:
+  - 08:00-18:00
+  sun:
+  - 08:00-18:00
+price_band: 2
+rating: 4.7
+rating_count: 356
+claimed: false
+amenities:
+  hotel-pickup: true
+  card-accepted: true
+  english-spoken: false
+updated_by: import
+updated_at: "2026-10-03 15:30"
+markdown: '> **SAMPLE listing.** This business is invented for development and design review. Do not publish.
+
+
+  Day trips and private tours with a local guide. In Night Bazaar, Chiang Mai.
+
+
+  Day trips from ฿900 per person. Family run since 2009.
+
+  '

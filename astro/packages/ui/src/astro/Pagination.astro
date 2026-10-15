@@ -1,0 +1,66 @@
+---
+/**
+ * Pagination — Headless pagination component.
+ * Renders page navigation links with semantic HTML.
+ * AI agents apply styling via class prop or data-* selectors.
+ *
+ * @example
+ * ```astro
+ * <Pagination currentPage={2} totalPages={10} baseUrl="/items" />
+ * ```
+ */
+import type { PaginationProps } from '../types.js';
+import { getVisiblePages } from '../lib/pagination.js';
+
+type Props = PaginationProps;
+
+const { currentPage, totalPages, baseUrl, maxVisible = 5, class: className, ...attrs } = Astro.props;
+
+/** Build the URL for a given page number */
+function pageUrl(page: number): string {
+  const normalizedBase = baseUrl === '/' ? '' : baseUrl.replace(/\/$/, '');
+  return page === 1 ? (normalizedBase || '/') : `${normalizedBase}/page/${page}`;
+}
+
+const pages = getVisiblePages(currentPage, totalPages, maxVisible);
+const hasPrev = currentPage > 1;
+const hasNext = currentPage < totalPages;
+---
+
+{totalPages > 1 && (
+  <nav class={className} data-component="pagination" aria-label="Pagination" {...attrs}>
+    {hasPrev ? (
+      <a href={pageUrl(currentPage - 1)} data-part="prev" rel="prev" aria-label="Previous page">
+        Previous
+      </a>
+    ) : (
+      <span data-part="prev" data-disabled aria-disabled="true">Previous</span>
+    )}
+
+    <ol data-part="pages">
+      {pages.map((page) =>
+        page === '...' ? (
+          <li data-part="ellipsis" aria-hidden="true">
+            <span>&hellip;</span>
+          </li>
+        ) : (
+          <li data-part="page" data-current={page === currentPage ? '' : undefined}>
+            {page === currentPage ? (
+              <span aria-current="page" data-part="current-page">{page}</span>
+            ) : (
+              <a href={pageUrl(page)} data-part="page-link">{page}</a>
+            )}
+          </li>
+        )
+      )}
+    </ol>
+
+    {hasNext ? (
+      <a href={pageUrl(currentPage + 1)} data-part="next" rel="next" aria-label="Next page">
+        Next
+      </a>
+    ) : (
+      <span data-part="next" data-disabled aria-disabled="true">Next</span>
+    )}
+  </nav>
+)}

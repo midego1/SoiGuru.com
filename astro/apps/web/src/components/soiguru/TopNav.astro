@@ -1,0 +1,23 @@
+---
+/**
+ * TopNav — the desktop counterpart of BottomNav (960px and up): Home, Search, Saved and
+ * the owner link as text links in the top bar. Hidden on phones by CSS.
+ */
+import type { City } from '../../lib/soiguru/data';
+
+interface Props {
+    city: City;
+    active?: 'home' | 'search' | 'saved';
+    /** Claim flow URL; the owner link is omitted without one */
+    ownerHref?: string;
+}
+
+const { city, active, ownerHref } = Astro.props;
+---
+
+<nav class="sg-topnav" aria-label="Main">
+    <a href={`/${city.id}`} aria-current={active === 'home' ? 'page' : undefined} data-th="หน้าแรก">Home</a>
+    <a href={`/${city.id}/search`} aria-current={active === 'search' ? 'page' : undefined} data-th="ค้นหา">Search</a>
+    <a href={`/${city.id}/saved`} aria-current={active === 'saved' ? 'page' : undefined} data-th="บันทึกไว้">Saved</a>
+    {ownerHref && <a href={ownerHref} data-th="สำหรับเจ้าของร้าน">For owners</a>}
+</nav>

@@ -1,0 +1,61 @@
+name: Honda Scooter Hire Lam Plai Mat
+name_th: ฮอนด้า เช่ามอเตอร์ไซค์ ลำปลายมาศ
+description: Automatic scooters by the day, week or month. In Town centre, Lam Plai Mat.
+description_th: เช่ารถมอเตอร์ไซค์ออโต้ รายวัน รายสัปดาห์ หรือรายเดือน ที่ตัวเมือง
+source_url: ''
+category: scooter-rental
+tags:
+- sample
+- budget
+- isan
+featured: false
+status: approved
+sample: true
+city: lam-plai-mat
+area: town
+address: 72/10 Moo 6, Town centre, Buriram 31130
+geo:
+  lat: 15.02489
+  lng: 102.83703
+location:
+  address: 72/10 Moo 6, Town centre, Buriram 31130
+  city: Lam Plai Mat
+  country: TH
+  latitude: 15.02489
+  longitude: 102.83703
+phone: "+66800001171"
+line_id: '@sample-hondascooterhirela'
+hours:
+  mon:
+  - 09:00-19:00
+  tue:
+  - 09:00-19:00
+  wed:
+  - 09:00-19:00
+  thu:
+  - 09:00-19:00
+  fri:
+  - 09:00-19:00
+  sat:
+  - 09:00-19:00
+  sun:
+  - 09:00-19:00
+price_band: 1
+rating: 4.4
+rating_count: 233
+claimed: false
+amenities:
+  card-accepted: true
+  english-spoken: true
+  helmet-included: true
+updated_by: import
+updated_at: "2026-10-04 09:30"
+markdown: '> **SAMPLE listing.** This business is invented for development and design review. Do not publish.
+
+
+  Automatic scooters by the day, week or month. In Town centre, Lam Plai Mat.
+
+
+  From ฿80 / day. Passport copy required. Family run since 2009.
+
+  '

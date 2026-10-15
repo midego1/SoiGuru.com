@@ -1,0 +1,101 @@
+---
+/**
+ * ItemCard — Directory-specific wrapper around fulldev/ui Card.
+ * Renders a single directory item with icon, name, description, categories, tags.
+ *
+ * @example
+ * ```astro
+ * <ItemCard item={item} showCategory showTags />
+ * ```
+ */
+import type { ItemCardProps } from '../types.js';
+import Card from '../primitives/card/Card.astro';
+import CardHeader from '../primitives/card/CardHeader.astro';
+import CardTitle from '../primitives/card/CardTitle.astro';
+import CardDescription from '../primitives/card/CardDescription.astro';
+import CardContent from '../primitives/card/CardContent.astro';
+import CardFooter from '../primitives/card/CardFooter.astro';
+import Badge from '../primitives/badge/Badge.astro';
+
+function taxonomyPath(value: string): string {
+    return encodeURIComponent(
+        value
+            .trim()
+            .toLowerCase()
+            .normalize('NFKD')
+            .replace(/[\u0300-\u036f]/g, '')
+            .replace(/[^a-z0-9]+/g, '-')
+            .replace(/^-+|-+$/g, '')
+    );
+}
+
+type Props = ItemCardProps;
+
+const {
+    item,
+    showCategory = true,
+    showTags = true,
+    showDescription = true,
+    class: className,
+    ...attrs
+} = Astro.props;
+
+const categories = Array.isArray(item.category) ? item.category : [item.category];
+---
+
+<Card
+    size="sm"
+    class={className}
+    data-component="item-card"
+    data-featured={item.featured ? '' : undefined}
+    {...attrs}
+>
+    <CardHeader>
+        <div class="flex items-start gap-3">
+            {item.icon_url && (
+                <img
+                    src={item.icon_url}
+                    alt={`${item.name} icon`}
+                    data-part="icon"
+                    loading="lazy"
+                    class="size-8 shrink-0 rounded-md object-contain"
+                />
+            )}
+            <div class="min-w-0">
+                <CardTitle>
+                    <a href={`/item/${item.slug}`} data-part="name" class="hover:underline">{item.name}</a>
+                </CardTitle>
+                {showDescription && item.description && (
+                    <CardDescription data-part="description">
+                        {item.description}
+                    </CardDescription>
+                )}
+            </div>
+        </div>
+    </CardHeader>
+
+    {(showCategory || showTags) && (
+        <CardContent>
+            <div class="flex flex-wrap gap-1">
+                {showCategory && categories.length > 0 && categories.map((cat) => (
+                    <Badge as="a" href={`/category/${taxonomyPath(cat)}`} variant="outline" data-part="category">
+                        {cat}
+                    </Badge>
+                ))}
+                {showTags && item.tags?.length > 0 && item.tags.map((tag) => (
+                    <Badge as="a" href={`/tag/${taxonomyPath(tag)}`} variant="secondary" data-part="tag">
+                        {tag}
+                    </Badge>
+                ))}
+            </div>
+        </CardContent>
+    )}
+
+    {item.source_url && (
+        <CardFooter>
+            <a href={item.source_url} data-part="source-link" rel="noopener noreferrer" target="_blank" class="text-xs text-muted-foreground hover:text-foreground transition-colors">
+                Visit &rarr;
+            </a>
+        </CardFooter>
+    )}
+</Card>

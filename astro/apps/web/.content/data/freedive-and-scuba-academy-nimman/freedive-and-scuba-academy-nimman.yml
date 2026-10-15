@@ -1,0 +1,60 @@
+name: Freedive & Scuba Academy Nimman
+name_th: ฟรีไดฟ์ แอนด์ สคูบ้า อคาเดมี่ นิมมาน
+description: PADI courses, fun dives and snorkel trips. In Nimman, Chiang Mai.
+description_th: คอร์ส PADI ดำน้ำลึก และทริปดำน้ำตื้น ที่นิมมาน
+source_url: ''
+category: dive-shops
+tags:
+- sample
+- northern-thai
+featured: false
+status: approved
+sample: true
+city: chiang-mai
+area: nimman
+address: 153/4 Moo 7, Nimman, Chiang Mai 50200
+geo:
+  lat: 18.79469
+  lng: 98.97319
+location:
+  address: 153/4 Moo 7, Nimman, Chiang Mai 50200
+  city: Chiang Mai
+  country: TH
+  latitude: 18.79469
+  longitude: 98.97319
+phone: "+66800001122"
+line_id: '@sample-freediveandscubaac'
+whatsapp: "+66800001122"
+hours:
+  mon: []
+  tue:
+  - 07:30-19:00
+  wed:
+  - 07:30-19:00
+  thu:
+  - 07:30-19:00
+  fri:
+  - 07:30-19:00
+  sat:
+  - 07:30-19:00
+  sun:
+  - 07:30-19:00
+price_band: 3
+rating: 4.5
+rating_count: 94
+claimed: true
+amenities:
+  card-accepted: true
+  hotel-pickup: true
+  english-spoken: true
+updated_by: owner
+updated_at: "2026-09-14 10:45"
+markdown: '> **SAMPLE listing.** This business is invented for development and design review. Do not publish.
+
+
+  PADI courses, fun dives and snorkel trips. In Nimman, Chiang Mai.
+
+
+  Two fun dives from ฿3500. Family run since 2009.
+
+  '

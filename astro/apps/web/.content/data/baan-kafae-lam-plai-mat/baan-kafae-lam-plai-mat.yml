@@ -1,0 +1,61 @@
+name: Baan Kafae Lam Plai Mat
+name_th: บ้านกาแฟ ลำปลายมาศ
+description: Coffee, fruit shakes and a small breakfast menu. In Town centre, Lam Plai Mat.
+description_th: กาแฟ น้ำผลไม้ปั่น และเมนูอาหารเช้า ที่ตัวเมือง
+source_url: ''
+category: cafes
+tags:
+- sample
+- isan
+featured: true
+status: approved
+sample: true
+city: lam-plai-mat
+area: town
+address: 234/15 Moo 9, Town centre, Buriram 31130
+geo:
+  lat: 15.03213
+  lng: 102.83838
+location:
+  address: 234/15 Moo 9, Town centre, Buriram 31130
+  city: Lam Plai Mat
+  country: TH
+  latitude: 15.03213
+  longitude: 102.83838
+phone: "+66800001163"
+whatsapp: "+66800001163"
+hours:
+  mon:
+  - 08:00-18:00
+  tue:
+  - 08:00-18:00
+  wed:
+  - 08:00-18:00
+  thu:
+  - 08:00-18:00
+  fri:
+  - 08:00-18:00
+  sat:
+  - 08:00-18:00
+  sun:
+  - 08:00-18:00
+price_band: 2
+rating: 4.5
+rating_count: 178
+claimed: true
+amenities:
+  parking: true
+  wifi: true
+  air-con: true
+  card-accepted: false
+updated_by: owner
+updated_at: "2026-08-09 08:00"
+markdown: '> **SAMPLE listing.** This business is invented for development and design review. Do not publish.
+
+
+  Coffee, fruit shakes and a small breakfast menu. In Town centre, Lam Plai Mat.
+
+
+  Latte ฿120, breakfast sets from ฿180. Card and QR payment accepted.
+
+  '

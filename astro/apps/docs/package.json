@@ -1,0 +1,73 @@
+{
+  "name": "@ever-works/docs-minimal",
+  "version": "0.1.0",
+  "private": true,
+  "author": {
+    "name": "Ever Co. LTD",
+    "email": "ever@ever.co",
+    "url": "https://ever.co"
+  },
+  "scripts": {
+    "docusaurus": "docusaurus start",
+    "start": "docusaurus start",
+    "build": "docusaurus build",
+    "audit:seo": "node scripts/audit-seo.mjs",
+    "swizzle": "docusaurus swizzle",
+    "deploy": "docusaurus deploy",
+    "clear": "docusaurus clear",
+    "serve": "docusaurus serve",
+    "write-translations": "docusaurus write-translations",
+    "write-heading-ids": "docusaurus write-heading-ids",
+    "typecheck": "tsc",
+    "version": "npx docusaurus --version",
+    "spellcheck": "cspell .",
+    "dev": "docusaurus start",
+    "lint": "echo 'No lint configured for docs'",
+    "clean": "docusaurus clear"
+  },
+  "dependencies": {
+    "@docusaurus/core": "^3.10.0",
+    "@docusaurus/plugin-client-redirects": "^3.10.0",
+    "@docusaurus/plugin-content-docs": "^3.10.0",
+    "@docusaurus/preset-classic": "^3.10.0",
+    "@docusaurus/theme-common": "^3.10.0",
+    "@docusaurus/theme-mermaid": "^3.10.0",
+    "@docusaurus/theme-search-algolia": "^3.10.0",
+    "@easyops-cn/docusaurus-search-local": "^0.55.1",
+    "@mdx-js/react": "^3.1.1",
+    "cheerio": "^1.2.0",
+    "clsx": "^2.1.1",
+    "docusaurus-plugin-sentry": "^2.1.0",
+    "dotenv": "^17.4.2",
+    "prism-react-renderer": "^2.4.1",
+    "react": "^18.3.1",
+    "react-dom": "^18.3.1",
+    "react-player": "^3.4.0"
+  },
+  "devDependencies": {
+    "@docusaurus/module-type-aliases": "^3.10.0",
+    "@docusaurus/tsconfig": "^3.10.0",
+    "@docusaurus/types": "^3.10.0",
+    "@tailwindcss/postcss": "^4.2.4",
+    "cspell": "^10.0.0",
+    "postcss": "^8.5.12",
+    "tailwind-merge": "^3.5.0",
+    "tailwindcss": "^4.2.4",
+    "typescript": "~6.0.3"
+  },
+  "browserslist": {
+    "production": [
+      ">0.5%",
+      "not dead",
+      "not op_mini all"
+    ],
+    "development": [
+      "last 3 chrome version",
+      "last 3 firefox version",
+      "last 5 safari version"
+    ]
+  },
+  "engines": {
+    "node": ">=22.12.0"
+  }
+}

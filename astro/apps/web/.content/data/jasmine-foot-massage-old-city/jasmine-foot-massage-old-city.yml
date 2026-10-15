@@ -1,0 +1,59 @@
+name: Jasmine Foot Massage Old City
+name_th: จัสมิน นวดเท้า คูเมือง
+description: Thai, foot and oil massage by experienced therapists. In Old City, Chiang Mai.
+description_th: นวดแผนไทย นวดเท้า และนวดน้ำมัน โดยหมอนวดมีประสบการณ์ ที่คูเมือง
+source_url: ''
+category: massage
+tags:
+- sample
+- northern-thai
+featured: false
+status: approved
+sample: true
+city: chiang-mai
+area: old-city
+address: 227/11 Moo 9, Old City, Chiang Mai 50200
+geo:
+  lat: 18.78274
+  lng: 98.98797
+location:
+  address: 227/11 Moo 9, Old City, Chiang Mai 50200
+  city: Chiang Mai
+  country: TH
+  latitude: 18.78274
+  longitude: 98.98797
+phone: "+66800001099"
+line_id: '@sample-jasminefootmassage'
+hours:
+  mon:
+  - 10:00-22:00
+  tue:
+  - 10:00-22:00
+  wed:
+  - 10:00-22:00
+  thu:
+  - 10:00-22:00
+  fri:
+  - 10:00-22:00
+  sat:
+  - 10:00-22:00
+  sun:
+  - 10:00-22:00
+price_band: 2
+rating: 4.4
+rating_count: 390
+claimed: false
+amenities:
+  walk-ins: true
+  english-spoken: true
+updated_by: import
+updated_at: "2026-08-07 17:45"
+markdown: '> **SAMPLE listing.** This business is invented for development and design review. Do not publish.
+
+
+  Thai, foot and oil massage by experienced therapists. In Old City, Chiang Mai.
+
+
+  One hour Thai massage from ฿300. Thai and English spoken.
+
+  '

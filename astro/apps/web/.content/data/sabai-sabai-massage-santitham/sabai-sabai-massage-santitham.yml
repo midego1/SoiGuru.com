@@ -1,0 +1,61 @@
+name: Sabai Sabai Massage Santitham
+name_th: สบาย สบาย นวด สันติธรรม
+description: Thai, foot and oil massage by experienced therapists. In Santitham, Chiang Mai.
+description_th: นวดแผนไทย นวดเท้า และนวดน้ำมัน โดยหมอนวดมีประสบการณ์ ที่สันติธรรม
+source_url: ''
+category: massage
+tags:
+- sample
+- budget
+- northern-thai
+featured: false
+status: approved
+sample: true
+city: chiang-mai
+area: santitham
+address: 203/8 Moo 3, Santitham, Chiang Mai 50200
+geo:
+  lat: 18.79625
+  lng: 98.98938
+location:
+  address: 203/8 Moo 3, Santitham, Chiang Mai 50200
+  city: Chiang Mai
+  country: TH
+  latitude: 18.79625
+  longitude: 98.98938
+phone: "+66800001146"
+whatsapp: "+66800001146"
+hours:
+  mon:
+  - 11:00-23:00
+  tue:
+  - 11:00-23:00
+  wed:
+  - 11:00-23:00
+  thu:
+  - 11:00-23:00
+  fri:
+  - 11:00-23:00
+  sat:
+  - 11:00-23:00
+  sun:
+  - 11:00-23:00
+price_band: 2
+rating: 4.4
+rating_count: 55
+claimed: true
+amenities:
+  air-con: true
+  english-spoken: true
+  walk-ins: false
+updated_by: owner
+updated_at: "2026-08-06 18:00"
+markdown: '> **SAMPLE listing.** This business is invented for development and design review. Do not publish.
+
+
+  Thai, foot and oil massage by experienced therapists. In Santitham, Chiang Mai.
+
+
+  One hour Thai massage from ฿250. Booking by LINE recommended in high season.
+
+  '

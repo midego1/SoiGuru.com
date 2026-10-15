@@ -1,0 +1,62 @@
+name: Gel & Go Santitham
+name_th: เจล แอนด์ โก สันติธรรม
+description: Manicure, pedicure, gel colour and nail art. In Santitham, Chiang Mai.
+description_th: ทำเล็บมือ เล็บเท้า สีเจล และเพ้นท์เล็บ ที่สันติธรรม
+source_url: ''
+category: nail-salons
+tags:
+- sample
+- northern-thai
+featured: true
+status: approved
+sample: true
+city: chiang-mai
+area: santitham
+address: 137/5 Moo 2, Santitham, Chiang Mai 50200
+geo:
+  lat: 18.80784
+  lng: 98.98463
+location:
+  address: 137/5 Moo 2, Santitham, Chiang Mai 50200
+  city: Chiang Mai
+  country: TH
+  latitude: 18.80784
+  longitude: 98.98463
+phone: "+66800001152"
+line_id: '@sample-gelandgosantitham'
+whatsapp: "+66800001152"
+hours:
+  mon: []
+  tue:
+  - 10:00-19:00
+  wed:
+  - 10:00-19:00
+  thu:
+  - 10:00-19:00
+  fri:
+  - 10:00-19:00
+  sat:
+  - 10:00-19:00
+  sun:
+  - 10:00-19:00
+price_band: 1
+rating: 4.2
+rating_count: 154
+claimed: false
+amenities:
+  air-con: true
+  card-accepted: true
+  gel-acrylic: true
+  walk-ins: true
+  english-spoken: false
+updated_by: import
+updated_at: "2026-09-12 08:45"
+markdown: '> **SAMPLE listing.** This business is invented for development and design review. Do not publish.
+
+
+  Manicure, pedicure, gel colour and nail art. In Santitham, Chiang Mai.
+
+
+  Gel colour from ฿250. Thai and English spoken.
+
+  '
