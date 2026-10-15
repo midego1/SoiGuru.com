@@ -1,0 +1,83 @@
+---
+/**
+ * Home Page — Time Tracking Directory (Git Data)
+ *
+ * Thin hero banner and a single interactive ItemBrowser Preact island
+ * that includes collapsible categories/tags, search, sort, and pagination.
+ */
+import BaseLayout from '../layouts/BaseLayout.astro';
+import { getContent } from '../lib/content';
+import { generateJsonLd } from '@ever-works/plugin-seo';
+import ItemBrowser from '../components/ItemBrowser';
+
+const { items, categories, tags, config } = await getContent();
+
+const jsonLd = generateJsonLd('WebSite', {
+    type: 'WebSite',
+    name: config.company_name,
+    url: config.app_url ?? '',
+});
+
+// Only serialize the first page of items for fast initial render.
+// The full dataset is available at /data/items.json and loaded lazily
+// by ItemBrowser on first user interaction (search, filter, sort, paginate).
+const PER_PAGE = 12;
+const browserItems = items
+    .sort((a, b) => {
+        if (a.featured && !b.featured) return -1;
+        if (!a.featured && b.featured) return 1;
+        return a.name.localeCompare(b.name);
+    })
+    .slice(0, PER_PAGE)
+    .map((item) => ({
+        slug: item.slug,
+        name: item.name,
+        description: item.description,
+        category: item.category,
+        tags: item.tags,
+        featured: item.featured,
+        icon_url: item.icon_url,
+        updated_at: item.updated_at,
+    }));
+const totalItemCount = items.length;
+
+// Filter out categories and tags with no items, include counts
+const activeCategories = categories
+    .filter((cat) => cat.count > 0)
+    .map((cat) => ({ id: cat.id, name: cat.name, count: cat.count }));
+
+const activeTags = tags
+    .filter((tag) => tag.count > 0)
+    .map((tag) => ({ id: tag.id, name: tag.name, count: tag.count }));
+---
+
+<BaseLayout title="Home" config={config}>
+    <Fragment slot="head">
+        <script is:inline type="application/ld+json" set:html={jsonLd} />
+    </Fragment>
+
+    <!-- Hero -->
+    <section class="relative overflow-hidden rounded-2xl bg-gradient-to-br from-brand-600 to-brand-800 px-6 py-4 text-center text-white sm:px-10 sm:py-5 mb-10">
+        <div class="relative z-10">
+            <h1 class="text-2xl font-extrabold tracking-tight sm:text-3xl lg:text-4xl">
+                Ever Works Demo
+            </h1>
+            <p class="mx-auto mt-2 max-w-2xl text-sm text-brand-100 sm:text-base">
+                Discover and compare {items.length} {items.length === 1 ? config.item_name.toLowerCase() : config.items_name.toLowerCase()} for your next project.
+            </p>
+        </div>
+        <div class="absolute inset-0 bg-[url('data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iNjAiIGhlaWdodD0iNjAiIHZpZXdCb3g9IjAgMCA2MCA2MCIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj48ZyBmaWxsPSJub25lIiBmaWxsLXJ1bGU9ImV2ZW5vZGQiPjxnIGZpbGw9IiNmZmYiIGZpbGwtb3BhY2l0eT0iMC4wNSI+PHBhdGggZD0iTTM2IDM0djItSDI0di0yaDEyem0wLTMwVjBoLTJ2NGgyem0tMzAgMGg0VjBINnY0em0wIDMwdjJoNHYtMkg2eiIvPjwvZz48L2c+PC9zdmc+')] opacity-30" />
+    </section>
+
+    <!-- Single interactive island: categories, tags, search, sort, items, pagination -->
+    <ItemBrowser
+        client:load
+        initialItems={browserItems}
+        totalItemCount={totalItemCount}
+        categories={activeCategories}
+        tags={activeTags}
+        itemsName={config.items_name}
+        perPage={PER_PAGE}
+        dataUrl="/data/items.json"
+    />
+</BaseLayout>

@@ -1,0 +1,71 @@
+---
+/**
+ * Paginated Listing Page — Shows items for a specific page number.
+ *
+ * Uses getStaticPaths with plugin-pagination to generate all pages.
+ * Page 1 redirects to / (home page handles it).
+ */
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import { getContent } from '../../lib/content';
+import { paginate, generatePagePaths } from '@ever-works/plugin-pagination';
+import { generateJsonLd } from '@ever-works/plugin-seo';
+import ItemGrid from '@ever-works/ui/astro/ItemGrid.astro';
+import EmptyState from '@ever-works/ui/astro/EmptyState.astro';
+import Pagination from '@ever-works/ui/astro/Pagination.astro';
+
+export async function getStaticPaths() {
+    const { items, config } = await getContent();
+    const perPage = config.pagination?.itemsPerPage ?? 12;
+    return generatePagePaths(items.length, perPage).filter((entry) => entry.params.page !== '1');
+}
+
+const { currentPage, totalPages } = Astro.props;
+const { items, config } = await getContent();
+const perPage = config.pagination?.itemsPerPage ?? 12;
+const pagination = paginate(items, { page: currentPage, perPage });
+
+const siteUrl = (config.app_url ?? '').replace(/\/$/, '');
+
+// JSON-LD for the listing page
+const jsonLd = generateJsonLd('ItemList', {
+    type: 'ItemList',
+    items: pagination.items.map((item) => ({
+        name: item.name,
+        url: `/item/${item.slug}`,
+    })),
+});
+
+// BreadcrumbList JSON-LD: Home → Page N
+const breadcrumbLd = generateJsonLd('BreadcrumbList', {
+    type: 'BreadcrumbList',
+    items: [
+        { name: 'Home', url: `${siteUrl}/` },
+        { name: `Page ${currentPage}`, url: `${siteUrl}/page/${currentPage}` },
+    ],
+});
+---
+
+<BaseLayout
+    title={`${config.items_name} — Page ${currentPage}`}
+    description={`Browse ${config.items_name} — Page ${currentPage} of ${totalPages}`}
+    config={config}
+>
+    <Fragment slot="head">
+        <script is:inline type="application/ld+json" set:html={jsonLd} />
+        <script is:inline type="application/ld+json" set:html={breadcrumbLd} />
+    </Fragment>
+
+    <section data-component="item-listing">
+        <h1 data-part="heading">
+            {config.items_name} — Page {currentPage} of {totalPages}
+        </h1>
+
+        {pagination.items.length === 0 ? (
+            <EmptyState message={`No ${config.items_name.toLowerCase()} found.`} />
+        ) : (
+            <ItemGrid items={pagination.items} columns={3} />
+        )}
+
+        <Pagination currentPage={currentPage} totalPages={totalPages} baseUrl="/" />
+    </section>
+</BaseLayout>

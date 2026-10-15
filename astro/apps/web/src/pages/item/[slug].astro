@@ -1,0 +1,87 @@
+---
+/**
+ * Item Detail Page — Shows full details for a single directory item.
+ *
+ * Uses getStaticPaths to generate one page per approved item at build time.
+ * Integrates with plugin-seo for Product JSON-LD structured data.
+ */
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import { getContent } from '../../lib/content';
+import { generateItemJsonLd, generateJsonLd } from '@ever-works/plugin-seo';
+import type { ItemData } from '@ever-works/core';
+import Breadcrumbs from '@ever-works/ui/astro/Breadcrumbs.astro';
+import ItemDetail from '@ever-works/ui/astro/ItemDetail.astro';
+
+export async function getStaticPaths() {
+    const { items } = await getContent();
+    return items.map((item) => ({
+        params: { slug: item.slug },
+        props: { item },
+    }));
+}
+
+interface Props {
+    item: ItemData;
+}
+
+const { item } = Astro.props;
+const { config, items, categories } = await getContent();
+
+// Find related items (same category, excluding self)
+const primaryCategory: string | undefined = Array.isArray(item.category) ? item.category[0] : item.category;
+const relatedItems = primaryCategory
+    ? items
+        .filter((i) => {
+            if (i.slug === item.slug) return false;
+            const cats = Array.isArray(i.category) ? i.category : [i.category];
+            return cats.includes(primaryCategory);
+        })
+        .slice(0, 6)
+    : [];
+
+// Resolve category name for breadcrumbs
+const categoryData = categories.find((c) => c.id === primaryCategory);
+
+// JSON-LD for the item (auto-selects SoftwareApplication or Product)
+const jsonLd = generateItemJsonLd({
+    name: item.name,
+    description: item.description,
+    url: item.source_url ?? '',
+    image: item.icon_url,
+});
+
+// BreadcrumbList JSON-LD for navigation trail
+const siteUrl = config.site_url ?? '';
+const breadcrumbLd = generateJsonLd('BreadcrumbList', {
+    type: 'BreadcrumbList',
+    items: [
+        { name: 'Home', url: `${siteUrl}/` },
+        ...(categoryData ? [{ name: categoryData.name, url: `${siteUrl}/category/${categoryData.id}` }] : []),
+        { name: item.name, url: `${siteUrl}/item/${item.slug}` },
+    ],
+});
+
+// Breadcrumb items for UI component
+const breadcrumbItems = [
+    { label: 'Home', href: '/' },
+    ...(categoryData ? [{ label: categoryData.name, href: `/category/${categoryData.id}` }] : []),
+    { label: item.name },
+];
+---
+
+<BaseLayout
+    title={item.name}
+    description={item.description}
+    config={config}
+    pageType="product"
+    markdownMirrorUrl={`/item/${item.slug}.md`}
+>
+    <Fragment slot="head">
+        <script is:inline type="application/ld+json" set:html={jsonLd} />
+        <script is:inline type="application/ld+json" set:html={breadcrumbLd} />
+    </Fragment>
+
+    <Breadcrumbs items={breadcrumbItems} />
+
+    <ItemDetail item={item} relatedItems={relatedItems} />
+</BaseLayout>

@@ -1,0 +1,72 @@
+{
+    "name": "ever-works-minimal-monorepo",
+    "version": "0.1.0",
+    "private": true,
+    "packageManager": "pnpm@10.33.0+sha512.10568bb4a6afb58c9eb3630da90cc9516417abebd3fabbe6739f0ae795728da1491e9db5a544c76ad8eb7570f5c4bb3d6c637b2cb41bfdcdb47fa823c8649319",
+    "engines": {
+        "node": ">=22.12.0"
+    },
+    "scripts": {
+        "build": "turbo run build",
+        "build:web": "pnpm --filter @ever-works/web-minimal build",
+        "dev": "turbo run dev",
+        "dev:web": "turbo run dev --filter=@ever-works/web-minimal",
+        "dev:docs": "turbo run dev --filter=@ever-works/docs-minimal",
+        "dev:sample-basic": "turbo run dev --filter=@ever-works/sample-basic",
+        "dev:sample-events": "turbo run dev --filter=@ever-works/sample-events",
+        "dev:sample-git": "turbo run dev --filter=@ever-works/sample-git",
+        "dev:sample-jobs": "turbo run dev --filter=@ever-works/sample-jobs",
+        "dev:sample-real-estate": "turbo run dev --filter=@ever-works/sample-real-estate",
+        "lint": "turbo run lint",
+        "lint:fix": "turbo run lint:fix",
+        "test:e2e": "turbo run test:e2e",
+        "clean": "turbo run clean",
+        "format": "prettier --write \"**/*.{ts,tsx,js,jsx,md,json}\"",
+        "test": "turbo run test",
+        "test:coverage": "turbo run test:coverage",
+        "test:ui:safe": "pnpm --filter @ever-works/ui test:safe",
+        "test:ct": "pnpm --filter @ever-works/ui test:ct",
+        "test:ct:install": "pnpm --filter @ever-works/ui test:ct:install",
+        "coverage": "pnpm --filter @ever-works/ui coverage",
+        "typecheck": "turbo run typecheck",
+        "audit:docs": "node ./node_modules/tsx/dist/cli.mjs scripts/audit-docs.ts"
+    },
+    "devDependencies": {
+        "@vitest/coverage-v8": "^4.1.5",
+        "prettier": "^3.8.3",
+        "tsx": "^4.21.0",
+        "turbo": "^2.9.6",
+        "vitest": "^4.1.5"
+    },
+    "prettier": {
+        "useTabs": false,
+        "tabWidth": 4,
+        "printWidth": 120,
+        "singleQuote": true,
+        "semi": true,
+        "trailingComma": "none",
+        "overrides": [
+            {
+                "files": [
+                    "*.yml",
+                    "*.yaml"
+                ],
+                "options": {
+                    "tabWidth": 2
+                }
+            }
+        ]
+    },
+    "pnpm": {
+        "overrides": {
+            "webpack": "5.104.1",
+            "serialize-javascript": ">=7.0.5",
+            "follow-redirects": ">=1.16.0",
+            "yaml": ">=2.8.3",
+            "dompurify": ">=3.4.0",
+            "fast-uri": ">=3.1.2",
+            "@babel/plugin-transform-modules-systemjs": ">=7.29.4",
+            "devalue": ">=5.8.1"
+        }
+    }
+}

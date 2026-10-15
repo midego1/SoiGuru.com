@@ -1,0 +1,26 @@
+{
+    "name": "@ever-works/plugin-breadcrumbs",
+    "version": "0.1.0",
+    "private": true,
+    "type": "module",
+    "exports": {
+        ".": "./src/index.ts"
+    },
+    "scripts": {
+        "test": "vitest run",
+        "typecheck": "tsc --noEmit",
+        "lint": "eslint src/",
+        "lint:fix": "eslint src/ --fix",
+        "test:coverage": "vitest run --coverage"
+    },
+    "dependencies": {
+        "@ever-works/core": "workspace:*",
+        "@ever-works/plugins": "workspace:*"
+    },
+    "devDependencies": {
+        "@ever-works/eslint-config": "workspace:*",
+        "@ever-works/tsconfig": "workspace:*",
+        "@types/node": "^25.6.0",
+        "typescript": "^6.0.3"
+    }
+}

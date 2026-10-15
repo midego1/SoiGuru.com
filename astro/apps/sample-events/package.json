@@ -1,0 +1,44 @@
+{
+    "name": "@ever-works/sample-events",
+    "version": "0.1.0",
+    "private": true,
+    "type": "module",
+    "description": "Reference implementation: a tech events directory built by AI from the minimal template.",
+    "scripts": {
+        "dev": "astro dev --port 4325",
+        "build": "astro build",
+        "preview": "astro preview --port 4325",
+        "typecheck": "tsc --noEmit",
+        "clean": "rm -rf dist .astro"
+    },
+    "dependencies": {
+        "@astrojs/preact": "^5.1.2",
+        "@astrojs/sitemap": "^3.7.2",
+        "@ever-works/adapters": "workspace:*",
+        "@ever-works/astro-integration": "workspace:*",
+        "@ever-works/core": "workspace:*",
+        "@ever-works/plugin-analytics": "workspace:*",
+        "@ever-works/plugin-breadcrumbs": "workspace:*",
+        "@ever-works/plugin-filters": "workspace:*",
+        "@ever-works/plugin-pagination": "workspace:*",
+        "@ever-works/plugin-related-items": "workspace:*",
+        "@ever-works/plugin-rss": "workspace:*",
+        "@ever-works/plugin-search": "workspace:*",
+        "@ever-works/plugin-seo": "workspace:*",
+        "@ever-works/plugin-sitemap": "workspace:*",
+        "@ever-works/plugin-sort": "workspace:*",
+        "@ever-works/plugins": "workspace:*",
+        "@ever-works/ui": "workspace:*",
+        "@tailwindcss/vite": "^4.2.4",
+        "astro": "^6.1.9",
+        "preact": "^10.29.1",
+        "tailwindcss": "^4.2.4",
+        "yaml": "^2.8.3"
+    },
+    "devDependencies": {
+        "@astrojs/check": "^0.9.8",
+        "@ever-works/tsconfig": "workspace:*",
+        "pagefind": "^1.5.2",
+        "typescript": "^6.0.3"
+    }
+}

@@ -1,0 +1,30 @@
+---
+/**
+ * CategoryList — List of category badges.
+ *
+ * @example
+ * ```astro
+ * <CategoryList categories={categories} showCounts />
+ * ```
+ */
+import type { CategoryListProps } from '../types.js';
+import CategoryBadge from './CategoryBadge.astro';
+
+type Props = CategoryListProps;
+
+const { categories, showCounts = true, class: className, ...attrs } = Astro.props;
+---
+
+<nav class:list={["flex flex-wrap gap-2", className]} data-component="category-list" aria-label="Categories" {...attrs}>
+    <ul data-part="list" class="flex flex-wrap gap-2">
+        {categories.map((cat) => (
+            <li data-part="list-item">
+                <CategoryBadge
+                    category={cat}
+                    count={showCounts ? cat.count : undefined}
+                    href={`/category/${cat.id}`}
+                />
+            </li>
+        ))}
+    </ul>
+</nav>

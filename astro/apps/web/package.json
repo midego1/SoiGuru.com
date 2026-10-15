@@ -1,0 +1,50 @@
+{
+    "name": "@ever-works/web-minimal",
+    "version": "0.1.0",
+    "private": true,
+    "type": "module",
+    "scripts": {
+        "predev": "tsx scripts/clone-content.ts",
+        "dev": "astro dev",
+        "prebuild": "tsx scripts/clone-content.ts",
+        "build": "astro build",
+        "preview": "astro preview",
+        "typecheck": "astro check && tsc --noEmit",
+        "lint": "eslint src/",
+        "lint:fix": "eslint src/ --fix",
+        "clean": "rm -rf dist .astro"
+    },
+    "dependencies": {
+        "@astrojs/preact": "^5.1.2",
+        "@astrojs/sitemap": "^3.7.2",
+        "@astrojs/vercel": "^10.0.5",
+        "@ever-works/adapters": "workspace:*",
+        "@ever-works/astro-integration": "workspace:*",
+        "@ever-works/core": "workspace:*",
+        "@ever-works/plugin-filters": "workspace:*",
+        "@ever-works/plugin-pagination": "workspace:*",
+        "@ever-works/plugin-rss": "workspace:*",
+        "@ever-works/plugin-search": "workspace:*",
+        "@ever-works/plugin-seo": "workspace:*",
+        "@ever-works/plugin-sitemap": "workspace:*",
+        "@ever-works/plugin-sort": "workspace:*",
+        "@ever-works/plugins": "workspace:*",
+        "@ever-works/sync": "workspace:*",
+        "@ever-works/ui": "workspace:*",
+        "@tailwindcss/vite": "^4.2.4",
+        "astro": "^6.1.9",
+        "leaflet": "1.9.4",
+        "preact": "^10.29.1",
+        "tailwindcss": "^4.2.4",
+        "yaml": "^2.8.3"
+    },
+    "devDependencies": {
+        "@astrojs/check": "^0.9.8",
+        "@ever-works/eslint-config": "workspace:*",
+        "@ever-works/tsconfig": "workspace:*",
+        "@types/leaflet": "1.9.20",
+        "pagefind": "^1.5.2",
+        "tsx": "^4.21.0",
+        "typescript": "^6.0.3"
+    }
+}

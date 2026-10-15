@@ -1,0 +1,430 @@
+name: Vercel Deployment
+
+# Dispatched by the Ever Works platform (apps/api/src/plugins-capabilities/deploy
+# in the ever-works/ever-works repo). The platform pushes the secrets this
+# workflow reads — VERCEL_TOKEN, DATA_REPOSITORY, GH_TOKEN, CRON_SECRET,
+# optionally VERCEL_TEAM_SCOPE — before triggering the dispatch. GH_TOKEN is
+# also exported to the GitHub Actions runner so the prebuilt fallback can
+# clone private content during `vercel build`.
+#
+# Mirrors directory-web-template's deploy_vercel.yaml, adjusted for the Astro
+# stack: `framework: astro`, `pnpm --filter @ever-works/web-minimal build`,
+# and the @astrojs/vercel adapter (which writes .vercel/output/ on its own
+# when `output: 'static'`).
+
+on:
+  workflow_dispatch:
+    inputs:
+      environment:
+        description: 'Vercel environment to deploy to (e.g., production, staging, preview)'
+        required: true
+        type: string
+  workflow_call:
+    inputs:
+      environment:
+        required: true
+        type: string
+
+permissions:
+  contents: read
+  deployments: write
+
+concurrency:
+  group: vercel-deployment-${{ github.ref }}-${{ inputs.environment }}
+  cancel-in-progress: true
+
+env:
+  # docker/build-push-action uploads a build record artifact and a job summary for every build.
+  # The record holds every build-arg value in plain text, and on a public repo anyone signed in to
+  # GitHub can download it, so neither is produced. (BuildKit `secrets:` are never recorded.)
+  DOCKER_BUILD_RECORD_UPLOAD: false
+  DOCKER_BUILD_SUMMARY: false
+  DATA_REPOSITORY: 'https://github.com/${{ github.repository_owner }}/${{ secrets.DATA_REPOSITORY }}'
+  VERCEL_TOKEN: ${{ secrets.VERCEL_TOKEN }}
+  GH_TOKEN: ${{ secrets.GH_TOKEN }}
+  WEBHOOK_SECRET: ${{ secrets.WEBHOOK_SECRET }}
+  VERCEL_TEAM_SCOPE: ${{ secrets.VERCEL_TEAM_SCOPE || secrets.DEPLOY_TEAM_SCOPE }}
+  NODE_OPTIONS: '--max-old-space-size=4096'
+
+jobs:
+  deploy:
+    runs-on: ${{ vars.RUNNER_LINUX_X64_4 || 'ubuntu-latest' }}
+    steps:
+      - name: Target environment
+        run: echo "Deploying to ${{ inputs.environment }}"
+
+      - uses: actions/checkout@v7
+
+      - name: Setup pnpm
+        uses: pnpm/action-setup@v6
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v7
+        with:
+          node-version: '24'
+          cache: pnpm
+
+      - name: Configure Registry
+        # Resolve npm packages through the internal Verdaccio cache instead of the public
+        # registry. The goal is TRAFFIC REDUCTION; the speed gain is a bonus.
+        #
+        # This repo is pnpm-only, so the shared ever-co/ever-gauzy composite action is NOT
+        # usable here: it opens with `git checkout -- .npmrc yarn.lock` and hard `exit 1`s
+        # when yarn.lock is absent. Its lockfile rewrite is unnecessary anyway -- unlike a
+        # yarn.lock/package-lock.json, pnpm-lock.yaml records NO registry host, so the
+        # `registry=` line below is what actually redirects the tarball downloads.
+        # Verified with a negative control: the same committed pnpm-lock.yaml plus a
+        # blackholed `registry=` makes pnpm exit 1, and pointing it at the VIP installs
+        # cleanly with --frozen-lockfile still satisfied.
+        #
+        # The VIP is a private LAN address, so the choice is made by PROBING it rather
+        # than by hardcoding a runner list: this job falls back to `ubuntu-latest` when
+        # the self-hosted pool is not configured, and a GitHub-hosted runner can never
+        # reach the VIP. Nothing is committed -- the edit lives only in this checkout,
+        # and the paired restore step below removes it again after the install.
+        shell: bash
+        env:
+          VERDACCIO_REGISTRY: ${{ vars.VERDACCIO_REGISTRY }}
+          EXPECT_VIP: ${{ vars.RUNNER_LINUX_X64_4 != '' }}
+        run: |
+          NPMRC_FILES=".npmrc apps/docs/.npmrc"
+
+          # Start from a known state. Self-hosted runners can reuse a checkout, so a
+          # registry line appended by a PREVIOUS run may still be on disk and would
+          # silently win over this run's decision. Not best-effort: if the reset fails
+          # we must not pick a registry from an unknown state.
+          rm -f .npmrc.ci-created
+          for f in $NPMRC_FILES; do
+            if git ls-files --error-unmatch "$f" >/dev/null 2>&1; then
+              if ! git checkout -- "$f"; then
+                echo "::error title=Could not reset registry configuration::git checkout -- $f failed, so a previous run's registry settings may still be in place. Refusing to select a registry from an unknown state."
+                exit 1
+              fi
+            fi
+          done
+
+          REGISTRY=""
+          if [ "$EXPECT_VIP" = "true" ]; then ATTEMPTS=2; else ATTEMPTS=1; fi
+          if [ -n "$VERDACCIO_REGISTRY" ]; then
+            attempt=1
+            while [ "$attempt" -le "$ATTEMPTS" ]; do
+              if curl -fsS --connect-timeout 5 --max-time 15 -o /dev/null "${VERDACCIO_REGISTRY%/}/-/ping"; then
+                REGISTRY="${VERDACCIO_REGISTRY%/}/"
+                echo "Verdaccio VIP is reachable (attempt $attempt) - using the internal npm cache."
+                break
+              fi
+              attempt=$((attempt + 1))
+              if [ "$attempt" -le "$ATTEMPTS" ]; then sleep 3; fi
+            done
+          fi
+
+          if [ -n "$REGISTRY" ]; then
+            for f in $NPMRC_FILES; do
+              if [ ! -f "$f" ]; then
+                # Only the workspace-root file is worth creating. Without this, a
+                # checkout that has no .npmrc would log "using the internal npm cache"
+                # while pnpm quietly resolved from the public registry - a silent
+                # failure of the entire point of this step. The marker tells the
+                # restore step to delete the file rather than leave a stray behind.
+                if [ "$f" != ".npmrc" ]; then continue; fi
+                : > "$f"
+                : > .npmrc.ci-created
+              fi
+              printf '%s\n' "" "registry=$REGISTRY" >> "$f"
+            done
+            echo "npm registry for this install: the internal Verdaccio cache."
+          else
+            if [ -z "$VERDACCIO_REGISTRY" ]; then
+              echo "No internal Verdaccio registry is configured (VERDACCIO_REGISTRY is empty)."
+            else
+              echo "Verdaccio VIP did not answer."
+              # An in-network runner that cannot reach the VIP means the internal cache is
+              # silently unavailable (this fleet has a recurring MetalLB speaker flap that
+              # presents exactly this way). Deliberately a warning, not a failure: a cache
+              # blip must never redden a pipeline the public registry can serve correctly.
+              if [ "$EXPECT_VIP" = "true" ]; then
+                echo "::warning title=Verdaccio VIP unreachable from an in-network runner::${RUNNER_NAME:-unknown} fell back to the committed npm configuration; the internal cache was expected to be reachable here."
+              fi
+            fi
+            # Deliberately no override: the committed .npmrc files decide. apps/docs/.npmrc
+            # pins the Yarn mirror, so naming npmjs here would misdirect anyone reading
+            # this log while investigating where the traffic actually went.
+            echo "npm registry for this install: the repository default, unchanged."
+          fi
+
+      - name: Install dependencies
+        run: pnpm install --frozen-lockfile
+
+      - name: Restore registry configuration
+        # The `registry=` line above is scoped to the install on THIS runner and must
+        # not outlive it, because later steps hand the working tree to builders that
+        # cannot reach a private LAN address:
+        #   - `vercel deploy --archive=tgz` uploads this checkout and re-installs on
+        #     Vercel infrastructure;
+        #   - `docker/build-push-action` ships it as the build context.
+        # Leaving the VIP in .npmrc would point those builds at an unreachable host.
+        # The in-image install is redirected separately and correctly, through the
+        # VERDACCIO_REGISTRY build-arg the Dockerfile already accepts.
+        #
+        # `always()` so a failed install still leaves the checkout clean - self-hosted
+        # runners reuse it.
+        if: always()
+        shell: bash
+        run: |
+          for f in .npmrc apps/docs/.npmrc; do
+            if git ls-files --error-unmatch "$f" >/dev/null 2>&1; then
+              git checkout -- "$f"
+            fi
+          done
+          if [ -f .npmrc.ci-created ]; then
+            # This step created the root .npmrc; it is not in the repo, so restoring
+            # means removing it rather than checking it out.
+            rm -f .npmrc .npmrc.ci-created
+          fi
+          echo "Tracked npm configuration restored to its committed state."
+
+      - name: Install Vercel CLI
+        run: pnpm add --global vercel@latest
+
+      - name: Sync Vercel project settings for remote build
+        run: |
+          API_URL="https://api.vercel.com/v9/projects/${{ github.event.repository.name }}"
+          [ -n "$VERCEL_TEAM_SCOPE" ] && API_URL="${API_URL}?slug=${VERCEL_TEAM_SCOPE}"
+
+          RESPONSE=$(curl -s -w "\n%{http_code}" -X PATCH "$API_URL" \
+            -H "Authorization: Bearer $VERCEL_TOKEN" \
+            -H "Content-Type: application/json" \
+            -d '{
+              "framework": "astro",
+              "rootDirectory": "apps/web",
+              "sourceFilesOutsideRootDirectory": true,
+              "installCommand": "cd ../.. && pnpm install --frozen-lockfile",
+              "buildCommand": "cd ../.. && pnpm --filter @ever-works/web-minimal build",
+              "outputDirectory": null
+            }')
+
+          HTTP_CODE=$(echo "$RESPONSE" | tail -n1)
+          BODY=$(echo "$RESPONSE" | sed '$d')
+          echo "HTTP Status: $HTTP_CODE"
+          echo "Response: $BODY"
+
+          if [ "$HTTP_CODE" = "404" ]; then
+            echo "Project '${{ github.event.repository.name }}' was not found; creating it with remote build settings."
+            CREATE_API_URL="https://api.vercel.com/v9/projects"
+            [ -n "$VERCEL_TEAM_SCOPE" ] && CREATE_API_URL="${CREATE_API_URL}?slug=${VERCEL_TEAM_SCOPE}"
+
+            CREATE_RESPONSE=$(curl -s -w "\n%{http_code}" -X POST "$CREATE_API_URL" \
+              -H "Authorization: Bearer $VERCEL_TOKEN" \
+              -H "Content-Type: application/json" \
+              -d '{
+                "name": "${{ github.event.repository.name }}",
+                "framework": "astro",
+                "rootDirectory": "apps/web",
+                "installCommand": "cd ../.. && pnpm install --frozen-lockfile",
+                "buildCommand": "cd ../.. && pnpm --filter @ever-works/web-minimal build",
+                "outputDirectory": null
+              }')
+
+            CREATE_HTTP_CODE=$(echo "$CREATE_RESPONSE" | tail -n1)
+            CREATE_BODY=$(echo "$CREATE_RESPONSE" | sed '$d')
+            echo "Create HTTP Status: $CREATE_HTTP_CODE"
+            echo "Create Response: $CREATE_BODY"
+
+            if [ "$CREATE_HTTP_CODE" -lt 200 ] || [ "$CREATE_HTTP_CODE" -ge 300 ]; then
+              echo "Failed to create Vercel project"
+              echo "Error: $(echo "$CREATE_BODY" | jq -r '.error.message // "Unknown error"')"
+              exit 1
+            fi
+
+            RESPONSE=$(curl -s -w "\n%{http_code}" -X PATCH "$API_URL" \
+              -H "Authorization: Bearer $VERCEL_TOKEN" \
+              -H "Content-Type: application/json" \
+              -d '{
+                "framework": "astro",
+                "rootDirectory": "apps/web",
+                "sourceFilesOutsideRootDirectory": true,
+                "installCommand": "cd ../.. && pnpm install --frozen-lockfile",
+                "buildCommand": "cd ../.. && pnpm --filter @ever-works/web-minimal build",
+                "outputDirectory": null
+              }')
+
+            HTTP_CODE=$(echo "$RESPONSE" | tail -n1)
+            BODY=$(echo "$RESPONSE" | sed '$d')
+            echo "Post-create sync HTTP Status: $HTTP_CODE"
+            echo "Post-create sync Response: $BODY"
+
+            if [ "$HTTP_CODE" -lt 200 ] || [ "$HTTP_CODE" -ge 300 ]; then
+              echo "Failed to sync Vercel project settings after creation"
+              echo "Error: $(echo "$BODY" | jq -r '.error.message // "Unknown error"')"
+              exit 1
+            fi
+
+            exit 0
+          fi
+
+          if [ "$HTTP_CODE" -lt 200 ] || [ "$HTTP_CODE" -ge 300 ]; then
+            echo "Failed to sync Vercel project settings"
+            echo "Error: $(echo "$BODY" | jq -r '.error.message // "Unknown error"')"
+            exit 1
+          fi
+
+      - name: Verify Vercel framework is compatible with apps/web/vercel.json
+        # Defensive: catch the case where the project's framework was left
+        # on a CONFLICTING value (most commonly `nextjs`, e.g. from an
+        # earlier classic-template deploy under the same Work's repo). That
+        # silently caused "No Next.js version detected" build failures
+        # before this check existed.
+        #
+        # Accepted values:
+        #   "astro" — matches apps/web/vercel.json (canonical)
+        #   "null"  — Vercel "Other" preset; vercel.json wins at build
+        #             time, so this is fine (Vercel's project model allows
+        #             framework to be null when the project was created
+        #             without a preset or had its preset cleared)
+        # Any other value (`nextjs`, `vite`, `gatsby`, …) is treated as
+        # misconfig — even though vercel.json should still win at build
+        # time, silent disagreement between vercel.json and the project
+        # setting tends to surprise on-call later, and the most common
+        # cause is a stale wrong-template setting that the operator
+        # actually wants to know about.
+        run: |
+          API_URL="https://api.vercel.com/v9/projects/${{ github.event.repository.name }}"
+          [ -n "$VERCEL_TEAM_SCOPE" ] && API_URL="${API_URL}?slug=${VERCEL_TEAM_SCOPE}"
+
+          FRAMEWORK=$(curl -s "$API_URL" \
+            -H "Authorization: Bearer $VERCEL_TOKEN" \
+            | jq -r '.framework // "null"')
+
+          echo "Vercel project framework: $FRAMEWORK"
+
+          if [ "$FRAMEWORK" != "astro" ] && [ "$FRAMEWORK" != "null" ]; then
+            echo "::error::Vercel project framework is '$FRAMEWORK', expected 'astro' or null (Other)."
+            echo "apps/web/vercel.json pins 'framework: astro' and should normally win at build time,"
+            echo "but a project-level setting that disagrees is flagged here — it almost always means"
+            echo "something pinned the wrong framework deliberately and the build will surprise on-call later."
+            echo ""
+            echo "Common causes:"
+            echo "  1. A previous deploy under this Work's repo used a different template (e.g. Next.js classic) and the project's framework setting persisted."
+            echo "     → Fix in the Vercel dashboard: Settings → General → Framework Preset → Other (or Astro)."
+            echo "  2. A vercel.json elsewhere in the rootDirectory has set 'framework' to something other than 'astro'."
+            echo "     → Fix the vercel.json file (apps/web/vercel.json in this template ships 'framework': 'astro')."
+            echo "  3. The PATCH above succeeded with an HTTP 200 but Vercel ignored the new framework value (rare)."
+            exit 1
+          fi
+
+      - name: Link Vercel project
+        run: |
+          SCOPE_FLAG=""
+          [ -n "$VERCEL_TEAM_SCOPE" ] && SCOPE_FLAG="--scope $VERCEL_TEAM_SCOPE"
+          vercel link --yes $SCOPE_FLAG --project ${{ github.event.repository.name }} --token="$VERCEL_TOKEN"
+
+      - name: Set DATA_REPOSITORY env variable
+        run: |
+          SCOPE_FLAG=""
+          [ -n "$VERCEL_TEAM_SCOPE" ] && SCOPE_FLAG="--scope $VERCEL_TEAM_SCOPE"
+          vercel env rm DATA_REPOSITORY ${{ inputs.environment }} --yes $SCOPE_FLAG --token "$VERCEL_TOKEN" || true
+          echo -n "$DATA_REPOSITORY" | vercel env add DATA_REPOSITORY ${{ inputs.environment }} $SCOPE_FLAG --token "$VERCEL_TOKEN"
+
+      - name: Set GH_TOKEN env variable
+        run: |
+          if [ -z "$GH_TOKEN" ]; then
+            echo "::error::GH_TOKEN GitHub Actions secret is missing; private DATA_REPOSITORY builds cannot clone content."
+            exit 1
+          fi
+          SCOPE_FLAG=""
+          [ -n "$VERCEL_TEAM_SCOPE" ] && SCOPE_FLAG="--scope $VERCEL_TEAM_SCOPE"
+          vercel env rm GH_TOKEN ${{ inputs.environment }} --yes $SCOPE_FLAG --token "$VERCEL_TOKEN" || true
+          echo -n "$GH_TOKEN" | vercel env add GH_TOKEN ${{ inputs.environment }} $SCOPE_FLAG --token "$VERCEL_TOKEN"
+
+      - name: Set CRON_SECRET env variable
+        env:
+          CRON_SECRET: ${{ secrets.CRON_SECRET }}
+        run: |
+          if [ -n "$CRON_SECRET" ]; then
+            SCOPE_FLAG=""
+            [ -n "$VERCEL_TEAM_SCOPE" ] && SCOPE_FLAG="--scope $VERCEL_TEAM_SCOPE"
+            vercel env rm CRON_SECRET ${{ inputs.environment }} --yes $SCOPE_FLAG --token "$VERCEL_TOKEN" || true
+            echo -n "$CRON_SECRET" | vercel env add CRON_SECRET ${{ inputs.environment }} $SCOPE_FLAG --token "$VERCEL_TOKEN"
+          fi
+
+      - name: Set WEBHOOK_SECRET env variable
+        # Optional — only present when the operator has provisioned a GitHub
+        # webhook secret for content-sync; otherwise the Astro integration
+        # leaves the /api/webhook endpoint disabled (see astro.config.ts).
+        env:
+          WEBHOOK_SECRET: ${{ secrets.WEBHOOK_SECRET }}
+        run: |
+          if [ -n "$WEBHOOK_SECRET" ]; then
+            SCOPE_FLAG=""
+            [ -n "$VERCEL_TEAM_SCOPE" ] && SCOPE_FLAG="--scope $VERCEL_TEAM_SCOPE"
+            vercel env rm WEBHOOK_SECRET ${{ inputs.environment }} --yes $SCOPE_FLAG --token "$VERCEL_TOKEN" || true
+            echo -n "$WEBHOOK_SECRET" | vercel env add WEBHOOK_SECRET ${{ inputs.environment }} $SCOPE_FLAG --token "$VERCEL_TOKEN"
+          fi
+
+      - name: Pull Vercel settings
+        run: |
+          SCOPE_FLAG=""
+          [ -n "$VERCEL_TEAM_SCOPE" ] && SCOPE_FLAG="--scope $VERCEL_TEAM_SCOPE"
+          vercel pull --yes $SCOPE_FLAG --environment=${{ inputs.environment }} --token="$VERCEL_TOKEN"
+
+      - name: Deploy with remote Vercel build
+        id: deploy_remote
+        continue-on-error: true
+        run: |
+          SCOPE_FLAG=""
+          [ -n "$VERCEL_TEAM_SCOPE" ] && SCOPE_FLAG="--scope $VERCEL_TEAM_SCOPE"
+          PROD_FLAG=""
+          [ "${{ inputs.environment }}" = "production" ] && PROD_FLAG="--prod"
+          vercel deploy --archive=tgz $SCOPE_FLAG $PROD_FLAG --token="$VERCEL_TOKEN"
+
+      - name: Pull Vercel settings for prebuilt fallback
+        if: steps.deploy_remote.outcome == 'failure'
+        run: |
+          SCOPE_FLAG=""
+          [ -n "$VERCEL_TEAM_SCOPE" ] && SCOPE_FLAG="--scope $VERCEL_TEAM_SCOPE"
+          vercel pull --yes $SCOPE_FLAG --environment=${{ inputs.environment }} --token="$VERCEL_TOKEN"
+          cat .vercel/project.json
+
+      - name: Build project artifacts
+        if: steps.deploy_remote.outcome == 'failure'
+        run: |
+          SCOPE_FLAG=""
+          [ -n "$VERCEL_TEAM_SCOPE" ] && SCOPE_FLAG="--scope $VERCEL_TEAM_SCOPE"
+          PROD_FLAG=""
+          [ "${{ inputs.environment }}" = "production" ] && PROD_FLAG="--prod"
+          vercel build $SCOPE_FLAG $PROD_FLAG --token="$VERCEL_TOKEN"
+
+      - name: Verify prebuilt output
+        if: steps.deploy_remote.outcome == 'failure'
+        run: |
+          if [ -f .vercel/output/config.json ]; then
+            du -sh .vercel/output
+          else
+            echo "Missing Vercel prebuilt output"
+            exit 1
+          fi
+          OUTPUT_SIZE_KB=$(du -sk .vercel/output | cut -f1)
+          # Astro static builds with minimal content are typically much
+          # smaller than the Next.js template's RSC payload; gate at 100KB
+          # instead of the classic template's 10MB so we still catch
+          # "empty output" without false-positives on a sparse directory.
+          if [ "$OUTPUT_SIZE_KB" -lt 100 ]; then
+            echo "Prebuilt output is suspiciously small: ${OUTPUT_SIZE_KB}KB"
+            find .vercel/output -maxdepth 3 -type f | sort | sed -n '1,200p'
+            exit 1
+          fi
+          cat .vercel/output/config.json
+          find .vercel/output -maxdepth 3 -type f | sort | sed -n '1,200p'
+
+      - name: Deploy prebuilt project artifacts
+        if: steps.deploy_remote.outcome == 'failure'
+        run: |
+          SCOPE_FLAG=""
+          [ -n "$VERCEL_TEAM_SCOPE" ] && SCOPE_FLAG="--scope $VERCEL_TEAM_SCOPE"
+          PROD_FLAG=""
+          [ "${{ inputs.environment }}" = "production" ] && PROD_FLAG="--prod"
+          vercel deploy --prebuilt --archive=tgz $SCOPE_FLAG $PROD_FLAG --token="$VERCEL_TOKEN"
+
+      - name: Deployment summary
+        if: success()
+        run: echo "Deployment to ${{ inputs.environment }} completed successfully"

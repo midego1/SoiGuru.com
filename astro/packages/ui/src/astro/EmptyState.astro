@@ -1,0 +1,24 @@
+---
+/**
+ * EmptyState — Directory-specific wrapper around fulldev/ui Empty.
+ *
+ * @example
+ * ```astro
+ * <EmptyState message="No items found" suggestion="Try adjusting your filters" />
+ * ```
+ */
+import type { EmptyStateProps } from '../types.js';
+import Empty from '../primitives/empty/Empty.astro';
+import EmptyTitle from '../primitives/empty/EmptyTitle.astro';
+import EmptyDescription from '../primitives/empty/EmptyDescription.astro';
+
+type Props = EmptyStateProps;
+
+const { message, suggestion, class: className, ...attrs } = Astro.props;
+---
+
+<Empty class={className} data-component="empty-state" role="status" {...attrs}>
+    <EmptyTitle data-part="message">{message}</EmptyTitle>
+    {suggestion && <EmptyDescription data-part="suggestion">{suggestion}</EmptyDescription>}
+    <slot />
+</Empty>
