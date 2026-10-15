@@ -522,3 +522,75 @@
 .sg-city-row .sg-city-th { color: var(--ink-muted); font-weight: 400; margin-left: 6px; }
 .sg-results-dock-list { display: none; }
 @media (min-width: 1024px) { .sg-results-dock-list { display: block; } }
+
+/* City hero band (was inline). */
+.sg-hero { background: var(--surface); padding: 16px 16px 20px; border-bottom: 1px solid var(--line); }
+
+/* Listing: one column on phones. The two wrappers dissolve and each block keeps the design's order. */
+.sg-listing-grid { display: flex; flex-direction: column; flex: 1; }
+.sg-listing-main, .sg-listing-aside { display: contents; }
+
+/* Desktop-only pieces of the top bar. */
+.sg-desk-nav, .tkg-topbar .sg-desk-only { display: none; }
+.sg-desk-nav { align-items: center; gap: var(--space-1); }
+.sg-desk-nav a { height: 40px; padding: 0 var(--space-3); border-radius: var(--radius-pill); color: var(--ink-muted); font-size: 14px; font-weight: 500; display: inline-flex; align-items: center; gap: 6px; }
+.sg-desk-nav a .tkg-i { width: 18px; height: 18px; }
+.sg-desk-nav a:hover { background: var(--surface-200); color: var(--ink); }
+.sg-desk-nav a.tkg-on { background: var(--sea-tint); color: var(--sea-deep); }
+
+/*
+ * Desktop (1024px and up). The design only specifies the phone column (and the docked map on
+ * results), so this extends it: a 1120px content column, full-width bands behind the top bar and
+ * the hero, the tab bar's destinations in the top bar, wider grids, and a right rail on listings.
+ */
+@media (min-width: 1024px) {
+	.sg-page { max-width: 1152px; padding-inline: var(--space-4); border: 0; }
+	.sg-page.sg-results-page { max-width: none; padding-inline: 0; }
+
+	/* Bands span the window while their content stays in the column. */
+	.tkg-root { overflow-x: clip; }
+	.sg-page:not(.sg-results-page) > .tkg-topbar,
+	.sg-page > .sg-band { margin-inline: calc(50% - 50vw); padding-inline: calc(50vw - 50% + var(--space-4)); }
+	.sg-page > .tkg-topbar { gap: var(--space-4); }
+	.sg-results-page > .tkg-topbar { padding-inline: var(--space-6); }
+	.sg-desk-nav { display: flex; }
+	.tkg-topbar .sg-desk-only { display: inline-flex; margin-right: var(--space-2); }
+	.tkg-nav { display: none; }
+
+	/* Landing */
+	.sg-landing-head { padding: 56px 16px 48px; }
+	.sg-landing .tkg-display, .sg-hero .tkg-display { font-size: 40px; line-height: 48px; }
+	.sg-landing-head p { font-size: 17px; line-height: 26px; max-width: 60ch; }
+	.sg-landing .tkg-section { padding-top: var(--space-8); }
+	.sg-landing .tkg-rows { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: var(--space-4); padding: 0 var(--space-4); background: transparent; border: 0; }
+	.sg-landing .sg-city-row { background: var(--surface); border: 1px solid var(--line); border-radius: var(--radius-lg); min-height: 96px; padding: var(--space-4) var(--space-4); }
+	.sg-landing .sg-city-row:hover { border-color: var(--sea); }
+
+	/* CityHome */
+	.sg-hero { padding: 40px 16px 32px; }
+	.sg-hero .tkg-search { max-width: 720px; }
+	.sg-home .tkg-section { padding-top: var(--space-8); }
+	.sg-home .tkg-cats { grid-template-columns: repeat(8, minmax(0, 1fr)); }
+	.sg-home .tkg-list { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); }
+	.sg-home .tkg-chiprow { flex-wrap: wrap; overflow: visible; }
+	.sg-home .tkg-ownercta { max-width: 720px; }
+
+	/* Listing: content left, sticky rail right. */
+	.sg-page > .tkg-strip { height: 360px; margin: var(--space-4) var(--space-4) 0; border-radius: var(--radius-lg); overflow: hidden; }
+	.sg-listing-grid { display: grid; grid-template-columns: minmax(0, 1fr) 360px; gap: var(--space-8); align-items: start; padding: var(--space-4) var(--space-4) 0; }
+	.sg-listing-main, .sg-listing-aside { display: flex; flex-direction: column; }
+	.sg-listing-main .sg-title-block { border: 1px solid var(--line); border-radius: var(--radius-lg); padding: var(--space-6); }
+	.sg-listing-main .sg-title-block .tkg-title { font-size: 28px; line-height: 34px; }
+	.sg-listing-main .sg-sample { margin-inline: 0; }
+	.sg-listing-main .tkg-section-h, .sg-listing-main .tkg-pad, .sg-listing-main .tkg-amenities, .sg-listing-main .tkg-list { padding-inline: 0; }
+	.sg-listing-main .tkg-amenities { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+	.sg-listing-aside { position: sticky; top: 72px; gap: var(--space-4); padding-bottom: var(--space-6); }
+	.sg-listing-aside .tkg-section { padding-top: 0; }
+	.sg-listing-aside .tkg-section-h, .sg-listing-aside .tkg-pad { padding-inline: 0; }
+	.sg-listing-aside .sg-contact-block { border: 1px solid var(--line); border-radius: var(--radius-lg); padding: var(--space-4); margin-top: 0 !important; }
+	.sg-listing-aside .sg-contact-block .tkg-contact, .sg-listing-aside .sg-contact-block .tkg-pad { padding-inline: 0; }
+	.sg-listing-aside .tkg-contact { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+	.sg-listing-aside .tkg-claim { margin-inline: 0; }
+	.sg-listing-aside .tkg-info { margin-inline: 0; }
+	.sg-page > .tkg-bottombar { display: none; }
+}

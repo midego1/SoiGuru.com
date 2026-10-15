@@ -264,7 +264,7 @@ export default async function CategoryResultsPage({ params, searchParams }: { pa
 
 	return (
 		<div className="sg-page sg-results-page">
-			<BackBar ctx={ctx} backHref={ctx.href(`/${city.id}`)} title={title} subtitle={subtitle}>
+			<BackBar ctx={ctx} backHref={ctx.href(`/${city.id}`)} title={title} subtitle={subtitle} city={city.id} active="search">
 				<Link className="tkg-iconbtn" href={ctx.href(`/${city.id}/search`)} aria-label={ctx.t('results.searchTitle')}>
 					<Icon name="search" />
 				</Link>

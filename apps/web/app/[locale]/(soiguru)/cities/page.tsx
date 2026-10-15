@@ -33,9 +33,9 @@ export default async function CitiesLandingPage({ params }: { params: Params }) 
 	for (const l of listings) counts.set(l.city, (counts.get(l.city) ?? 0) + 1);
 
 	return (
-		<div className="sg-page">
+		<div className="sg-page sg-landing">
 			<BrandBar ctx={ctx} langPath="/" />
-			<div className="sg-landing-head">
+			<div className="sg-landing-head sg-band">
 				<h1 className="tkg-display" style={{ margin: '0 0 8px', color: 'var(--sea-deep)' }}>
 					{ctx.t('landing.headline')}
 				</h1>

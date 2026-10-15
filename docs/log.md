@@ -9,6 +9,7 @@ sidebar_position: 99
 
 ## 2026-10-15
 
+- `spec-054` `apps/web/app/[locale]/(soiguru)` `apps/web/components/soiguru`: desktop layout from 1024px for the SoiGuru screens (top-bar navigation, wide grids, listing right rail) ([spec 054](spec/054-soiguru-city-screens/spec.md), PR #1).
 - `spec-054` `apps/web/app/[locale]/(soiguru)` `apps/web/lib/soiguru` `apps/web/components/soiguru`: SoiGuru city screens ported from the TheKrabiGuide design system: city landing at `/` (the item listing stays at `/discover`), CityHome `/<city>`, CategoryResults `/<city>/<category|area>` with a server-rendered OpenStreetMap tile map, ListingPage `/<city>/<area>/<slug>` with LocalBusiness JSON-LD; open status computed in Asia/Bangkok; EN/TH strings. `apps/web/proxy.ts` now decodes the session JWT through `decodeAuthJsToken` in every guard (the Dokploy secure-cookie patch) ([spec 054](spec/054-soiguru-city-screens/spec.md), PR #1).
 
 ## 2026-10-05

@@ -66,9 +66,9 @@ export default async function CityHomePage({ params }: { params: Params }) {
 	const cityName = localName(ctx, city);
 
 	return (
-		<div className="sg-page">
-			<BrandBar ctx={ctx} city={city} langPath={`/${city.id}`} />
-			<div style={{ background: 'var(--surface)', padding: '16px 16px 20px', borderBottom: '1px solid var(--line)' }}>
+		<div className="sg-page sg-home">
+			<BrandBar ctx={ctx} city={city} langPath={`/${city.id}`} active="home" />
+			<div className="sg-band sg-hero">
 				<div className="tkg-small tkg-muted" style={{ marginBottom: 2 }}>
 					<Icon name="pin" className="tkg-i-16" /> {place} · {nowLabel}
 				</div>
@@ -89,7 +89,10 @@ export default async function CityHomePage({ params }: { params: Params }) {
 			<section className="tkg-section" style={{ paddingTop: 20 }}>
 				<SectionHeading
 					title={ctx.t('home.categories')}
-					link={{ href: ctx.href(`/${city.id}/search`), label: ctx.t('home.allCategories', { count: categories.length }) }}
+					link={{
+						href: ctx.href(`/${city.id}/search`),
+						label: ctx.t('home.allCategories', { count: categories.length })
+					}}
 				/>
 				<CategoryGrid ctx={ctx} city={city.id} categories={categories.slice(0, 8)} />
 			</section>
@@ -99,7 +102,9 @@ export default async function CityHomePage({ params }: { params: Params }) {
 					title={ctx.t('home.openIn', { place })}
 					sub={ctx.t('home.openCount', { count: openInArea.length })}
 					link={{
-						href: ctx.href(defaultArea ? `/${city.id}/${defaultArea.id}?open=1` : `/${city.id}/search?open=1`),
+						href: ctx.href(
+							defaultArea ? `/${city.id}/${defaultArea.id}?open=1` : `/${city.id}/search?open=1`
+						),
 						label: ctx.t('home.seeAll')
 					}}
 				/>
@@ -119,7 +124,9 @@ export default async function CityHomePage({ params }: { params: Params }) {
 								key={a.id}
 								href={ctx.href(`/${city.id}/${a.id}`)}
 								on={a.id === defaultArea?.id}
-								small={[otherName(ctx, a), String(areaCounts.get(a.id) ?? 0)].filter(Boolean).join(' · ')}
+								small={[otherName(ctx, a), String(areaCounts.get(a.id) ?? 0)]
+									.filter(Boolean)
+									.join(' · ')}
 							>
 								{localName(ctx, a)}
 							</Chip>

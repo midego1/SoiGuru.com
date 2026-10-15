@@ -56,7 +56,9 @@ export async function generateMetadata({ params }: { params: Params }): Promise<
 	const name = listingTitle(ctx, listing);
 	const area = city.areas.find((a) => a.id === listing.area);
 	return {
-		title: { absolute: `${name} · ${categoryName(ctx, listing.category)} · ${area ? localName(ctx, area) : ''} | SoiGuru` },
+		title: {
+			absolute: `${name} · ${categoryName(ctx, listing.category)} · ${area ? localName(ctx, area) : ''} | SoiGuru`
+		},
 		description: ctx.t('listing.metaDescription', {
 			name,
 			category: categoryName(ctx, listing.category),
@@ -88,7 +90,10 @@ function localBusinessJsonLd(listing: Listing, city: City, url: string) {
 			'@type': 'OpeningHoursSpecification',
 			dayOfWeek: `https://schema.org/${SCHEMA_DAYS[d]}`,
 			opens: `${String(Math.floor(r.start / 60)).padStart(2, '0')}:${String(r.start % 60).padStart(2, '0')}`,
-			closes: r.end === 1440 ? '23:59' : `${String(Math.floor(r.end / 60)).padStart(2, '0')}:${String(r.end % 60).padStart(2, '0')}`
+			closes:
+				r.end === 1440
+					? '23:59'
+					: `${String(Math.floor(r.end / 60)).padStart(2, '0')}:${String(r.end % 60).padStart(2, '0')}`
 		}))
 	);
 	return {
@@ -109,7 +114,9 @@ function localBusinessJsonLd(listing: Listing, city: City, url: string) {
 			addressRegion: city.name,
 			addressCountry: 'TH'
 		},
-		...(listing.geo ? { geo: { '@type': 'GeoCoordinates', latitude: listing.geo.lat, longitude: listing.geo.lng } } : {}),
+		...(listing.geo
+			? { geo: { '@type': 'GeoCoordinates', latitude: listing.geo.lat, longitude: listing.geo.lng } }
+			: {}),
 		...(openingHoursSpecification.length ? { openingHoursSpecification } : {}),
 		...(listing.rating !== undefined && listing.ratingCount
 			? {
@@ -135,7 +142,11 @@ function provenance(ctx: SgContext, l: Listing): string | undefined {
 export default async function ListingPage({ params }: { params: Params }) {
 	const { locale, city: cityId, segment, slug } = await params;
 	setRequestLocale(locale);
-	const [ctx, found, amenities] = await Promise.all([getSgContext(locale), load(cityId, segment, slug), getAmenities()]);
+	const [ctx, found, amenities] = await Promise.all([
+		getSgContext(locale),
+		load(cityId, segment, slug),
+		getAmenities()
+	]);
 	if (!found) notFound();
 	const { city, listing: l } = found;
 
@@ -150,20 +161,38 @@ export default async function ListingPage({ params }: { params: Params }) {
 
 	const contacts = [
 		l.phone && { key: 'call', href: telHref(l.phone), icon: 'phone', label: ctx.t('listing.call'), cls: undefined },
-		l.lineId && { key: 'line', href: lineHref(l.lineId), icon: 'chat', label: ctx.t('listing.line'), cls: 'tkg-c-line' },
-		l.whatsapp && { key: 'wa', href: whatsappHref(l.whatsapp), icon: 'chat', label: ctx.t('listing.whatsapp'), cls: 'tkg-c-wa' },
-		l.geo && { key: 'dir', href: directionsHref(l.geo), icon: 'navigation', label: ctx.t('listing.directions'), cls: 'tkg-c-primary' }
+		l.lineId && {
+			key: 'line',
+			href: lineHref(l.lineId),
+			icon: 'chat',
+			label: ctx.t('listing.line'),
+			cls: 'tkg-c-line'
+		},
+		l.whatsapp && {
+			key: 'wa',
+			href: whatsappHref(l.whatsapp),
+			icon: 'chat',
+			label: ctx.t('listing.whatsapp'),
+			cls: 'tkg-c-wa'
+		},
+		l.geo && {
+			key: 'dir',
+			href: directionsHref(l.geo),
+			icon: 'navigation',
+			label: ctx.t('listing.directions'),
+			cls: 'tkg-c-primary'
+		}
 	].filter((c): c is { key: string; href: string; icon: string; label: string; cls: string | undefined } => !!c);
-	const rawContact = [
-		formatThaiPhone(l.phone),
-		l.lineId ? `LINE ${l.lineId}` : undefined,
-		l.bookingNote
-	].filter(Boolean);
+	const rawContact = [formatThaiPhone(l.phone), l.lineId ? `LINE ${l.lineId}` : undefined, l.bookingNote].filter(
+		Boolean
+	);
 
 	// Nearby · open now: the closest open places, 2 at most, within 1 km.
 	const nearby = l.geo
 		? rankListings(
-				(await getCityListings(city.id)).filter((x) => x.slug !== l.slug && x.geo && distanceMetres(l.geo!, x.geo) <= 1000),
+				(await getCityListings(city.id)).filter(
+					(x) => x.slug !== l.slug && x.geo && distanceMetres(l.geo!, x.geo) <= 1000
+				),
 				{ origin: l.geo }
 			)
 				.filter((r) => r.open)
@@ -174,9 +203,13 @@ export default async function ListingPage({ params }: { params: Params }) {
 
 	return (
 		<div className="sg-page">
-			<script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd).replace(/</g, '\\u003c') }} />
+			<script
+				type="application/ld+json"
+				dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd).replace(/</g, '\\u003c') }}
+			/>
 			<BackBar
 				ctx={ctx}
+				city={city.id}
 				backHref={ctx.href(`/${city.id}/${l.category.id}?area=${l.area}`)}
 				title={title}
 				subtitle={`${categoryName(ctx, l.category)} · ${areaLabel}`}
@@ -185,12 +218,24 @@ export default async function ListingPage({ params }: { params: Params }) {
 			{l.images.length ? (
 				<div className="tkg-strip" style={{ position: 'relative' }}>
 					{/* Plain <img>: owner photos come from arbitrary hosts. */}
-					<img className="tkg-photo" src={l.images[0]} alt="" style={{ flex: 2, objectFit: 'cover', minWidth: 0 }} />
+					<img
+						className="tkg-photo"
+						src={l.images[0]}
+						alt=""
+						style={{ flex: 2, objectFit: 'cover', minWidth: 0 }}
+					/>
 					{l.images.length > 2 ? (
 						<div className="tkg-strip-side">
 							{l.images.slice(1, 3).map((src) => (
 								// Plain <img>: owner photos come from arbitrary hosts.
-								<img key={src} className="tkg-photo" src={src} alt="" loading="lazy" style={{ objectFit: 'cover', width: '100%' }} />
+								<img
+									key={src}
+									className="tkg-photo"
+									src={src}
+									alt=""
+									loading="lazy"
+									style={{ objectFit: 'cover', width: '100%' }}
+								/>
 							))}
 						</div>
 					) : null}
@@ -201,219 +246,267 @@ export default async function ListingPage({ params }: { params: Params }) {
 				</div>
 			) : null}
 
-			<div className="sg-title-block">
-				<div className="tkg-hstack" style={{ gap: 8, alignItems: 'center' }}>
-					<h1 className="tkg-title" style={{ margin: 0 }}>
-						{title}
-					</h1>
-					{l.claimed ? (
-						<span className="tkg-badge">
-							<Icon name="shield" />
-							{ctx.t('listing.verified')}
-						</span>
-					) : null}
-				</div>
-				<div className="tkg-body tkg-muted" style={{ marginTop: 2 }}>
-					{[other, categoryName(ctx, l.category)].filter(Boolean).join(' · ')}
-				</div>
-				<div className="tkg-hstack" style={{ marginTop: 8, gap: 12 }}>
-					<span className={`${statusClass(status)} tkg-status-lg`}>{statusText(ctx, status)}</span>
-					<Rating value={l.rating} count={l.ratingCount} />
-					{price ? <span className="tkg-small tkg-muted">{price}</span> : null}
-				</div>
-				{l.address ? (
-					<div className="tkg-small tkg-muted" style={{ marginTop: 8 }}>
-						<Icon name="pin" className="tkg-i-16" /> {l.address}
-					</div>
-				) : null}
-				{provenance(ctx, l) ? (
-					<div className="tkg-small tkg-muted" style={{ marginTop: 2 }}>
-						{provenance(ctx, l)}
-					</div>
-				) : null}
-			</div>
-
-			{l.sample ? <SampleNotice ctx={ctx} /> : null}
-
-			{contacts.length ? (
-				<div className="sg-contact-block" style={l.sample ? { marginTop: 12 } : undefined}>
-					<div className={`tkg-contact${contacts.length < 4 ? ` sg-cols-${contacts.length}` : ''}`}>
-						{contacts.map((c) => (
-							<a key={c.key} href={c.href} className={c.cls} {...(c.key === 'call' ? {} : { target: '_blank', rel: 'noopener' })}>
-								<Icon name={c.icon} />
-								{c.label}
-							</a>
-						))}
-					</div>
-					{rawContact.length ? (
-						<div className="tkg-small tkg-muted tkg-pad sg-copy" style={{ marginTop: 8 }}>
-							{rawContact.join(' · ')}
-						</div>
-					) : null}
-				</div>
-			) : null}
-
-			<section className="tkg-section">
-				<div className="tkg-section-h">
-					<h2>{ctx.t('listing.hours')}</h2>
-				</div>
-				<div className="tkg-pad">
-					{l.hoursNote ? (
-						<p className="tkg-small" style={{ margin: '0 0 8px' }}>
-							{l.hoursNote}
-						</p>
-					) : null}
-					{l.hasHours ? (
-						<div className="sg-hours-card">
-							<table className="tkg-hours">
-								<tbody>
-									{hoursTableRows(l.hours).map((row) => {
-										const days =
-											row.days.length > 1
-												? `${ctx.t(`days.${row.days[0]}`)}–${ctx.t(`days.${row.days[row.days.length - 1]}`)}`
-												: ctx.t(`days.${row.days[0]}`);
-										return (
-											<tr key={row.days.join('-')} className={row.today ? 'tkg-today' : undefined}>
-												<td>{row.today ? `${days} · ${ctx.t('listing.today')}` : days}</td>
-												{row.ranges === null ? (
-													<td className="tkg-muted">–</td>
-												) : row.ranges.length === 0 ? (
-													<td className="tkg-closed-day">{ctx.t('listing.closed')}</td>
-												) : (
-													<td>
-														{formatRanges(row.ranges).map((r) => (
-															<span key={r}>{r === '24h' ? ctx.t('status.open24') : r}</span>
-														))}
-													</td>
-												)}
-											</tr>
-										);
-									})}
-								</tbody>
-							</table>
-						</div>
-					) : (
-						<p className="tkg-body tkg-muted" style={{ margin: 0 }}>
-							{ctx.t('listing.hoursUnknown')}
-						</p>
-					)}
-				</div>
-			</section>
-
-			{l.amenities.length ? (
-				<section className="tkg-section">
-					<div className="tkg-section-h">
-						<h2>
-							{ctx.t('listing.goodToKnow')}
-							<small>{ctx.t('listing.goodToKnowSub')}</small>
-						</h2>
-					</div>
-					<div className="tkg-amenities">
-						{l.amenities.map((a) => (
-							<div key={a.id} className={a.available ? undefined : 'tkg-no'}>
-								<Icon name={a.available ? 'check' : 'close'} />
-								{a.available
-									? amenityLabel(amenities, a.id, ctx.thai)
-									: `${ctx.thai ? 'ไม่มี' : 'No'} ${amenityLabel(amenities, a.id, ctx.thai).toLowerCase()}`}
+			{/* Phone: one column in the design's order (the wrappers are display: contents and each block
+			    carries its order). From 1024px: details on the left, contact, hours and map in a sticky right rail. */}
+			<div className="sg-listing-grid">
+				<div className="sg-listing-main">
+					<div style={{ order: 1 }}>
+						<div className="sg-title-block">
+							<div className="tkg-hstack" style={{ gap: 8, alignItems: 'center' }}>
+								<h1 className="tkg-title" style={{ margin: 0 }}>
+									{title}
+								</h1>
+								{l.claimed ? (
+									<span className="tkg-badge">
+										<Icon name="shield" />
+										{ctx.t('listing.verified')}
+									</span>
+								) : null}
 							</div>
-						))}
+							<div className="tkg-body tkg-muted" style={{ marginTop: 2 }}>
+								{[other, categoryName(ctx, l.category)].filter(Boolean).join(' · ')}
+							</div>
+							<div className="tkg-hstack" style={{ marginTop: 8, gap: 12 }}>
+								<span className={`${statusClass(status)} tkg-status-lg`}>
+									{statusText(ctx, status)}
+								</span>
+								<Rating value={l.rating} count={l.ratingCount} />
+								{price ? <span className="tkg-small tkg-muted">{price}</span> : null}
+							</div>
+							{l.address ? (
+								<div className="tkg-small tkg-muted" style={{ marginTop: 8 }}>
+									<Icon name="pin" className="tkg-i-16" /> {l.address}
+								</div>
+							) : null}
+							{provenance(ctx, l) ? (
+								<div className="tkg-small tkg-muted" style={{ marginTop: 2 }}>
+									{provenance(ctx, l)}
+								</div>
+							) : null}
+						</div>
 					</div>
-				</section>
-			) : null}
-
-			{l.description || l.descriptionTh ? (
-				<section className="tkg-section">
-					<div className="tkg-section-h">
-						<h2>{ctx.t('listing.about')}</h2>
+					<div style={{ order: 2 }}>{l.sample ? <SampleNotice ctx={ctx} /> : null}</div>
+					<div style={{ order: 5 }}>
+						{l.amenities.length ? (
+							<section className="tkg-section">
+								<div className="tkg-section-h">
+									<h2>
+										{ctx.t('listing.goodToKnow')}
+										<small>{ctx.t('listing.goodToKnowSub')}</small>
+									</h2>
+								</div>
+								<div className="tkg-amenities">
+									{l.amenities.map((a) => (
+										<div key={a.id} className={a.available ? undefined : 'tkg-no'}>
+											<Icon name={a.available ? 'check' : 'close'} />
+											{a.available
+												? amenityLabel(amenities, a.id, ctx.thai)
+												: `${ctx.thai ? 'ไม่มี' : 'No'} ${amenityLabel(amenities, a.id, ctx.thai).toLowerCase()}`}
+										</div>
+									))}
+								</div>
+							</section>
+						) : null}
 					</div>
-					{(ctx.thai ? [l.descriptionTh, l.description] : [l.description, l.descriptionTh])
-						.filter(Boolean)
-						.map((text, i) => (
-							<p
-								key={i}
-								lang={(i === 0) === ctx.thai ? 'th' : 'en'}
-								className={`tkg-body tkg-pad${i > 0 ? ' tkg-muted' : ''}${(i === 0) === ctx.thai ? ' tkg-th' : ''}`}
-								style={{ margin: i > 0 ? '8px 0 0' : 0 }}
+					<div style={{ order: 6 }}>
+						{l.description || l.descriptionTh ? (
+							<section className="tkg-section">
+								<div className="tkg-section-h">
+									<h2>{ctx.t('listing.about')}</h2>
+								</div>
+								{(ctx.thai ? [l.descriptionTh, l.description] : [l.description, l.descriptionTh])
+									.filter(Boolean)
+									.map((text, i) => (
+										<p
+											key={i}
+											lang={(i === 0) === ctx.thai ? 'th' : 'en'}
+											className={`tkg-body tkg-pad${i > 0 ? ' tkg-muted' : ''}${(i === 0) === ctx.thai ? ' tkg-th' : ''}`}
+											style={{ margin: i > 0 ? '8px 0 0' : 0 }}
+										>
+											{text}
+										</p>
+									))}
+							</section>
+						) : null}
+					</div>
+					<div style={{ order: 9 }}>
+						{nearby.length ? (
+							<section className="tkg-section">
+								<div className="tkg-section-h">
+									<h2>{ctx.t('listing.nearby')}</h2>
+									<Link href={ctx.href(`/${city.id}/${l.area}?open=1`)}>{ctx.t('listing.more')}</Link>
+								</div>
+								<CompactList ctx={ctx} city={city} items={nearby} />
+							</section>
+						) : null}
+					</div>
+					<div style={{ order: 10 }}>
+						<div className="tkg-pad sg-grow" style={{ paddingTop: 20, paddingBottom: 24 }}>
+							<a
+								className="tkg-btn tkg-btn-ghost"
+								style={{ paddingLeft: 0 }}
+								href={
+									process.env.SOIGURU_REPORT_EMAIL
+										? `mailto:${process.env.SOIGURU_REPORT_EMAIL}?subject=${encodeURIComponent(`Wrong info: ${l.name} (${city.id}/${l.slug})`)}`
+										: ctx.href('/help')
+								}
 							>
-								{text}
-							</p>
-						))}
-				</section>
-			) : null}
-
-			{l.geo ? (
-				<section className="tkg-section">
-					<div className="tkg-section-h">
-						<h2>
-							{ctx.t('listing.where')}
-							{l.address ? <small>{l.address}</small> : null}
-						</h2>
-						<a href={directionsHref(l.geo)} target="_blank" rel="noopener">
-							{ctx.t('listing.directions')}
-						</a>
+								<Icon name="flag" />
+								{ctx.t('listing.report')}
+							</a>
+							<div className="tkg-small tkg-muted">
+								{ctx.t('listing.listingId', { id: `${city.id}/${l.slug}` })}
+								{l.sample ? ` · ${ctx.t('listing.sample')}` : ''}
+							</div>
+						</div>
 					</div>
-					<div className="tkg-pad">
-						<a href={directionsHref(l.geo)} target="_blank" rel="noopener" aria-label={ctx.t('listing.directions')}>
-							<TileMap
-								pins={[{ id: l.slug, geo: l.geo, label: title, selected: true }]}
-								height={160}
-								className="sg-where-map"
-							/>
-						</a>
-						<p className="tkg-small tkg-muted" style={{ margin: '6px 0 0' }}>
-							{ctx.t('results.attribution')}
-						</p>
-					</div>
-				</section>
-			) : null}
-
-			{!l.claimed ? (
-				<section className="tkg-section">
-					<div className="tkg-claim">
-						<h3>{ctx.t('listing.claimTitle')}</h3>
-						<p>
-							{ctx.t('listing.claimBody')} <span className="tkg-claim-price">{ctx.t('listing.claimPrice')}</span>{' '}
-							{ctx.t('listing.claimYear')}
-						</p>
-						<Link className="tkg-btn tkg-btn-sun" href={ctx.href(`/auth/register?callbackUrl=${encodeURIComponent(ctx.href(path))}`)}>
-							<Icon name="shield" />
-							{ctx.t('listing.claimButton')}
-						</Link>
-					</div>
-					<p className="tkg-info" style={{ marginTop: 8 }}>
-						<Icon name="info" />
-						<span>{ctx.t('listing.staleNote')}</span>
-					</p>
-				</section>
-			) : null}
-
-			{nearby.length ? (
-				<section className="tkg-section">
-					<div className="tkg-section-h">
-						<h2>{ctx.t('listing.nearby')}</h2>
-						<Link href={ctx.href(`/${city.id}/${l.area}?open=1`)}>{ctx.t('listing.more')}</Link>
-					</div>
-					<CompactList ctx={ctx} city={city} items={nearby} />
-				</section>
-			) : null}
-
-			<div className="tkg-pad sg-grow" style={{ paddingTop: 20, paddingBottom: 24 }}>
-				<a
-					className="tkg-btn tkg-btn-ghost"
-					style={{ paddingLeft: 0 }}
-					href={
-						process.env.SOIGURU_REPORT_EMAIL
-							? `mailto:${process.env.SOIGURU_REPORT_EMAIL}?subject=${encodeURIComponent(`Wrong info: ${l.name} (${city.id}/${l.slug})`)}`
-							: ctx.href('/help')
-					}
-				>
-					<Icon name="flag" />
-					{ctx.t('listing.report')}
-				</a>
-				<div className="tkg-small tkg-muted">
-					{ctx.t('listing.listingId', { id: `${city.id}/${l.slug}` })}
-					{l.sample ? ` · ${ctx.t('listing.sample')}` : ''}
 				</div>
+				<aside className="sg-listing-aside">
+					<div style={{ order: 3 }}>
+						{contacts.length ? (
+							<div className="sg-contact-block" style={l.sample ? { marginTop: 12 } : undefined}>
+								<div
+									className={`tkg-contact${contacts.length < 4 ? ` sg-cols-${contacts.length}` : ''}`}
+								>
+									{contacts.map((c) => (
+										<a
+											key={c.key}
+											href={c.href}
+											className={c.cls}
+											{...(c.key === 'call' ? {} : { target: '_blank', rel: 'noopener' })}
+										>
+											<Icon name={c.icon} />
+											{c.label}
+										</a>
+									))}
+								</div>
+								{rawContact.length ? (
+									<div className="tkg-small tkg-muted tkg-pad sg-copy" style={{ marginTop: 8 }}>
+										{rawContact.join(' · ')}
+									</div>
+								) : null}
+							</div>
+						) : null}
+					</div>
+					<div style={{ order: 4 }}>
+						<section className="tkg-section">
+							<div className="tkg-section-h">
+								<h2>{ctx.t('listing.hours')}</h2>
+							</div>
+							<div className="tkg-pad">
+								{l.hoursNote ? (
+									<p className="tkg-small" style={{ margin: '0 0 8px' }}>
+										{l.hoursNote}
+									</p>
+								) : null}
+								{l.hasHours ? (
+									<div className="sg-hours-card">
+										<table className="tkg-hours">
+											<tbody>
+												{hoursTableRows(l.hours).map((row) => {
+													const days =
+														row.days.length > 1
+															? `${ctx.t(`days.${row.days[0]}`)}–${ctx.t(`days.${row.days[row.days.length - 1]}`)}`
+															: ctx.t(`days.${row.days[0]}`);
+													return (
+														<tr
+															key={row.days.join('-')}
+															className={row.today ? 'tkg-today' : undefined}
+														>
+															<td>
+																{row.today
+																	? `${days} · ${ctx.t('listing.today')}`
+																	: days}
+															</td>
+															{row.ranges === null ? (
+																<td className="tkg-muted">–</td>
+															) : row.ranges.length === 0 ? (
+																<td className="tkg-closed-day">
+																	{ctx.t('listing.closed')}
+																</td>
+															) : (
+																<td>
+																	{formatRanges(row.ranges).map((r) => (
+																		<span key={r}>
+																			{r === '24h' ? ctx.t('status.open24') : r}
+																		</span>
+																	))}
+																</td>
+															)}
+														</tr>
+													);
+												})}
+											</tbody>
+										</table>
+									</div>
+								) : (
+									<p className="tkg-body tkg-muted" style={{ margin: 0 }}>
+										{ctx.t('listing.hoursUnknown')}
+									</p>
+								)}
+							</div>
+						</section>
+					</div>
+					<div style={{ order: 7 }}>
+						{l.geo ? (
+							<section className="tkg-section">
+								<div className="tkg-section-h">
+									<h2>
+										{ctx.t('listing.where')}
+										{l.address ? <small>{l.address}</small> : null}
+									</h2>
+									<a href={directionsHref(l.geo)} target="_blank" rel="noopener">
+										{ctx.t('listing.directions')}
+									</a>
+								</div>
+								<div className="tkg-pad">
+									<a
+										href={directionsHref(l.geo)}
+										target="_blank"
+										rel="noopener"
+										aria-label={ctx.t('listing.directions')}
+									>
+										<TileMap
+											pins={[{ id: l.slug, geo: l.geo, label: title, selected: true }]}
+											height={160}
+											className="sg-where-map"
+										/>
+									</a>
+									<p className="tkg-small tkg-muted" style={{ margin: '6px 0 0' }}>
+										{ctx.t('results.attribution')}
+									</p>
+								</div>
+							</section>
+						) : null}
+					</div>
+					<div style={{ order: 8 }}>
+						{!l.claimed ? (
+							<section className="tkg-section">
+								<div className="tkg-claim">
+									<h3>{ctx.t('listing.claimTitle')}</h3>
+									<p>
+										{ctx.t('listing.claimBody')}{' '}
+										<span className="tkg-claim-price">{ctx.t('listing.claimPrice')}</span>{' '}
+										{ctx.t('listing.claimYear')}
+									</p>
+									<Link
+										className="tkg-btn tkg-btn-sun"
+										href={ctx.href(
+											`/auth/register?callbackUrl=${encodeURIComponent(ctx.href(path))}`
+										)}
+									>
+										<Icon name="shield" />
+										{ctx.t('listing.claimButton')}
+									</Link>
+								</div>
+								<p className="tkg-info" style={{ marginTop: 8 }}>
+									<Icon name="info" />
+									<span>{ctx.t('listing.staleNote')}</span>
+								</p>
+							</section>
+						) : null}
+					</div>
+				</aside>
 			</div>
 
 			<div className="tkg-bottombar">

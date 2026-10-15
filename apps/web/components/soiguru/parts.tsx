@@ -23,8 +23,51 @@ import type { City, ListingCategory } from '@/lib/soiguru/types';
 
 /* ── Top bar ─────────────────────────────────────────────────────────────── */
 
+type NavKey = 'home' | 'search' | 'saved' | 'owner';
+
+function navItems(ctx: SgContext, city: string) {
+	return [
+		{ key: 'home', icon: 'home', href: ctx.href(`/${city}`) },
+		{ key: 'search', icon: 'search', href: ctx.href(`/${city}/search`) },
+		{ key: 'saved', icon: 'heart', href: ctx.href('/favorites') },
+		{ key: 'owner', icon: 'user', href: ctx.href('/client/dashboard') }
+	] as const;
+}
+
+/**
+ * The bottom tab bar's destinations as inline top-bar links. Hidden on phones
+ * (the tab bar carries them there) and shown from 1024px, where the tab bar is hidden.
+ */
+function DeskNav({ ctx, city, active }: { ctx: SgContext; city: string; active?: NavKey }) {
+	return (
+		<nav className="sg-desk-nav">
+			{navItems(ctx, city).map((i) => (
+				<Link
+					key={i.key}
+					href={i.href}
+					className={active === i.key ? 'tkg-on' : undefined}
+					aria-current={active === i.key ? 'page' : undefined}
+				>
+					<Icon name={i.icon} />
+					{ctx.t(`nav.${i.key}`)}
+				</Link>
+			))}
+		</nav>
+	);
+}
+
 /** Brand row: fixed "SoiGuru" wordmark, the city as a separate label. */
-export function BrandBar({ ctx, city, langPath }: { ctx: SgContext; city?: City; langPath: string }) {
+export function BrandBar({
+	ctx,
+	city,
+	langPath,
+	active
+}: {
+	ctx: SgContext;
+	city?: City;
+	langPath: string;
+	active?: NavKey;
+}) {
 	return (
 		<header className="tkg-topbar">
 			<Link className="tkg-brand" href={ctx.href('/')}>
@@ -36,6 +79,7 @@ export function BrandBar({ ctx, city, langPath }: { ctx: SgContext; city?: City;
 				</Link>
 			) : null}
 			<div className="tkg-spacer" />
+			{city ? <DeskNav ctx={ctx} city={city.id} active={active} /> : null}
 			<LanguageToggle ctx={ctx} path={langPath} />
 			<Link className="tkg-iconbtn" href={ctx.href('/')} aria-label={ctx.t('allCities')}>
 				<Icon name="menu" />
@@ -50,16 +94,24 @@ export function BackBar({
 	title,
 	subtitle,
 	ctx,
+	city,
+	active,
 	children
 }: {
 	backHref: string;
 	title: string;
 	subtitle?: string;
 	ctx: SgContext;
+	/** On wide screens the bar also shows the brand and the tab destinations. */
+	city?: string;
+	active?: NavKey;
 	children?: React.ReactNode;
 }) {
 	return (
 		<header className="tkg-topbar">
+			<Link className="tkg-brand sg-desk-only" href={ctx.href('/')}>
+				SoiGuru
+			</Link>
 			<Link className="tkg-iconbtn" href={backHref} aria-label={ctx.t('results.back')}>
 				<Icon name="chevron-left" />
 			</Link>
@@ -68,6 +120,7 @@ export function BackBar({
 				{subtitle ? <small>{subtitle}</small> : null}
 			</div>
 			{children}
+			{city ? <DeskNav ctx={ctx} city={city} active={active} /> : null}
 		</header>
 	);
 }
@@ -78,27 +131,36 @@ export function LanguageToggle({ ctx, path }: { ctx: SgContext; path: string }) 
 	const thHref = `/th${path === '/' ? '' : path}`;
 	return (
 		<nav className="tkg-lang" aria-label={ctx.t('language')}>
-			<Link href={enHref} className={ctx.thai ? undefined : 'tkg-on'} hrefLang="en" aria-current={ctx.thai ? undefined : 'true'}>
+			<Link
+				href={enHref}
+				className={ctx.thai ? undefined : 'tkg-on'}
+				hrefLang="en"
+				aria-current={ctx.thai ? undefined : 'true'}
+			>
 				EN
 			</Link>
-			<Link href={thHref} className={ctx.thai ? 'tkg-on' : undefined} hrefLang="th" aria-current={ctx.thai ? 'true' : undefined}>
+			<Link
+				href={thHref}
+				className={ctx.thai ? 'tkg-on' : undefined}
+				hrefLang="th"
+				aria-current={ctx.thai ? 'true' : undefined}
+			>
 				ไทย
 			</Link>
 		</nav>
 	);
 }
 
-export function BottomNav({ ctx, city, active }: { ctx: SgContext; city: string; active: 'home' | 'search' }) {
-	const items = [
-		{ key: 'home', icon: 'home', href: ctx.href(`/${city}`) },
-		{ key: 'search', icon: 'search', href: ctx.href(`/${city}/search`) },
-		{ key: 'saved', icon: 'heart', href: ctx.href('/favorites') },
-		{ key: 'owner', icon: 'user', href: ctx.href('/client/dashboard') }
-	] as const;
+export function BottomNav({ ctx, city, active }: { ctx: SgContext; city: string; active: NavKey }) {
 	return (
 		<nav className="tkg-nav">
-			{items.map((i) => (
-				<Link key={i.key} href={i.href} className={active === i.key ? 'tkg-on' : undefined} aria-current={active === i.key ? 'page' : undefined}>
+			{navItems(ctx, city).map((i) => (
+				<Link
+					key={i.key}
+					href={i.href}
+					className={active === i.key ? 'tkg-on' : undefined}
+					aria-current={active === i.key ? 'page' : undefined}
+				>
 					<Icon name={i.icon} />
 					{ctx.t(`nav.${i.key}`)}
 				</Link>
@@ -114,7 +176,13 @@ export function SearchBar({ ctx, city, defaultValue }: { ctx: SgContext; city: C
 	return (
 		<form className="tkg-search" action={ctx.href(`/${city.id}/search`)} method="get" role="search">
 			<Icon name="search" />
-			<input type="search" name="q" defaultValue={defaultValue} placeholder={ctx.t('home.searchPlaceholder')} aria-label={label} />
+			<input
+				type="search"
+				name="q"
+				defaultValue={defaultValue}
+				placeholder={ctx.t('home.searchPlaceholder')}
+				aria-label={label}
+			/>
 			<button className="tkg-search-btn" type="submit">
 				{ctx.t('home.search')}
 			</button>
@@ -144,7 +212,15 @@ export function Chip({
 	);
 }
 
-export function CategoryGrid({ ctx, city, categories }: { ctx: SgContext; city: string; categories: ListingCategory[] }) {
+export function CategoryGrid({
+	ctx,
+	city,
+	categories
+}: {
+	ctx: SgContext;
+	city: string;
+	categories: ListingCategory[];
+}) {
 	return (
 		<div className="tkg-cats">
 			{categories.map((c) => (
@@ -229,7 +305,9 @@ export function ListingCard({ ctx, city, item, compact, selected, subline = 'cat
 			? [other, l.address].filter(Boolean).join(' · ')
 			: [other, categoryName(ctx, l.category), area ? localName(ctx, area) : l.area].filter(Boolean).join(' · ');
 	const price = formatPriceBand(l.priceBand);
-	const cls = ['tkg-card', compact ? 'tkg-card-compact' : '', selected ? 'tkg-card-selected' : ''].filter(Boolean).join(' ');
+	const cls = ['tkg-card', compact ? 'tkg-card-compact' : '', selected ? 'tkg-card-selected' : '']
+		.filter(Boolean)
+		.join(' ');
 	return (
 		<Link className={cls} href={ctx.href(listingPath(l))}>
 			<Thumb src={l.images[0]} icon={l.category.icon} />

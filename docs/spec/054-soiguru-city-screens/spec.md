@@ -65,6 +65,13 @@ paint before any script runs.
   deep merge.
 - The site root (`/`) now rewrites to the city landing; the template's item
   listing stays reachable at `/discover`.
+- **Desktop layout** (from 1024px). The design only specifies the 640px phone
+  column, so the app extends it: a 1152px content column with the top bar and
+  hero bands spanning the window, the tab bar's destinations as top-bar links
+  (the bottom tab bar is hidden), 8 category tiles and 3 listing cards per row
+  on CityHome, city cards on the landing, and on ListingPage the details on
+  the left with contact, hours and map in a sticky 360px right rail.
+  CategoryResults keeps its docked map.
 
 ## 4. Non-goals (later specs)
 
