@@ -36,7 +36,7 @@ function navItems(ctx: SgContext, city: string) {
 
 /**
  * The bottom tab bar's destinations as inline top-bar links. Hidden on phones
- * (the tab bar carries them there) and shown from 1024px, where the tab bar is hidden.
+ * (the tab bar carries them there) and shown from 960px, where the tab bar is hidden.
  */
 function DeskNav({ ctx, city, active }: { ctx: SgContext; city: string; active?: NavKey }) {
 	return (

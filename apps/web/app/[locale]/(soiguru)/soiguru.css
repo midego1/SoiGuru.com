@@ -496,7 +496,7 @@
 /* Results: on wide screens the list takes the left 420px and the map docks right. */
 .sg-results-page { max-width: none; }
 .sg-results-map-dock { display: none; }
-@media (min-width: 1024px) {
+@media (min-width: 960px) {
 	.sg-results-page { max-width: none; border: 0; }
 	.sg-results-body { display: grid; grid-template-columns: 420px 1fr; align-items: start; }
 	.sg-results-list { border-right: 1px solid var(--line); min-height: calc(100vh - 113px); }
@@ -521,7 +521,10 @@
 .sg-city-row .tkg-row-main b { font-size: 17px; line-height: 24px; font-weight: 600; }
 .sg-city-row .sg-city-th { color: var(--ink-muted); font-weight: 400; margin-left: 6px; }
 .sg-results-dock-list { display: none; }
-@media (min-width: 1024px) { .sg-results-dock-list { display: block; } }
+@media (min-width: 960px) { .sg-results-dock-list { display: block; } }
+
+/* CityHome "Open now": 3 cards on phones, up to 6 in the desktop grid. */
+.sg-home .tkg-list > :nth-child(n + 4) { display: none; }
 
 /* City hero band (was inline). */
 .sg-hero { background: var(--surface); padding: 16px 16px 20px; border-bottom: 1px solid var(--line); }
@@ -539,12 +542,12 @@
 .sg-desk-nav a.tkg-on { background: var(--sea-tint); color: var(--sea-deep); }
 
 /*
- * Desktop (1024px and up). The design only specifies the phone column (and the docked map on
- * results), so this extends it: a 1120px content column, full-width bands behind the top bar and
+ * Desktop (960px and up). The design only specifies the phone column (and the docked map on
+ * results), so this extends it: a 1200px content column, full-width bands behind the top bar and
  * the hero, the tab bar's destinations in the top bar, wider grids, and a right rail on listings.
  */
-@media (min-width: 1024px) {
-	.sg-page { max-width: 1152px; padding-inline: var(--space-4); border: 0; }
+@media (min-width: 960px) {
+	.sg-page { max-width: 1232px; padding-inline: var(--space-4); border: 0; }
 	.sg-page.sg-results-page { max-width: none; padding-inline: 0; }
 
 	/* Bands span the window while their content stays in the column. */
@@ -572,6 +575,7 @@
 	.sg-home .tkg-section { padding-top: var(--space-8); }
 	.sg-home .tkg-cats { grid-template-columns: repeat(8, minmax(0, 1fr)); }
 	.sg-home .tkg-list { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); }
+	.sg-home .tkg-list > :nth-child(n + 4) { display: grid; }
 	.sg-home .tkg-chiprow { flex-wrap: wrap; overflow: visible; }
 	.sg-home .tkg-ownercta { max-width: 720px; }
 

@@ -56,7 +56,8 @@ export default async function CityHomePage({ params }: { params: Params }) {
 	const ranked = rankListings(listings, { origin, sort: 'nearest' });
 	const inArea = defaultArea ? ranked.filter((r) => r.listing.area === defaultArea.id) : ranked;
 	const openInArea = inArea.filter((r) => r.open);
-	const featured = (openInArea.length ? openInArea : inArea).slice(0, 3);
+	// Phones show 3; the desktop grid shows up to 6 (the rest are hidden below 960px in CSS).
+	const featured = (openInArea.length ? openInArea : inArea).slice(0, 6);
 	const areaCounts = new Map<string, number>();
 	for (const l of listings) areaCounts.set(l.area, (areaCounts.get(l.area) ?? 0) + 1);
 
