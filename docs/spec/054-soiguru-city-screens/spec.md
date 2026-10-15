@@ -72,18 +72,34 @@ paint before any script runs.
   on CityHome, city cards on the landing, and on ListingPage the details on
   the left with contact, hours and map in a sticky 360px right rail.
   CategoryResults keeps its docked map.
+- **ClaimFlow** (`/<city>/claim`, 3 steps carried in the query string): find
+  the business, pick verification (a call to the listed number, or a photo of
+  the shop sign) and choose a plan (monthly ฿100 or yearly ฿1,000) with
+  PromptPay or card. Verification and payment are **manual for now**:
+  submitting stores a `pending` row in `listing_claims` (migration 0043) and
+  nothing is charged. An admin works the queue at `/owner/review`, calls the
+  number, confirms the payment, then approves or rejects. Approval sets
+  `paid_until`, writes `claimed: true` on the listing YAML and opens the
+  owner dashboard. A listing with an approved claim cannot be claimed again.
+  Omise or Stripe checkout replaces the manual payment step later.
+- **OwnerDashboard** (`/owner`, credentials sign-in through the existing
+  NextAuth setup): one overview per approved listing (status, one nudge,
+  Details, Hours, Good to know, Billing; Photos is marked as coming soon) plus
+  pending claims. Details, Hours and Good to know are plain HTML forms posting
+  to server actions in `app/[locale]/(soiguru)/actions.ts`; each action checks
+  the session and an approved claim (or the admin role) before it patches the
+  listing YAML through `ItemRepository.patchFields`, which only touches the
+  submitted keys and commits to the content repository like an admin save.
 
 ## 4. Non-goals (later specs)
 
-- ClaimFlow and OwnerDashboard (need auth, payments and the database).
+- Automatic payments (Omise or Stripe), owner photo uploads, and email
+  receipts for claims.
 - Visitor geolocation ("Near me", distances from the visitor). Distances are
   measured from the area centre for now.
 - The Filters sheet (price band, rating, has LINE, verified only), map panning
   with "Search this area", Save and Share on the listing page, the
   "Report wrong info" form (it links to `SOIGURU_REPORT_EMAIL` or `/help`).
-- Admin editing of listings: `lib/services/item-git.service.ts` writes items
-  through a field whitelist and would drop the SoiGuru keys on any admin edit.
-  This must be fixed before admins or owners edit listings.
 
 ## 5. Acceptance
 
@@ -94,4 +110,7 @@ paint before any script runs.
   `LocalBusiness`) JSON-LD block with address, geo, telephone,
   `openingHoursSpecification` and `aggregateRating`; sample listings are
   `noindex`.
+- A signed-in user can claim an unclaimed listing; the admin sees it at
+  `/owner/review` and approves it; the owner then edits details, hours and
+  good-to-know, and the listing page shows the change.
 - `pnpm tsc --noEmit`, `pnpm lint` and `next build` pass.

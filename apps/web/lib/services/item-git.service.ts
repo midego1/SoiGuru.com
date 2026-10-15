@@ -610,6 +610,36 @@ export class ItemGitService {
     return updatedItem;
   }
 
+  /**
+   * Patch keys of an item's YAML file directly, including keys this service
+   * does not model (SoiGuru: hours, amenities, phone, LINE…), then commit and
+   * push. A value of `undefined` removes the key. `updated_at` is set to now.
+   * Returns the file's content after the patch.
+   */
+  async patchItemFields(
+    slug: string,
+    patch: Record<string, unknown>,
+    message: string
+  ): Promise<Record<string, unknown>> {
+    if (!/^[a-z0-9][a-z0-9-]*$/.test(slug)) {
+      throw new Error(`Invalid item slug '${slug}'`);
+    }
+    const itemFile = path.join(this.config.dataDir, 'data', slug, `${slug}.yml`);
+    const parsed = yaml.parse(await fs.readFile(itemFile, 'utf-8'));
+    if (!parsed || typeof parsed !== 'object' || Array.isArray(parsed)) {
+      throw new Error(`Item '${slug}' has no readable YAML`);
+    }
+    const next: Record<string, unknown> = { ...(parsed as Record<string, unknown>) };
+    for (const [key, value] of Object.entries(patch)) {
+      if (value === undefined) delete next[key];
+      else next[key] = value;
+    }
+    next.updated_at = formatDateForYaml();
+    await fs.writeFile(itemFile, yaml.stringify(next), 'utf-8');
+    await this.commitAndPush(message);
+    return next;
+  }
+
   async updateItemWithoutCommit(id: string, data: UpdateItemRequest): Promise<ItemData> {
     const items = await this.readItems(true);
     const itemIndex = items.findIndex(item => item.id === id);

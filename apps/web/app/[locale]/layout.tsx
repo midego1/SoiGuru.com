@@ -151,7 +151,7 @@ export default async function RootLayout({
 	const locationSettings = getLocationSettings();
 
 	// SoiGuru city screens draw their own top bar and bottom nav.
-	const soiguruCityIds = [...(await getCities()).map((c) => c.id), 'cities'];
+	const soiguruCityIds = [...(await getCities()).map((c) => c.id), 'cities', 'owner'];
 
 	// Locale-detection strategy. `client-banner` (default) shows a small
 	// dismissible banner suggesting the visitor's browser language while

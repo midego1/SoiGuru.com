@@ -1781,3 +1781,57 @@ export const billingIssues = pgTable(
 
 export type BillingIssue = typeof billingIssues.$inferSelect;
 export type NewBillingIssue = typeof billingIssues.$inferInsert;
+
+// ######################### SoiGuru Listing Claims #########################
+/**
+ * A shop owner's claim on a SoiGuru listing (spec 054). The listing itself
+ * lives in the Git content repo (`data/<slug>/<slug>.yml`); this row records
+ * who asked for it, how they will be verified, the plan they chose, and the
+ * admin's decision. An `approved` claim lets that user edit the listing from
+ * `/owner`, and approval writes `claimed: true` into the listing YAML.
+ *
+ * Verification and payment are manual for now: an admin calls the number on
+ * the listing, confirms the PromptPay or card payment, then approves.
+ */
+export const listingClaims = pgTable(
+	'listing_claims',
+	{
+		id: text('id')
+			.primaryKey()
+			.$defaultFn(() => crypto.randomUUID()),
+		userId: text('user_id')
+			.notNull()
+			.references(() => users.id, { onDelete: 'cascade' }),
+		/** City id from `cities.yml`, e.g. `krabi`. */
+		city: text('city').notNull(),
+		/** Listing slug (the item directory name in the content repo). */
+		listingSlug: text('listing_slug').notNull(),
+		/** `pending` → `approved` | `rejected`; `cancelled` when the owner withdraws. */
+		status: text('status').notNull().default('pending'),
+		/** `call`: we call the number on the listing. `sign`: the number changed; photo of the shop sign + ID by email. */
+		verification: text('verification').notNull().default('call'),
+		/** Best number to reach the owner, if different from the listing. */
+		contactPhone: text('contact_phone'),
+		/** Free text from the owner. */
+		note: text('note'),
+		/** `monthly` (฿100) or `yearly` (฿1,000). */
+		plan: text('plan').notNull().default('yearly'),
+		/** `promptpay` or `card`. */
+		paymentMethod: text('payment_method').notNull().default('promptpay'),
+		paidAt: timestamp('paid_at'),
+		paidUntil: timestamp('paid_until'),
+		reviewedBy: text('reviewed_by').references(() => users.id, { onDelete: 'set null' }),
+		reviewedAt: timestamp('reviewed_at'),
+		reviewNote: text('review_note'),
+		createdAt: timestamp('created_at').notNull().defaultNow(),
+		updatedAt: timestamp('updated_at').notNull().defaultNow()
+	},
+	(table) => ({
+		userIdIndex: index('listing_claims_user_id_idx').on(table.userId),
+		listingIndex: index('listing_claims_listing_idx').on(table.city, table.listingSlug),
+		statusIndex: index('listing_claims_status_idx').on(table.status)
+	})
+);
+
+export type ListingClaim = typeof listingClaims.$inferSelect;
+export type NewListingClaim = typeof listingClaims.$inferInsert;

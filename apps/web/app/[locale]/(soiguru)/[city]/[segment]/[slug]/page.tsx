@@ -491,9 +491,7 @@ export default async function ListingPage({ params }: { params: Params }) {
 									</p>
 									<Link
 										className="tkg-btn tkg-btn-sun"
-										href={ctx.href(
-											`/auth/register?callbackUrl=${encodeURIComponent(ctx.href(path))}`
-										)}
+										href={ctx.href(`/${city.id}/claim?listing=${l.slug}&step=2`)}
 									>
 										<Icon name="shield" />
 										{ctx.t('listing.claimButton')}

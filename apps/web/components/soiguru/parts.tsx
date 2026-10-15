@@ -30,7 +30,7 @@ function navItems(ctx: SgContext, city: string) {
 		{ key: 'home', icon: 'home', href: ctx.href(`/${city}`) },
 		{ key: 'search', icon: 'search', href: ctx.href(`/${city}/search`) },
 		{ key: 'saved', icon: 'heart', href: ctx.href('/favorites') },
-		{ key: 'owner', icon: 'user', href: ctx.href('/client/dashboard') }
+		{ key: 'owner', icon: 'user', href: ctx.href('/owner') }
 	] as const;
 }
 

@@ -598,3 +598,69 @@
 	.sg-listing-aside .tkg-info { margin-inline: 0; }
 	.sg-page > .tkg-bottombar { display: none; }
 }
+
+/*
+ * ClaimFlow, OwnerDashboard and claim review (spec 054). The design draws radios, plans,
+ * switches and segmented controls as buttons with .tkg-on; here they are native inputs, so the
+ * "on" look comes from :checked instead and the forms work without script.
+ */
+.sg-flow-form, .sg-owner > .tkg-form { display: flex; flex-direction: column; }
+.sg-form-h { font-size: 13px; line-height: 18px; font-weight: 600; text-transform: uppercase; letter-spacing: 0.04em; color: var(--ink-muted); margin: var(--space-2) 0 0; }
+.sg-form-h:first-child { margin-top: 0; }
+.sg-brand-owner { font-size: 13px; font-weight: 600; color: var(--ink-muted); border: 1px solid var(--line-strong); border-radius: var(--radius-pill); padding: 2px 8px; margin-right: auto; margin-left: -4px; }
+
+/* Visually hidden native inputs that drive a drawn control. */
+.sg-choice input[type="radio"], .sg-plan input[type="radio"], .sg-switch input, .sg-seg-radio input { position: absolute; opacity: 0; width: 1px; height: 1px; margin: 0; pointer-events: none; }
+
+/* Radio rows */
+.sg-choice .tkg-row { cursor: pointer; position: relative; }
+.sg-radio { width: 20px; height: 20px; border-radius: 999px; border: 2px solid var(--line-strong); flex: none; }
+.sg-choice input:checked + .sg-radio { border-color: var(--sea); background: radial-gradient(circle, var(--sea) 0 5px, transparent 6px); }
+.sg-choice input:focus-visible + .sg-radio, .sg-plan:has(input:focus-visible), .sg-switch input:focus-visible + .tkg-toggle, .sg-seg-radio input:focus-visible + span { outline: 2px solid var(--sea); outline-offset: 2px; }
+
+/* Plan cards */
+.sg-plan { cursor: pointer; }
+.sg-plan:has(input:checked) { border-color: var(--sea); box-shadow: 0 0 0 1px var(--sea); }
+.sg-plan:has(input:checked) .tkg-radio { border-color: var(--sea); background: radial-gradient(circle, var(--sea) 0 5px, transparent 6px); }
+
+/* Claim search: listings already claimed */
+.sg-card-disabled { opacity: 0.55; cursor: not-allowed; }
+
+/* Switch (hours) */
+.sg-switch { position: relative; display: inline-flex; cursor: pointer; flex: none; }
+.sg-switch input:checked + .tkg-toggle { background: var(--sea); }
+.sg-switch input:checked + .tkg-toggle::after { left: 21px; background: var(--on-sea); }
+
+/* Hours editor: a closed day hides its ranges and says "Closed". */
+.sg-hours-edit .tkg-row { flex-wrap: wrap; row-gap: var(--space-2); }
+.sg-hours-edit .tkg-row-main { min-width: 72px; }
+.sg-hours-edit .tkg-row-main .sg-closed-label { display: none; }
+.sg-hours-edit .tkg-row:has(.sg-switch input:not(:checked)) .tkg-row-main .sg-closed-label { display: block; }
+.sg-hours-edit .tkg-row:has(.sg-switch input:not(:checked)) .sg-ranges { display: none; }
+.sg-ranges { display: flex; flex-direction: column; gap: var(--space-2); margin-left: auto; }
+.sg-range { display: inline-flex; align-items: center; gap: var(--space-2); }
+.sg-range .tkg-input { width: 132px; height: 40px; padding: 0 var(--space-2); font-variant-numeric: tabular-nums; }
+
+/* Segmented Yes / No / Not set */
+.tkg-root .sg-seg-radio label { position: relative; display: inline-flex; cursor: pointer; }
+.tkg-root .sg-seg-radio label + label { border-left: 1px solid var(--line-strong); }
+.tkg-root .sg-seg-radio span { height: 34px; padding: 0 var(--space-3); background: var(--surface); color: var(--ink); font-size: 14px; font-weight: 500; display: inline-flex; align-items: center; }
+.tkg-root .sg-seg-radio input:checked + span { background: var(--sea); color: var(--on-sea); }
+
+/* Owner dashboard */
+.sg-owner-head { background: var(--surface); padding: var(--space-4); border-bottom: 1px solid var(--line); }
+.sg-owner-thumb .sg-thumb, .sg-owner-thumb .sg-thumb-empty { width: 64px; height: 64px; border-radius: var(--radius-md); object-fit: cover; }
+.sg-owner-card { background: var(--surface); border: 1px solid var(--line); border-radius: var(--radius-lg); padding: var(--space-4); display: flex; flex-direction: column; gap: var(--space-2); }
+.sg-row-muted { color: var(--ink-muted); }
+.sg-facts { display: grid; grid-template-columns: max-content minmax(0, 1fr); gap: 4px var(--space-3); margin: var(--space-2) 0 0; font-size: 14px; line-height: 20px; }
+.sg-facts dt { color: var(--ink-muted); }
+.sg-facts dd { margin: 0; overflow-wrap: anywhere; }
+
+@media (min-width: 960px) {
+	/* Forms and the dashboard read best as one 720px column inside the wide page. */
+	.sg-owner > :not(.tkg-topbar):not(.sg-band):not(.tkg-bottombar),
+	.sg-flow > :not(.tkg-topbar):not(.sg-band):not(.tkg-bottombar) { width: 100%; max-width: 720px; margin-inline: auto; }
+	.sg-owner > .sg-band > *, .sg-flow > .sg-band > * { max-width: 720px; margin-inline: auto; }
+	.sg-owner > .tkg-bottombar, .sg-flow > .tkg-bottombar { display: flex; position: sticky; bottom: 0; margin-inline: calc(50% - 50vw); padding-inline: calc(50vw - 50% + var(--space-4)); justify-content: flex-end; }
+	.sg-owner > .tkg-bottombar > *, .sg-flow > .tkg-bottombar > * { flex: 0 0 auto; min-width: 200px; }
+}

@@ -142,7 +142,7 @@ export default async function CityHomePage({ params }: { params: Params }) {
 						<h3>{ctx.t('home.ownerTitle', { city: cityName })}</h3>
 						<p>{ctx.t('home.ownerBody')}</p>
 					</div>
-					<Link className="tkg-btn tkg-btn-sun tkg-btn-sm" href={ctx.href('/auth/register')}>
+					<Link className="tkg-btn tkg-btn-sun tkg-btn-sm" href={ctx.href(`/${city.id}/claim`)}>
 						{ctx.t('home.claim')}
 					</Link>
 				</div>

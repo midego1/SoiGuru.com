@@ -103,3 +103,14 @@ export function relativeTime(ctx: SgContext, date: Date, now: Date = new Date())
 	if (Math.abs(diffMonths) < 12) return rtf.format(diffMonths, 'month');
 	return rtf.format(Math.round(diffDays / 365), 'year');
 }
+
+/** A calendar date in the UI language, in Bangkok time ("12 Mar 2027"). */
+export function formatDay(ctx: SgContext, d: Date | null | undefined): string {
+	if (!d) return '';
+	return d.toLocaleDateString(ctx.thai ? 'th-TH' : 'en-GB', {
+		day: 'numeric',
+		month: 'short',
+		year: 'numeric',
+		timeZone: 'Asia/Bangkok'
+	});
+}
