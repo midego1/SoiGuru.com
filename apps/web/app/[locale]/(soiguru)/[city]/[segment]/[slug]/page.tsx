@@ -31,6 +31,7 @@ import { formatRanges, hoursTableRows } from '@/lib/soiguru/hours';
 import { listingStatus, rankListings } from '@/lib/soiguru/query';
 import { WEEKDAYS, type City, type Listing } from '@/lib/soiguru/types';
 import { getBaseUrl } from '@/lib/utils/url-cleaner';
+import { saveListing } from '../../../actions';
 
 /**
  * ListingPage (`/krabi/ao-nang/krabi-nail`): one business, in the order of a
@@ -213,7 +214,21 @@ export default async function ListingPage({ params }: { params: Params }) {
 				backHref={ctx.href(`/${city.id}/${l.category.id}?area=${l.area}`)}
 				title={title}
 				subtitle={`${categoryName(ctx, l.category)} · ${areaLabel}`}
-			/>
+			>
+				<form action={saveListing}>
+					<input type="hidden" name="locale" value={locale} />
+					<input type="hidden" name="city" value={city.id} />
+					<input type="hidden" name="listing" value={l.slug} />
+					<button
+						className="tkg-iconbtn"
+						type="submit"
+						aria-label={ctx.t('saved.save')}
+						title={ctx.t('saved.save')}
+					>
+						<Icon name="heart" />
+					</button>
+				</form>
+			</BackBar>
 
 			{l.images.length ? (
 				<div className="tkg-strip" style={{ position: 'relative' }}>

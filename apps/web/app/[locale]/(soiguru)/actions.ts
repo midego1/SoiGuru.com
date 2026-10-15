@@ -14,6 +14,7 @@ import {
 	type ClaimVerification
 } from '@/lib/soiguru/claims';
 import { getCategories, getCityListings } from '@/lib/soiguru/content';
+import { addSaved, removeSaved } from '@/lib/soiguru/saved';
 import { WEEKDAYS } from '@/lib/soiguru/types';
 
 /**
@@ -84,6 +85,33 @@ export async function submitClaim(formData: FormData) {
 	}
 	revalidatePath(`${p}/owner`);
 	redirect(`${p}/owner?claimed=${encodeURIComponent(slug)}`);
+}
+
+/* ── Saved ──────────────────────────────────────────────────────────────── */
+
+/** Heart on the listing page: save the place and open the Saved tab. */
+export async function saveListing(formData: FormData) {
+	const locale = str(formData, 'locale', 5);
+	const city = str(formData, 'city', 40);
+	const slug = str(formData, 'listing', 120);
+	const p = prefixOf(locale);
+	const listing = (await getCityListings(city)).find((l) => l.slug === slug);
+	if (!listing) redirect(`${p}/saved?city=${encodeURIComponent(city)}`);
+	const back = `${p}/${city}/${listing.area}/${slug}`;
+	const user = await requireUser(locale, back);
+	await addSaved(user.id, listing);
+	revalidatePath(`${p}/saved`);
+	redirect(`${p}/saved?city=${encodeURIComponent(city)}&added=${encodeURIComponent(slug)}`);
+}
+
+export async function unsaveListing(formData: FormData) {
+	const locale = str(formData, 'locale', 5);
+	const city = str(formData, 'city', 40);
+	const p = prefixOf(locale);
+	const user = await requireUser(locale, `${p}/saved`);
+	await removeSaved(user.id, str(formData, 'listing', 120));
+	revalidatePath(`${p}/saved`);
+	redirect(`${p}/saved?city=${encodeURIComponent(city)}`);
 }
 
 /* ── Owner dashboard ────────────────────────────────────────────────────── */

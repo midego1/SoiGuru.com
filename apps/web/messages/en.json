@@ -4995,6 +4995,18 @@
 			"approvedNote": "Approved. The listing now shows the Verified badge.",
 			"rejectedNote": "Rejected.",
 			"recent": "Recently decided"
+		},
+		"saved": {
+			"title": "Saved",
+			"save": "Save",
+			"remove": "Remove",
+			"added": "Saved {name}.",
+			"count": "{count, plural, one {# place} other {# places}}",
+			"signInTitle": "Keep your favourite places",
+			"signInBody": "Sign in to save places and find them again on any device.",
+			"emptyTitle": "Nothing saved yet",
+			"emptyBody": "Tap the heart on a place to keep it here.",
+			"browse": "Browse {city}"
 		}
 	}
 }

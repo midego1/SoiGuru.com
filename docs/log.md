@@ -9,6 +9,7 @@ sidebar_position: 99
 
 ## 2026-10-15
 
+- `spec-054` `apps/web/app/[locale]/(soiguru)` `apps/web/lib/soiguru`: SoiGuru Saved tab (`/saved`) and a Save heart on the listing page, stored in the existing `favorites` table ([spec 054](spec/054-soiguru-city-screens/spec.md), PR #1).
 - `spec-054` `apps/web/app/[locale]/(soiguru)` `apps/web/lib/soiguru` `apps/web/lib/db`: SoiGuru ClaimFlow (`/<city>/claim`), OwnerDashboard (`/owner` with Details, Hours, Good to know and Billing) and the admin claim queue (`/owner/review`); new `listing_claims` table (migration 0043); manual verification and payment for now; owner edits patch the listing YAML through `ItemRepository.patchFields` ([spec 054](spec/054-soiguru-city-screens/spec.md), PR #1).
 - `spec-054` `apps/web/lib/services/item-git.service.ts`: admin item saves keep YAML keys the service does not manage (SoiGuru hours, amenities, geo, contacts…) instead of rewriting the file from a whitelist ([spec 054](spec/054-soiguru-city-screens/spec.md), PR #1).
 - `spec-054` `apps/web/app/[locale]/(soiguru)` `apps/web/components/soiguru`: desktop layout from 960px for the SoiGuru screens (top-bar navigation, wide grids, listing right rail) ([spec 054](spec/054-soiguru-city-screens/spec.md), PR #1).

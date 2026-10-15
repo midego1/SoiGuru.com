@@ -664,3 +664,11 @@
 	.sg-owner > .tkg-bottombar, .sg-flow > .tkg-bottombar { display: flex; position: sticky; bottom: 0; margin-inline: calc(50% - 50vw); padding-inline: calc(50vw - 50% + var(--space-4)); justify-content: flex-end; }
 	.sg-owner > .tkg-bottombar > *, .sg-flow > .tkg-bottombar > * { flex: 0 0 auto; min-width: 200px; }
 }
+
+/* Saved: each card keeps a Remove button under it. */
+.sg-saved-item { display: flex; flex-direction: column; background: var(--surface); border: 1px solid var(--line); border-radius: var(--radius-lg); overflow: hidden; }
+.sg-saved-item form { display: flex; justify-content: flex-end; padding: 0 var(--space-2) var(--space-2); }
+.sg-saved-item .tkg-card { border: 0; border-radius: 0; box-shadow: none; }
+@media (min-width: 960px) {
+	.sg-saved .tkg-list { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: var(--space-4); padding-inline: var(--space-4); }
+}

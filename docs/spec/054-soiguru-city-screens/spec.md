@@ -90,6 +90,11 @@ paint before any script runs.
   the session and an approved claim (or the admin role) before it patches the
   listing YAML through `ItemRepository.patchFields`, which only touches the
   submitted keys and commits to the content repository like an admin save.
+- **Saved** (`/saved?city=`): the heart in the listing top bar posts a server
+  action that adds the place to the template's `favorites` table (sign-in
+  required) and opens the Saved tab, which lists saved places by city with a
+  Remove button. The listing page stays cached; it does not show per-visitor
+  saved state.
 
 ## 4. Non-goals (later specs)
 
@@ -98,7 +103,7 @@ paint before any script runs.
 - Visitor geolocation ("Near me", distances from the visitor). Distances are
   measured from the area centre for now.
 - The Filters sheet (price band, rating, has LINE, verified only), map panning
-  with "Search this area", Save and Share on the listing page, the
+  with "Search this area", Share on the listing page, the
   "Report wrong info" form (it links to `SOIGURU_REPORT_EMAIL` or `/help`).
 
 ## 5. Acceptance

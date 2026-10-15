@@ -36,15 +36,25 @@ export function EditorBar({ ctx, title, listingName }: { ctx: SgContext; title: 
 	);
 }
 
-export function SignInPrompt({ ctx, back }: { ctx: SgContext; back: string }) {
+export function SignInPrompt({
+	ctx,
+	back,
+	title = ctx.t('owner.signInTitle'),
+	body = ctx.t('owner.signInBody')
+}: {
+	ctx: SgContext;
+	back: string;
+	title?: string;
+	body?: string;
+}) {
 	return (
 		<section className="tkg-section sg-grow" style={{ paddingTop: 20 }}>
 			<div className="tkg-pad">
 				<h1 className="tkg-title" style={{ margin: '0 0 4px' }}>
-					{ctx.t('owner.signInTitle')}
+					{title}
 				</h1>
 				<p className="tkg-body tkg-muted" style={{ margin: '0 0 16px' }}>
-					{ctx.t('owner.signInBody')}
+					{body}
 				</p>
 				<div className="tkg-stack">
 					<Link
