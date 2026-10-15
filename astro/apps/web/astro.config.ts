@@ -5,6 +5,7 @@ import vercel from '@astrojs/vercel';
 import tailwindcss from '@tailwindcss/vite';
 import { everWorksIntegration } from '@ever-works/astro-integration';
 import { getPluginRunner, getContent } from './src/lib/content';
+import { soiguruThai } from './src/integrations/soiguru-thai';
 
 /**
  * Astro Configuration
@@ -39,7 +40,10 @@ export default defineConfig({
 		preact({ compat: true }),
 
 		// Auto-generate sitemap.xml (city search pages are noindex, so they stay out)
-		sitemap({ filter: (page) => !/\/search\/?$/.test(new URL(page).pathname) }),
+		sitemap({ filter: (page) => !/\/(search|saved)\/?$/.test(new URL(page).pathname) }),
+
+		// SoiGuru: Thai copies of every SoiGuru page under /th/ (after the sitemap, which it extends)
+		soiguruThai(),
 
 		// Ever Works plugin build hooks (onBeforeBuild, onAfterBuild)
 		// + webhook endpoint injection when ISR is enabled

@@ -40,6 +40,11 @@ const boat = listing.area?.boat_only ? ' · boat' : '';
     data-category={listing.category?.id}
     data-search={listing.searchText}
     data-boat={listing.area?.boat_only ? '1' : undefined}
+    data-price={listing.price_band}
+    data-line={listing.line_id ? '1' : undefined}
+    data-wa={listing.whatsapp ? '1' : undefined}
+    data-verified={listing.claimed ? '1' : undefined}
+    data-amenities={listing.amenities.filter((a) => a.available).map((a) => a.id).join(' ') || undefined}
 >
     <ListingPhoto listing={listing} size={compact ? 64 : 96} />
     <div class="tkg-card-body">

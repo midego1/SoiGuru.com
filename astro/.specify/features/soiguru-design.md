@@ -50,6 +50,18 @@ The design is phone first: one 640px column, and only CategoryResults has a wide
 - ListingPage: two columns. Left: photos, title, good to know (3 columns), about, nearby, report. Right: a sticky card with the contact buttons, hours, map and claim box. The sticky Directions bar is hidden (Directions is in the contact card). On phones the page keeps its single column in the original order through CSS `order`.
 - CategoryResults and search keep the design's wide layout.
 
+## Full public site (second pass)
+
+- **Search** runs in the browser over the rendered cards: name (EN/TH), category, area, description (EN/TH) and amenity names. Words are matched with a trailing plural "s" dropped ("nails" finds "Nail salons"). Results pages have an inline search box behind the top-bar search icon; the city search page filters as you type.
+- **Sheets** are native `<dialog>` elements (`Sheet.astro`, `scripts/soiguru/sheet.ts`): a bottom sheet on phones, a centred 480px panel on desktop. **Area** picks one area; **Filters** has price bands, "Show only" (rated 4+, has LINE, has WhatsApp, verified owner) and the 12 most common amenities. Filters live in the URL (`price=1,2`, `rating=4`, `line=1`, `wa=1`, `verified=1`, `am=a,b`); the Filters chip shows the active count.
+- **Search this area**: moving the map by hand shows the pill; tapping it limits the list to the visible bounds ("Whole map" clears it). The map sheet steps prev/next (buttons or swipe) through places ordered by distance from the visitor, else from the selected pin.
+- **Photo gallery**: listing photos open a full-screen scroll-snap gallery (swipe, arrow keys, prev/next on desktop).
+- **Saved**: a heart on each listing stores slugs on the device (`localStorage` key `sg-saved-v1`); `/<city>/saved` lists them (noindex). Saved is a bottom tab and a top-nav link.
+- **Thai URLs**: the `soiguru-thai` integration (`src/integrations/soiguru-thai.ts`) copies every SoiGuru page to `/th/…` after the build, swapping `[data-th]` texts, internal links, `lang`, canonical and `og:url`, and adds the Thai URLs to the sitemap. Pages carry `hreflang` en / th / x-default. The EN / ไทย toggle moves between the two URLs.
+- **Hours**: today's row moves to the top of the table.
+- **LINE / WhatsApp**: official marks from Simple Icons 13.21.0 (CC0) inlined in `icons.ts`.
+- **Claim** links go to `claim_url` in `works.yml` (`https://soiguru.midego.net/claim`).
+
 ## Not in this pass
 
-ClaimFlow and OwnerDashboard (need accounts; Next.js only), the Filters sheet (price, rating, has LINE…), "Search this area", the photo gallery, Saved, Thai URL prefix (`/th/…`), official LINE/WhatsApp marks, a self-hosted map style. See `docs/questions.md` Q30.
+ClaimFlow and OwnerDashboard (need accounts; Next.js only), contact-tap counting (needs a backend), a self-hosted map style. See `docs/questions.md` Q30.

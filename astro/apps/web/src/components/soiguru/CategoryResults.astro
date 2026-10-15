@@ -4,7 +4,9 @@
  * URL: List (default) and Map (OpenStreetMap via Leaflet, loaded only on this screen).
  *
  * Filters change the list in place and the URL (`?area=ao-nang&open=1&sort=nearest&view=map`)
- * so results can be shared. Closed places sit behind one "Show N closed now" button rather
+ * so results can be shared. The area chip and "Filters" open bottom sheets (price band,
+ * rating 4+, LINE, WhatsApp, verified owners, amenities). On the map, "Search this area"
+ * appears after panning and narrows the list to the visible map once tapped. Closed places sit behind one "Show N closed now" button rather
  * than mixed in grey. "Show more" at 20. All filtering runs in the browser
  * (`scripts/soiguru/results.ts`) over the listings rendered here.
  *
@@ -13,6 +15,7 @@
 import Icon from './Icon.astro';
 import ListingCard from './ListingCard.astro';
 import BottomNav from './BottomNav.astro';
+import Sheet from './Sheet.astro';
 import { directionsUrl } from '../../lib/soiguru/geo';
 import { jsonForScript } from '../../lib/soiguru/format';
 import type { Area, City, Listing } from '../../lib/soiguru/data';
@@ -29,9 +32,21 @@ interface Props {
     ownerHref?: string;
     /** Search page: filter by `?q=` */
     search?: boolean;
+    /** Show the inline search field (opened by the top bar's search button) */
+    inlineSearch?: boolean;
 }
 
-const { city, listings, noun, area, lockArea = false, ownerHref, search = false } = Astro.props;
+const { city, listings, noun, area, lockArea = false, ownerHref, search = false, inlineSearch = false } = Astro.props;
+// Amenities offered by at least one result, most common first, for the Filters sheet.
+const amenityCounts = new Map<string, { name: string; name_th?: string; count: number }>();
+for (const l of listings)
+    for (const a of l.amenities.filter((x) => x.available)) {
+        const entry = amenityCounts.get(a.id) ?? { name: a.name, name_th: a.name_th, count: 0 };
+        entry.count += 1;
+        amenityCounts.set(a.id, entry);
+    }
+const amenityOptions = [...amenityCounts.entries()].sort((a, b) => b[1].count - a[1].count).slice(0, 12);
+const priceBands = [1, 2, 3].filter((p) => listings.some((l) => l.price_band === p));
 const pins = listings
     .filter((l) => l.geo)
     .map((l) => ({
@@ -56,47 +71,60 @@ const center = area?.geo ?? city.geo ?? pins[0] ?? { lat: 13.75, lng: 100.5 };
 >
     <div class="tkg-filterbar" role="toolbar" aria-label="Filters">
         <div class="tkg-seg sg-view-seg" role="group" aria-label="View">
-            <button type="button" class="tkg-on" data-view-set="list" aria-pressed="true"><Icon name="list" />List</button>
-            <button type="button" data-view-set="map" aria-pressed="false"><Icon name="map" />Map</button>
+            <button type="button" class="tkg-on" data-view-set="list" aria-pressed="true"><Icon name="list" /><span data-th="รายการ">List</span></button>
+            <button type="button" data-view-set="map" aria-pressed="false"><Icon name="map" /><span data-th="แผนที่">Map</span></button>
         </div>
         <button type="button" class="tkg-chip" data-filter-open aria-pressed="false">
             <Icon name="clock" /><span data-th="เปิดอยู่ตอนนี้">Open now</span>
         </button>
         {
             !lockArea && city.areas.length > 1 && (
-                <label class="tkg-chip sg-chip-select" data-area-chip>
+                <button type="button" class="tkg-chip" data-sheet-open="area" data-area-chip aria-haspopup="dialog">
                     <span data-area-label>{area?.name ?? 'All areas'}</span>
                     <Icon name="chevron-down" />
-                    <select data-filter-area aria-label="Area">
-                        <option value="">All areas</option>
-                        {city.areas.map((a) => (
-                            <option value={a.id} selected={a.id === area?.id}>
-                                {a.name}
-                            </option>
-                        ))}
-                    </select>
-                </label>
+                </button>
             )
         }
         <label class="tkg-chip sg-chip-select">
             <span data-sort-label>Top rated</span>
             <Icon name="chevron-down" />
             <select data-filter-sort aria-label="Sort">
-                <option value="rating">Top rated</option>
-                <option value="nearest">Nearest</option>
-                <option value="updated">Recently updated</option>
+                <option value="rating" data-th="คะแนนสูงสุด">Top rated</option>
+                <option value="nearest" data-th="ใกล้ที่สุด">Nearest</option>
+                <option value="updated" data-th="อัปเดตล่าสุด">Recently updated</option>
             </select>
         </label>
+        <button type="button" class="tkg-chip" data-sheet-open="filters" aria-haspopup="dialog" data-filters-chip>
+            <Icon name="filter" /><span data-th="ตัวกรอง">Filters</span><span class="sg-chip-count" data-filter-count hidden></span>
+        </button>
     </div>
 
+    {
+        inlineSearch && (
+            <div class="sg-search-wrap" data-inline-search hidden>
+                <label class="tkg-search">
+                    <Icon name="search" />
+                    <span class="sg-visually-hidden">Search these results</span>
+                    <input type="search" data-filter-q placeholder="Name, street, LINE… · ชื่อร้าน" autocomplete="off" enterkeyhint="search" />
+                </label>
+            </div>
+        )
+    }
+
     <div class="tkg-map sg-results-map" data-map data-center={`${center.lat},${center.lng}`}>
-        <button type="button" class="tkg-map-pill sg-show-map" data-view-set="map"><Icon name="map" />Show map</button>
+        <button type="button" class="tkg-map-pill sg-show-map" data-view-set="map"><Icon name="map" /><span data-th="ดูแผนที่">Show map</span></button>
+        <button type="button" class="tkg-map-pill sg-area-pill" data-search-area hidden><Icon name="search" /><span data-th="ค้นหาในบริเวณนี้">Search this area</span></button>
         <div class="sg-sheet" data-sheet hidden>
             <div class="sg-sheet-grip"></div>
+            <div class="sg-sheet-nav">
+                <button type="button" class="tkg-iconbtn" data-sheet-step="-1" aria-label="Previous place"><Icon name="chevron-left" /></button>
+                <span class="tkg-small tkg-muted" data-sheet-pos></span>
+                <button type="button" class="tkg-iconbtn" data-sheet-step="1" aria-label="Next place"><Icon name="chevron-right" /></button>
+            </div>
             <div data-sheet-card></div>
             <div class="sg-sheet-actions">
-                <a class="tkg-btn tkg-btn-sm" data-sheet-directions target="_blank" rel="noopener"><Icon name="navigation" />Directions</a>
-                <a class="tkg-btn tkg-btn-secondary tkg-btn-sm" data-sheet-view>View listing</a>
+                <a class="tkg-btn tkg-btn-sm" data-sheet-directions target="_blank" rel="noopener"><Icon name="navigation" /><span data-th="นำทาง">Directions</span></a>
+                <a class="tkg-btn tkg-btn-secondary tkg-btn-sm" data-sheet-view><span data-th="ดูรายละเอียด">View listing</span></a>
             </div>
         </div>
     </div>
@@ -112,6 +140,9 @@ const center = area?.geo ?? city.geo ?? pins[0] ?? { lat: 13.75, lng: 100.5 };
                     <span data-count-open>{listings.length} {noun}</span>
                     <small data-count-total>in {area?.name ?? city.name}</small>
                 </h2>
+                <button type="button" class="tkg-btn tkg-btn-ghost tkg-btn-sm" data-clear-bounds hidden>
+                    <Icon name="close" /><span data-th="ทั้งหมด">Whole map</span>
+                </button>
             </div>
             <div class="tkg-list" data-results>
                 {listings.map((listing) => <ListingCard listing={listing} />)}
@@ -120,13 +151,74 @@ const center = area?.geo ?? city.geo ?? pins[0] ?? { lat: 13.75, lng: 100.5 };
                 {listings.length === 0 ? `Nothing listed here yet.` : `No places match these filters.`}
             </p>
             <div class="tkg-pad" style="padding-top:12px;padding-bottom:16px;display:flex;flex-direction:column;gap:8px">
-                <button type="button" class="tkg-btn tkg-btn-secondary tkg-btn-block" data-show-more hidden>Show more</button>
+                <button type="button" class="tkg-btn tkg-btn-secondary tkg-btn-block" data-show-more hidden><span data-th="ดูเพิ่มเติม">Show more</span></button>
                 <button type="button" class="tkg-btn tkg-btn-secondary tkg-btn-block" data-show-closed hidden></button>
             </div>
         </div>
     </div>
 </div>
 <BottomNav city={city} active="search" ownerHref={ownerHref} />
+
+{
+    !lockArea && city.areas.length > 1 && (
+        <Sheet id="area" title="Area" titleTh="พื้นที่">
+            <div class="sg-chip-wrap">
+                <button type="button" class="tkg-chip" data-area-set="" data-sheet-close>
+                    All of {city.name}
+                </button>
+                {city.areas.map((a) => (
+                    <button type="button" class="tkg-chip" data-area-set={a.id} data-area-name={a.name} data-area-name-th={a.name_th} data-sheet-close>
+                        {a.name} {a.name_th && <small lang="th">{a.name_th}</small>}
+                    </button>
+                ))}
+            </div>
+        </Sheet>
+    )
+}
+
+<Sheet id="filters" title="Filters" titleTh="ตัวกรอง">
+    {
+        priceBands.length > 1 && (
+            <fieldset class="sg-fieldset">
+                <legend data-th="ราคา">Price</legend>
+                <div class="sg-chip-wrap">
+                    {priceBands.map((p) => (
+                        <button type="button" class="tkg-chip" data-f-price={p} aria-pressed="false">
+                            {'฿'.repeat(p)}
+                        </button>
+                    ))}
+                </div>
+            </fieldset>
+        )
+    }
+    <fieldset class="sg-fieldset">
+        <legend data-th="ตัวเลือก">Show only</legend>
+        <div class="sg-chip-wrap">
+            <button type="button" class="tkg-chip" data-f-toggle="rating" aria-pressed="false"><Icon name="star" /><span data-th="คะแนน 4 ขึ้นไป">Rated 4+</span></button>
+            <button type="button" class="tkg-chip" data-f-toggle="line" aria-pressed="false"><Icon name="line" />LINE</button>
+            <button type="button" class="tkg-chip" data-f-toggle="wa" aria-pressed="false"><Icon name="whatsapp" />WhatsApp</button>
+            <button type="button" class="tkg-chip" data-f-toggle="verified" aria-pressed="false"><Icon name="shield" /><span data-th="เจ้าของยืนยันแล้ว">Verified owners</span></button>
+        </div>
+    </fieldset>
+    {
+        amenityOptions.length > 0 && (
+            <fieldset class="sg-fieldset">
+                <legend data-th="สิ่งอำนวยความสะดวก">Good to know</legend>
+                <div class="sg-chip-wrap">
+                    {amenityOptions.map(([id, a]) => (
+                        <button type="button" class="tkg-chip" data-f-amenity={id} aria-pressed="false">
+                            <span data-th={a.name_th}>{a.name}</span>
+                        </button>
+                    ))}
+                </div>
+            </fieldset>
+        )
+    }
+    <Fragment slot="footer">
+        <button type="button" class="tkg-btn tkg-btn-ghost" data-f-clear><span data-th="ล้าง">Clear</span></button>
+        <button type="button" class="tkg-btn" data-sheet-close data-f-apply><span data-th="แสดงสถานที่">Show places</span></button>
+    </Fragment>
+</Sheet>
 <script is:inline type="application/json" data-pins set:html={jsonForScript(pins)} />
 <script>
     import '../../scripts/soiguru/results';

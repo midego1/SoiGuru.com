@@ -53,11 +53,11 @@ const siteUrl = (Astro.site?.href ?? '').replace(/\/$/, '');
     jsonLd={[breadcrumbJsonLd(siteUrl, [[config.company_name, '/'], [city.name, `/${city.id}`], [title, path]])]}
 >
     <TopBar back={{ href: `/${city.id}`, label: `Back to ${city.name}` }} title={titleTh ? `${title} · ${titleTh}` : title} subtitle={subtitle} nav={{ city, ownerHref: claimUrl(config) }}>
-        <a class="tkg-iconbtn" href={`/${city.id}/search`} aria-label="Search">
+        <button type="button" class="tkg-iconbtn" data-search-toggle aria-expanded="false" aria-label={`Search ${title}`}>
             <Icon name="search" />
-        </a>
+        </button>
     </TopBar>
     <main>
-        <CategoryResults city={city} listings={listings} noun={noun} area={area} lockArea={!!area} ownerHref={claimUrl(config)} />
+        <CategoryResults city={city} listings={listings} noun={noun} area={area} lockArea={!!area} ownerHref={claimUrl(config)} inlineSearch />
     </main>
 </SoiGuruLayout>

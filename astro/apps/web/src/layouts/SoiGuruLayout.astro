@@ -6,6 +6,9 @@
  * script that computes open status, distances and the language swap in the browser.
  *
  * Phone first: one 640px column; `wide` lets a screen (results) use the full width.
+ *
+ * Every SoiGuru page also exists in Thai under `/th/…`: the `soiguru-thai` integration
+ * writes those copies after the build from this HTML (`data-path-en` names the twin).
  */
 import { generateMetaTags } from '@ever-works/plugin-seo';
 import type { SiteConfig } from '@ever-works/core';
@@ -38,7 +41,7 @@ const metaTags = generateMetaTags({ title, description, url: canonical, type: 'w
 ---
 
 <!doctype html>
-<html lang="en" data-lang="en">
+<html lang="en" data-lang="en" data-path-en={path}>
     <head>
         <meta charset="utf-8" />
         <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
@@ -51,6 +54,9 @@ const metaTags = generateMetaTags({ title, description, url: canonical, type: 'w
         }
         {noindex && <meta name="robots" content="noindex" />}
         <link rel="canonical" href={canonical} />
+        <link rel="alternate" hreflang="en" href={canonical} />
+        <link rel="alternate" hreflang="th" href={`${siteUrl}/th${path === '/' ? '/' : path}`} />
+        <link rel="alternate" hreflang="x-default" href={canonical} />
         {config.logo?.favicon && <link rel="icon" href={config.logo.favicon} />}
         <link rel="preconnect" href="https://fonts.googleapis.com" />
         <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
@@ -67,6 +73,8 @@ const metaTags = generateMetaTags({ title, description, url: canonical, type: 'w
         </div>
         <script>
             import '../scripts/soiguru/page';
+            import '../scripts/soiguru/sheet';
+            import '../scripts/soiguru/saved';
         </script>
     </body>
 </html>

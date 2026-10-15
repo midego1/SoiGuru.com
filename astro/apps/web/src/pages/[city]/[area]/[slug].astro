@@ -17,6 +17,7 @@ import HoursTable from '../../../components/soiguru/HoursTable.astro';
 import StaticMap from '../../../components/soiguru/StaticMap.astro';
 import ClaimBox from '../../../components/soiguru/ClaimBox.astro';
 import ListingCard from '../../../components/soiguru/ListingCard.astro';
+import SaveButton from '../../../components/soiguru/SaveButton.astro';
 import { getSoiGuru, claimUrl, reportUrl, type Listing } from '../../../lib/soiguru/data';
 import { breadcrumbJsonLd, localBusinessJsonLd } from '../../../lib/soiguru/jsonld';
 import { priceBand, formatDate } from '../../../lib/soiguru/format';
@@ -78,6 +79,7 @@ const trail: [string, string][] = [
         subtitleTh={[category?.name_th, area?.name_th].filter(Boolean).join(' · ') || undefined}
         nav={{ city, ownerHref: claimUrl(config) }}
     >
+        <SaveButton slug={listing.slug} />
         <button type="button" class="tkg-iconbtn" aria-label="Share" data-share={`${siteUrl}${listing.url}`} data-share-title={listing.name}>
             <Icon name="external" />
         </button>
@@ -90,11 +92,19 @@ const trail: [string, string][] = [
             {
                 listing.images.length > 0 && (
                     <div class="tkg-strip" style="position:relative">
-                        <div class="sg-strip-photo"><ListingPhoto listing={listing} index={0} size={260} loading="eager" /></div>
+                        <button type="button" class="sg-strip-photo sg-photo-btn" data-gallery-open="0" aria-label="Open photos">
+                            <ListingPhoto listing={listing} index={0} size={260} loading="eager" />
+                        </button>
                         {listing.images.length > 1 && (
                             <div class="tkg-strip-side">
-                                <ListingPhoto listing={listing} index={1} size={130} />
-                                {listing.images.length > 2 && <ListingPhoto listing={listing} index={2} size={130} />}
+                                <button type="button" class="sg-photo-btn" data-gallery-open="1" aria-label="Open photo 2">
+                                    <ListingPhoto listing={listing} index={1} size={130} />
+                                </button>
+                                {listing.images.length > 2 && (
+                                    <button type="button" class="sg-photo-btn" data-gallery-open="2" aria-label="Open photo 3">
+                                        <ListingPhoto listing={listing} index={2} size={130} />
+                                    </button>
+                                )}
                             </div>
                         )}
                         <span class="tkg-strip-count">
@@ -116,7 +126,7 @@ const trail: [string, string][] = [
                             </span>
                         )
                     }
-                    {listing.sample && <span class="tkg-badge tkg-badge-outline">Sample listing</span>}
+                    {listing.sample && <span class="tkg-badge tkg-badge-outline" data-th="ตัวอย่าง">Sample listing</span>}
                 </div>
                 {subTitle && <div class="tkg-body tkg-muted" style="margin-top:2px">{subTitle}</div>}
                 <div class="tkg-hstack" style="margin-top:8px;gap:12px">
@@ -177,7 +187,7 @@ const trail: [string, string][] = [
             }
 
             <section class="tkg-section sg-about-sec">
-                <div class="tkg-section-h"><h2>About</h2></div>
+                <div class="tkg-section-h"><h2 data-th="เกี่ยวกับ">About</h2></div>
                 <p class="tkg-body tkg-pad" style="margin:0">{listing.description}</p>
                 {listing.description_th && <p class="tkg-body tkg-pad tkg-muted tkg-th" lang="th" style="margin:8px 0 0">{listing.description_th}</p>}
             </section>
@@ -186,8 +196,8 @@ const trail: [string, string][] = [
                 nearby.length > 0 && (
                     <section class="tkg-section sg-nearby-sec" data-open-now data-limit="2">
                         <div class="tkg-section-h">
-                            <h2>Nearby · open now</h2>
-                            {category && <a href={`/${city.id}/${area?.id ?? ''}`}>More</a>}
+                            <h2 data-th="ใกล้เคียง · เปิดอยู่">Nearby · open now</h2>
+                            {category && <a href={`/${city.id}/${area?.id ?? ''}`} data-th="เพิ่มเติม">More</a>}
                         </div>
                         <div class="tkg-rows">
                             {nearby.map(({ l, d }, i) => (
@@ -215,7 +225,7 @@ const trail: [string, string][] = [
                     {report && (
                         <>
                             {' · '}
-                            <a href={report}>Suggest an edit</a>
+                            <a href={report} data-th="เสนอการแก้ไข">Suggest an edit</a>
                         </>
                     )}
                 </div>
@@ -231,7 +241,7 @@ const trail: [string, string][] = [
                     <section class="tkg-section sg-where-sec">
                         <div class="tkg-section-h">
                             <h2>
-                                Where{listing.address && <small>{listing.address}</small>}
+                                <span data-th="ที่ตั้ง">Where</span>{listing.address && <small>{listing.address}</small>}
                             </h2>
                             <a href={directionsUrl(listing.geo)} target="_blank" rel="noopener">
                                 Directions
@@ -264,9 +274,40 @@ const trail: [string, string][] = [
             </div>
         )
     }
+
+    {
+        listing.images.length > 0 && (
+            <dialog class="sg-gallery" data-gallery aria-label={`Photos of ${listing.name}`}>
+                <div class="sg-gallery-bar">
+                    <span data-gallery-pos>1 / {listing.images.length}</span>
+                    <button type="button" class="tkg-iconbtn" data-gallery-close aria-label="Close">
+                        <Icon name="close" />
+                    </button>
+                </div>
+                <div class="sg-gallery-track" data-gallery-track>
+                    {listing.images.map((src, i) => (
+                        <figure>
+                            <img src={src} alt={`${listing.name}, photo ${i + 1}`} loading="lazy" decoding="async" />
+                        </figure>
+                    ))}
+                </div>
+                {listing.images.length > 1 && (
+                    <>
+                        <button type="button" class="sg-gallery-step sg-gallery-prev" data-gallery-step="-1" aria-label="Previous photo">
+                            <Icon name="chevron-left" />
+                        </button>
+                        <button type="button" class="sg-gallery-step sg-gallery-next" data-gallery-step="1" aria-label="Next photo">
+                            <Icon name="chevron-right" />
+                        </button>
+                    </>
+                )}
+            </dialog>
+        )
+    }
 </SoiGuruLayout>
 
 <script>
+    import '../../../scripts/soiguru/gallery';
     // Share sheet with the clean URL; falls back to copying it.
     for (const btn of document.querySelectorAll<HTMLButtonElement>('[data-share]')) {
         btn.addEventListener('click', async () => {

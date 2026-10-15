@@ -1,0 +1,35 @@
+---
+/**
+ * Sheet — the design's bottom sheet (`radius-lg` top corners, `shadow-sheet`, `overlay`
+ * scrim) as a native `<dialog>`, so focus trapping, Esc and the backdrop come for free.
+ * On desktop it is a centred panel. Opened by any `[data-sheet-open="<id>"]` button
+ * (`scripts/soiguru/sheet.ts`); `[data-sheet-close]` inside closes it.
+ */
+import Icon from './Icon.astro';
+
+interface Props {
+    id: string;
+    title: string;
+    titleTh?: string;
+}
+
+const { id, title, titleTh } = Astro.props;
+---
+
+<dialog class="sg-dialog" data-sheet-dialog={id} aria-labelledby={`sheet-${id}-title`}>
+    <div class="sg-dialog-grip" aria-hidden="true"></div>
+    <div class="sg-dialog-head">
+        <h2 id={`sheet-${id}-title`} class="tkg-heading" data-th={titleTh}>{title}</h2>
+        <button type="button" class="tkg-iconbtn" data-sheet-close aria-label="Close"><Icon name="close" /></button>
+    </div>
+    <div class="sg-dialog-body">
+        <slot />
+    </div>
+    {
+        Astro.slots.has('footer') && (
+            <div class="sg-dialog-foot">
+                <slot name="footer" />
+            </div>
+        )
+    }
+</dialog>

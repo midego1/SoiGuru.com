@@ -1,14 +1,14 @@
 ---
 /**
- * BottomNav — Home, Search, Owner. "Saved" from the design needs accounts or device
- * storage and is left for the Next.js app; Owner goes to the claim flow.
+ * BottomNav — Home, Search, Saved, Owner. Saved lists the places saved on this device;
+ * Owner goes to the claim flow (the Next.js app).
  */
 import Icon from './Icon.astro';
 import type { City } from '../../lib/soiguru/data';
 
 interface Props {
     city: City;
-    active: 'home' | 'search';
+    active?: 'home' | 'search' | 'saved';
     /** Claim flow URL; the Owner tab is omitted without one */
     ownerHref?: string;
 }
@@ -16,12 +16,15 @@ interface Props {
 const { city, active, ownerHref } = Astro.props;
 ---
 
-<nav class="tkg-nav sg-nav" aria-label="Main" style={ownerHref ? undefined : 'grid-template-columns: repeat(2, 1fr)'}>
+<nav class="tkg-nav sg-nav" aria-label="Main" style={ownerHref ? undefined : 'grid-template-columns: repeat(3, 1fr)'}>
     <a href={`/${city.id}`} class:list={{ 'tkg-on': active === 'home' }} aria-current={active === 'home' ? 'page' : undefined}>
         <Icon name="home" /><span data-th="หน้าแรก">Home</span>
     </a>
     <a href={`/${city.id}/search`} class:list={{ 'tkg-on': active === 'search' }} aria-current={active === 'search' ? 'page' : undefined}>
         <Icon name="search" /><span data-th="ค้นหา">Search</span>
+    </a>
+    <a href={`/${city.id}/saved`} class:list={{ 'tkg-on': active === 'saved' }} aria-current={active === 'saved' ? 'page' : undefined}>
+        <Icon name="heart" /><span data-th="บันทึกไว้">Saved</span>
     </a>
     {
         ownerHref && (

@@ -7,7 +7,9 @@
  * - "Updated by the owner 3 days ago" from `data-updated-at`,
  * - distances when location permission is already granted (or after "Near me"),
  * - the "Open now" short list on the city home,
- * - the EN / ไทย language swap of every `[data-th]` text, remembered on the device.
+ * - the EN / ไทย language: `/th/…` pages are Thai from the server; elsewhere a stored
+ *   Thai choice swaps every `[data-th]` text. The toggle goes to the other language's URL,
+ * - today's row first in hours tables (the design's "today first").
  *
  * Other scripts listen for `sg:refresh` (statuses recomputed) and `sg:location`.
  */
@@ -30,7 +32,17 @@ function readLang(): Lang {
     }
 }
 
-let lang: Lang = readLang();
+/** `/th/…` pages are rendered in Thai at build time; their language is fixed. */
+const serverLang: Lang | null = document.documentElement.dataset['lang'] === 'th' ? 'th' : null;
+let lang: Lang = serverLang ?? readLang();
+
+/** The same page in the other language, when the page has a twin (`data-path-en`). */
+function twinUrl(target: Lang): string | null {
+    const en = document.documentElement.dataset['pathEn'];
+    if (en === undefined) return null;
+    const path = target === 'th' ? `/th${en === '/' ? '/' : en}` : en;
+    return `${path}${location.search}${location.hash}`;
+}
 
 /** Swap `[data-th]` texts to the current language. The English text is kept in `data-en`. */
 function applyLang(): void {
@@ -75,12 +87,18 @@ function refreshStatuses(): void {
         const card = el.closest<HTMLElement>('[data-listing]');
         if (card) card.dataset['open'] = status.isOpen ? '1' : '0';
     }
-    // Today's row in hours tables.
-    for (const row of document.querySelectorAll<HTMLTableRowElement>('[data-hours-table] tr[data-days]')) {
-        const today = (row.dataset['days'] ?? '').split(' ').includes(clock.day);
-        row.classList.toggle('tkg-today', today);
-        const label = row.querySelector<HTMLElement>('.sg-today-label');
-        if (label) label.hidden = !today;
+    // Today's row in hours tables, moved to the top (the rows keep their weekly order after it).
+    for (const table of document.querySelectorAll<HTMLElement>('[data-hours-table]')) {
+        const rows = [...table.querySelectorAll<HTMLTableRowElement>('tr[data-days]')];
+        rows.sort((a, b) => Number(a.dataset['order'] ?? 0) - Number(b.dataset['order'] ?? 0));
+        const todayAt = rows.findIndex((row) => (row.dataset['days'] ?? '').split(' ').includes(clock.day));
+        rows.forEach((row, i) => {
+            const today = i === todayAt;
+            row.classList.toggle('tkg-today', today);
+            const label = row.querySelector<HTMLElement>('.sg-today-label');
+            if (label) label.hidden = !today;
+        });
+        if (todayAt > 0) for (const row of [...rows.slice(todayAt), ...rows.slice(0, todayAt)]) row.parentElement?.append(row);
     }
     // Local time line on the city home.
     for (const el of document.querySelectorAll<HTMLElement>('[data-local-time]')) {
@@ -181,12 +199,19 @@ document.addEventListener('click', (event) => {
     const target = event.target instanceof Element ? event.target : null;
     const langBtn = target?.closest<HTMLElement>('[data-lang-set]');
     if (langBtn) {
-        lang = langBtn.dataset['langSet'] === 'th' ? 'th' : 'en';
+        const chosen: Lang = langBtn.dataset['langSet'] === 'th' ? 'th' : 'en';
         try {
-            localStorage.setItem(LANG_KEY, lang);
+            localStorage.setItem(LANG_KEY, chosen);
         } catch {
             // Private mode: the choice lasts for this page only.
         }
+        // Pages with a twin switch URL, so the address bar and shared links carry the language.
+        const twin = twinUrl(chosen);
+        if (twin && (serverLang ?? 'en') !== chosen) {
+            location.href = twin;
+            return;
+        }
+        lang = chosen;
         applyLang();
         refreshStatuses();
     }

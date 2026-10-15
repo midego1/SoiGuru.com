@@ -173,6 +173,7 @@ function toListing(
     const updatedBy = str(item['updated_by']);
     const images = Array.isArray(item.images) ? item.images.filter((i): i is string => typeof i === 'string') : [];
     const name_th = str(item['name_th']);
+    const amenities = toAmenities(item['amenities'], amenityLabels);
     const listing: Listing = {
         slug: item.slug,
         name: item.name,
@@ -195,7 +196,7 @@ function toListing(
         rating: num(item['rating']),
         rating_count: num(item['rating_count']),
         claimed: item['claimed'] === true,
-        amenities: toAmenities(item['amenities'], amenityLabels),
+        amenities,
         updated_by: updatedBy === 'owner' || updatedBy === 'import' || updatedBy === 'editor' ? updatedBy : undefined,
         updated_at: updatedAtIso(item.updated_at),
         images,
@@ -210,6 +211,9 @@ function toListing(
             area?.name,
             area?.name_th,
             str(item['address']),
+            item.description,
+            str(item['description_th']),
+            ...amenities.filter((a) => a.available).flatMap((a) => [a.name, a.name_th]),
             ...item.tags
         ]
             .filter(Boolean)

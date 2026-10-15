@@ -4,9 +4,7 @@
  * channel is left out and the grid reflows; never a disabled button. Below it the raw
  * phone and LINE id in text (copyable) and the owner's booking note.
  *
- * The LINE and WhatsApp buttons use their brand fills. The design calls for the official
- * marks from each company's brand resources; until those files are added this uses the
- * generic chat glyph, as the design previews do.
+ * The LINE and WhatsApp buttons use their brand fills and marks (`BRAND_PATHS`).
  */
 import Icon from './Icon.astro';
 import { formatThaiPhone, lineUrl, telUrl, whatsappUrl } from '../../lib/soiguru/format';
@@ -20,8 +18,8 @@ interface Props {
 const { listing } = Astro.props;
 const buttons = [
     listing.phone && { href: telUrl(listing.phone), cls: '', icon: 'phone', label: 'Call · โทร', channel: 'call' },
-    listing.line_id && { href: lineUrl(listing.line_id), cls: 'tkg-c-line', icon: 'chat', label: 'LINE', channel: 'line' },
-    listing.whatsapp && { href: whatsappUrl(listing.whatsapp), cls: 'tkg-c-wa', icon: 'chat', label: 'WhatsApp', channel: 'whatsapp' },
+    listing.line_id && { href: lineUrl(listing.line_id), cls: 'tkg-c-line', icon: 'line', label: 'LINE', channel: 'line' },
+    listing.whatsapp && { href: whatsappUrl(listing.whatsapp), cls: 'tkg-c-wa', icon: 'whatsapp', label: 'WhatsApp', channel: 'whatsapp' },
     listing.geo && { href: directionsUrl(listing.geo), cls: 'tkg-c-primary', icon: 'navigation', label: 'Directions', channel: 'directions' },
 ].filter((b): b is { href: string; cls: string; icon: string; label: string; channel: string } => Boolean(b));
 const facts = [

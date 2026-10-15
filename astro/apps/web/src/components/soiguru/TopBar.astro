@@ -27,7 +27,7 @@ interface Props {
     subtitle?: string;
     subtitleTh?: string;
     /** Desktop navigation for a city (hidden on phones, where BottomNav is used) */
-    nav?: { city: City; active?: 'home' | 'search'; ownerHref?: string };
+    nav?: { city: City; active?: 'home' | 'search' | 'saved'; ownerHref?: string };
 }
 
 const { city, back, title, titleTh, subtitle, subtitleTh, nav } = Astro.props;

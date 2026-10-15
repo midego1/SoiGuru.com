@@ -53,7 +53,7 @@ const owner = claimUrl(config);
                 <Icon name="pin" class="tkg-i-16" />
                 {' '}<span data-th={area?.name_th ?? city.name_th}>{area?.name ?? city.name}</span> · <span data-local-time></span>
             </div>
-            <h1 class="tkg-display">Find anything<br />in {city.name}</h1>
+            <h1 class="tkg-display"><span data-th="ค้นหาทุกอย่าง">Find anything</span><br /><span data-th={city.name_th ? `ใน${city.name_th}` : ''}>in {city.name}</span></h1>
             <SearchBar city={city} hints area={area} />
         </div>
 

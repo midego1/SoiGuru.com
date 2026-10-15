@@ -2017,8 +2017,8 @@ default applied until the owner decides.
 2. **Map tiles.** [DEFAULT] `tile.openstreetmap.org` with attribution (fine for low traffic under the
    OSM tile policy). Alternatives: a self-hosted vector style (design README), MapTiler/Stadia with a key,
    Apple MapKit JS (wanted later).
-3. **Thai UI.** [DEFAULT] Client-side swap of `[data-th]` texts, remembered on the device. Alternative:
-   a `/th/…` URL prefix with pre-rendered Thai pages (better for Thai search).
+3. **Thai UI.** [DECIDED 2026-10-15] Pre-rendered `/th/…` pages from a post-build integration, plus the
+   client-side swap for visitors who toggle on an English URL.
 4. **Claim and report targets.** [DEFAULT] `claim_url` / `contact_email` in `works.yml`; buttons hide
    when unset. The claim flow itself lives in the Next.js app.
 
