@@ -1,0 +1,59 @@
+name: Baan Kafae Night Bazaar
+name_th: บ้านกาแฟ ไนท์บาซาร์
+description: Coffee, fruit shakes and a small breakfast menu. In Night Bazaar, Chiang Mai.
+description_th: กาแฟ น้ำผลไม้ปั่น และเมนูอาหารเช้า ที่ไนท์บาซาร์
+source_url: ''
+category: cafes
+tags:
+- sample
+- northern-thai
+featured: false
+status: approved
+sample: true
+city: chiang-mai
+area: night-bazaar
+address: 81/19 Moo 8, Night Bazaar, Chiang Mai 50200
+geo:
+  lat: 18.78315
+  lng: 98.99306
+location:
+  address: 81/19 Moo 8, Night Bazaar, Chiang Mai 50200
+  city: Chiang Mai
+  country: TH
+  latitude: 18.78315
+  longitude: 98.99306
+phone: "+66800001129"
+line_id: '@sample-baankafaenightbaza'
+hours:
+  mon:
+  - 08:00-18:00
+  tue:
+  - 08:00-18:00
+  wed:
+  - 08:00-18:00
+  thu:
+  - 08:00-18:00
+  fri:
+  - 08:00-18:00
+  sat:
+  - 08:00-18:00
+  sun:
+  - 08:00-18:00
+price_band: 1
+rating: 4.5
+rating_count: 299
+claimed: false
+amenities:
+  vegetarian: true
+  air-con: true
+updated_by: import
+updated_at: "2026-08-11 08:30"
+markdown: '> **SAMPLE listing.** This business is invented for development and design review. Do not publish.
+
+
+  Coffee, fruit shakes and a small breakfast menu. In Night Bazaar, Chiang Mai.
+
+
+  Latte ฿60, breakfast sets from ฿1200. Walk-ins welcome.
+
+  '

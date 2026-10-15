@@ -2,13 +2,13 @@
 
 Content repository for [SoiGuru.com](https://soiguru.com): cities, areas, categories and listings. It uses the Ever Works data format (same layout as `ever-works/awesome-time-tracking-data`) and is read by both site templates through `DATA_REPOSITORY`.
 
-> **All 15 listings in `data/` are SAMPLE businesses** (`sample: true`, tag `sample`, phone numbers `+668000001xx`–`+668000003xx`, LINE ids `@sample-…`). They exist for development and design review. Replace them before launch.
+> **All listings in `data/` are SAMPLE businesses** (`sample: true`, tag `sample`, phone numbers starting `+66800`, LINE ids `@sample-…`). They exist for development and design review. Replace them before launch.
 
 ## Layout
 
 ```
 .works/works.yml      site config (auth: credentials only)
-categories.yml        shared categories, all cities (id, name, short_name, name_th, icon = TKG icon name, description, priority)
+categories.yml        shared categories, all cities (id, name, name_th, description, priority)
 cities.yml            cities and their areas (SoiGuru extension)
 amenities.yml         amenity ids with EN/TH labels (SoiGuru extension)
 tags.yml              tags (id, name)

@@ -1,0 +1,67 @@
+name: Somboon Noodles Old City
+name_th: ก๋วยเตี๋ยวสมบูรณ์ คูเมือง
+description: Thai home cooking and fresh seafood, cooked to order. In Old City, Chiang Mai.
+description_th: อาหารไทยแบบบ้านๆ และอาหารทะเลสด ทำสดใหม่ทุกจาน ที่คูเมือง
+source_url: ''
+category: restaurants
+tags:
+- sample
+- open-late
+- northern-thai
+featured: false
+status: approved
+sample: true
+city: chiang-mai
+area: old-city
+address: 111/17 Moo 6, Old City, Chiang Mai 50200
+geo:
+  lat: 18.78162
+  lng: 98.99343
+location:
+  address: 111/17 Moo 6, Old City, Chiang Mai 50200
+  city: Chiang Mai
+  country: TH
+  latitude: 18.78162
+  longitude: 98.99343
+phone: "+66800001094"
+whatsapp: "+66800001094"
+hours:
+  mon:
+  - 10:00-15:00
+  - 17:00-22:00
+  tue:
+  - 10:00-15:00
+  - 17:00-22:00
+  wed: []
+  thu:
+  - 10:00-15:00
+  - 17:00-22:00
+  fri:
+  - 10:00-15:00
+  - 17:00-22:00
+  sat:
+  - 10:00-15:00
+  - 17:00-22:00
+  sun:
+  - 10:00-15:00
+  - 17:00-22:00
+price_band: 1
+rating: 4.8
+rating_count: 386
+claimed: true
+amenities:
+  vegetarian: true
+  halal: true
+  english-spoken: true
+  wifi: false
+updated_by: owner
+updated_at: "2026-08-01 17:15"
+markdown: '> **SAMPLE listing.** This business is invented for development and design review. Do not publish.
+
+
+  Thai home cooking and fresh seafood, cooked to order. In Old City, Chiang Mai.
+
+
+  Mains from ฿80. Card and QR payment accepted.
+
+  '

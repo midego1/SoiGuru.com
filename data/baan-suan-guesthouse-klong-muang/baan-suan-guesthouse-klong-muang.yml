@@ -1,0 +1,62 @@
+name: Baan Suan Guesthouse Klong Muang
+name_th: บ้านสวน เกสต์เฮาส์ คลองม่วง
+description: Clean rooms, friendly staff and a quiet location. In Klong Muang, Krabi.
+description_th: ห้องพักสะอาด พนักงานเป็นมิตร ทำเลเงียบสงบ ที่คลองม่วง
+source_url: ''
+category: hotels
+tags:
+- sample
+- family-friendly
+- budget
+featured: false
+status: approved
+sample: true
+city: krabi
+area: klong-muang
+address: 107/5 Moo 5, Klong Muang, Krabi 81180
+geo:
+  lat: 8.06018
+  lng: 98.75704
+location:
+  address: 107/5 Moo 5, Klong Muang, Krabi 81180
+  city: Krabi
+  country: TH
+  latitude: 8.06018
+  longitude: 98.75704
+phone: "+66800001091"
+line_id: '@sample-baansuanguesthouse'
+whatsapp: "+66800001091"
+hours:
+  mon:
+  - 00:00-24:00
+  tue:
+  - 00:00-24:00
+  wed:
+  - 00:00-24:00
+  thu:
+  - 00:00-24:00
+  fri:
+  - 00:00-24:00
+  sat:
+  - 00:00-24:00
+  sun:
+  - 00:00-24:00
+price_band: 3
+rating: 4.2
+rating_count: 240
+claimed: false
+amenities:
+  sea-view: true
+  breakfast: true
+  pool: true
+updated_by: import
+updated_at: "2026-09-01 08:00"
+markdown: '> **SAMPLE listing.** This business is invented for development and design review. Do not publish.
+
+
+  Clean rooms, friendly staff and a quiet location. In Klong Muang, Krabi.
+
+
+  Rooms from ฿3500 / night. Family run since 2009.
+
+  '

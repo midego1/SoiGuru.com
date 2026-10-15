@@ -1,0 +1,59 @@
+name: Local Eyes Tours Santitham
+name_th: โลคอล อายส์ ทัวร์ สันติธรรม
+description: Day trips and private tours with a local guide. In Santitham, Chiang Mai.
+description_th: ทริปไปเช้าเย็นกลับและทัวร์ส่วนตัวกับไกด์ท้องถิ่น ที่สันติธรรม
+source_url: ''
+category: tours
+tags:
+- sample
+- northern-thai
+featured: false
+status: approved
+sample: true
+city: chiang-mai
+area: santitham
+address: 116/7 Moo 7, Santitham, Chiang Mai 50200
+geo:
+  lat: 18.79918
+  lng: 98.98219
+location:
+  address: 116/7 Moo 7, Santitham, Chiang Mai 50200
+  city: Chiang Mai
+  country: TH
+  latitude: 18.79918
+  longitude: 98.98219
+phone: "+66800001148"
+line_id: '@sample-localeyestourssant'
+hours:
+  mon:
+  - 08:00-18:00
+  tue:
+  - 08:00-18:00
+  wed:
+  - 08:00-18:00
+  thu:
+  - 08:00-18:00
+  fri:
+  - 08:00-18:00
+  sat:
+  - 08:00-18:00
+  sun:
+  - 08:00-18:00
+price_band: 2
+rating: 4.4
+rating_count: 68
+claimed: true
+amenities:
+  english-spoken: true
+  card-accepted: true
+updated_by: owner
+updated_at: "2026-08-10 09:00"
+markdown: '> **SAMPLE listing.** This business is invented for development and design review. Do not publish.
+
+
+  Day trips and private tours with a local guide. In Santitham, Chiang Mai.
+
+
+  Day trips from ฿150 per person. Card and QR payment accepted.
+
+  '

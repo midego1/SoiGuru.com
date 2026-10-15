@@ -1,0 +1,59 @@
+name: Gel & Go Railay
+name_th: เจล แอนด์ โก ไร่เลย์
+description: Manicure, pedicure, gel colour and nail art. In Railay, Krabi.
+description_th: ทำเล็บมือ เล็บเท้า สีเจล และเพ้นท์เล็บ ที่ไร่เลย์
+source_url: ''
+category: nail-salons
+tags:
+- sample
+- local-favourite
+featured: false
+status: approved
+sample: true
+city: krabi
+area: railay
+address: 111/20 Moo 6, Railay, Krabi 81180
+geo:
+  lat: 8.00433
+  lng: 98.84089
+location:
+  address: 111/20 Moo 6, Railay, Krabi 81180
+  city: Krabi
+  country: TH
+  latitude: 8.00433
+  longitude: 98.84089
+phone: "+66800001038"
+line_id: '@sample-gelandgorailay'
+hours:
+  mon: []
+  tue:
+  - 10:00-19:00
+  wed:
+  - 10:00-19:00
+  thu:
+  - 10:00-19:00
+  fri:
+  - 10:00-19:00
+  sat:
+  - 10:00-19:00
+  sun:
+  - 10:00-19:00
+price_band: 3
+rating: 4.3
+rating_count: 194
+claimed: false
+amenities:
+  walk-ins: true
+  air-con: true
+  card-accepted: false
+updated_by: import
+updated_at: "2026-10-05 12:00"
+markdown: '> **SAMPLE listing.** This business is invented for development and design review. Do not publish.
+
+
+  Manicure, pedicure, gel colour and nail art. In Railay, Krabi.
+
+
+  Gel colour from ฿300. Walk-ins welcome.
+
+  '

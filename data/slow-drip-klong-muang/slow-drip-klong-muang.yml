@@ -1,0 +1,60 @@
+name: Slow Drip Klong Muang
+name_th: สโลว์ ดริป คลองม่วง
+description: Coffee, fruit shakes and a small breakfast menu. In Klong Muang, Krabi.
+description_th: กาแฟ น้ำผลไม้ปั่น และเมนูอาหารเช้า ที่คลองม่วง
+source_url: ''
+category: cafes
+tags:
+- sample
+featured: false
+status: approved
+sample: true
+city: krabi
+area: klong-muang
+address: 204/8 Moo 8, Klong Muang, Krabi 81180
+geo:
+  lat: 8.06153
+  lng: 98.76294
+location:
+  address: 204/8 Moo 8, Klong Muang, Krabi 81180
+  city: Krabi
+  country: TH
+  latitude: 8.06153
+  longitude: 98.76294
+phone: "+66800001074"
+line_id: '@sample-slowdripklongmuang'
+whatsapp: "+66800001074"
+hours:
+  mon:
+  - 09:00-19:00
+  tue:
+  - 09:00-19:00
+  wed:
+  - 09:00-19:00
+  thu:
+  - 09:00-19:00
+  fri:
+  - 09:00-19:00
+  sat:
+  - 09:00-19:00
+  sun:
+  - 09:00-19:00
+price_band: 2
+rating: 4.3
+rating_count: 47
+claimed: false
+amenities:
+  vegetarian: true
+  parking: true
+  wifi: true
+updated_by: import
+updated_at: "2026-08-14 13:45"
+markdown: '> **SAMPLE listing.** This business is invented for development and design review. Do not publish.
+
+
+  Coffee, fruit shakes and a small breakfast menu. In Klong Muang, Krabi.
+
+
+  Latte ฿80, breakfast sets from ฿180. Thai and English spoken.
+
+  '

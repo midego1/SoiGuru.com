@@ -1,0 +1,60 @@
+name: Pool Dive Training Nimman
+name_th: พูล ไดฟ์ เทรนนิ่ง นิมมาน
+description: PADI courses, fun dives and snorkel trips. In Nimman, Chiang Mai.
+description_th: คอร์ส PADI ดำน้ำลึก และทริปดำน้ำตื้น ที่นิมมาน
+source_url: ''
+category: dive-shops
+tags:
+- sample
+- northern-thai
+featured: false
+status: approved
+sample: true
+city: chiang-mai
+area: nimman
+address: 67/8 Moo 6, Nimman, Chiang Mai 50200
+geo:
+  lat: 18.79445
+  lng: 98.96423
+location:
+  address: 67/8 Moo 6, Nimman, Chiang Mai 50200
+  city: Chiang Mai
+  country: TH
+  latitude: 18.79445
+  longitude: 98.96423
+phone: "+66800001123"
+line_id: '@sample-pooldivetrainingni'
+whatsapp: "+66800001123"
+hours:
+  mon:
+  - 07:30-19:00
+  tue:
+  - 07:30-19:00
+  wed:
+  - 07:30-19:00
+  thu:
+  - 07:30-19:00
+  fri:
+  - 07:30-19:00
+  sat:
+  - 07:30-19:00
+  sun: []
+price_band: 3
+rating: 4.3
+rating_count: 233
+claimed: false
+amenities:
+  card-accepted: true
+  padi: true
+  hotel-pickup: false
+updated_by: import
+updated_at: "2026-08-12 20:45"
+markdown: '> **SAMPLE listing.** This business is invented for development and design review. Do not publish.
+
+
+  PADI courses, fun dives and snorkel trips. In Nimman, Chiang Mai.
+
+
+  Two fun dives from ฿1500. Booking by LINE recommended in high season.
+
+  '

@@ -1,0 +1,61 @@
+name: Happy Bike Rental Santitham
+name_th: แฮปปี้ ไบค์ เช่ารถ สันติธรรม
+description: Automatic scooters by the day, week or month. In Santitham, Chiang Mai.
+description_th: เช่ารถมอเตอร์ไซค์ออโต้ รายวัน รายสัปดาห์ หรือรายเดือน ที่สันติธรรม
+source_url: ''
+category: scooter-rental
+tags:
+- sample
+- budget
+- monthly-rental
+- northern-thai
+featured: false
+status: approved
+sample: true
+city: chiang-mai
+area: santitham
+address: 139/11 Moo 1, Santitham, Chiang Mai 50200
+geo:
+  lat: 18.8078
+  lng: 98.98847
+location:
+  address: 139/11 Moo 1, Santitham, Chiang Mai 50200
+  city: Chiang Mai
+  country: TH
+  latitude: 18.8078
+  longitude: 98.98847
+phone: "+66800001151"
+hours:
+  mon:
+  - 08:00-20:00
+  tue:
+  - 08:00-20:00
+  wed:
+  - 08:00-20:00
+  thu:
+  - 08:00-20:00
+  fri:
+  - 08:00-20:00
+  sat:
+  - 08:00-20:00
+  sun:
+  - 08:00-20:00
+price_band: 1
+rating: 4.6
+rating_count: 38
+claimed: false
+amenities:
+  helmet-included: true
+  card-accepted: true
+  english-spoken: true
+updated_by: import
+updated_at: "2026-09-10 08:30"
+markdown: '> **SAMPLE listing.** This business is invented for development and design review. Do not publish.
+
+
+  Automatic scooters by the day, week or month. In Santitham, Chiang Mai.
+
+
+  From ฿120 / day. Passport copy required. Thai and English spoken.
+
+  '

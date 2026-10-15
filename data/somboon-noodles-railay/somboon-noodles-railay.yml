@@ -1,0 +1,60 @@
+name: Somboon Noodles Railay
+name_th: ก๋วยเตี๋ยวสมบูรณ์ ไร่เลย์
+description: Thai home cooking and fresh seafood, cooked to order. In Railay, Krabi.
+description_th: อาหารไทยแบบบ้านๆ และอาหารทะเลสด ทำสดใหม่ทุกจาน ที่ไร่เลย์
+source_url: ''
+category: restaurants
+tags:
+- sample
+featured: false
+status: approved
+sample: true
+city: krabi
+area: railay
+address: 67/6 Moo 8, Railay, Krabi 81180
+geo:
+  lat: 8.00488
+  lng: 98.83686
+location:
+  address: 67/6 Moo 8, Railay, Krabi 81180
+  city: Krabi
+  country: TH
+  latitude: 8.00488
+  longitude: 98.83686
+phone: "+66800001025"
+line_id: '@sample-somboonnoodlesrail'
+whatsapp: "+66800001025"
+hours:
+  mon:
+  - 17:00-23:30
+  tue: []
+  wed:
+  - 17:00-23:30
+  thu:
+  - 17:00-23:30
+  fri:
+  - 17:00-23:30
+  sat:
+  - 17:00-23:30
+  sun:
+  - 17:00-23:30
+price_band: 3
+rating: 4.3
+rating_count: 404
+claimed: false
+amenities:
+  sea-view: true
+  english-spoken: true
+  air-con: true
+  card-accepted: true
+updated_by: import
+updated_at: "2026-10-10 16:00"
+markdown: '> **SAMPLE listing.** This business is invented for development and design review. Do not publish.
+
+
+  Thai home cooking and fresh seafood, cooked to order. In Railay, Krabi.
+
+
+  Mains from ฿120. Card and QR payment accepted.
+
+  '

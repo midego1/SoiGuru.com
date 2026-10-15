@@ -1,0 +1,60 @@
+name: Coconut Roasters Lam Plai Mat
+name_th: โคโคนัท โรสเตอร์ ลำปลายมาศ
+description: Coffee, fruit shakes and a small breakfast menu. In Town centre, Lam Plai Mat.
+description_th: กาแฟ น้ำผลไม้ปั่น และเมนูอาหารเช้า ที่ตัวเมือง
+source_url: ''
+category: cafes
+tags:
+- sample
+- isan
+featured: true
+status: approved
+sample: true
+city: lam-plai-mat
+area: town
+address: 35/2 Moo 7, Town centre, Buriram 31130
+geo:
+  lat: 15.02218
+  lng: 102.83839
+location:
+  address: 35/2 Moo 7, Town centre, Buriram 31130
+  city: Lam Plai Mat
+  country: TH
+  latitude: 15.02218
+  longitude: 102.83839
+phone: "+66800001162"
+line_id: '@sample-coconutroasterslam'
+whatsapp: "+66800001162"
+hours:
+  mon:
+  - 08:00-18:00
+  tue:
+  - 08:00-18:00
+  wed:
+  - 08:00-18:00
+  thu:
+  - 08:00-18:00
+  fri:
+  - 08:00-18:00
+  sat:
+  - 08:00-18:00
+  sun:
+  - 08:00-18:00
+price_band: 1
+rating: 4.3
+rating_count: 244
+claimed: false
+amenities:
+  card-accepted: true
+  wifi: true
+updated_by: import
+updated_at: "2026-09-08 20:30"
+markdown: '> **SAMPLE listing.** This business is invented for development and design review. Do not publish.
+
+
+  Coffee, fruit shakes and a small breakfast menu. In Town centre, Lam Plai Mat.
+
+
+  Latte ฿60, breakfast sets from ฿220. Booking by LINE recommended in high season.
+
+  '

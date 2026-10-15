@@ -1,0 +1,59 @@
+name: Freedive & Scuba Academy Night Bazaar
+name_th: ฟรีไดฟ์ แอนด์ สคูบ้า อคาเดมี่ ไนท์บาซาร์
+description: PADI courses, fun dives and snorkel trips. In Night Bazaar, Chiang Mai.
+description_th: คอร์ส PADI ดำน้ำลึก และทริปดำน้ำตื้น ที่ไนท์บาซาร์
+source_url: ''
+category: dive-shops
+tags:
+- sample
+- northern-thai
+featured: true
+status: approved
+sample: true
+city: chiang-mai
+area: night-bazaar
+address: 56/3 Moo 1, Night Bazaar, Chiang Mai 50200
+geo:
+  lat: 18.78321
+  lng: 99.00154
+location:
+  address: 56/3 Moo 1, Night Bazaar, Chiang Mai 50200
+  city: Chiang Mai
+  country: TH
+  latitude: 18.78321
+  longitude: 99.00154
+phone: "+66800001139"
+whatsapp: "+66800001139"
+hours:
+  mon:
+  - 07:30-19:00
+  tue:
+  - 07:30-19:00
+  wed:
+  - 07:30-19:00
+  thu:
+  - 07:30-19:00
+  fri:
+  - 07:30-19:00
+  sat:
+  - 07:30-19:00
+  sun:
+  - 07:30-19:00
+price_band: 2
+rating: 4.6
+rating_count: 250
+claimed: true
+amenities:
+  card-accepted: true
+  english-spoken: true
+updated_by: owner
+updated_at: "2026-09-08 20:45"
+markdown: '> **SAMPLE listing.** This business is invented for development and design review. Do not publish.
+
+
+  PADI courses, fun dives and snorkel trips. In Night Bazaar, Chiang Mai.
+
+
+  Two fun dives from ฿900. Family run since 2009.
+
+  '

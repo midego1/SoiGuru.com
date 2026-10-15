@@ -1,0 +1,5 @@
+> **SAMPLE listing.** This business is invented for development and design review. Do not publish.
+
+Thai, foot and oil massage by experienced therapists. In Klong Muang, Krabi.
+
+One hour Thai massage from ฿300. Walk-ins welcome.

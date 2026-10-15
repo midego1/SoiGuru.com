@@ -1,0 +1,59 @@
+name: Two Wheels Klong Muang
+name_th: ทู วีลส์ คลองม่วง
+description: Automatic scooters by the day, week or month. In Klong Muang, Krabi.
+description_th: เช่ารถมอเตอร์ไซค์ออโต้ รายวัน รายสัปดาห์ หรือรายเดือน ที่คลองม่วง
+source_url: ''
+category: scooter-rental
+tags:
+- sample
+featured: false
+status: approved
+sample: true
+city: krabi
+area: klong-muang
+address: 150/13 Moo 5, Klong Muang, Krabi 81180
+geo:
+  lat: 8.05628
+  lng: 98.76553
+location:
+  address: 150/13 Moo 5, Klong Muang, Krabi 81180
+  city: Krabi
+  country: TH
+  latitude: 8.05628
+  longitude: 98.76553
+phone: "+66800001084"
+line_id: '@sample-twowheelsklongmuan'
+hours:
+  mon:
+  - 09:00-19:00
+  tue:
+  - 09:00-19:00
+  wed:
+  - 09:00-19:00
+  thu:
+  - 09:00-19:00
+  fri:
+  - 09:00-19:00
+  sat:
+  - 09:00-19:00
+  sun:
+  - 09:00-19:00
+price_band: 2
+rating: 4.6
+rating_count: 164
+claimed: false
+amenities:
+  helmet-included: true
+  card-accepted: true
+  english-spoken: true
+updated_by: import
+updated_at: "2026-09-08 20:15"
+markdown: '> **SAMPLE listing.** This business is invented for development and design review. Do not publish.
+
+
+  Automatic scooters by the day, week or month. In Klong Muang, Krabi.
+
+
+  From ฿250 / day. Passport copy required. Booking by LINE recommended in high season.
+
+  '

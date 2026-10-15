@@ -1,0 +1,60 @@
+name: Pool Dive Training Lam Plai Mat
+name_th: พูล ไดฟ์ เทรนนิ่ง ลำปลายมาศ
+description: PADI courses, fun dives and snorkel trips. In Town centre, Lam Plai Mat.
+description_th: คอร์ส PADI ดำน้ำลึก และทริปดำน้ำตื้น ที่ตัวเมือง
+source_url: ''
+category: dive-shops
+tags:
+- sample
+- isan
+featured: false
+status: approved
+sample: true
+city: lam-plai-mat
+area: town
+address: 203/20 Moo 8, Town centre, Buriram 31130
+geo:
+  lat: 15.02158
+  lng: 102.83826
+location:
+  address: 203/20 Moo 8, Town centre, Buriram 31130
+  city: Lam Plai Mat
+  country: TH
+  latitude: 15.02158
+  longitude: 102.83826
+phone: "+66800001176"
+whatsapp: "+66800001176"
+hours:
+  mon:
+  - 08:00-18:00
+  tue:
+  - 08:00-18:00
+  wed:
+  - 08:00-18:00
+  thu:
+  - 08:00-18:00
+  fri:
+  - 08:00-18:00
+  sat:
+  - 08:00-18:00
+  sun:
+  - 08:00-18:00
+price_band: 1
+rating: 4.5
+rating_count: 42
+claimed: true
+amenities:
+  padi: true
+  hotel-pickup: true
+  english-spoken: false
+updated_by: owner
+updated_at: "2026-08-14 18:30"
+markdown: '> **SAMPLE listing.** This business is invented for development and design review. Do not publish.
+
+
+  PADI courses, fun dives and snorkel trips. In Town centre, Lam Plai Mat.
+
+
+  Two fun dives from ฿2500. Booking by LINE recommended in high season.
+
+  '

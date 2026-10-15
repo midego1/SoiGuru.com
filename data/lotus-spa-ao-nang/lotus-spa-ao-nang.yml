@@ -1,0 +1,60 @@
+name: Lotus Spa Ao Nang
+name_th: โลตัส สปา อ่าวนาง
+description: Thai, foot and oil massage by experienced therapists. In Ao Nang, Krabi.
+description_th: นวดแผนไทย นวดเท้า และนวดน้ำมัน โดยหมอนวดมีประสบการณ์ ที่อ่าวนาง
+source_url: ''
+category: massage
+tags:
+- sample
+featured: true
+status: approved
+sample: true
+city: krabi
+area: ao-nang
+address: 3/12 Moo 7, Ao Nang, Krabi 81180
+geo:
+  lat: 8.03693
+  lng: 98.81706
+location:
+  address: 3/12 Moo 7, Ao Nang, Krabi 81180
+  city: Krabi
+  country: TH
+  latitude: 8.03693
+  longitude: 98.81706
+phone: "+66800001009"
+line_id: '@sample-lotusspaaonang'
+whatsapp: "+66800001009"
+hours:
+  mon:
+  - 10:00-22:00
+  tue:
+  - 10:00-22:00
+  wed:
+  - 10:00-22:00
+  thu:
+  - 10:00-22:00
+  fri:
+  - 10:00-22:00
+  sat:
+  - 10:00-22:00
+  sun: []
+price_band: 2
+rating: 4.0
+rating_count: 304
+claimed: true
+amenities:
+  english-spoken: true
+  air-con: true
+  card-accepted: true
+  walk-ins: false
+updated_by: owner
+updated_at: "2026-09-08 15:00"
+markdown: '> **SAMPLE listing.** This business is invented for development and design review. Do not publish.
+
+
+  Thai, foot and oil massage by experienced therapists. In Ao Nang, Krabi.
+
+
+  One hour Thai massage from ฿80. Booking by LINE recommended in high season.
+
+  '

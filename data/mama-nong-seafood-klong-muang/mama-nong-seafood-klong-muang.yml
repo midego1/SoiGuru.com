@@ -1,0 +1,66 @@
+name: Mama Nong Seafood Klong Muang
+name_th: แม่หนอง ซีฟู้ด คลองม่วง
+description: Thai home cooking and fresh seafood, cooked to order. In Klong Muang, Krabi.
+description_th: อาหารไทยแบบบ้านๆ และอาหารทะเลสด ทำสดใหม่ทุกจาน ที่คลองม่วง
+source_url: ''
+category: restaurants
+tags:
+- sample
+- open-late
+featured: false
+status: approved
+sample: true
+city: krabi
+area: klong-muang
+address: 176/12 Moo 8, Klong Muang, Krabi 81180
+geo:
+  lat: 8.05606
+  lng: 98.76633
+location:
+  address: 176/12 Moo 8, Klong Muang, Krabi 81180
+  city: Krabi
+  country: TH
+  latitude: 8.05606
+  longitude: 98.76633
+phone: "+66800001070"
+line_id: '@sample-mamanongseafoodklo'
+whatsapp: "+66800001070"
+hours:
+  mon:
+  - 10:00-15:00
+  - 17:00-22:00
+  tue: []
+  wed:
+  - 10:00-15:00
+  - 17:00-22:00
+  thu:
+  - 10:00-15:00
+  - 17:00-22:00
+  fri:
+  - 10:00-15:00
+  - 17:00-22:00
+  sat:
+  - 10:00-15:00
+  - 17:00-22:00
+  sun:
+  - 10:00-15:00
+  - 17:00-22:00
+price_band: 2
+rating: 4.8
+rating_count: 308
+claimed: false
+amenities:
+  air-con: true
+  english-spoken: true
+  halal: true
+updated_by: import
+updated_at: "2026-09-06 10:15"
+markdown: '> **SAMPLE listing.** This business is invented for development and design review. Do not publish.
+
+
+  Thai home cooking and fresh seafood, cooked to order. In Klong Muang, Krabi.
+
+
+  Mains from ฿60. Family run since 2009.
+
+  '

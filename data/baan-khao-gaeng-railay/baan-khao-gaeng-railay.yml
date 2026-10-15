@@ -1,0 +1,59 @@
+name: Baan Khao Gaeng Railay
+name_th: บ้านข้าวแกง ไร่เลย์
+description: Thai home cooking and fresh seafood, cooked to order. In Railay, Krabi.
+description_th: อาหารไทยแบบบ้านๆ และอาหารทะเลสด ทำสดใหม่ทุกจาน ที่ไร่เลย์
+source_url: ''
+category: restaurants
+tags:
+- sample
+featured: false
+status: approved
+sample: true
+city: krabi
+area: railay
+address: 85/10 Moo 1, Railay, Krabi 81180
+geo:
+  lat: 8.01198
+  lng: 98.83908
+location:
+  address: 85/10 Moo 1, Railay, Krabi 81180
+  city: Krabi
+  country: TH
+  latitude: 8.01198
+  longitude: 98.83908
+phone: "+66800001027"
+line_id: '@sample-baankhaogaengraila'
+whatsapp: "+66800001027"
+hours:
+  mon:
+  - 11:00-22:00
+  tue:
+  - 11:00-22:00
+  wed:
+  - 11:00-22:00
+  thu:
+  - 11:00-22:00
+  fri:
+  - 11:00-22:00
+  sat:
+  - 11:00-22:00
+  sun:
+  - 11:00-22:00
+price_band: 2
+rating: 4.1
+rating_count: 176
+claimed: true
+amenities:
+  sea-view: true
+  halal: true
+updated_by: owner
+updated_at: "2026-08-01 13:45"
+markdown: '> **SAMPLE listing.** This business is invented for development and design review. Do not publish.
+
+
+  Thai home cooking and fresh seafood, cooked to order. In Railay, Krabi.
+
+
+  Mains from ฿250. Card and QR payment accepted.
+
+  '
