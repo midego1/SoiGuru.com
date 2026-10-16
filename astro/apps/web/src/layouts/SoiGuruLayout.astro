@@ -65,6 +65,8 @@ const metaTags = generateMetaTags({ title, description, url: canonical, type: 'w
             href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@400;500;600;700&family=IBM+Plex+Sans+Thai:wght@400;500;600;700&display=swap"
         />
         {jsonLd.map((ld) => <script is:inline type="application/ld+json" set:html={jsonForScript(ld)} />)}
+        <script is:inline defer src="https://umami.midego.net/script.js" data-website-id="f0546456-1d42-40ae-9008-6be2c6510eaa"></script>
+        <script is:inline defer src="https://umami.midego.net/recorder.js" data-website-id="f0546456-1d42-40ae-9008-6be2c6510eaa"></script>
         <slot name="head" />
     </head>
     <body data-tz={timeZone}>
