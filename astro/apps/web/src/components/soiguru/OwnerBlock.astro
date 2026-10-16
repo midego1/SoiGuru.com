@@ -1,0 +1,59 @@
+---
+/**
+ * OwnerBlock — the "For business owners" band of the website mockup: the pitch on the left,
+ * the price card (฿100 / month, what is included, the accent button) on the right. Stacks on
+ * phones. The compact OwnerCta stays for places that need one line.
+ */
+import Icon from './Icon.astro';
+
+interface Props {
+    /** Claim flow URL; nothing renders without one */
+    href?: string;
+    cityName?: string;
+}
+
+const { href, cityName } = Astro.props;
+const perks: [string, string][] = [
+    ['Your own login, edit any time', 'มีบัญชีของคุณเอง แก้ไขได้ทุกเวลา'],
+    ['Opening hours, photos and a menu', 'เวลาเปิด-ปิด รูปภาพ และเมนู'],
+    ['LINE and WhatsApp buttons', 'ปุ่ม LINE และ WhatsApp'],
+    ['Verified owner badge', 'ป้ายยืนยันเจ้าของร้าน'],
+];
+---
+
+{
+    href && (
+        <section class="sg-wrap sg-owner-sec" aria-labelledby="sg-owner-h">
+            <div class="sg-owner">
+                <div class="sg-owner-pitch">
+                    <p class="sg-eyebrow" data-th="สำหรับเจ้าของธุรกิจ">For business owners</p>
+                    <h2 class="sg-h-xl" id="sg-owner-h" data-th="ร้านของคุณน่าจะอยู่ที่นี่แล้ว เคลมเลย">
+                        Your shop is probably already listed. Claim it.
+                    </h2>
+                    <p class="sg-lead" data-th="เข้าสู่ระบบ แก้ไขเวลาเปิด-ปิด เพิ่มรูปภาพ LINE หรือ WhatsApp นักท่องเที่ยวเห็นข้อมูลที่ถูกต้อง คุณได้ลูกค้า">
+                        Log in, fix your hours, add photos and your LINE or WhatsApp{cityName ? ` in ${cityName}` : ''}. Visitors see the right
+                        info, you get the customers.
+                    </p>
+                </div>
+                <div class="sg-price-card">
+                    <div class="sg-price">
+                        <span class="sg-price-num">฿100</span>
+                        <span class="sg-price-per" data-th="/ เดือน">/ month</span>
+                    </div>
+                    <p class="sg-price-alt" data-th="หรือ ฿1,000 / ปี ร้านของคุณอยู่ในรายการฟรีเสมอ">or ฿1,000 / year. Your listing stays free either way.</p>
+                    <ul class="sg-ticks">
+                        {perks.map(([en, th]) => (
+                            <li>
+                                <Icon name="check" />
+                                <span data-th={th}>{en}</span>
+                            </li>
+                        ))}
+                    </ul>
+                    <a class="sg-btn sg-btn-accent sg-btn-lg sg-btn-block" href={href} data-umami-event="claim-cta" data-th="เคลมร้านของคุณ">
+                        Claim your listing
+                    </a>
+                </div>
+            </div>
+        </section>
+    )
+}

@@ -49,6 +49,7 @@ const siteUrl = (Astro.site?.href ?? '').replace(/\/$/, '');
     config={config}
     path={path}
     timeZone={city.timezone}
+    city={city}
     wide
     jsonLd={[breadcrumbJsonLd(siteUrl, [[config.company_name, '/'], [city.name, `/${city.id}`], [title, path]])]}
 >

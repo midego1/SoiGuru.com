@@ -232,6 +232,48 @@ let cached: Promise<SoiGuruData> | null = null;
  * Listings without a known `city` are left out (they belong to no SoiGuru screen);
  * listings without a known `area` are kept but get no listing page (their URL needs one).
  */
+/**
+ * Category marks drawn for the SoiGuru categories (fork and knife, cup, …). They win over the
+ * generic `icon` in `categories.yml`, which the Next.js owner app shares and reads with its own set.
+ */
+const CATEGORY_ICONS: Record<string, IconName> = {
+    restaurants: 'utensils',
+    cafes: 'coffee',
+    massage: 'spa',
+    tours: 'boat',
+    'scooter-rental': 'scooter',
+    'nail-salons': 'nail',
+    'dive-shops': 'waves',
+    hotels: 'bed'
+};
+
+/** The visual themes of the public site (`theme` in works.yml, or `SITE_THEME` at build time). */
+export const THEMES = ['soiguru', 'navy'] as const;
+export type Theme = (typeof THEMES)[number];
+
+/**
+ * The site's theme. `soiguru` (default) is the design system: sea and sun, IBM Plex.
+ * `navy` is the website mockup's palette: navy and orange, Bricolage Grotesque and Figtree.
+ * Both use the same pages and layout; only the tokens and fonts change.
+ */
+export function siteTheme(config: SiteConfig): Theme {
+    const raw = str(process.env['SITE_THEME']) ?? str(config['theme']);
+    return (THEMES as readonly string[]).includes(raw ?? '') ? (raw as Theme) : 'soiguru';
+}
+
+/** The header's main links for a city: the busiest categories plus the map. */
+export function headerLinks(data: Pick<SoiGuruData, 'categories'>, city: Pick<City, 'id'>): { href: string; label: string; label_th: string }[] {
+    const has = (id: string) => data.categories.some((c) => c.id === id);
+    const links = [
+        has('restaurants') && { href: `/${city.id}/restaurants`, label: 'Eat & drink', label_th: 'ร้านอาหาร' },
+        has('cafes') && { href: `/${city.id}/cafes`, label: 'Cafés', label_th: 'คาเฟ่' },
+        has('tours') && { href: `/${city.id}/tours`, label: 'Things to do', label_th: 'ทัวร์และกิจกรรม' },
+        has('hotels') && { href: `/${city.id}/hotels`, label: 'Stay', label_th: 'ที่พัก' },
+        { href: `/${city.id}/search?view=map`, label: 'Map', label_th: 'แผนที่' }
+    ];
+    return links.filter((l): l is { href: string; label: string; label_th: string } => Boolean(l));
+}
+
 export function getSoiGuru(): Promise<SoiGuruData> {
     cached ??= (async () => {
         const [content, citiesRaw, amenitiesRaw] = await Promise.all([
@@ -251,7 +293,7 @@ export function getSoiGuru(): Promise<SoiGuruData> {
                     name: c.name,
                     short_name: str(extra['short_name']) ?? c.name,
                     name_th: str(extra['name_th']),
-                    icon: isIconName(extra['icon']) ? extra['icon'] : ('info' as IconName),
+                    icon: CATEGORY_ICONS[c.id] ?? (isIconName(extra['icon']) ? extra['icon'] : ('info' as IconName)),
                     priority: typeof c.priority === 'number' ? c.priority : 0
                 };
             })

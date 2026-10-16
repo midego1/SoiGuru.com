@@ -62,3 +62,78 @@
     --shadow-sheet: 0 -8px 24px #00000099;
   }
 }
+
+/*
+ * Website tokens (the mockup's layout on the design system's colours). Shared by both themes;
+ * the `navy` theme below overrides them.
+ * - hero / footer ground: a dark sea that stays dark in dark mode
+ * - accent: the one call-to-action colour (sun with ink text in the default theme)
+ * - display font: headings
+ */
+:root {
+  --font-display: var(--font-sans);
+  --hero-bg: #064a50;
+  --hero-ink: #ffffff;
+  --hero-muted: #cfe6e7;
+  --hero-accent: #9fd8d2;
+  --accent: var(--sun);
+  --on-accent: #14201f;
+  --accent-hover: #e0922a;
+  --area-1: #0a6b73;
+  --area-2: #1f4e79;
+  --area-3: #7a3e1d;
+  --area-4: #3f5b2a;
+  --area-5: #064a50;
+  --radius-xl: 22px;
+  --radius-2xl: 28px;
+  --sg-header-h: 64px;
+}
+@media (prefers-color-scheme: dark) {
+  :root {
+    --hero-bg: #0b2f32;
+    --accent-hover: #f6b65a;
+  }
+}
+
+/*
+ * Theme `navy` (works.yml `theme: navy`): the website mockup's own palette, navy ground with an
+ * orange accent, Bricolage Grotesque headings and Figtree text (IBM Plex Sans Thai for Thai).
+ * Light only: the attribute selector outranks the dark-mode block above.
+ */
+:root[data-theme='navy'] {
+  color-scheme: light;
+  --surface: #ffffff;
+  --surface-100: #ffffff;
+  --surface-200: #eef2f1;
+  --ink: #10272b;
+  --ink-muted: #4a5d61;
+  --line: #e3e9e8;
+  --line-strong: #d3dcdb;
+  --sea: #0b5f5b;
+  --sea-deep: #10272b;
+  --sea-tint: #e6f1ef;
+  --on-sea: #ffffff;
+  --sun: #c2410c;
+  --sun-tint: #fbebe3;
+  --open: #146c2e;
+  --closed: #b3261e;
+  --soon: #9a5b00;
+  --focus: #0b5f5b;
+  --overlay: #10272bb3;
+  --shadow-card: 0 1px 2px #10272b14;
+  --shadow-sheet: 0 -8px 24px #10272b1f;
+  --font-sans: "Figtree", "IBM Plex Sans Thai", "Noto Sans Thai", system-ui, -apple-system, "Segoe UI", sans-serif;
+  --font-display: "Bricolage Grotesque", "IBM Plex Sans Thai", "Figtree", system-ui, sans-serif;
+  --hero-bg: #10272b;
+  --hero-ink: #ffffff;
+  --hero-muted: #cfdedc;
+  --hero-accent: #9fd8d2;
+  --accent: #c2410c;
+  --on-accent: #ffffff;
+  --accent-hover: #a8380a;
+  --area-1: #0b5f5b;
+  --area-2: #1f4e79;
+  --area-3: #7a3e1d;
+  --area-4: #3f5b2a;
+  --area-5: #10272b;
+}

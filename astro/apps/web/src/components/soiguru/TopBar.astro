@@ -1,21 +1,21 @@
 ---
 /**
- * TopBar — the 56px bar on every screen.
+ * TopBar — the bar on every screen.
  *
- * Brand mode (no `back`): the fixed "SoiGuru" wordmark, the city as a separate label in
- * `sea`, the language toggle and the city menu. Back mode: back button, a two-line title,
- * and actions passed in the default slot.
+ * Brand mode (no `back`): the website header (`SiteHeader`, from the mockup) at every width.
  *
- * Desktop (960px and up): `nav` adds Home / Search / For owners links to the bar, which
- * replace the bottom tabs; back mode also shows the wordmark.
+ * Back mode: the 56px app bar on phones — back button, a two-line title and actions passed
+ * in the default slot. From 960px the website header sits above it and the bar becomes the
+ * page's title row (back link, title, actions), no longer sticky.
+ *
+ * `nav` is kept for callers: its city feeds the header (whose links replaced TopNav).
  */
 import Icon from './Icon.astro';
-import LanguageToggle from './LanguageToggle.astro';
-import TopNav from './TopNav.astro';
+import SiteHeader from './SiteHeader.astro';
 import type { City } from '../../lib/soiguru/data';
 
 interface Props {
-    /** City shown next to the wordmark (brand mode) */
+    /** City of the page (header city picker and links) */
     city?: City;
     /** Back link (back mode) */
     back?: { href: string; label: string };
@@ -26,18 +26,19 @@ interface Props {
     /** Second line under the title */
     subtitle?: string;
     subtitleTh?: string;
-    /** Desktop navigation for a city (hidden on phones, where BottomNav is used) */
+    /** City navigation (the city is used by the header; `active` is no longer shown) */
     nav?: { city: City; active?: 'home' | 'search' | 'saved'; ownerHref?: string };
 }
 
 const { city, back, title, titleTh, subtitle, subtitleTh, nav } = Astro.props;
+const pageCity = city ?? nav?.city;
 ---
 
-<header class="tkg-topbar">
-    {
-        back ? (
-            <>
-                <a class="tkg-brand sg-desk-only" href="/">SoiGuru</a>
+{
+    back ? (
+        <>
+            <SiteHeader city={pageCity} class="sg-sh-desk" />
+            <header class="tkg-topbar sg-backbar">
                 <a class="tkg-iconbtn" href={back.href} aria-label={back.label}>
                     <Icon name="chevron-left" />
                 </a>
@@ -46,23 +47,9 @@ const { city, back, title, titleTh, subtitle, subtitleTh, nav } = Astro.props;
                     {subtitle && <small data-th={subtitleTh}>{subtitle}</small>}
                 </div>
                 <slot />
-                {nav && <TopNav {...nav} />}
-            </>
-        ) : (
-            <>
-                <a class="tkg-brand" href="/">SoiGuru</a>
-                {city && (
-                    <a class="tkg-brand-city" href={`/${city.id}`} data-th={city.name_th}>
-                        {city.name}
-                    </a>
-                )}
-                <div class="tkg-spacer" />
-                {nav && <TopNav {...nav} />}
-                <LanguageToggle />
-                <a class="tkg-iconbtn" href="/" aria-label="All cities">
-                    <Icon name="menu" />
-                </a>
-            </>
-        )
-    }
-</header>
+            </header>
+        </>
+    ) : (
+        <SiteHeader city={pageCity} />
+    )
+}

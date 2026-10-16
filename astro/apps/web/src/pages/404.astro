@@ -16,15 +16,15 @@ const { config, cities } = data;
 <SoiGuruLayout title={`Page not found · ${config.company_name}`} description="This page does not exist or has moved." config={config} path="/404" noindex>
     <TopBar />
     <main>
-        <div class="sg-header">
-            <h1 class="tkg-display" data-th="ไม่พบหน้านี้">Page not found</h1>
-            <p class="tkg-body tkg-muted" style="margin:0" data-th="หน้านี้ไม่มีอยู่หรือถูกย้ายแล้ว เลือกเมืองเพื่อค้นหาต่อ">
+        <div class="sg-wrap sg-sec sg-sec-first sg-notfound">
+            <h1 class="sg-h-xl" data-th="ไม่พบหน้านี้">Page not found</h1>
+            <p class="sg-lead" data-th="หน้านี้ไม่มีอยู่หรือถูกย้ายแล้ว เลือกเมืองเพื่อค้นหาต่อ">
                 This page doesn't exist or has moved. Pick a city to keep looking.
             </p>
         </div>
 
-        <section class="tkg-section">
-            <div class="tkg-section-h"><h2>Cities<small>เมือง</small></h2></div>
+        <section class="sg-wrap sg-sec">
+            <div class="sg-sec-h"><h2 class="sg-h-lg">Cities<small lang="th"> · เมือง</small></h2></div>
             <div class="tkg-rows sg-cities">
                 {
                     cities.map((city) => {
@@ -43,8 +43,8 @@ const { config, cities } = data;
             </div>
         </section>
 
-        <div class="tkg-section" style="padding-bottom:24px">
-            <a class="tkg-btn tkg-btn-secondary" href="/" data-th="กลับหน้าแรก">Back to home</a>
+        <div class="sg-wrap sg-sec">
+            <a class="sg-btn sg-btn-secondary" href="/" data-th="กลับหน้าแรก">Back to home</a>
         </div>
     </main>
 </SoiGuruLayout>

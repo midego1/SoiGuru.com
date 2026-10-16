@@ -1,0 +1,67 @@
+---
+/**
+ * SiteFooter — the website footer from the mockup on the dark sea ground: the brand line, the
+ * cities, the business links and the Thai switch, then the copyright and the OpenStreetMap
+ * credit (many listings and every map come from OSM, ODbL).
+ */
+import Logo from './Logo.astro';
+import { getSoiGuru, cityListings, claimUrl, ownerUrl, type City } from '../../lib/soiguru/data';
+
+interface Props {
+    city?: City;
+}
+
+const { city } = Astro.props;
+const data = await getSoiGuru();
+const { config, cities } = data;
+const homeCity = city ?? cities[0];
+const owner = ownerUrl(config, homeCity);
+const listHref = (homeCity ? claimUrl(config, homeCity) : undefined) ?? owner;
+const year = new Date().getFullYear();
+---
+
+<footer class="sg-sf">
+    <div class="sg-wrap sg-sf-grid">
+        <div class="sg-sf-brand">
+            <a class="sg-logo" href="/">
+                <Logo size={30} />
+                <span class="sg-logo-word">{config.company_name}</span>
+            </a>
+            <p data-th="ไดเรกทอรีร้านค้าท้องถิ่นในประเทศไทย เวลาเปิด-ปิด LINE และเส้นทาง ทั้งภาษาอังกฤษและไทย">
+                The local directory for Thailand: opening hours, LINE and directions for every shop, in English and Thai.
+            </p>
+        </div>
+        <nav class="sg-sf-col" aria-label="Cities">
+            <h2 data-th="เมือง">Cities</h2>
+            {
+                cities.map((c) => {
+                    const count = cityListings(data, c).length;
+                    return (
+                        <a href={`/${c.id}`}>
+                            {c.name}
+                            <small>
+                                {c.name_th}
+                                {c.name_th ? ' · ' : ''}
+                                {count} {count === 1 ? 'place' : 'places'}
+                            </small>
+                        </a>
+                    );
+                })
+            }
+        </nav>
+        <nav class="sg-sf-col" aria-label="Business">
+            <h2 data-th="สำหรับธุรกิจ">Business</h2>
+            {listHref && <a href={listHref} data-th="ลงทะเบียนธุรกิจ">List your business</a>}
+            {owner && <a href={owner} data-th="เข้าสู่ระบบเจ้าของร้าน">Owner login</a>}
+            <button type="button" class="sg-sf-lang" data-lang-set="th" lang="th">ภาษาไทย</button>
+            <button type="button" class="sg-sf-lang" data-lang-set="en" lang="en">English</button>
+        </nav>
+    </div>
+    <div class="sg-wrap sg-sf-legal">
+        <span>© {year} {config.company_name}</span>
+        <span>
+            Maps and many listings ©{' '}
+            <a href="https://www.openstreetmap.org/copyright" rel="noopener" target="_blank">OpenStreetMap contributors</a> (ODbL)
+        </span>
+    </div>
+</footer>

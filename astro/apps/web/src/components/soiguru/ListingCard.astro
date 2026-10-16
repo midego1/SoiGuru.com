@@ -2,7 +2,9 @@
 /**
  * ListingCard — one business in a list: what is it, is it open, how far, is it any good.
  * The whole card is one link. `compact` is the 64px row used under the map and in
- * "Nearby". The `data-*` attributes feed the browser scripts (status, distance, filters).
+ * "Nearby". `tile` is the website's photo card (city home "Open now"): photo or category
+ * mark on top, category, name, area and status below. The `data-*` attributes feed the
+ * browser scripts (status, distance, filters) in every variant.
  */
 import Icon from './Icon.astro';
 import ListingPhoto from './ListingPhoto.astro';
@@ -14,19 +16,82 @@ import type { Listing } from '../../lib/soiguru/data';
 interface Props {
     listing: Listing;
     compact?: boolean;
+    /** The website photo card (city home grid) */
+    tile?: boolean;
     /** Distance in metres computed at build time (e.g. "Nearby" on a listing page) */
     distance?: number;
     /** Hide the card initially (the browser reveals it) */
     hidden?: boolean;
 }
 
-const { listing, compact, distance, hidden } = Astro.props;
+const { listing, compact, tile, distance, hidden } = Astro.props;
 const price = priceBand(listing.price_band);
 const sub = [listing.category?.name, listing.area?.name].filter(Boolean).join(' · ');
 const subTh = [listing.category?.name_th, listing.area?.name_th ?? listing.area?.name].filter(Boolean).join(' · ');
 const boat = listing.area?.boat_only ? ' · boat' : '';
+const dataAttrs = {
+    'data-listing': listing.slug,
+    'data-lat': listing.geo?.lat,
+    'data-lng': listing.geo?.lng,
+    'data-rating': listing.rating ?? 0,
+    'data-updated': listing.updated_at,
+    'data-area': listing.area?.id,
+    'data-category': listing.category?.id,
+    'data-search': listing.searchText,
+    'data-boat': listing.area?.boat_only ? '1' : undefined,
+    'data-price': listing.price_band,
+    'data-line': listing.line_id ? '1' : undefined,
+    'data-wa': listing.whatsapp ? '1' : undefined,
+    'data-verified': listing.claimed ? '1' : undefined,
+    'data-amenities': listing.amenities.filter((a) => a.available).map((a) => a.id).join(' ') || undefined,
+};
 ---
 
+{
+    tile ? (
+        <a class="sg-tcard" href={listing.url} hidden={hidden} {...dataAttrs}>
+            <div class="sg-tcard-photo">
+                {listing.images[0] ? (
+                    <img src={listing.images[0]} alt="" width="400" height="240" loading="lazy" decoding="async" />
+                ) : (
+                    <span class="sg-tcard-mark" aria-hidden="true">
+                        <Icon name={listing.category?.icon ?? 'image'} />
+                    </span>
+                )}
+                {listing.claimed && (
+                    <span class="sg-flag">
+                        <Icon name="shield" class="tkg-i-16" />
+                        Verified owner
+                    </span>
+                )}
+                {listing.sample && <span class="sg-flag sg-flag-quiet">Sample</span>}
+            </div>
+            <div class="sg-tcard-body">
+                {listing.category && (
+                    <span class="sg-tcard-cat" data-th={listing.category.name_th}>
+                        {listing.category.name}
+                    </span>
+                )}
+                <span class="sg-tcard-name tkg-name" data-th={listing.name_th}>
+                    {listing.name}
+                </span>
+                <span class="sg-tcard-meta">
+                    <span class="sg-tcard-where">
+                        <Icon name="pin" class="tkg-i-16" />
+                        <span data-distance>{listing.area?.name ?? listing.city.name}</span>
+                    </span>
+                    {listing.rating !== undefined && (
+                        <span class="tkg-rating">
+                            <Icon name="star" />
+                            {listing.rating.toFixed(1)}
+                        </span>
+                    )}
+                    {price && <span>{price}</span>}
+                </span>
+                <OpenStatus listing={listing} />
+            </div>
+        </a>
+    ) : (
 <a
     class:list={['tkg-card', { 'tkg-card-compact': compact }]}
     href={listing.url}
@@ -93,3 +158,5 @@ const boat = listing.area?.boat_only ? ' · boat' : '';
         </div>
     </div>
 </a>
+    )
+}

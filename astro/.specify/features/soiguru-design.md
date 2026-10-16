@@ -43,6 +43,8 @@ Category and area ids share the second URL segment; `soiguru-data` keeps them di
 
 ## Desktop layout (960px and up)
 
+> Superseded by § Website layout for the landing, CityHome, ListingPage and 404; still describes CategoryResults, search and saved.
+
 The design is phone first: one 640px column, and only CategoryResults has a wide version (list 420px on the left, map filling the rest). Desktop visitors saw a phone column in the middle of the screen, so every screen now extends to desktop in the same style:
 
 - Top bar spans the window; its content sits in a 1200px column. Home / Search / For owners links (`TopNav`) replace the bottom tabs, which are hidden. Back-mode bars also show the SoiGuru wordmark.
@@ -69,3 +71,15 @@ ClaimFlow and OwnerDashboard (need accounts; Next.js only), contact-tap counting
 ## Generic routes
 
 The generic template routes (`/item`, `/category`, `/categories`, `/tag`, `/tags`, `/collection`, `/collections`, `/comparison`, `/comparisons`, `/directory`, `/page`, `/pages`) are still built but not shown on soiguru.com: the `soiguru-redirects` integration (`src/integrations/soiguru-redirects.ts`) writes `dist/_redirects` with 301s (`/item/<slug>` → its listing page, the rest → `/`) and the sitemap leaves them out. The 404 page uses the SoiGuru design.
+
+## Website layout
+
+The public site follows the layout of the website mockup (artifact "Main" and "Listing" screens) drawn with this design system's tokens. Phone first; breakpoints 720px (tablet), 960px (desktop), 1100px (header links in the bar). Content sits in a 1200px column (`.sg-wrap`); the hero and footer span the window.
+
+- **Header** (`SiteHeader`, every page; back-mode pages keep their app bar on phones and show the header above a title row from 960px): logo mark + wordmark, city picker (`<details>`), the city's links (Eat & drink, Cafés, Things to do, Stay, Map = `/<city>/search?view=map`), EN / ไทย, Owner login (`owner_url`), List your business (`claim_url`). Phones: logo, city, language and a menu panel with the links, Saved, Owner login and List your business; bottom tabs stay. On the listing page a search field replaces the links.
+- **CityHome**: hero on the dark sea ground (eyebrow with the areas and local time, headline, what + where search posting `q` and `area` to `/<city>/search`, Open now / Near me / Map chips, three trust ticks, a drawn karst scene from 960px); 8 category tiles (4-up on phones); "Open now" photo cards (4 on phones, 8 on desktop; a category mark when there is no photo); "Browse by area" cards for areas with places; the owner block; footer.
+- **Landing**: the same hero with one button per city, city cards, owner block, footer.
+- **ListingPage**: breadcrumb (city / area / category / name); photo grid (1 big + up to 4); chips (category, Verified owner, Sample), title, Thai name, status · rating · price · area/distance; action row (first channel in the accent colour, then LINE, WhatsApp, Directions, Save, Share); About, Good to know pills, Location (280px static map, address), Nearby open now. Side column (sticky from 960px; between head and body on phones): Opening hours card with the provenance line, claim card, out-of-date note, report link. Phones keep the sticky Directions bar.
+- **Footer**: brand line, cities with counts, business links, the other language, © and the OpenStreetMap (ODbL) credit.
+- **Theme**: `theme` in works.yml, or `SITE_THEME` at build time, sets `<html data-theme>`. `soiguru` (default): sea `#0a6b73`, sun `#f2a33a` accent with ink text, IBM Plex Sans + Thai, light and dark. `navy`: the mockup's own palette (navy `#10272b`, orange `#c2410c` with white text, teal `#0b5f5b`), Bricolage Grotesque headings, Figtree text, IBM Plex Sans Thai for Thai; light only. Same pages and markup; only tokens and fonts change.
+- **Analytics**: Umami (`script.js`, `recorder.js`) in `SoiGuruLayout`; buttons carry `data-umami-event` (`contact-<channel>`, `claim-listing`, `claim-cta`, `list-business`, `owner-login`).

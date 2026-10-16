@@ -1,8 +1,8 @@
 ---
 /**
- * ClaimBox — the call-to-action on unclaimed listings: `sun-tint`, `sun` border and the
- * one `sun` button on the page. Followed by the blame-free "hours may be out of date" note.
- * Renders nothing on claimed listings.
+ * ClaimBox — the "Is this your business?" card of the listing page (website mockup): one
+ * sentence, the price and the claim button. Followed by the blame-free "hours may be out of
+ * date" note. Renders nothing on claimed listings.
  */
 import Icon from './Icon.astro';
 import type { Listing } from '../../lib/soiguru/data';
@@ -17,24 +17,25 @@ const { listing, href } = Astro.props;
 
 {
     !listing.claimed && (
-        <div class="tkg-section sg-claim-sec">
+        <div class="sg-claim-sec">
             {href && (
-                <div class="tkg-claim">
-                    <h3 data-th="นี่คือธุรกิจของคุณใช่ไหม?">Is this your business?</h3>
-                    <p>
-                        Claim it to edit your hours, photos and LINE, and get a Verified owner badge.{' '}
-                        <span class="tkg-claim-price">฿100 / month</span> or ฿1,000 / year.
+                <section class="sg-card sg-card-tint" aria-labelledby="sg-claim-h">
+                    <h2 class="sg-card-h" id="sg-claim-h" data-th="นี่คือธุรกิจของคุณใช่ไหม?">
+                        Is this your business?
+                    </h2>
+                    <p class="sg-card-text" data-th="เคลมเพื่อแก้ไขเวลาเปิด-ปิด รูปภาพ และช่องทางติดต่อ พร้อมรับป้ายยืนยันเจ้าของร้าน ฿100 / เดือน หรือ ฿1,000 / ปี">
+                        Claim it to update hours, photos and contact details, and get a Verified owner badge. ฿100 / month or ฿1,000 / year.
                     </p>
-                    <a class="tkg-btn tkg-btn-sun" href={href}>
+                    <a class="sg-btn sg-btn-ink sg-btn-lg sg-btn-block" href={href} data-umami-event="claim-listing">
                         <Icon name="shield" />
-                        Claim this listing
+                        <span data-th="เคลมร้านนี้">Claim this listing</span>
                     </a>
-                </div>
+                </section>
             )}
-            <div class:list={['tkg-info', { 'sg-mt-2': href }]}>
-                <Icon name="info" />
+            <p class="sg-note">
+                <Icon name="info" class="tkg-i-16" />
                 <span data-th="เวลาอาจไม่เป็นปัจจุบัน: เจ้าของยังไม่ได้จัดการรายการนี้">Hours may be out of date: this listing isn't managed by its owner yet.</span>
-            </div>
+            </p>
         </div>
     )
 }

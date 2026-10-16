@@ -31,10 +31,11 @@ const owner = ownerUrl(config, city);
     config={config}
     path={`/${city.id}/saved`}
     timeZone={city.timezone}
+    city={city}
     noindex
 >
     <TopBar city={city} nav={{ city, active: 'saved', ownerHref: owner }} />
-    <main>
+    <main class="sg-wrap-narrow">
         <section class="tkg-section" style="padding-top:20px">
             <div class="tkg-section-h">
                 <h1 class="tkg-heading">
@@ -53,5 +54,5 @@ const owner = ownerUrl(config, city);
             </div>
         </section>
     </main>
-    <BottomNav city={city} active="saved" ownerHref={owner} />
+    <BottomNav slot="nav" city={city} active="saved" ownerHref={owner} />
 </SoiGuruLayout>

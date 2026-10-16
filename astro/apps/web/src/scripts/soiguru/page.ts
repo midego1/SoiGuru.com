@@ -9,7 +9,9 @@
  * - the "Open now" short list on the city home,
  * - the EN / ไทย language: `/th/…` pages are Thai from the server; elsewhere a stored
  *   Thai choice swaps every `[data-th]` text. The toggle goes to the other language's URL,
- * - today's row first in hours tables (the design's "today first").
+ * - today's row first in hours tables (the design's "today first"),
+ * - the header's city picker and menu (`details[data-pop]`): one open at a time, closed by a
+ *   click outside or Escape.
  *
  * Other scripts listen for `sg:refresh` (statuses recomputed) and `sg:location`.
  */
@@ -215,6 +217,26 @@ document.addEventListener('click', (event) => {
         applyLang();
         refreshStatuses();
     }
+});
+
+/** Close the header's open pop-ups except `keep`. */
+function closePops(keep?: Element | null): void {
+    for (const pop of document.querySelectorAll<HTMLDetailsElement>('details[data-pop][open]')) {
+        if (pop !== keep) pop.open = false;
+    }
+}
+
+document.addEventListener('click', (event) => {
+    const target = event.target instanceof Element ? event.target : null;
+    closePops(target?.closest('details[data-pop]'));
+});
+
+document.addEventListener('keydown', (event) => {
+    if (event.key !== 'Escape') return;
+    const open = document.querySelector<HTMLDetailsElement>('details[data-pop][open]');
+    if (!open) return;
+    open.open = false;
+    open.querySelector<HTMLElement>('summary')?.focus();
 });
 
 /** Current UI language (for other scripts). */

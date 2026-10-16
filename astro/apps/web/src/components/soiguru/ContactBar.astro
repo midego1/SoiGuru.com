@@ -1,10 +1,12 @@
 ---
 /**
- * ContactBar — Call, LINE, WhatsApp, Directions as real deep links, 56px tall. A missing
- * channel is left out and the grid reflows; never a disabled button. Below it the raw
- * phone and LINE id in text (copyable) and the owner's booking note.
+ * ContactBar — the listing's action row from the website mockup: Call, LINE, WhatsApp and
+ * Directions as real deep links (48px buttons that wrap), the first one in the accent colour.
+ * A missing channel is left out; never a disabled button. Extra buttons (Save, Share) come
+ * in the default slot. Below it the raw phone and LINE id in text (copyable) and the owner's
+ * booking note.
  *
- * The LINE and WhatsApp buttons use their brand fills and marks (`BRAND_PATHS`).
+ * LINE and WhatsApp show their brand marks in brand colour (`BRAND_PATHS`).
  */
 import Icon from './Icon.astro';
 import { formatThaiPhone, lineUrl, telUrl, whatsappUrl } from '../../lib/soiguru/format';
@@ -17,11 +19,11 @@ interface Props {
 
 const { listing } = Astro.props;
 const buttons = [
-    listing.phone && { href: telUrl(listing.phone), cls: '', icon: 'phone', label: 'Call · โทร', channel: 'call' },
-    listing.line_id && { href: lineUrl(listing.line_id), cls: 'tkg-c-line', icon: 'line', label: 'LINE', channel: 'line' },
-    listing.whatsapp && { href: whatsappUrl(listing.whatsapp), cls: 'tkg-c-wa', icon: 'whatsapp', label: 'WhatsApp', channel: 'whatsapp' },
-    listing.geo && { href: directionsUrl(listing.geo), cls: 'tkg-c-primary', icon: 'navigation', label: 'Directions', channel: 'directions' },
-].filter((b): b is { href: string; cls: string; icon: string; label: string; channel: string } => Boolean(b));
+    listing.phone && { href: telUrl(listing.phone), cls: 'sg-act-call', icon: 'phone', label: 'Call', th: 'โทร', channel: 'call' },
+    listing.line_id && { href: lineUrl(listing.line_id), cls: 'sg-act-line', icon: 'line', label: 'LINE', th: undefined, channel: 'line' },
+    listing.whatsapp && { href: whatsappUrl(listing.whatsapp), cls: 'sg-act-wa', icon: 'whatsapp', label: 'WhatsApp', th: undefined, channel: 'whatsapp' },
+    listing.geo && { href: directionsUrl(listing.geo), cls: 'sg-act-dir', icon: 'navigation', label: 'Directions', th: 'เส้นทาง', channel: 'directions' },
+].filter((b): b is { href: string; cls: string; icon: string; label: string; th: string | undefined; channel: string } => Boolean(b));
 const facts = [
     listing.phone && formatThaiPhone(listing.phone),
     listing.line_id && `LINE ${listing.line_id}`,
@@ -29,23 +31,23 @@ const facts = [
 ].filter(Boolean);
 ---
 
-{
-    buttons.length > 0 && (
-        <div class="sg-contact-wrap">
-            <div class="tkg-contact" style={`grid-template-columns: repeat(${buttons.length}, 1fr)`}>
-                {buttons.map((b) => (
-                    <a
-                        href={b.href}
-                        class={b.cls || undefined}
-                        data-contact={b.channel}
-                        {...(b.channel === 'call' ? {} : { target: '_blank', rel: 'noopener' })}
-                    >
-                        <Icon name={b.icon} />
-                        {b.label}
-                    </a>
-                ))}
-            </div>
-            {facts.length > 0 && <div class="tkg-small tkg-muted tkg-pad sg-mt-2">{facts.join(' · ')}</div>}
-        </div>
-    )
-}
+<div class="sg-contact-wrap">
+    <div class="sg-actions">
+        {
+            buttons.map((b, i) => (
+                <a
+                    href={b.href}
+                    class:list={['sg-act', b.cls, { 'sg-act-primary': i === 0 }]}
+                    data-contact={b.channel}
+                    data-umami-event={`contact-${b.channel}`}
+                    {...(b.channel === 'call' ? {} : { target: '_blank', rel: 'noopener' })}
+                >
+                    <Icon name={b.icon} />
+                    <span data-th={b.th}>{b.label}</span>
+                </a>
+            ))
+        }
+        <slot />
+    </div>
+    {facts.length > 0 && <p class="sg-facts">{facts.join(' · ')}</p>}
+</div>

@@ -1,0 +1,151 @@
+---
+/**
+ * SiteHeader — the website header from the SoiGuru mockup: logo mark and wordmark, the city
+ * picker, the main links (Eat & drink, Cafés, Things to do, Stay, Map), the language toggle,
+ * "Owner login" and the "List your business" button.
+ *
+ * Responsive: phones show the logo, city, language and a menu button (the rest moves into the
+ * menu panel; the bottom tabs stay); 720px adds "List your business"; 960px adds "Owner login";
+ * 1100px shows the links in the bar and drops the menu. The city picker and the menu are
+ * `<details>` disclosures, so they work without a script (page.ts closes them on outside
+ * clicks and Escape).
+ *
+ * `search` swaps the links for a search field (the listing page, as in the mockup).
+ */
+import Icon from './Icon.astro';
+import LanguageToggle from './LanguageToggle.astro';
+import Logo from './Logo.astro';
+import { getSoiGuru, claimUrl, ownerUrl, headerLinks, type City } from '../../lib/soiguru/data';
+
+interface Props {
+    /** The city the page belongs to (picker label, links, search) */
+    city?: City;
+    /** Show a search field in place of the links */
+    search?: boolean;
+    /** Current link, matched against the link `href` */
+    current?: string;
+    /** Extra classes (e.g. hide on phones where a back bar replaces the header) */
+    class?: string;
+}
+
+const { city, search = false, current, class: className } = Astro.props;
+const data = await getSoiGuru();
+const { config, cities } = data;
+const homeCity = city ?? cities[0];
+const links = homeCity ? headerLinks(data, homeCity) : [];
+const owner = ownerUrl(config, homeCity);
+const claim = homeCity ? claimUrl(config, homeCity) : undefined;
+const listHref = claim ?? owner;
+---
+
+<header class:list={['sg-sh', className]}>
+    <div class="sg-wrap sg-sh-row">
+        <a class="sg-logo" href="/" aria-label={`${config.company_name} home`}>
+            <Logo />
+            <span class="sg-logo-word">{config.company_name}</span>
+        </a>
+
+        {
+            cities.length > 0 && (
+                <details class="sg-pop sg-citypick" data-pop>
+                    <summary class="sg-pill-btn" aria-label={city ? `City: ${city.name}. Change city` : 'Choose a city'}>
+                        <Icon name="pin" class="tkg-i-16" />
+                        <span data-th={city?.name_th}>{city?.name ?? 'Cities'}</span>
+                        <Icon name="chevron-down" class="tkg-i-16" />
+                    </summary>
+                    <div class="sg-pop-panel">
+                        <p class="sg-pop-title" data-th="เลือกเมือง">Choose a city</p>
+                        {cities.map((c) => (
+                            <a href={`/${c.id}`} aria-current={c.id === city?.id ? 'page' : undefined}>
+                                <span>{c.name}</span>
+                                {c.name_th && <small lang="th">{c.name_th}</small>}
+                            </a>
+                        ))}
+                    </div>
+                </details>
+            )
+        }
+
+        {
+            search && homeCity ? (
+                <form class="sg-sh-search" action={`/${homeCity.id}/search`} method="get" role="search">
+                    <label>
+                        <Icon name="search" />
+                        <span class="sg-visually-hidden">Search {homeCity.name}</span>
+                        <input type="search" name="q" placeholder={`Search ${homeCity.name}`} autocomplete="off" enterkeyhint="search" />
+                    </label>
+                </form>
+            ) : (
+                <nav class="sg-sh-nav" aria-label="Main">
+                    {links.map((l) => (
+                        <a href={l.href} aria-current={current === l.href ? 'page' : undefined} data-th={l.label_th}>
+                            {l.label}
+                        </a>
+                    ))}
+                </nav>
+            )
+        }
+
+        <div class="sg-sh-end">
+            <LanguageToggle />
+            {
+                owner && (
+                    <a class="sg-sh-login" href={owner} data-umami-event="owner-login" data-th="เข้าสู่ระบบเจ้าของร้าน">
+                        Owner login
+                    </a>
+                )
+            }
+            {
+                listHref && (
+                    <a class="sg-btn sg-btn-accent sg-sh-list" href={listHref} data-umami-event="list-business" data-th="ลงทะเบียนธุรกิจ">
+                        List your business
+                    </a>
+                )
+            }
+            <details class="sg-pop sg-menu" data-pop>
+                <summary class="tkg-iconbtn" aria-label="Menu">
+                    <Icon name="menu" />
+                </summary>
+                <div class="sg-pop-panel sg-menu-panel">
+                    {
+                        homeCity && (
+                            <nav aria-label="Menu">
+                                <a href={`/${homeCity.id}/search`}>
+                                    <Icon name="search" />
+                                    <span data-th="ค้นหา">Search</span>
+                                </a>
+                                {links.map((l) => (
+                                    <a href={l.href}>
+                                        <Icon name={l.href.endsWith('view=map') ? 'map' : 'chevron-right'} />
+                                        <span data-th={l.label_th}>{l.label}</span>
+                                    </a>
+                                ))}
+                                <a href={`/${homeCity.id}/saved`}>
+                                    <Icon name="heart" />
+                                    <span data-th="บันทึกไว้">Saved</span>
+                                </a>
+                            </nav>
+                        )
+                    }
+                    <div class="sg-menu-foot">
+                        {
+                            owner && (
+                                <a class="sg-btn sg-btn-secondary" href={owner}>
+                                    <Icon name="user" />
+                                    <span data-th="เข้าสู่ระบบเจ้าของร้าน">Owner login</span>
+                                </a>
+                            )
+                        }
+                        {
+                            listHref && (
+                                <a class="sg-btn sg-btn-accent" href={listHref} data-th="ลงทะเบียนธุรกิจ">
+                                    List your business
+                                </a>
+                            )
+                        }
+                    </div>
+                </div>
+            </details>
+        </div>
+    </div>
+</header>

@@ -5,7 +5,11 @@
  * `font-display: swap`, SEO meta from plugin-seo, optional JSON-LD, and the small page
  * script that computes open status, distances and the language swap in the browser.
  *
- * Phone first: one 640px column; `wide` lets a screen (results) use the full width.
+ * Website layout (the SoiGuru mockup): full-width header and footer with content in a
+ * 1200px column, phone first and responsive. `wide` lets a screen (results) use the full
+ * width and leaves out the footer. The theme (`theme` in works.yml or `SITE_THEME`) sets
+ * `data-theme` on `<html>`; `navy` also loads Bricolage Grotesque and Figtree.
+ * Pages put their phone tab bar in the `nav` slot so it follows the footer.
  *
  * Every SoiGuru page also exists in Thai under `/th/…`: the `soiguru-thai` integration
  * writes those copies after the build from this HTML (`data-path-en` names the twin).
@@ -13,9 +17,12 @@
 import { generateMetaTags } from '@ever-works/plugin-seo';
 import type { SiteConfig } from '@ever-works/core';
 import { jsonForScript } from '../lib/soiguru/format';
+import { siteTheme, type City } from '../lib/soiguru/data';
+import SiteFooter from '../components/soiguru/SiteFooter.astro';
 import '../styles/soiguru/tokens.css';
 import '../styles/soiguru/components.css';
 import '../styles/soiguru/app.css';
+import '../styles/soiguru/site.css';
 
 interface Props {
     /** Full document title */
@@ -32,20 +39,26 @@ interface Props {
     wide?: boolean;
     /** Keep the page out of search results (e.g. the search page) */
     noindex?: boolean;
+    /** City of the page (footer links) */
+    city?: City;
+    /** Show the website footer (default: not on `wide` screens) */
+    footer?: boolean;
 }
 
-const { title, description, config, path, jsonLd = [], timeZone = 'Asia/Bangkok', wide = false, noindex = false } = Astro.props;
+const { title, description, config, path, jsonLd = [], timeZone = 'Asia/Bangkok', wide = false, noindex = false, city } = Astro.props;
+const footer = Astro.props.footer ?? !wide;
+const theme = siteTheme(config);
 const siteUrl = (Astro.site?.href ?? 'https://soiguru.com/').replace(/\/$/, '');
 const canonical = `${siteUrl}${path}`;
 const metaTags = generateMetaTags({ title, description, url: canonical, type: 'website' }, {});
 ---
 
 <!doctype html>
-<html lang="en" data-lang="en" data-path-en={path}>
+<html lang="en" data-lang="en" data-path-en={path} data-theme={theme}>
     <head>
         <meta charset="utf-8" />
         <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
-        <meta name="theme-color" content="#0a6b73" />
+        <meta name="theme-color" content={theme === 'navy' ? '#10272b' : '#064a50'} />
         <title>{title}</title>
         {
             metaTags.map((tag) =>
@@ -64,6 +77,14 @@ const metaTags = generateMetaTags({ title, description, url: canonical, type: 'w
             rel="stylesheet"
             href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@400;500;600;700&family=IBM+Plex+Sans+Thai:wght@400;500;600;700&display=swap"
         />
+        {
+            theme === 'navy' && (
+                <link
+                    rel="stylesheet"
+                    href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,500;12..96,700;12..96,800&family=Figtree:wght@400;500;600;700&display=swap"
+                />
+            )
+        }
         {jsonLd.map((ld) => <script is:inline type="application/ld+json" set:html={jsonForScript(ld)} />)}
         <script is:inline defer src="https://umami.midego.net/script.js" data-website-id="f0546456-1d42-40ae-9008-6be2c6510eaa"></script>
         <script is:inline defer src="https://umami.midego.net/recorder.js" data-website-id="f0546456-1d42-40ae-9008-6be2c6510eaa"></script>
@@ -72,6 +93,8 @@ const metaTags = generateMetaTags({ title, description, url: canonical, type: 'w
     <body data-tz={timeZone}>
         <div class:list={['sg-page', { 'sg-page-wide': wide }]}>
             <slot />
+            {footer && <SiteFooter city={city} />}
+            <slot name="nav" />
         </div>
         <script>
             import '../scripts/soiguru/page';

@@ -3,6 +3,10 @@ title: "Change Log"
 sidebar_label: "Change Log"
 ---
 
+## 2026-10-16 — Website layout from the SoiGuru mockup; theme setting; Umami
+
+The public site now uses the layout of the website mockup (Main / Listing screens) with the design system's colours and type (sea and sun, IBM Plex), phone first and responsive (390 / 768 / 1280 tested): a website header (logo mark, city picker, Eat & drink / Cafés / Things to do / Stay / Map, EN / ไทย, Owner login, List your business; a menu on phones), a hero with a what + where search, category tiles with their own marks, "Open now" photo cards, "Browse by area" cards (areas with places only), the owner block (฿100 / month), a footer with the OpenStreetMap credit, and a two-column listing page (breadcrumb, photo grid, chips, title, action buttons, About, Good to know, Location, Nearby; sticky Opening hours, claim card and report link). New `site.css` and components `SiteHeader`, `SiteFooter`, `Logo`, `HeroSearch`, `KarstScene`, `OwnerBlock`; `ListingCard` gains `tile`. New setting `theme` in works.yml (or `SITE_THEME` at build): `soiguru` (default) or `navy`, the mockup's own navy / orange palette with Bricolage Grotesque and Figtree. Merged `develop` (Umami `script.js` + `recorder.js` in `SoiGuruLayout`); contact, claim, list-your-business and owner-login buttons carry `data-umami-event`. Spec: `.specify/features/soiguru-design.md` § Website layout.
+
 ## 2026-10-16 — Real Krabi listings; bundled content refreshed
 
 The bundled `.content/` is refreshed from the `data` branch (commit 264fa81): 490 real businesses in Ao Nang, Railay and Klong Muang (461 from OpenStreetMap with coordinates and ODbL attribution, 29 from web research), the 102 Krabi sample listings removed. `soiguru-redirects` now writes two lines per listing (`/item/<slug>`, `/item/<slug>/`) instead of three, so the file stays under the 2,000 static redirects Cloudflare Workers allow; `/item/<slug>.md` falls through to `/`. Spec: `.specify/features/soiguru-design.md` § Generic routes.
