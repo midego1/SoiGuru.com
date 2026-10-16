@@ -1,0 +1,30 @@
+name: Yam Yam Restaurant
+description: Thai restaurant in Railay.
+source_url: ''
+category: restaurants
+tags: []
+featured: false
+status: approved
+city: krabi
+area: railay
+geo:
+  lat: 8.012902
+  lng: 98.843698
+location:
+  address: Ao Nang, Krabi
+  city: Krabi
+  country: TH
+  latitude: 8.012902
+  longitude: 98.843698
+claimed: false
+updated_by: import
+updated_at: "2026-10-16 02:55"
+markdown: 'Thai restaurant in Railay.
+
+
+  Sources: <https://www.openstreetmap.org/node/660225547>
+
+
+  Map data © OpenStreetMap contributors (ODbL).
+
+  '

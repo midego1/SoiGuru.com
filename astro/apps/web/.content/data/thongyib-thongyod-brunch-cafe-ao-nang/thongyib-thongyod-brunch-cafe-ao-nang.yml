@@ -1,0 +1,36 @@
+name: Thongyib Thongyod Brunch & Cafe
+description: Brunch cafe inside Ao Nang Landmark with sandwiches, avocado toast, pancakes, breakfast sets and coffee, plus
+  Thai lunch dishes.
+source_url: https://thongyibthongyod.com/
+category: cafes
+tags: []
+featured: false
+status: approved
+city: krabi
+area: ao-nang
+address: Ao Nang Landmark, Ao Nang, Krabi
+hours:
+  mon:
+  - 08:00-18:00
+  tue:
+  - 08:00-18:00
+  wed:
+  - 08:00-18:00
+  thu:
+  - 08:00-18:00
+  fri:
+  - 08:00-18:00
+  sat:
+  - 08:00-18:00
+  sun:
+  - 08:00-18:00
+claimed: false
+updated_by: import
+updated_at: "2026-10-16 02:55"
+markdown: 'Brunch cafe inside Ao Nang Landmark with sandwiches, avocado toast, pancakes, breakfast sets and coffee, plus Thai
+  lunch dishes.
+
+
+  Sources: <https://thongyibthongyod.com/>
+
+  '

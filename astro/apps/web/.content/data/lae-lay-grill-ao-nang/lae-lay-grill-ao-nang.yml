@@ -1,0 +1,50 @@
+name: Lae Lay Grill
+description: Hilltop grill restaurant in the Ao Nang area known for sunset views and seafood platters.
+source_url: https://laelaygrill.com/
+category: restaurants
+tags:
+- seafood
+featured: false
+status: approved
+city: krabi
+area: ao-nang
+geo:
+  lat: 8.040102
+  lng: 98.82292
+location:
+  address: Ao Nang, Krabi
+  city: Krabi
+  country: TH
+  latitude: 8.040102
+  longitude: 98.82292
+phone: "+6675661588"
+hours:
+  mon:
+  - 11:00-22:00
+  tue:
+  - 11:00-22:00
+  wed:
+  - 11:00-22:00
+  thu:
+  - 11:00-22:00
+  fri:
+  - 11:00-22:00
+  sat:
+  - 11:00-22:00
+  sun:
+  - 11:00-22:00
+amenities:
+  sea-view: true
+claimed: false
+updated_by: import
+updated_at: "2026-10-16 02:55"
+markdown: 'Hilltop grill restaurant in the Ao Nang area known for sunset views and seafood platters.
+
+
+  Sources: <https://www.openstreetmap.org/node/4201532390>, <https://www.hotels.com/go/thailand/best-restaurants-krabi>, <https://www.thaiholidayguide.com/best-restaurants-krabi/>,
+  <https://www.visitthailandtoday.com/restaurants/krabi/lae-lay-grill>
+
+
+  Map data © OpenStreetMap contributors (ODbL).
+
+  '

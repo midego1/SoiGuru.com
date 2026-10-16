@@ -1,0 +1,33 @@
+name: P.A.N. Beach Bungalow
+name_th: พี.เอ.เอ็น. บีช บังกะโล
+description: Guesthouse in Klong Muang.
+source_url: http://www.panbeachkrabi.com/
+category: hotels
+tags: []
+featured: false
+status: approved
+city: krabi
+area: klong-muang
+geo:
+  lat: 8.044891
+  lng: 98.782464
+location:
+  address: Ao Nang, Krabi
+  city: Krabi
+  country: TH
+  latitude: 8.044891
+  longitude: 98.782464
+amenities:
+  wifi: true
+claimed: false
+updated_by: import
+updated_at: "2026-10-16 02:55"
+markdown: 'Guesthouse in Klong Muang.
+
+
+  Sources: <https://www.openstreetmap.org/node/1582812530>
+
+
+  Map data © OpenStreetMap contributors (ODbL).
+
+  '

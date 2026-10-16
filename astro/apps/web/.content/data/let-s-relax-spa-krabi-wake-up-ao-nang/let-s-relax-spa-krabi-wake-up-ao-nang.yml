@@ -1,0 +1,52 @@
+name: Let's Relax Spa - Krabi Wake Up
+description: Branch of the Let's Relax spa chain on the first floor of Wake Up Aonang hotel; reservations recommended.
+source_url: https://letsrelaxspa.com/
+category: massage
+tags:
+- spa
+featured: false
+status: approved
+city: krabi
+area: ao-nang
+address: 1st floor, Wake Up Aonang Krabi (Tipa Resort), 121/3 Moo 2, Ao Nang, Mueang Krabi
+geo:
+  lat: 8.032436
+  lng: 98.823464
+location:
+  address: 1st floor, Wake Up Aonang Krabi (Tipa Resort), 121/3 Moo 2, Ao Nang, Mueang Krabi
+  city: Krabi
+  country: TH
+  latitude: 8.032436
+  longitude: 98.823464
+phone: "+6675695029"
+line_id: '@letsrelaxspa'
+hours:
+  mon:
+  - 11:00-23:00
+  tue:
+  - 11:00-23:00
+  wed:
+  - 11:00-23:00
+  thu:
+  - 11:00-23:00
+  fri:
+  - 11:00-23:00
+  sat:
+  - 11:00-23:00
+  sun:
+  - 11:00-23:00
+amenities:
+  wifi: true
+claimed: false
+updated_by: import
+updated_at: "2026-10-16 02:55"
+markdown: 'Branch of the Let''s Relax spa chain on the first floor of Wake Up Aonang hotel; reservations recommended.
+
+
+  Sources: <https://www.openstreetmap.org/node/13678315226>, <https://develop.letsrelaxspa.com/branches/L207-let-s-relax-krabi-wake-up-ao-nang>,
+  <https://www.visitthailandtoday.com/wellness-spas/krabi/lets-relax-spa-krabi-wake-up-ao-nang>
+
+
+  Map data © OpenStreetMap contributors (ODbL).
+
+  '

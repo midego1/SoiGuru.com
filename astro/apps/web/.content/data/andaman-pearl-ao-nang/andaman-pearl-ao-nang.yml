@@ -1,0 +1,30 @@
+name: Andaman Pearl
+description: Hotel in Ao Nang.
+source_url: ''
+category: hotels
+tags: []
+featured: false
+status: approved
+city: krabi
+area: ao-nang
+geo:
+  lat: 8.031455
+  lng: 98.832367
+location:
+  address: Ao Nang, Krabi
+  city: Krabi
+  country: TH
+  latitude: 8.031455
+  longitude: 98.832367
+claimed: false
+updated_by: import
+updated_at: "2026-10-16 02:55"
+markdown: 'Hotel in Ao Nang.
+
+
+  Sources: <https://www.openstreetmap.org/way/1132509127>
+
+
+  Map data © OpenStreetMap contributors (ODbL).
+
+  '

@@ -1,0 +1,30 @@
+name: Red Ginger Resort
+description: Hotel in Ao Nang.
+source_url: ''
+category: hotels
+tags: []
+featured: false
+status: approved
+city: krabi
+area: ao-nang
+geo:
+  lat: 8.039349
+  lng: 98.817194
+location:
+  address: Ao Nang, Krabi
+  city: Krabi
+  country: TH
+  latitude: 8.039349
+  longitude: 98.817194
+claimed: false
+updated_by: import
+updated_at: "2026-10-16 02:55"
+markdown: 'Hotel in Ao Nang.
+
+
+  Sources: <https://www.openstreetmap.org/node/3678616717>
+
+
+  Map data © OpenStreetMap contributors (ODbL).
+
+  '

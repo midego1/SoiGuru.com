@@ -1,0 +1,50 @@
+name: The Beach Seafood & Grill
+description: Seafood and grill restaurant in Ao Nang listed with long daily hours running late into the night.
+source_url: https://www.thebeachaonang.com/
+category: restaurants
+tags:
+- seafood
+- open-late
+featured: false
+status: approved
+city: krabi
+area: ao-nang
+address: Ao Nang, เมืองกระบี่, Krabi
+geo:
+  lat: 8.03893
+  lng: 98.815635
+location:
+  address: Ao Nang, เมืองกระบี่, Krabi
+  city: Krabi
+  country: TH
+  latitude: 8.03893
+  longitude: 98.815635
+hours:
+  mon:
+  - 08:00-00:00
+  tue:
+  - 08:00-00:00
+  wed:
+  - 08:00-00:00
+  thu:
+  - 08:00-00:00
+  fri:
+  - 08:00-00:00
+  sat:
+  - 08:00-00:00
+  sun:
+  - 08:00-00:00
+amenities:
+  wifi: true
+claimed: false
+updated_by: import
+updated_at: "2026-10-16 02:55"
+markdown: 'Seafood and grill restaurant in Ao Nang listed with long daily hours running late into the night.
+
+
+  Sources: <https://www.openstreetmap.org/node/4605486492>, <https://www.visitthailandtoday.com/restaurants/krabi/the-beach-seafoodandgrill>
+
+
+  Map data © OpenStreetMap contributors (ODbL).
+
+  '

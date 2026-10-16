@@ -1,0 +1,30 @@
+name: Railay Princess Resort & Spa
+description: Hotel in Railay.
+source_url: ''
+category: hotels
+tags: []
+featured: false
+status: approved
+city: krabi
+area: railay
+geo:
+  lat: 8.010666
+  lng: 98.840974
+location:
+  address: Ao Nang, Krabi
+  city: Krabi
+  country: TH
+  latitude: 8.010666
+  longitude: 98.840974
+claimed: false
+updated_by: import
+updated_at: "2026-10-16 02:55"
+markdown: 'Hotel in Railay.
+
+
+  Sources: <https://www.openstreetmap.org/way/400697562>
+
+
+  Map data © OpenStreetMap contributors (ODbL).
+
+  '

@@ -3,7 +3,7 @@
  * pages (`/item/…`, `/category/…`, `/tag/…`, `/page/…`, `/directory`, …) send visitors
  * and search engines to the SoiGuru screens with a 301 instead of showing the old design.
  *
- * - `/item/<slug>` (and `/item/<slug>.md`) go to the listing page `/<city>/<area>/<slug>`,
+ * - `/item/<slug>` goes to the listing page `/<city>/<area>/<slug>`,
  *   found from the built SoiGuru pages (`data-path-en`, set by `SoiGuruLayout`).
  * - Everything else of the generic template goes to the landing page `/`.
  *
@@ -49,7 +49,8 @@ export function buildRedirects(listings: Map<string, string>): string {
     for (const [slug, path] of [...listings].sort(([a], [b]) => a.localeCompare(b))) {
         // Target the directory URL (`…/slug/`) that the static assets serve, so there is one hop.
         const target = `${path.replace(/\/+$/, '')}/`;
-        lines.push(`/item/${slug} ${target} 301`, `/item/${slug}/ ${target} 301`, `/item/${slug}.md ${target} 301`);
+        // Two lines per listing keeps well under the 2,000 static redirects Workers allow; `.md` falls to `/`.
+        lines.push(`/item/${slug} ${target} 301`, `/item/${slug}/ ${target} 301`);
     }
     for (const prefix of GENERIC_PREFIXES) {
         lines.push(`${prefix} / 301`, `${prefix}/ / 301`, `${prefix}/* / 301`);

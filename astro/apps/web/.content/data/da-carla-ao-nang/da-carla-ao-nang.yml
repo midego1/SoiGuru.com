@@ -1,0 +1,32 @@
+name: Da Carla
+description: Thai, Italian, Breakfast restaurant in Ao Nang.
+source_url: ''
+category: restaurants
+tags: []
+featured: false
+status: approved
+city: krabi
+area: ao-nang
+geo:
+  lat: 8.044651
+  lng: 98.809972
+location:
+  address: Ao Nang, Krabi
+  city: Krabi
+  country: TH
+  latitude: 8.044651
+  longitude: 98.809972
+amenities:
+  wifi: true
+claimed: false
+updated_by: import
+updated_at: "2026-10-16 02:55"
+markdown: 'Thai, Italian, Breakfast restaurant in Ao Nang.
+
+
+  Sources: <https://www.openstreetmap.org/node/4187014294>
+
+
+  Map data © OpenStreetMap contributors (ODbL).
+
+  '

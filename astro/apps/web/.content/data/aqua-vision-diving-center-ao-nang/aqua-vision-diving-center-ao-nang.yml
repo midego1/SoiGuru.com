@@ -1,0 +1,48 @@
+name: Aqua Vision Diving Center
+description: Dive centre in Ao Nang.
+source_url: https://www.diving-krabi.com
+category: dive-shops
+tags: []
+featured: false
+status: approved
+city: krabi
+area: ao-nang
+geo:
+  lat: 8.033389
+  lng: 98.827294
+location:
+  address: Ao Nang, Krabi
+  city: Krabi
+  country: TH
+  latitude: 8.033389
+  longitude: 98.827294
+phone: "+66980108589"
+hours:
+  mon:
+  - 09:00-18:00
+  tue:
+  - 09:00-18:00
+  wed:
+  - 09:00-18:00
+  thu:
+  - 09:00-18:00
+  fri:
+  - 09:00-18:00
+  sat:
+  - 09:00-18:00
+  sun:
+  - 09:00-18:00
+amenities:
+  card-accepted: true
+claimed: false
+updated_by: import
+updated_at: "2026-10-16 02:55"
+markdown: 'Dive centre in Ao Nang.
+
+
+  Sources: <https://www.openstreetmap.org/node/6303179085>
+
+
+  Map data © OpenStreetMap contributors (ODbL).
+
+  '

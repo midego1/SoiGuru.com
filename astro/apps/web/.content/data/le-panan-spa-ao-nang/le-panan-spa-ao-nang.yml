@@ -1,0 +1,36 @@
+name: Le Panan Spa
+description: Resort spa at Panan Krabi Resort in Ao Nang combining traditional Thai techniques with wellness treatments.
+source_url: ''
+category: massage
+tags:
+- spa
+featured: false
+status: approved
+city: krabi
+area: ao-nang
+address: Panan Krabi Resort, Ao Nang, Mueang Krabi, Krabi 81180
+phone: "+6675817788"
+hours:
+  mon:
+  - 10:00-20:00
+  tue:
+  - 10:00-20:00
+  wed:
+  - 10:00-20:00
+  thu:
+  - 10:00-20:00
+  fri:
+  - 10:00-20:00
+  sat:
+  - 10:00-20:00
+  sun:
+  - 10:00-20:00
+claimed: false
+updated_by: import
+updated_at: "2026-10-16 02:55"
+markdown: 'Resort spa at Panan Krabi Resort in Ao Nang combining traditional Thai techniques with wellness treatments.
+
+
+  Sources: <https://www.visitthailandtoday.com/wellness-spas/krabi/le-panan-spa>, <https://www.britishairways.com/en-gb/destinations/hotel-information/Krabi/Panan-Krabi-Resort/TH-KBV-5817788>
+
+  '

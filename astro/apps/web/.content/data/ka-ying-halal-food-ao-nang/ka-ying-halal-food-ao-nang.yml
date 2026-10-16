@@ -1,0 +1,30 @@
+name: Ka Ying Halal Food
+description: Restaurant in Ao Nang.
+source_url: ''
+category: restaurants
+tags: []
+featured: false
+status: approved
+city: krabi
+area: ao-nang
+geo:
+  lat: 8.050214
+  lng: 98.816056
+location:
+  address: Ao Nang, Krabi
+  city: Krabi
+  country: TH
+  latitude: 8.050214
+  longitude: 98.816056
+claimed: false
+updated_by: import
+updated_at: "2026-10-16 02:55"
+markdown: 'Restaurant in Ao Nang.
+
+
+  Sources: <https://www.openstreetmap.org/node/11586854369>
+
+
+  Map data © OpenStreetMap contributors (ODbL).
+
+  '

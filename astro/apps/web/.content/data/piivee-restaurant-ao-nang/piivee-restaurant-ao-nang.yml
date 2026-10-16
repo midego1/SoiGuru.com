@@ -1,0 +1,45 @@
+name: PiiVee Restaurant
+description: Thai, German, European restaurant in Ao Nang.
+source_url: ''
+category: restaurants
+tags: []
+featured: false
+status: approved
+city: krabi
+area: ao-nang
+address: 123/6, Soi Aonang 13, อ่าวนาง, 81000
+geo:
+  lat: 8.033717
+  lng: 98.830138
+location:
+  address: 123/6, Soi Aonang 13, อ่าวนาง, 81000
+  city: Krabi
+  country: TH
+  latitude: 8.033717
+  longitude: 98.830138
+hours:
+  mon:
+  - 16:00-23:00
+  tue:
+  - 16:00-23:00
+  wed:
+  - 16:00-23:00
+  thu:
+  - 16:00-23:00
+  fri:
+  - 16:00-23:00
+  sat:
+  - 16:00-23:00
+  sun: []
+claimed: false
+updated_by: import
+updated_at: "2026-10-16 02:55"
+markdown: 'Thai, German, European restaurant in Ao Nang.
+
+
+  Sources: <https://www.openstreetmap.org/node/6078284109>
+
+
+  Map data © OpenStreetMap contributors (ODbL).
+
+  '

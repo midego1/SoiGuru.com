@@ -1,0 +1,32 @@
+name: The Coffee Club
+description: Branch of the Australian coffee chain in Ao Nang, serving breakfast and a wide coffee menu.
+source_url: ''
+category: cafes
+tags: []
+featured: false
+status: approved
+city: krabi
+area: ao-nang
+address: Ao Nang, Krabi
+geo:
+  lat: 8.03283
+  lng: 98.824746
+location:
+  address: Ao Nang, Krabi
+  city: Krabi
+  country: TH
+  latitude: 8.03283
+  longitude: 98.824746
+claimed: false
+updated_by: import
+updated_at: "2026-10-16 02:55"
+markdown: 'Branch of the Australian coffee chain in Ao Nang, serving breakfast and a wide coffee menu.
+
+
+  Sources: <https://www.openstreetmap.org/node/7202850585>, <https://thailandmagazine.com/krabi/eat-drink/the-coffee-club-in-ao-nang/>,
+  <https://www.tripadvisor.com/Restaurant_Review-g1507054-d12919009-Reviews-The_Coffee_Club_Ao_Nang-Ao_Nang_Krabi_Province.html>
+
+
+  Map data © OpenStreetMap contributors (ODbL).
+
+  '

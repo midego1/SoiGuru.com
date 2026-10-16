@@ -1,0 +1,30 @@
+name: Jungle Bungalows
+description: Serviced apartments in Railay.
+source_url: ''
+category: hotels
+tags: []
+featured: false
+status: approved
+city: krabi
+area: railay
+geo:
+  lat: 8.019106
+  lng: 98.837845
+location:
+  address: Ao Nang, Krabi
+  city: Krabi
+  country: TH
+  latitude: 8.019106
+  longitude: 98.837845
+claimed: false
+updated_by: import
+updated_at: "2026-10-16 02:55"
+markdown: 'Serviced apartments in Railay.
+
+
+  Sources: <https://www.openstreetmap.org/node/6262194285>
+
+
+  Map data © OpenStreetMap contributors (ODbL).
+
+  '

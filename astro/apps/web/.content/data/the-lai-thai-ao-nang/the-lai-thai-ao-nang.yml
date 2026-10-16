@@ -1,0 +1,35 @@
+name: The Lai Thai
+description: Serviced apartments in Ao Nang.
+source_url: https://www.laithai-resort.com/krabi/en/
+category: hotels
+tags: []
+featured: false
+status: approved
+city: krabi
+area: ao-nang
+address: 25/1, Ao Nang, 81000
+geo:
+  lat: 8.03363
+  lng: 98.829369
+location:
+  address: 25/1, Ao Nang, 81000
+  city: Krabi
+  country: TH
+  latitude: 8.03363
+  longitude: 98.829369
+phone: "+6675637281"
+amenities:
+  air-con: true
+  wifi: true
+claimed: false
+updated_by: import
+updated_at: "2026-10-16 02:55"
+markdown: 'Serviced apartments in Ao Nang.
+
+
+  Sources: <https://www.openstreetmap.org/relation/19799647>
+
+
+  Map data © OpenStreetMap contributors (ODbL).
+
+  '

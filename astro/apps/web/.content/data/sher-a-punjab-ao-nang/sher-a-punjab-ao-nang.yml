@@ -1,0 +1,49 @@
+name: Sher A Punjab
+description: Indian restaurant in Ao Nang.
+source_url: ''
+category: restaurants
+tags: []
+featured: false
+status: approved
+city: krabi
+area: ao-nang
+geo:
+  lat: 8.043356
+  lng: 98.81082
+location:
+  address: Ao Nang, Krabi
+  city: Krabi
+  country: TH
+  latitude: 8.043356
+  longitude: 98.81082
+hours:
+  mon:
+  - 09:30-23:30
+  tue:
+  - 09:30-23:30
+  wed:
+  - 09:30-23:30
+  thu:
+  - 09:30-23:30
+  fri:
+  - 09:30-23:30
+  sat:
+  - 09:30-23:30
+  sun:
+  - 09:30-23:30
+amenities:
+  air-con: true
+  wifi: true
+  card-accepted: true
+claimed: false
+updated_by: import
+updated_at: "2026-10-16 02:55"
+markdown: 'Indian restaurant in Ao Nang.
+
+
+  Sources: <https://www.openstreetmap.org/node/11766227620>
+
+
+  Map data © OpenStreetMap contributors (ODbL).
+
+  '

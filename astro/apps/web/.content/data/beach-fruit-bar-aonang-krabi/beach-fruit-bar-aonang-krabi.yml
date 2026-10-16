@@ -1,0 +1,45 @@
+name: Beach Fruit Bar Aonang Krabi
+description: Café in Ao Nang.
+source_url: ''
+category: cafes
+tags: []
+featured: false
+status: approved
+city: krabi
+area: ao-nang
+geo:
+  lat: 8.029255
+  lng: 98.824252
+location:
+  address: Ao Nang, Krabi
+  city: Krabi
+  country: TH
+  latitude: 8.029255
+  longitude: 98.824252
+hours:
+  mon:
+  - 10:00-22:00
+  tue:
+  - 10:00-22:00
+  wed:
+  - 10:00-22:00
+  thu:
+  - 10:00-22:00
+  fri:
+  - 10:00-22:00
+  sat:
+  - 10:00-22:00
+  sun:
+  - 10:00-22:00
+claimed: false
+updated_by: import
+updated_at: "2026-10-16 02:55"
+markdown: 'Café in Ao Nang.
+
+
+  Sources: <https://www.openstreetmap.org/node/4631824095>
+
+
+  Map data © OpenStreetMap contributors (ODbL).
+
+  '

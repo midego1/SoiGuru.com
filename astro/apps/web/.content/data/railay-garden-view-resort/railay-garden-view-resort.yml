@@ -1,0 +1,30 @@
+name: Railay Garden View Resort
+description: Guesthouse in Railay.
+source_url: ''
+category: hotels
+tags: []
+featured: false
+status: approved
+city: krabi
+area: railay
+geo:
+  lat: 8.01337
+  lng: 98.845253
+location:
+  address: Ao Nang, Krabi
+  city: Krabi
+  country: TH
+  latitude: 8.01337
+  longitude: 98.845253
+claimed: false
+updated_by: import
+updated_at: "2026-10-16 02:55"
+markdown: 'Guesthouse in Railay.
+
+
+  Sources: <https://www.openstreetmap.org/node/1397562898>
+
+
+  Map data © OpenStreetMap contributors (ODbL).
+
+  '

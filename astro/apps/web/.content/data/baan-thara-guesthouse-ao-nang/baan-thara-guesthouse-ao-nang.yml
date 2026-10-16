@@ -1,0 +1,34 @@
+name: Baan Thara Guesthouse
+description: Hotel in Ao Nang.
+source_url: ''
+category: hotels
+tags: []
+featured: false
+status: approved
+city: krabi
+area: ao-nang
+address: 225/1 M.5 T, Aonang Muang Krabi, Nopprarat Thara beach, Krabi, 81000
+geo:
+  lat: 8.050942
+  lng: 98.807386
+location:
+  address: 225/1 M.5 T, Aonang Muang Krabi, Nopprarat Thara beach, Krabi, 81000
+  city: Krabi
+  country: TH
+  latitude: 8.050942
+  longitude: 98.807386
+phone: "+66887938582"
+amenities:
+  wifi: true
+claimed: false
+updated_by: import
+updated_at: "2026-10-16 02:55"
+markdown: 'Hotel in Ao Nang.
+
+
+  Sources: <https://www.openstreetmap.org/node/11403382652>
+
+
+  Map data © OpenStreetMap contributors (ODbL).
+
+  '

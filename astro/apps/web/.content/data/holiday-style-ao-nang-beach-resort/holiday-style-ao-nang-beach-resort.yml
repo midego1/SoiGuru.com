@@ -1,0 +1,50 @@
+name: Holiday Style Ao Nang Beach Resort
+description: Hotel in Ao Nang.
+source_url: https://www.holidaystyleresortkrabi.com/
+category: hotels
+tags: []
+featured: false
+status: approved
+city: krabi
+area: ao-nang
+geo:
+  lat: 8.04138
+  lng: 98.814251
+location:
+  address: Ao Nang, Krabi
+  city: Krabi
+  country: TH
+  latitude: 8.04138
+  longitude: 98.814251
+phone: "+6675810777"
+hours:
+  mon:
+  - 00:00-24:00
+  tue:
+  - 00:00-24:00
+  wed:
+  - 00:00-24:00
+  thu:
+  - 00:00-24:00
+  fri:
+  - 00:00-24:00
+  sat:
+  - 00:00-24:00
+  sun:
+  - 00:00-24:00
+amenities:
+  air-con: true
+  wifi: true
+  card-accepted: true
+claimed: false
+updated_by: import
+updated_at: "2026-10-16 02:55"
+markdown: 'Hotel in Ao Nang.
+
+
+  Sources: <https://www.openstreetmap.org/node/11766148467>
+
+
+  Map data © OpenStreetMap contributors (ODbL).
+
+  '

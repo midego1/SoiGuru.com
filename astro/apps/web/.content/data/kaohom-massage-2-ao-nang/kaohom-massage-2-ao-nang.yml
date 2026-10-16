@@ -1,0 +1,45 @@
+name: Kaohom Massage 2
+description: Thai massage in Ao Nang.
+source_url: ''
+category: massage
+tags: []
+featured: false
+status: approved
+city: krabi
+area: ao-nang
+geo:
+  lat: 8.032914
+  lng: 98.820623
+location:
+  address: Ao Nang, Krabi
+  city: Krabi
+  country: TH
+  latitude: 8.032914
+  longitude: 98.820623
+hours:
+  mon:
+  - 09:00-24:00
+  tue:
+  - 09:00-24:00
+  wed:
+  - 09:00-24:00
+  thu:
+  - 09:00-24:00
+  fri:
+  - 09:00-24:00
+  sat:
+  - 09:00-24:00
+  sun:
+  - 09:00-24:00
+claimed: false
+updated_by: import
+updated_at: "2026-10-16 02:55"
+markdown: 'Thai massage in Ao Nang.
+
+
+  Sources: <https://www.openstreetmap.org/node/6317811358>
+
+
+  Map data © OpenStreetMap contributors (ODbL).
+
+  '

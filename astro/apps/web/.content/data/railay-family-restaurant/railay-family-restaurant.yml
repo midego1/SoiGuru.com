@@ -1,0 +1,32 @@
+name: Railay Family Restaurant
+description: Barbecue, Thai restaurant in Railay.
+source_url: ''
+category: restaurants
+tags: []
+featured: false
+status: approved
+city: krabi
+area: railay
+geo:
+  lat: 8.012041
+  lng: 98.84
+location:
+  address: Ao Nang, Krabi
+  city: Krabi
+  country: TH
+  latitude: 8.012041
+  longitude: 98.84
+amenities:
+  wifi: true
+claimed: false
+updated_by: import
+updated_at: "2026-10-16 02:55"
+markdown: 'Barbecue, Thai restaurant in Railay.
+
+
+  Sources: <https://www.openstreetmap.org/node/5251403721>
+
+
+  Map data © OpenStreetMap contributors (ODbL).
+
+  '

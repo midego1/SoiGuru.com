@@ -1,0 +1,33 @@
+name: Anana Ecological Resort Krabi
+description: Hotel in Ao Nang.
+source_url: https://www.ananakrabi.com/
+category: hotels
+tags: []
+featured: false
+status: approved
+city: krabi
+area: ao-nang
+address: 1004, Moo. 2 Soi Suan Tu Rian, Amphoe Muang, Krabi, 81180
+geo:
+  lat: 8.035601
+  lng: 98.841446
+location:
+  address: 1004, Moo. 2 Soi Suan Tu Rian, Amphoe Muang, Krabi, 81180
+  city: Krabi
+  country: TH
+  latitude: 8.035601
+  longitude: 98.841446
+amenities:
+  wifi: true
+claimed: false
+updated_by: import
+updated_at: "2026-10-16 02:55"
+markdown: 'Hotel in Ao Nang.
+
+
+  Sources: <https://www.openstreetmap.org/way/1219327916>
+
+
+  Map data © OpenStreetMap contributors (ODbL).
+
+  '

@@ -1,0 +1,31 @@
+name: Rayavadee
+description: Hotel in Railay.
+source_url: https://www.rayavadee.com/en/
+category: hotels
+tags: []
+featured: false
+status: approved
+city: krabi
+area: railay
+address: Ao Nang, Mueang Krabi, กระบี่
+geo:
+  lat: 8.007464
+  lng: 98.839131
+location:
+  address: Ao Nang, Mueang Krabi, กระบี่
+  city: Krabi
+  country: TH
+  latitude: 8.007464
+  longitude: 98.839131
+claimed: false
+updated_by: import
+updated_at: "2026-10-16 02:55"
+markdown: 'Hotel in Railay.
+
+
+  Sources: <https://www.openstreetmap.org/relation/19742758>
+
+
+  Map data © OpenStreetMap contributors (ODbL).
+
+  '

@@ -1,0 +1,36 @@
+name: Antique Spa
+description: Spa in central Ao Nang offering massage and spa treatments.
+source_url: ''
+category: massage
+tags:
+- spa
+featured: false
+status: approved
+city: krabi
+area: ao-nang
+address: 244 Ao Nang, Mueang Krabi, Krabi 81000
+phone: "+66983481014"
+hours:
+  mon:
+  - 10:00-21:00
+  tue:
+  - 10:00-21:00
+  wed:
+  - 10:00-21:00
+  thu:
+  - 10:00-21:00
+  fri:
+  - 10:00-21:00
+  sat:
+  - 10:00-21:00
+  sun:
+  - 10:00-21:00
+claimed: false
+updated_by: import
+updated_at: "2026-10-16 02:55"
+markdown: 'Spa in central Ao Nang offering massage and spa treatments.
+
+
+  Sources: <https://www.visitthailandtoday.com/wellness-spas/krabi/antique-spa>
+
+  '

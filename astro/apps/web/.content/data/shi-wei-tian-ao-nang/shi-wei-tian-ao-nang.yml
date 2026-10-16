@@ -1,0 +1,31 @@
+name: Shi Wei Tian
+description: Chinese restaurant in Ao Nang.
+source_url: ''
+category: restaurants
+tags: []
+featured: false
+status: approved
+city: krabi
+area: ao-nang
+address: 667/4, Moo2, Ao Nang
+geo:
+  lat: 8.036739
+  lng: 98.818447
+location:
+  address: 667/4, Moo2, Ao Nang
+  city: Krabi
+  country: TH
+  latitude: 8.036739
+  longitude: 98.818447
+claimed: false
+updated_by: import
+updated_at: "2026-10-16 02:55"
+markdown: 'Chinese restaurant in Ao Nang.
+
+
+  Sources: <https://www.openstreetmap.org/node/5814323543>
+
+
+  Map data © OpenStreetMap contributors (ODbL).
+
+  '

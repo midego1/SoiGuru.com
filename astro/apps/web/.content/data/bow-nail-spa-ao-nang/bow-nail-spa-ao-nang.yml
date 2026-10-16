@@ -1,0 +1,45 @@
+name: Bow Nail & Spa
+description: Nail salon in Ao Nang, Krabi, per its own website.
+source_url: https://www.bownailspa.com
+category: nail-salons
+tags: []
+featured: false
+status: approved
+city: krabi
+area: ao-nang
+address: 981/2, Na Thai Road, Ao Nang, Mueang Krabi, Krabi, 81180
+geo:
+  lat: 8.059083
+  lng: 98.840125
+location:
+  address: 981/2, Na Thai Road, Ao Nang, Mueang Krabi, Krabi, 81180
+  city: Krabi
+  country: TH
+  latitude: 8.059083
+  longitude: 98.840125
+hours:
+  mon: []
+  tue:
+  - 09:30-19:30
+  wed:
+  - 09:30-19:30
+  thu:
+  - 09:30-19:30
+  fri:
+  - 09:30-19:30
+  sat:
+  - 09:30-19:30
+  sun:
+  - 09:30-19:30
+claimed: false
+updated_by: import
+updated_at: "2026-10-16 02:55"
+markdown: 'Nail salon in Ao Nang, Krabi, per its own website.
+
+
+  Sources: <https://www.openstreetmap.org/node/14222404674>, <https://bownailspa.com/>
+
+
+  Map data © OpenStreetMap contributors (ODbL).
+
+  '

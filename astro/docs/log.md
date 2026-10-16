@@ -3,6 +3,10 @@ title: "Change Log"
 sidebar_label: "Change Log"
 ---
 
+## 2026-10-16 — Real Krabi listings; bundled content refreshed
+
+The bundled `.content/` is refreshed from the `data` branch (commit 264fa81): 490 real businesses in Ao Nang, Railay and Klong Muang (461 from OpenStreetMap with coordinates and ODbL attribution, 29 from web research), the 102 Krabi sample listings removed. `soiguru-redirects` now writes two lines per listing (`/item/<slug>`, `/item/<slug>/`) instead of three, so the file stays under the 2,000 static redirects Cloudflare Workers allow; `/item/<slug>.md` falls through to `/`. Spec: `.specify/features/soiguru-design.md` § Generic routes.
+
 ## 2026-10-16 — Owner links point at owner.soiguru.com
 
 The Next.js owner app now also answers on `owner.soiguru.com` (Cloudflare-proxied DNS to the Dokploy server). Bundled `works.yml`: `claim_url: https://owner.soiguru.com/{city}/claim`, `owner_url: https://owner.soiguru.com/owner`. Spec: `.specify/features/soiguru-design.md`.

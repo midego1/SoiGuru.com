@@ -1,0 +1,47 @@
+name: Tanta Restaurant
+name_th: Tanta ร้านอาหารตันตา
+description: Italian pizza, Thai restaurant in Ao Nang.
+source_url: ''
+category: restaurants
+tags: []
+featured: false
+status: approved
+city: krabi
+area: ao-nang
+geo:
+  lat: 8.031593
+  lng: 98.822944
+location:
+  address: Ao Nang, Krabi
+  city: Krabi
+  country: TH
+  latitude: 8.031593
+  longitude: 98.822944
+phone: "+66815394400"
+hours:
+  mon:
+  - 10:00-23:00
+  tue:
+  - 10:00-23:00
+  wed:
+  - 10:00-23:00
+  thu:
+  - 10:00-23:00
+  fri:
+  - 10:00-23:00
+  sat:
+  - 10:00-23:00
+  sun:
+  - 10:00-23:00
+claimed: false
+updated_by: import
+updated_at: "2026-10-16 02:55"
+markdown: 'Italian pizza, Thai restaurant in Ao Nang.
+
+
+  Sources: <https://www.openstreetmap.org/node/5348534821>
+
+
+  Map data © OpenStreetMap contributors (ODbL).
+
+  '
