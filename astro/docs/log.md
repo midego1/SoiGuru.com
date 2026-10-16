@@ -3,6 +3,10 @@ title: "Change Log"
 sidebar_label: "Change Log"
 ---
 
+## 2026-10-16 — Claim and Owner links match the Next.js routes
+
+Claim buttons linked to `https://soiguru.midego.net/claim`, which does not exist in the Next.js app (its ClaimFlow is `/<city>/claim`) and showed an error page. `claim_url` now takes a `{city}` placeholder (`claimUrl(config, city, listing?)`), and a new optional `owner_url` (`ownerUrl()`) sends the Owner tab, "For owners" and the landing CTA to the owner dashboard (`/owner`), like the Next.js bottom nav. Bundled `works.yml` updated. Spec: `.specify/features/soiguru-design.md`.
+
 ## 2026-10-16 — Default site URL is soiguru.com
 
 Builds without `SITE_URL` (the Cloudflare Worker `soiguru-minimal` deploy) put `https://example.com` in every canonical, hreflang, sitemap and robots.txt URL. `astro.config.ts` now falls back to `https://soiguru.com`; `SITE_URL` still overrides it. Spec: `.specify/features/soiguru-design.md`.

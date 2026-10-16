@@ -8,7 +8,7 @@ import SoiGuruLayout from '../../layouts/SoiGuruLayout.astro';
 import TopBar from '../../components/soiguru/TopBar.astro';
 import SearchBar from '../../components/soiguru/SearchBar.astro';
 import CategoryResults from '../../components/soiguru/CategoryResults.astro';
-import { getSoiGuru, cityListings, claimUrl, type City } from '../../lib/soiguru/data';
+import { getSoiGuru, cityListings, ownerUrl, type City } from '../../lib/soiguru/data';
 
 export async function getStaticPaths() {
     const { cities } = await getSoiGuru();
@@ -33,9 +33,9 @@ const { config } = data;
     wide
     noindex
 >
-    <TopBar back={{ href: `/${city.id}`, label: `Back to ${city.name}` }} title="Search · ค้นหา" subtitle={city.name} nav={{ city, active: 'search', ownerHref: claimUrl(config) }} />
+    <TopBar back={{ href: `/${city.id}`, label: `Back to ${city.name}` }} title="Search · ค้นหา" subtitle={city.name} nav={{ city, active: 'search', ownerHref: ownerUrl(config, city) }} />
     <main>
         <div class="sg-search-wrap"><SearchBar city={city} /></div>
-        <CategoryResults city={city} listings={cityListings(data, city)} noun="places" ownerHref={claimUrl(config)} search />
+        <CategoryResults city={city} listings={cityListings(data, city)} noun="places" ownerHref={ownerUrl(config, city)} search />
     </main>
 </SoiGuruLayout>

@@ -283,12 +283,20 @@ export function defaultArea(city: City): Area | undefined {
     return city.areas.find((a) => a.id === city.default_area) ?? city.areas[0];
 }
 
-/** Where the "Claim this listing" button goes (`claim_url` in works.yml), with the listing preselected. */
-export function claimUrl(config: SiteConfig, listing?: Listing): string | undefined {
-    const base = str(config['claim_url']);
+/**
+ * Where the Claim buttons go: `claim_url` in works.yml, with `{city}` replaced by the city id
+ * (the Next.js ClaimFlow lives at `/<city>/claim`) and the listing preselected.
+ */
+export function claimUrl(config: SiteConfig, city: Pick<City, 'id'>, listing?: Listing): string | undefined {
+    const base = str(config['claim_url'])?.replaceAll('{city}', encodeURIComponent(city.id));
     if (!base) return undefined;
     if (!listing) return base;
     return `${base}${base.includes('?') ? '&' : '?'}listing=${encodeURIComponent(listing.slug)}`;
+}
+
+/** Where the Owner tab and "For owners" go: `owner_url` in works.yml (the owner dashboard), else the city's claim flow. */
+export function ownerUrl(config: SiteConfig, city?: Pick<City, 'id'>): string | undefined {
+    return str(config['owner_url']) ?? (city ? claimUrl(config, city) : undefined);
 }
 
 /** Where "Report wrong info" goes: a prefilled e-mail to `contact_email` in works.yml. */

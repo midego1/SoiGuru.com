@@ -28,7 +28,7 @@ Category and area ids share the second URL segment; `soiguru-data` keeps them di
 - `cities.yml` (cities with `areas`, `timezone`, `default_area`, `geo`) and `amenities.yml` (id → EN/TH label) are SoiGuru extensions read through `readContentYaml()` in `src/lib/content.ts`.
 - Items keep every extra YAML key (core item loader spreads the raw YAML). `src/lib/soiguru/data.ts` narrows them into a typed `Listing`: `city`, `area`, `name_th`, `description_th`, `address`, `geo`, `phone`, `line_id`, `whatsapp`, `hours`, `hours_note`, `booking_note`, `price_band`, `rating`, `rating_count`, `claimed`, `amenities`, `updated_by`, `updated_at`, `sample`.
 - Categories: the core category loader now passes extra keys through (`name_th`, `short_name`, `icon`), re-validating its known keys. Higher `priority` sorts first (as in `soiguru-data` and the Next.js template).
-- `works.yml`: optional `claim_url` (Claim buttons and the Owner tab; hidden without it) and `contact_email` ("Report wrong info"; hidden without it).
+- `works.yml`: optional `claim_url` (Claim buttons; `{city}` is replaced by the city id; hidden without it), `owner_url` (Owner tab and "For owners"; falls back to the city's `claim_url`) and `contact_email` ("Report wrong info"; hidden without it).
 
 ## Behaviour
 
@@ -60,7 +60,7 @@ The design is phone first: one 640px column, and only CategoryResults has a wide
 - **Thai URLs**: the `soiguru-thai` integration (`src/integrations/soiguru-thai.ts`) copies every SoiGuru page to `/th/…` after the build, swapping `[data-th]` texts, internal links, `lang`, canonical and `og:url`, and adds the Thai URLs to the sitemap. Pages carry `hreflang` en / th / x-default. The EN / ไทย toggle moves between the two URLs.
 - **Hours**: today's row moves to the top of the table.
 - **LINE / WhatsApp**: official marks from Simple Icons 13.21.0 (CC0) inlined in `icons.ts`.
-- **Claim** links go to `claim_url` in `works.yml` (`https://soiguru.midego.net/claim`).
+- **Claim** links go to `claim_url` in `works.yml` (`https://soiguru.midego.net/{city}/claim`, the Next.js ClaimFlow, with `?listing=<slug>` on a listing). The Owner tab, "For owners" and the landing CTA go to `owner_url` (`https://soiguru.midego.net/owner`, the Next.js owner dashboard).
 
 ## Not in this pass
 

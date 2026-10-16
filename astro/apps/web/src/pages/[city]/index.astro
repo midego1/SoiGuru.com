@@ -12,7 +12,7 @@ import SearchBar from '../../components/soiguru/SearchBar.astro';
 import ListingCard from '../../components/soiguru/ListingCard.astro';
 import OwnerCta from '../../components/soiguru/OwnerCta.astro';
 import BottomNav from '../../components/soiguru/BottomNav.astro';
-import { getSoiGuru, cityListings, defaultArea, claimUrl, type City } from '../../lib/soiguru/data';
+import { getSoiGuru, cityListings, defaultArea, claimUrl, ownerUrl, type City } from '../../lib/soiguru/data';
 import { breadcrumbJsonLd } from '../../lib/soiguru/jsonld';
 
 export async function getStaticPaths() {
@@ -35,7 +35,7 @@ const openNowCandidates = [...listings].sort(
 );
 const areaCounts = new Map(city.areas.map((a) => [a.id, listings.filter((l) => l.area?.id === a.id).length]));
 const siteUrl = (Astro.site?.href ?? '').replace(/\/$/, '');
-const owner = claimUrl(config);
+const owner = ownerUrl(config, city);
 ---
 
 <SoiGuruLayout
@@ -110,7 +110,7 @@ const owner = claimUrl(config);
         }
 
         <div class="tkg-section" style="padding-bottom:24px">
-            <OwnerCta cityName={city.name} href={owner} />
+            <OwnerCta cityName={city.name} href={claimUrl(config, city)} />
         </div>
     </main>
     <BottomNav city={city} active="home" ownerHref={owner} />

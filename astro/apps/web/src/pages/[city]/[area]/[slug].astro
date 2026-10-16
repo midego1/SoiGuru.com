@@ -18,7 +18,7 @@ import StaticMap from '../../../components/soiguru/StaticMap.astro';
 import ClaimBox from '../../../components/soiguru/ClaimBox.astro';
 import ListingCard from '../../../components/soiguru/ListingCard.astro';
 import SaveButton from '../../../components/soiguru/SaveButton.astro';
-import { getSoiGuru, claimUrl, reportUrl, type Listing } from '../../../lib/soiguru/data';
+import { getSoiGuru, claimUrl, ownerUrl, reportUrl, type Listing } from '../../../lib/soiguru/data';
 import { breadcrumbJsonLd, localBusinessJsonLd } from '../../../lib/soiguru/jsonld';
 import { priceBand, formatDate } from '../../../lib/soiguru/format';
 import { directionsUrl, distanceMetres } from '../../../lib/soiguru/geo';
@@ -77,7 +77,7 @@ const trail: [string, string][] = [
         titleTh={listing.name_th}
         subtitle={[category?.name, area?.name].filter(Boolean).join(' · ')}
         subtitleTh={[category?.name_th, area?.name_th].filter(Boolean).join(' · ') || undefined}
-        nav={{ city, ownerHref: claimUrl(config) }}
+        nav={{ city, ownerHref: ownerUrl(config, city) }}
     >
         <SaveButton slug={listing.slug} />
         <button type="button" class="tkg-iconbtn" aria-label="Share" data-share={`${siteUrl}${listing.url}`} data-share-title={listing.name}>
@@ -254,7 +254,7 @@ const trail: [string, string][] = [
                 )
             }
 
-            <ClaimBox listing={listing} href={claimUrl(config, listing)} />
+            <ClaimBox listing={listing} href={claimUrl(config, city, listing)} />
         </aside>
     </main>
 
