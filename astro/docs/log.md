@@ -3,6 +3,10 @@ title: "Change Log"
 sidebar_label: "Change Log"
 ---
 
+## 2026-10-16 — Owner links point at owner.soiguru.com
+
+The Next.js owner app now also answers on `owner.soiguru.com` (Cloudflare-proxied DNS to the Dokploy server). Bundled `works.yml`: `claim_url: https://owner.soiguru.com/{city}/claim`, `owner_url: https://owner.soiguru.com/owner`. Spec: `.specify/features/soiguru-design.md`.
+
 ## 2026-10-16 — Generic template pages redirect to SoiGuru pages; 404 in the SoiGuru design
 
 soiguru.com still served ~240 pages of the generic template design (`/item/…`, `/category/…`, `/tag/…`, `/page/…`, `/directory`, `/categories`, `/tags`, `/collections`, `/comparisons`, `/pages/…`), all in the sitemap, with sample items linking to `example.com`. New `soiguru-redirects` integration writes `dist/_redirects` after the build (Cloudflare Workers static assets apply it before serving files): `/item/<slug>` (and `.md`) 301 to the listing page `/<city>/<area>/<slug>/`, every other generic route 301 to `/`. The same prefixes (`GENERIC_PREFIXES`) are filtered out of the sitemap. The routes stay in the code (R11). `404.astro` now uses `SoiGuruLayout` (top bar, EN/TH message, city list, noindex). Spec: `.specify/features/soiguru-design.md` § Generic routes.

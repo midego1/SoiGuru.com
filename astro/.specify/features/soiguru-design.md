@@ -60,7 +60,7 @@ The design is phone first: one 640px column, and only CategoryResults has a wide
 - **Thai URLs**: the `soiguru-thai` integration (`src/integrations/soiguru-thai.ts`) copies every SoiGuru page to `/th/…` after the build, swapping `[data-th]` texts, internal links, `lang`, canonical and `og:url`, and adds the Thai URLs to the sitemap. Pages carry `hreflang` en / th / x-default. The EN / ไทย toggle moves between the two URLs.
 - **Hours**: today's row moves to the top of the table.
 - **LINE / WhatsApp**: official marks from Simple Icons 13.21.0 (CC0) inlined in `icons.ts`.
-- **Claim** links go to `claim_url` in `works.yml` (`https://soiguru.midego.net/{city}/claim`, the Next.js ClaimFlow, with `?listing=<slug>` on a listing). The Owner tab, "For owners" and the landing CTA go to `owner_url` (`https://soiguru.midego.net/owner`, the Next.js owner dashboard).
+- **Claim** links go to `claim_url` in `works.yml` (`https://owner.soiguru.com/{city}/claim`, the Next.js ClaimFlow, with `?listing=<slug>` on a listing). The Owner tab, "For owners" and the landing CTA go to `owner_url` (`https://owner.soiguru.com/owner`, the Next.js owner dashboard).
 
 ## Not in this pass
 
