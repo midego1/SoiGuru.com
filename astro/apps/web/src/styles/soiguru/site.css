@@ -1684,3 +1684,105 @@ html[data-lang='en'] .sg-sf-lang[data-lang-set='en'] {
         height: calc(100dvh - 56px - 61px - 40px - 56px - env(safe-area-inset-bottom));
     }
 }
+
+/* ---------- Menu tab: phones open the menu from the tab bar, not the header ---------- */
+.tkg-nav .sg-nav-menu {
+    border: 0;
+    background: none;
+    padding: 0;
+    font: inherit;
+    cursor: pointer;
+    color: var(--ink-muted);
+    font-size: 11px;
+    line-height: 14px;
+    font-weight: 500;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 2px;
+}
+.tkg-nav .sg-nav-menu .tkg-i {
+    width: 24px;
+    height: 24px;
+}
+@media (max-width: 959px) {
+    .sg-sh .sg-menu {
+        display: none;
+    }
+}
+.sg-msheet-links {
+    display: grid;
+    gap: 2px;
+}
+.sg-page .sg-msheet-links a {
+    display: flex;
+    align-items: center;
+    gap: var(--space-3);
+    min-height: 48px;
+    padding: 0 var(--space-3);
+    border-radius: var(--radius-md);
+    color: var(--ink);
+    font-weight: 600;
+    text-decoration: none;
+}
+.sg-page .sg-msheet-links a:hover {
+    background: var(--sea-tint);
+}
+.sg-msheet-links .tkg-i {
+    color: var(--sea);
+}
+.sg-msheet-block .sg-pop-title {
+    margin-inline: 0;
+}
+.sg-msheet-owner {
+    display: grid;
+    gap: var(--space-2);
+}
+
+/*
+ * Desktop results (category, area, search): the page fits the window, no page scroll. The
+ * list scrolls in its own column, the map fills the rest, and "Show more" / "Show closed"
+ * stay pinned under the list.
+ */
+@media (min-width: 960px) {
+    .sg-page-wide {
+        height: 100vh;
+        height: 100dvh;
+        min-height: 0;
+        overflow: hidden;
+    }
+    .sg-page-wide > main {
+        flex: 1 1 auto;
+        min-height: 0;
+        display: flex;
+        flex-direction: column;
+    }
+    .sg-page-wide > main > .sg-results {
+        flex: 1 1 auto;
+        min-height: 0;
+        grid-template-rows: auto minmax(0, 1fr);
+    }
+    .sg-page-wide .sg-results-list {
+        min-height: 0;
+        overflow-y: auto;
+        overscroll-behavior: contain;
+    }
+    .sg-page-wide .sg-results-map {
+        position: relative !important;
+        top: auto !important;
+        height: auto !important;
+        min-height: 0;
+    }
+    .sg-page-wide .sg-results-list .tkg-section > .tkg-pad:last-child {
+        position: sticky;
+        bottom: 0;
+        z-index: 1;
+        background: var(--surface);
+        border-top: 1px solid var(--line);
+        margin-top: var(--space-3);
+    }
+    .sg-page-wide .sg-results-list .tkg-section > .tkg-pad:last-child:not(:has(> :not([hidden]))) {
+        display: none;
+    }
+}
