@@ -2020,3 +2020,29 @@ html[data-lang='en'] .sg-sf-lang[data-lang-set='en'] {
         min-width: 240px;
     }
 }
+
+/*
+ * Theme `soiguru` follows the moodboard's grounds: the page is `surface-100` (sand), cards,
+ * bars and sheets are `surface`, category tiles sit on `sea-tint` with the icon in `sea`.
+ */
+:root:not([data-theme='navy']) body,
+:root:not([data-theme='navy']) .sg-page {
+    background: var(--surface-100);
+}
+:root:not([data-theme='navy']) .sg-page a.sg-tile {
+    background: var(--sea-tint);
+    border-color: transparent;
+}
+:root:not([data-theme='navy']) .sg-page a.sg-tile:hover {
+    border-color: var(--sea);
+}
+:root:not([data-theme='navy']) .sg-sh,
+:root:not([data-theme='navy']) .sg-results > .tkg-filterbar,
+:root:not([data-theme='navy']) .sg-page .tkg-card,
+:root:not([data-theme='navy']) .sg-page .sg-tcard,
+:root:not([data-theme='navy']) .sg-card:not(.sg-card-tint) {
+    background: var(--surface);
+}
+:root:not([data-theme='navy']) .sg-page-wide .sg-results[data-view='list'] > .tkg-filterbar {
+    background: transparent;
+}
