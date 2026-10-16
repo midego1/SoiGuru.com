@@ -78,7 +78,7 @@ const dataAttrs = {
                 <span class="sg-tcard-meta">
                     <span class="sg-tcard-where">
                         <Icon name="pin" class="tkg-i-16" />
-                        <span data-distance>{listing.area?.name ?? listing.city.name}</span>
+                        <span data-distance>{distance !== undefined ? `${formatDistance(distance)}${boat}` : (listing.area?.name ?? listing.city.name)}</span>
                     </span>
                     {listing.rating !== undefined && (
                         <span class="tkg-rating">

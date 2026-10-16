@@ -57,6 +57,14 @@ const nearby = listing.geo
 const provenance =
     listing.updated_by === 'owner' ? 'Updated by the owner' : listing.updated_by === 'editor' ? 'Updated by SoiGuru' : 'Added from public sources';
 const report = reportUrl(config, listing);
+// More of the same category: in the same area when there are at least 3 there, else in the city; best rated first; not the nearby ones.
+const nearbySlugs = new Set(nearby.map((x) => x.l.slug));
+const sameCategory = data.listings
+    .filter((l) => l.slug !== listing.slug && l.city.id === city.id && !!category && l.category?.id === category.id && !nearbySlugs.has(l.slug))
+    .sort((a, b) => (b.rating ?? 0) - (a.rating ?? 0));
+const sameArea = sameCategory.filter((l) => area && l.area?.id === area.id);
+const similarIn = sameArea.length >= 3 ? (area?.name ?? city.name) : city.name;
+const similar = (sameArea.length >= 3 ? sameArea : sameCategory).slice(0, 6);
 const shown = listing.images.slice(0, 5);
 const more = listing.images.length - shown.length;
 const trail: [string, string][] = [
@@ -174,6 +182,24 @@ const trail: [string, string][] = [
                         )
                     }
                 </HoursTable>
+                {
+                    (listing.geo || listing.address) && (
+                        <section class="sg-card sg-where-sec" aria-labelledby="sg-where-h">
+                            <div class="sg-card-head">
+                                <h2 class="sg-card-h" id="sg-where-h" data-th="ที่ตั้ง">
+                                    Location
+                                </h2>
+                                {listing.geo && (
+                                    <a class="sg-sec-link" href={directionsUrl(listing.geo)} target="_blank" rel="noopener" data-umami-event="contact-directions" data-th="เส้นทาง">
+                                        Directions
+                                    </a>
+                                )}
+                            </div>
+                            {listing.geo && <StaticMap point={listing.geo} height={220} width={480} />}
+                            {listing.address && <p class="sg-lp-address">{listing.address}</p>}
+                        </section>
+                    )
+                }
                 <ClaimBox listing={listing} href={claimUrl(config, city, listing)} />
                 <div class="sg-report">
                     {
@@ -218,23 +244,6 @@ const trail: [string, string][] = [
                 }
 
                 {
-                    (listing.geo || listing.address) && (
-                        <section class="sg-lp-sec" aria-labelledby="sg-where-h">
-                            <div class="sg-sec-h">
-                                <h2 class="sg-h-md" id="sg-where-h" data-th="ที่ตั้ง">Location</h2>
-                                {listing.geo && (
-                                    <a class="sg-sec-link" href={directionsUrl(listing.geo)} target="_blank" rel="noopener" data-th="เส้นทาง">
-                                        Directions
-                                    </a>
-                                )}
-                            </div>
-                            {listing.geo && <StaticMap point={listing.geo} height={280} width={960} />}
-                            {listing.address && <p class="sg-lp-address">{listing.address}</p>}
-                        </section>
-                    )
-                }
-
-                {
                     nearby.length > 0 && (
                         <section class="sg-lp-sec sg-nearby-sec" data-open-now data-limit="3">
                             <div class="sg-sec-h">
@@ -245,14 +254,33 @@ const trail: [string, string][] = [
                                     </a>
                                 )}
                             </div>
-                            <div class="tkg-rows sg-rows-card">
+                            <div class="sg-tcards sg-tcards-sm">
                                 {nearby.map(({ l, d }, i) => (
-                                    <ListingCard listing={l} compact distance={d} hidden={i >= 3} />
+                                    <ListingCard listing={l} tile distance={d} hidden={i >= 3} />
                                 ))}
                             </div>
                             <p class="sg-empty" data-open-empty hidden>
                                 Nothing nearby is open right now.
                             </p>
+                        </section>
+                    )
+                }
+                {
+                    similar.length > 0 && category && (
+                        <section class="sg-lp-sec" aria-labelledby="sg-more-h">
+                            <div class="sg-sec-h">
+                                <h2 class="sg-h-md" id="sg-more-h">
+                                    More {category.name.toLowerCase()} in {similarIn}
+                                </h2>
+                                <a class="sg-sec-link" href={`/${city.id}/${category.id}`} data-th="ดูทั้งหมด">
+                                    See all
+                                </a>
+                            </div>
+                            <div class="sg-tcards sg-tcards-sm">
+                                {similar.map((l) => (
+                                    <ListingCard listing={l} tile />
+                                ))}
+                            </div>
                         </section>
                     )
                 }

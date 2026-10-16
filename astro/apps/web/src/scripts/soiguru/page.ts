@@ -137,11 +137,12 @@ function refreshUpdated(now: Date): void {
     }
 }
 
-/** City home: keep the first N open (or closing soon) cards of the "Open now" list (`data-limit-wide` on desktop). */
+/** City home: keep the first N open (or closing soon) cards of the "Open now" list (`data-limit-wide` on desktop, `data-limit-xl` from 1440px). */
 function refreshOpenNow(): void {
     for (const section of document.querySelectorAll<HTMLElement>('[data-open-now]')) {
+        const xl = section.dataset['limitXl'] !== undefined && matchMedia('(min-width: 1440px)').matches;
         const wide = section.dataset['limitWide'] !== undefined && matchMedia('(min-width: 960px)').matches;
-        const limit = Number((wide ? section.dataset['limitWide'] : section.dataset['limit']) ?? 3);
+        const limit = Number((xl ? section.dataset['limitXl'] : wide ? section.dataset['limitWide'] : section.dataset['limit']) ?? 3);
         const cards = [...section.querySelectorAll<HTMLElement>('[data-listing]')];
         const open = cards.filter((c) => c.dataset['open'] === '1');
         const shown = new Set(open.slice(0, limit));

@@ -7,7 +7,6 @@
 import SoiGuruLayout from '../../layouts/SoiGuruLayout.astro';
 import TopBar from '../../components/soiguru/TopBar.astro';
 import ListingCard from '../../components/soiguru/ListingCard.astro';
-import BottomNav from '../../components/soiguru/BottomNav.astro';
 import { getSoiGuru, cityListings, ownerUrl, type City } from '../../lib/soiguru/data';
 
 export async function getStaticPaths() {
@@ -54,5 +53,4 @@ const owner = ownerUrl(config, city);
             </div>
         </section>
     </main>
-    <BottomNav slot="nav" city={city} active="saved" ownerHref={owner} />
 </SoiGuruLayout>

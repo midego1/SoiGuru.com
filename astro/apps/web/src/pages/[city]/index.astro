@@ -13,7 +13,6 @@ import HeroSearch from '../../components/soiguru/HeroSearch.astro';
 import KarstScene from '../../components/soiguru/KarstScene.astro';
 import ListingCard from '../../components/soiguru/ListingCard.astro';
 import OwnerBlock from '../../components/soiguru/OwnerBlock.astro';
-import BottomNav from '../../components/soiguru/BottomNav.astro';
 import { getSoiGuru, cityListings, defaultArea, claimUrl, ownerUrl, type City } from '../../lib/soiguru/data';
 import { breadcrumbJsonLd } from '../../lib/soiguru/jsonld';
 
@@ -105,7 +104,7 @@ const trust: [string, string][] = [
             </div>
         </section>
 
-        <section class="sg-wrap sg-sec sg-open-now" data-open-now data-limit="4" data-limit-wide="8">
+        <section class="sg-wrap sg-sec sg-open-now" data-open-now data-limit="4" data-limit-wide="8" data-limit-xl="10">
             <div class="sg-sec-h">
                 <h2 class="sg-h-lg">
                     <span data-th={`เปิดอยู่ตอนนี้ใน${area?.name_th ?? area?.name ?? city.name_th ?? city.name}`}>Open now in {area?.name ?? city.name}</span>
@@ -153,5 +152,4 @@ const trust: [string, string][] = [
 
         <OwnerBlock cityName={city.name} href={claimUrl(config, city)} />
     </main>
-    <BottomNav slot="nav" city={city} active="home" ownerHref={owner} />
 </SoiGuruLayout>

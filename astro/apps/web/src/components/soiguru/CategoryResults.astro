@@ -14,7 +14,6 @@
  */
 import Icon from './Icon.astro';
 import ListingCard from './ListingCard.astro';
-import BottomNav from './BottomNav.astro';
 import Sheet from './Sheet.astro';
 import { directionsUrl } from '../../lib/soiguru/geo';
 import { jsonForScript } from '../../lib/soiguru/format';
@@ -29,6 +28,7 @@ interface Props {
     area?: Area;
     /** Hide the area filter (area results already are one area) */
     lockArea?: boolean;
+    /** Owner link; unused since the bottom tab bar was removed (the header carries it) */
     ownerHref?: string;
     /** Search page: filter by `?q=` */
     search?: boolean;
@@ -36,7 +36,7 @@ interface Props {
     inlineSearch?: boolean;
 }
 
-const { city, listings, noun, area, lockArea = false, ownerHref, search = false, inlineSearch = false } = Astro.props;
+const { city, listings, noun, area, lockArea = false, search = false, inlineSearch = false } = Astro.props;
 // Amenities offered by at least one result, most common first, for the Filters sheet.
 const amenityCounts = new Map<string, { name: string; name_th?: string; count: number }>();
 for (const l of listings)
@@ -157,7 +157,6 @@ const center = area?.geo ?? city.geo ?? pins[0] ?? { lat: 13.75, lng: 100.5 };
         </div>
     </div>
 </div>
-<BottomNav city={city} active="search" ownerHref={ownerHref} />
 
 {
     !lockArea && city.areas.length > 1 && (

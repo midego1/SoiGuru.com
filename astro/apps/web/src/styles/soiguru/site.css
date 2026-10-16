@@ -1240,6 +1240,11 @@ html[data-lang='en'] .sg-sf-lang[data-lang-set='en'] {
     }
     .sg-lp-side {
         align-self: start;
+    }
+}
+/* the side column (hours, map, claim) stays in view only when the window is tall enough for it */
+@media (min-width: 960px) and (min-height: 1040px) {
+    .sg-lp-side {
         position: sticky;
         top: calc(var(--sg-header-h) + 24px);
     }
@@ -1520,4 +1525,139 @@ html[data-lang='en'] .sg-sf-lang[data-lang-set='en'] {
 }
 .sg-page .sg-cities .tkg-row {
     text-decoration: none;
+}
+
+/* ---------- phone search icon in the header (the tab bar is gone) ---------- */
+.sg-sh-searchicon {
+    flex: none;
+}
+@media (min-width: 720px) {
+    .sg-sh-search ~ .sg-sh-end .sg-sh-searchicon {
+        display: none;
+    }
+}
+@media (min-width: 1100px) {
+    .sg-sh-searchicon {
+        display: none;
+    }
+}
+
+/* ---------- listing: map card in the side column, card grids in the body ---------- */
+.sg-card-head {
+    display: flex;
+    align-items: baseline;
+    justify-content: space-between;
+    gap: 12px;
+}
+.sg-card-head .sg-card-h {
+    margin-bottom: 12px;
+}
+.sg-where-sec .sg-static-map {
+    border-radius: var(--radius-lg);
+}
+.sg-where-sec .sg-lp-address {
+    margin-top: 10px;
+    font-size: 14px;
+}
+.sg-tcards-sm {
+    grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+    gap: 14px;
+}
+.sg-tcards-sm .sg-tcard-photo {
+    height: 112px;
+}
+.sg-tcards-sm .sg-tcard-mark {
+    width: 52px;
+    height: 52px;
+    border-radius: 16px;
+}
+.sg-tcards-sm .sg-tcard-name {
+    font-size: 17px;
+}
+/* phones: small card rows swipe sideways instead of stacking */
+@media (max-width: 559px) {
+    .sg-tcards-sm {
+        display: flex;
+        overflow-x: auto;
+        scroll-snap-type: x mandatory;
+        scrollbar-width: none;
+        margin-inline: calc(-1 * var(--space-4));
+        padding-inline: var(--space-4);
+        scroll-padding-inline: var(--space-4);
+    }
+    .sg-tcards-sm::-webkit-scrollbar {
+        display: none;
+    }
+    .sg-page .sg-tcards-sm > a.sg-tcard {
+        flex: 0 0 72%;
+        scroll-snap-align: start;
+    }
+}
+
+/* ---------- desktop: use the width ---------- */
+@media (min-width: 960px) {
+    .sg-tiles {
+        grid-template-columns: repeat(8, minmax(0, 1fr));
+    }
+    .sg-tcards:not(.sg-tcards-sm) {
+        grid-template-columns: repeat(4, minmax(0, 1fr));
+    }
+    .sg-areas {
+        grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+    }
+}
+@media (min-width: 1440px) {
+    .sg-wrap,
+    .sg-page:not(.sg-page-wide) > main.sg-wrap {
+        max-width: 1440px;
+        padding-inline: 32px;
+    }
+    .sg-tcards:not(.sg-tcards-sm) {
+        grid-template-columns: repeat(5, minmax(0, 1fr));
+    }
+    .sg-lp {
+        grid-template-columns: minmax(0, 1fr) 420px;
+        gap: 32px 56px;
+    }
+    .sg-page:not(.sg-page-wide) > .tkg-topbar.sg-backbar,
+    .sg-page-wide > .tkg-topbar.sg-backbar {
+        padding-inline: 32px;
+    }
+}
+
+/* results: a wider list with two columns of cards on big screens */
+@media (min-width: 1360px) {
+    .sg-page-wide .sg-results {
+        grid-template-columns: minmax(420px, 46%) 1fr;
+    }
+    .sg-page-wide .sg-results-list .tkg-list {
+        display: grid;
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+        gap: var(--space-3);
+    }
+}
+
+/* phones: the map view gains the tab bar's height */
+.sg-results[data-view='map'] .sg-results-map {
+    height: calc(100dvh - 56px - 61px - 40px);
+}
+
+/* phones: the language toggle moves into the menu so the bar fits 360px */
+.sg-menu-lang {
+    display: none;
+}
+@media (max-width: 559px) {
+    .sg-sh-end > .tkg-lang {
+        display: none;
+    }
+    .sg-menu-lang {
+        display: flex;
+        justify-content: center;
+        padding-bottom: var(--space-1);
+    }
+}
+
+/* a meta row that starts with a dotted item has no leading dot */
+.tkg-card-meta > .tkg-dot:first-child::before {
+    content: none;
 }

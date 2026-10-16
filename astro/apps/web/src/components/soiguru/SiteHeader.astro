@@ -87,6 +87,13 @@ const listHref = claim ?? owner;
         }
 
         <div class="sg-sh-end">
+            {
+                homeCity && (
+                    <a class="tkg-iconbtn sg-sh-searchicon" href={`/${homeCity.id}/search`} aria-label={`Search ${homeCity.name}`}>
+                        <Icon name="search" />
+                    </a>
+                )
+            }
             <LanguageToggle />
             {
                 owner && (
@@ -128,6 +135,9 @@ const listHref = claim ?? owner;
                         )
                     }
                     <div class="sg-menu-foot">
+                        <div class="sg-menu-lang">
+                            <LanguageToggle />
+                        </div>
                         {
                             owner && (
                                 <a class="sg-btn sg-btn-secondary" href={owner}>
