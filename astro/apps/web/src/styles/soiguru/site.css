@@ -1126,10 +1126,27 @@ html[data-lang='en'] .sg-sf-lang[data-lang-set='en'] {
     color: var(--hero-muted);
 }
 
-/* the phone tab bar follows the footer and stays on screen */
+/* the phone tab bar is fixed to the bottom of the screen; the page leaves room for it */
 .sg-page > .sg-nav {
-    position: sticky;
+    position: fixed;
+    left: 0;
+    right: 0;
     bottom: 0;
+    z-index: 25;
+    box-sizing: content-box;
+    height: 56px;
+    min-height: 0;
+}
+@media (max-width: 959px) {
+    .sg-page:has(> .sg-nav) {
+        padding-bottom: calc(56px + env(safe-area-inset-bottom));
+    }
+    /* the listing's Directions bar sits right above the tabs */
+    .sg-page > .tkg-bottombar {
+        position: sticky;
+        bottom: calc(56px + env(safe-area-inset-bottom));
+        padding-bottom: var(--space-3);
+    }
 }
 
 /* ---------- listing page ---------- */
@@ -1637,10 +1654,6 @@ html[data-lang='en'] .sg-sf-lang[data-lang-set='en'] {
     }
 }
 
-/* phones: the map view gains the tab bar's height */
-.sg-results[data-view='map'] .sg-results-map {
-    height: calc(100dvh - 56px - 61px - 40px);
-}
 
 /* phones: the language toggle moves into the menu so the bar fits 360px */
 .sg-menu-lang {
@@ -1660,4 +1673,14 @@ html[data-lang='en'] .sg-sf-lang[data-lang-set='en'] {
 /* a meta row that starts with a dotted item has no leading dot */
 .tkg-card-meta > .tkg-dot:first-child::before {
     content: none;
+}
+
+/* phones: the Search tab replaces the header's search icon; the map view fits above the tabs */
+@media (max-width: 959px) {
+    .sg-sh-searchicon {
+        display: none;
+    }
+    .sg-results[data-view='map'] .sg-results-map {
+        height: calc(100dvh - 56px - 61px - 40px - 56px - env(safe-area-inset-bottom));
+    }
 }

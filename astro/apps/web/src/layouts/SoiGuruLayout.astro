@@ -9,7 +9,8 @@
  * 1200px column, phone first and responsive. `wide` lets a screen (results) use the full
  * width and leaves out the footer. The theme (`theme` in works.yml or `SITE_THEME`) sets
  * `data-theme` on `<html>`; `navy` also loads Bricolage Grotesque and Figtree.
- * Pages put their phone tab bar in the `nav` slot so it follows the footer.
+ * The phone tab bar (BottomNav) is added here on every page, fixed to the bottom of the
+ * screen below 960px; pages put other bottom bars (Directions) in the `nav` slot.
  *
  * Every SoiGuru page also exists in Thai under `/th/…`: the `soiguru-thai` integration
  * writes those copies after the build from this HTML (`data-path-en` names the twin).
@@ -17,8 +18,9 @@
 import { generateMetaTags } from '@ever-works/plugin-seo';
 import type { SiteConfig } from '@ever-works/core';
 import { jsonForScript } from '../lib/soiguru/format';
-import { siteTheme, type City } from '../lib/soiguru/data';
+import { getSoiGuru, ownerUrl, siteTheme, type City } from '../lib/soiguru/data';
 import SiteFooter from '../components/soiguru/SiteFooter.astro';
+import BottomNav from '../components/soiguru/BottomNav.astro';
 import '../styles/soiguru/tokens.css';
 import '../styles/soiguru/components.css';
 import '../styles/soiguru/app.css';
@@ -47,6 +49,18 @@ interface Props {
 
 const { title, description, config, path, jsonLd = [], timeZone = 'Asia/Bangkok', wide = false, noindex = false, city } = Astro.props;
 const footer = Astro.props.footer ?? !wide;
+// Phone tab bar (Home, Search, Saved, Owner) on every page, for the page's city or the first one.
+const { cities } = await getSoiGuru();
+const navCity = city ?? cities[0];
+const tab = navCity
+    ? path === `/${navCity.id}`
+        ? 'home'
+        : path === `/${navCity.id}/search`
+          ? 'search'
+          : path === `/${navCity.id}/saved`
+            ? 'saved'
+            : undefined
+    : undefined;
 const theme = siteTheme(config);
 const siteUrl = (Astro.site?.href ?? 'https://soiguru.com/').replace(/\/$/, '');
 const canonical = `${siteUrl}${path}`;
@@ -95,6 +109,7 @@ const metaTags = generateMetaTags({ title, description, url: canonical, type: 'w
             <slot />
             {footer && <SiteFooter city={city} />}
             <slot name="nav" />
+            {navCity && <BottomNav city={navCity} active={tab} ownerHref={ownerUrl(config, navCity)} />}
         </div>
         <script>
             import '../scripts/soiguru/page';

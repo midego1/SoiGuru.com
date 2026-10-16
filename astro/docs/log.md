@@ -3,9 +3,9 @@ title: "Change Log"
 sidebar_label: "Change Log"
 ---
 
-## 2026-10-16 — No bottom tab bar; map in the listing sidebar; wider desktop
+## 2026-10-16 — Bottom tab bar on every phone page; map in the listing sidebar; wider desktop
 
-Feedback on the website layout. Phones: the bottom tab bar is gone on every page (`BottomNav` is kept but no longer placed); the header gains a search icon and the menu carries Search, Saved and the EN / ไทย switch (moved out of the bar below 560px so it fits 360px). Listing page: the Location map moved from the main column into the side column (hours → location → claim); Nearby and a new "More <category> in <area>" section are photo-card grids (a swipeable row on phones); the side column sticks only on windows at least 1040px tall. Desktop: the content column grows to 1440px from 1440px wide, the open-now grid is 4 columns (5 from 1440px, `data-limit-xl`), category tiles sit in one row of 8, area cards stretch, and results pages from 1360px show a 46% list with two columns of cards beside the map. Spec: `.specify/features/soiguru-design.md` § Website layout.
+Feedback on the website layout. Phones: the bottom tab bar (Home, Search, Saved, Owner) did not show on every page, so `SoiGuruLayout` now places `BottomNav` itself on every page (the page's city, else the first city), `position: fixed` to the bottom of the screen with room left under the page; the listing's Directions bar sits right above it. The menu carries Search, Saved and the EN / ไทย switch (moved out of the bar below 560px so it fits 360px); a header search icon shows only from 960 to 1099px. Listing page: the Location map moved from the main column into the side column (hours → location → claim); Nearby and a new "More <category> in <area>" section are photo-card grids (a swipeable row on phones); the side column sticks only on windows at least 1040px tall. Desktop: the content column grows to 1440px from 1440px wide, the open-now grid is 4 columns (5 from 1440px, `data-limit-xl`), category tiles sit in one row of 8, area cards stretch, and results pages from 1360px show a 46% list with two columns of cards beside the map. Spec: `.specify/features/soiguru-design.md` § Website layout.
 
 ## 2026-10-16 — Website layout from the SoiGuru mockup; theme setting; Umami
 
