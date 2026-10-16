@@ -59,6 +59,6 @@ const siteUrl = (Astro.site?.href ?? '').replace(/\/$/, '');
         </button>
     </TopBar>
     <main>
-        <CategoryResults city={city} listings={listings} noun={noun} area={area} lockArea={!!area} ownerHref={ownerUrl(config, city)} inlineSearch />
+        <CategoryResults city={city} listings={listings} noun={noun} area={area} lockArea={!!area} ownerHref={ownerUrl(config, city)} inlineSearch title={category ? category.name : 'Places'} titleTh={category ? category.name_th : 'สถานที่'} />
     </main>
 </SoiGuruLayout>

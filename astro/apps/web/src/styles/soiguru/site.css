@@ -1644,10 +1644,10 @@ html[data-lang='en'] .sg-sf-lang[data-lang-set='en'] {
 
 /* results: a wider list with two columns of cards on big screens */
 @media (min-width: 1360px) {
-    .sg-page-wide .sg-results {
+    .sg-page-wide .sg-results[data-view='map'] {
         grid-template-columns: minmax(420px, 46%) 1fr;
     }
-    .sg-page-wide .sg-results-list .tkg-list {
+    .sg-page-wide .sg-results[data-view='map'] .sg-results-list .tkg-list {
         display: grid;
         grid-template-columns: repeat(2, minmax(0, 1fr));
         gap: var(--space-3);
@@ -1741,40 +1741,46 @@ html[data-lang='en'] .sg-sf-lang[data-lang-set='en'] {
 }
 
 /*
- * Desktop results (category, area, search): the page fits the window, no page scroll. The
- * list scrolls in its own column, the map fills the rest, and "Show more" / "Show closed"
- * stay pinned under the list.
+ * Desktop results, Map view (category, area, search): the page fits the window, no page
+ * scroll. The list scrolls in its own column, the map fills the rest, and "Show more" /
+ * "Show closed" stay pinned under the list.
  */
 @media (min-width: 960px) {
-    .sg-page-wide {
+    .sg-page-wide:has(.sg-results[data-view='map']) {
         height: 100vh;
         height: 100dvh;
         min-height: 0;
         overflow: hidden;
     }
-    .sg-page-wide > main {
+    .sg-page-wide:has(.sg-results[data-view='map']) > main {
         flex: 1 1 auto;
         min-height: 0;
         display: flex;
         flex-direction: column;
     }
-    .sg-page-wide > main > .sg-results {
+    .sg-page-wide > main > .sg-results[data-view='map'] {
         flex: 1 1 auto;
         min-height: 0;
-        grid-template-rows: auto minmax(0, 1fr);
+        grid-template-rows: auto auto minmax(0, 1fr);
     }
-    .sg-page-wide .sg-results-list {
+    .sg-page-wide .sg-results[data-view='map'] > [data-inline-search] {
+        grid-column: 1 / -1;
+        grid-row: 2;
+    }
+    .sg-page-wide .sg-results[data-view='map'] > .sg-results-list {
+        grid-row: 3;
         min-height: 0;
         overflow-y: auto;
         overscroll-behavior: contain;
     }
-    .sg-page-wide .sg-results-map {
+    .sg-page-wide .sg-results[data-view='map'] > .sg-results-map {
+        grid-row: 3;
         position: relative !important;
         top: auto !important;
         height: auto !important;
         min-height: 0;
     }
-    .sg-page-wide .sg-results-list .tkg-section > .tkg-pad:last-child {
+    .sg-page-wide .sg-results[data-view='map'] .sg-results-list .tkg-section > .tkg-pad:last-child {
         position: sticky;
         bottom: 0;
         z-index: 1;
@@ -1784,5 +1790,233 @@ html[data-lang='en'] .sg-sf-lang[data-lang-set='en'] {
     }
     .sg-page-wide .sg-results-list .tkg-section > .tkg-pad:last-child:not(:has(> :not([hidden]))) {
         display: none;
+    }
+}
+
+/*
+ * Results, design A. Desktop List view (default): title, toolbar, filter sidebar beside a
+ * grid of cards; the map stays hidden until "Map". Phones: compact rows, floating Map / List.
+ */
+.sg-rhead,
+.sg-rside {
+    display: none;
+}
+.sg-rf-list {
+    display: grid;
+    gap: 2px;
+}
+.sg-rf-opt {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: var(--space-2);
+    min-height: 40px;
+    padding: 0 var(--space-3);
+    border: 0;
+    border-radius: var(--radius-md);
+    background: none;
+    color: var(--ink);
+    font: inherit;
+    font-size: 15px;
+    text-align: left;
+    cursor: pointer;
+}
+.sg-rf-opt small {
+    color: var(--ink-muted);
+    font-size: 13px;
+}
+.sg-rf-opt:hover {
+    background: var(--surface-200);
+}
+.sg-rf-opt.tkg-chip-on {
+    background: var(--sea-tint);
+    color: var(--sea);
+    font-weight: 700;
+}
+.sg-fab {
+    display: none;
+}
+@media (max-width: 959px) {
+    .sg-results .sg-view-seg {
+        display: none;
+    }
+    .sg-results[data-view='list'] .sg-results-map {
+        display: none;
+    }
+    .sg-fab {
+        display: flex;
+        justify-content: center;
+        position: fixed;
+        left: 0;
+        right: 0;
+        bottom: calc(56px + env(safe-area-inset-bottom) + 16px);
+        z-index: 24;
+        pointer-events: none;
+    }
+    .sg-fab-btn {
+        pointer-events: auto;
+        display: inline-flex;
+        align-items: center;
+        gap: 8px;
+        min-height: 48px;
+        padding: 0 22px;
+        border: 0;
+        border-radius: var(--radius-pill);
+        background: var(--hero-bg);
+        color: var(--hero-ink);
+        font: inherit;
+        font-size: 15px;
+        font-weight: 700;
+        box-shadow: 0 6px 20px #10272b40;
+        cursor: pointer;
+    }
+    .sg-results[data-view='list'] .sg-fab-list,
+    .sg-results[data-view='map'] .sg-fab-map {
+        display: none;
+    }
+    /* the map sheet sits above the floating button */
+    .sg-results[data-view='map'] .sg-sheet {
+        bottom: 76px;
+    }
+    .sg-results[data-view='list'] .sg-results-list {
+        padding-bottom: 72px;
+    }
+}
+@media (min-width: 960px) {
+    .sg-page-wide:has(.sg-rhead) > .tkg-topbar.sg-backbar {
+        display: none;
+    }
+    .sg-page-wide .sg-results .sg-view-seg {
+        display: inline-flex !important;
+    }
+    .sg-page-wide .sg-results[data-inline-results] {
+        display: block;
+    }
+    .sg-page-wide .sg-results [data-inline-search][hidden] {
+        display: block !important;
+    }
+    .sg-page-wide .sg-results > [data-inline-search] {
+        padding: 0 var(--space-4) var(--space-3);
+        background: var(--surface);
+    }
+    .sg-page-wide .sg-results[data-view='list'] {
+        display: grid;
+        grid-template-columns: 260px minmax(0, 1fr);
+        grid-template-areas: 'head head' 'bar bar' 'search search' 'side list';
+        grid-template-rows: auto auto auto auto;
+        height: auto;
+        min-height: 0;
+        column-gap: 32px;
+        width: 100%;
+        max-width: 1440px;
+        margin: 0 auto;
+        padding: 0 32px 56px;
+        box-sizing: border-box;
+    }
+    .sg-page-wide .sg-results[data-view='list'] > .sg-rhead {
+        grid-area: head;
+        display: block;
+        padding-top: 24px;
+    }
+    .sg-rhead .sg-h-lg {
+        margin-top: 10px;
+    }
+    .sg-rhead .sg-sec-sub {
+        margin-top: 4px;
+    }
+    .sg-page-wide .sg-results[data-view='list'] > .tkg-filterbar {
+        grid-area: bar;
+        padding-inline: 0;
+        margin-top: 16px;
+        border-bottom: 0;
+        overflow: visible;
+        flex-wrap: wrap;
+    }
+    .sg-page-wide .sg-results[data-view='list'] > [data-inline-search] {
+        grid-area: search;
+        padding: 0 0 8px;
+        max-width: 640px;
+    }
+    .sg-page-wide .sg-results[data-view='list'] > .sg-rside {
+        grid-area: side;
+        display: grid;
+        gap: var(--space-6);
+        align-content: start;
+        padding: 16px 0;
+        position: sticky;
+        top: calc(var(--sg-header-h) + 16px);
+        align-self: start;
+        max-height: calc(100vh - var(--sg-header-h) - 32px);
+        overflow-y: auto;
+    }
+    .sg-page-wide .sg-results[data-view='list'] > .sg-results-list {
+        grid-area: list;
+        display: block !important;
+        border-right: 0;
+        min-width: 0;
+        overflow: visible;
+        max-height: none;
+    }
+    .sg-page-wide .sg-results[data-view='list'] > .sg-results-map,
+    .sg-page-wide .sg-results[data-view='list'] > .sg-map-footer,
+    .sg-page-wide .sg-results[data-view='list'] [data-filters-chip] {
+        display: none !important;
+    }
+    .sg-page-wide .sg-results[data-view='map'] > .sg-rhead,
+    .sg-page-wide .sg-results[data-view='map'] > .sg-rside {
+        display: none;
+    }
+    /* cards: photo (or category mark) on top, details below */
+    .sg-results[data-view='list'] .sg-results-list .tkg-section-h,
+    .sg-results[data-view='list'] .sg-results-list .tkg-list,
+    .sg-results[data-view='list'] .sg-results-list .tkg-pad {
+        padding-inline: 0;
+    }
+    .sg-results[data-view='list'] .sg-results-list .tkg-list {
+        display: grid;
+        grid-template-columns: repeat(auto-fill, minmax(230px, 1fr));
+        gap: 18px;
+    }
+    .sg-results[data-view='list'] .sg-results-list .tkg-card {
+        display: flex;
+        flex-direction: column;
+        gap: 0;
+        padding: 0;
+        overflow: hidden;
+        border-radius: 18px;
+        box-shadow: none;
+        transition: box-shadow 0.15s ease, border-color 0.15s ease;
+    }
+    .sg-results[data-view='list'] .sg-results-list .tkg-card:hover {
+        border-color: var(--line-strong);
+        box-shadow: 0 8px 24px #14201f1a;
+    }
+    .sg-results[data-view='list'] .sg-results-list .tkg-card .tkg-photo {
+        width: 100%;
+        height: 140px;
+        border-radius: 0;
+        background: var(--sea-tint);
+        color: var(--sea);
+    }
+    .sg-results[data-view='list'] .sg-results-list .tkg-card .sg-photo-empty .tkg-i {
+        width: 36px;
+        height: 36px;
+    }
+    .sg-results[data-view='list'] .sg-results-list .tkg-card-body {
+        padding: 12px 16px 16px;
+        gap: 4px;
+    }
+    .sg-results[data-view='list'] .sg-results-list .tkg-card-title {
+        font-family: var(--font-display);
+        font-size: 18px;
+        font-weight: 700;
+    }
+    .sg-results[data-view='list'] .sg-results-list .tkg-section > .tkg-pad:last-child {
+        flex-direction: row !important;
+        justify-content: center;
+    }
+    .sg-results[data-view='list'] .sg-results-list .tkg-section > .tkg-pad:last-child .tkg-btn {
+        width: auto;
+        min-width: 240px;
     }
 }

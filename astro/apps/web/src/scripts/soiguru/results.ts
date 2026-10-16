@@ -465,7 +465,12 @@ if (root) {
         state.view = btn.dataset['viewSet'] === 'map' ? 'map' : 'list';
         writeUrl();
         render();
-        void loadMap().then(setInteractive);
+        // Fit the pins once the map is visible (it may have loaded while hidden).
+        void loadMap().then(() => {
+            setInteractive();
+            render();
+        });
+        window.scrollTo({ top: 0 });
     });
     areaPill.addEventListener('click', () => {
         if (!map) return;

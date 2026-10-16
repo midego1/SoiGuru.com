@@ -10,11 +10,15 @@
  * than mixed in grey. "Show more" at 20. All filtering runs in the browser
  * (`scripts/soiguru/results.ts`) over the listings rendered here.
  *
- * On wide screens the list takes the left 420px and the map fills the rest.
+ * Desktop (960px and up), design A: a title, the toolbar (search, Open now, area, sort,
+ * Filters, List | Map), then a filter sidebar (`ResultFilters`) beside a grid of cards. The
+ * Map view is the split screen: the list beside the map, fitting the window. Phones: compact
+ * rows and a floating Map / List button above the tab bar.
  */
 import Icon from './Icon.astro';
 import ListingCard from './ListingCard.astro';
 import Sheet from './Sheet.astro';
+import ResultFilters from './ResultFilters.astro';
 import { directionsUrl } from '../../lib/soiguru/geo';
 import { jsonForScript } from '../../lib/soiguru/format';
 import type { Area, City, Listing } from '../../lib/soiguru/data';
@@ -32,11 +36,19 @@ interface Props {
     ownerHref?: string;
     /** Search page: filter by `?q=` */
     search?: boolean;
-    /** Show the inline search field (opened by the top bar's search button) */
+    /** Show the inline search field (opened by the top bar's search button; always shown on desktop) */
     inlineSearch?: boolean;
+    /** Desktop page title ("Restaurants in Krabi"); none on the search page */
+    title?: string;
+    titleTh?: string;
 }
 
-const { city, listings, noun, area, lockArea = false, search = false, inlineSearch = false } = Astro.props;
+const { city, listings, noun, area, lockArea = false, search = false, inlineSearch = false, title, titleTh } = Astro.props;
+const areaOptions = lockArea
+    ? []
+    : city.areas
+          .map((a) => ({ id: a.id, name: a.name, name_th: a.name_th, count: listings.filter((l) => l.area?.id === a.id).length }))
+          .filter((a) => a.count > 0);
 // Amenities offered by at least one result, most common first, for the Filters sheet.
 const amenityCounts = new Map<string, { name: string; name_th?: string; count: number }>();
 for (const l of listings)
@@ -69,6 +81,31 @@ const center = area?.geo ?? city.geo ?? pins[0] ?? { lat: 13.75, lng: 100.5 };
     data-default-area={lockArea ? undefined : (area?.id ?? '')}
     data-search={search ? '1' : undefined}
 >
+    {
+        title && (
+            <div class="sg-rhead">
+                <nav class="sg-crumbs" aria-label="Breadcrumb">
+                    <a href={`/${city.id}`} data-th={city.name_th}>
+                        {city.name}
+                    </a>
+                    <span aria-hidden="true">/</span>
+                    <span aria-current="page">{title}</span>
+                </nav>
+                <h1 class="sg-h-lg">
+                    <span data-th={titleTh ? `${titleTh}ใน${city.name_th ?? city.name}` : undefined}>
+                        {title} in {area?.name ?? city.name}
+                    </span>
+                </h1>
+                <p class="sg-sec-sub">
+                    {listings.length} {listings.length === 1 ? 'place' : 'places'}
+                </p>
+            </div>
+        )
+    }
+    <aside class="sg-rside" aria-label="Filters">
+        <ResultFilters city={city} priceBands={priceBands} amenityOptions={amenityOptions} areas={areaOptions} />
+        <button type="button" class="tkg-btn tkg-btn-ghost tkg-btn-sm" data-f-clear><span data-th="ล้างตัวกรอง">Clear filters</span></button>
+    </aside>
     <div class="tkg-filterbar" role="toolbar" aria-label="Filters">
         <div class="tkg-seg sg-view-seg" role="group" aria-label="View">
             <button type="button" class="tkg-on" data-view-set="list" aria-pressed="true"><Icon name="list" /><span data-th="รายการ">List</span></button>
@@ -156,6 +193,10 @@ const center = area?.geo ?? city.geo ?? pins[0] ?? { lat: 13.75, lng: 100.5 };
             </div>
         </div>
     </div>
+    <div class="sg-fab">
+        <button type="button" class="sg-fab-btn sg-fab-map" data-view-set="map"><Icon name="map" /><span data-th="แผนที่">Map</span></button>
+        <button type="button" class="sg-fab-btn sg-fab-list" data-view-set="list"><Icon name="list" /><span data-th="รายการ">List</span></button>
+    </div>
 </div>
 
 {
@@ -176,43 +217,7 @@ const center = area?.geo ?? city.geo ?? pins[0] ?? { lat: 13.75, lng: 100.5 };
 }
 
 <Sheet id="filters" title="Filters" titleTh="ตัวกรอง">
-    {
-        priceBands.length > 1 && (
-            <fieldset class="sg-fieldset">
-                <legend data-th="ราคา">Price</legend>
-                <div class="sg-chip-wrap">
-                    {priceBands.map((p) => (
-                        <button type="button" class="tkg-chip" data-f-price={p} aria-pressed="false">
-                            {'฿'.repeat(p)}
-                        </button>
-                    ))}
-                </div>
-            </fieldset>
-        )
-    }
-    <fieldset class="sg-fieldset">
-        <legend data-th="ตัวเลือก">Show only</legend>
-        <div class="sg-chip-wrap">
-            <button type="button" class="tkg-chip" data-f-toggle="rating" aria-pressed="false"><Icon name="star" /><span data-th="คะแนน 4 ขึ้นไป">Rated 4+</span></button>
-            <button type="button" class="tkg-chip" data-f-toggle="line" aria-pressed="false"><Icon name="line" />LINE</button>
-            <button type="button" class="tkg-chip" data-f-toggle="wa" aria-pressed="false"><Icon name="whatsapp" />WhatsApp</button>
-            <button type="button" class="tkg-chip" data-f-toggle="verified" aria-pressed="false"><Icon name="shield" /><span data-th="เจ้าของยืนยันแล้ว">Verified owners</span></button>
-        </div>
-    </fieldset>
-    {
-        amenityOptions.length > 0 && (
-            <fieldset class="sg-fieldset">
-                <legend data-th="สิ่งอำนวยความสะดวก">Good to know</legend>
-                <div class="sg-chip-wrap">
-                    {amenityOptions.map(([id, a]) => (
-                        <button type="button" class="tkg-chip" data-f-amenity={id} aria-pressed="false">
-                            <span data-th={a.name_th}>{a.name}</span>
-                        </button>
-                    ))}
-                </div>
-            </fieldset>
-        )
-    }
+    <ResultFilters city={city} priceBands={priceBands} amenityOptions={amenityOptions} />
     <Fragment slot="footer">
         <button type="button" class="tkg-btn tkg-btn-ghost" data-f-clear><span data-th="ล้าง">Clear</span></button>
         <button type="button" class="tkg-btn" data-sheet-close data-f-apply><span data-th="แสดงสถานที่">Show places</span></button>

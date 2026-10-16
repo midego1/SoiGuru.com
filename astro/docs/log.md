@@ -3,6 +3,10 @@ title: "Change Log"
 sidebar_label: "Change Log"
 ---
 
+## 2026-10-16 — Results pages as a directory (design A); map on demand
+
+Results pages (category, area, search) open as a directory instead of a list beside a map. Desktop: breadcrumb and title ("Restaurants in Krabi", N places), a toolbar (List | Map, Open now, area, sort, search), a filter sidebar (`ResultFilters`: area with counts, price, show only, good to know; sticky) and a grid of cards (photo or category mark on top). "Map" switches to the split view (list beside the map, fitting the window, Show more / Show closed pinned). Phones: compact rows and a floating Map / List button above the tab bar; the map strip above the list is gone. The filter groups are one component rendered in the sidebar and the Filters sheet, both handled by `results.ts` at document level; switching to Map refits the pins once the map is visible. Spec: `.specify/features/soiguru-design.md` § Website layout.
+
 ## 2026-10-16 — Menu in the tab bar; desktop results fit the window; navy theme live
 
 Phones: the tab bar gains a Menu tab (Home, Search, Saved, Owner, Menu) that opens a bottom sheet with the city's links, the cities, EN / ไทย and the owner links; the header's menu button shows only from 960 to 1099px. Desktop results pages (category, area, search) fit the window: no page scroll, the list scrolls in its own column with "Show more" / "Show closed" pinned under it, the map fills the height. Bundled works.yml sets `theme: navy` (the owner chose the navy / orange look). Spec: `.specify/features/soiguru-design.md` § Website layout.
