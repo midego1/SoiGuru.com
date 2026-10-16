@@ -1,0 +1,30 @@
+name: Long Beach Wedding Krabi
+description: Guesthouse in Klong Muang.
+source_url: ''
+category: hotels
+tags: []
+featured: false
+status: approved
+city: krabi
+area: klong-muang
+geo:
+  lat: 8.045529
+  lng: 98.784522
+location:
+  address: Ao Nang, Krabi
+  city: Krabi
+  country: TH
+  latitude: 8.045529
+  longitude: 98.784522
+claimed: false
+updated_by: import
+updated_at: "2026-10-16 02:55"
+markdown: 'Guesthouse in Klong Muang.
+
+
+  Sources: <https://www.openstreetmap.org/node/713937926>
+
+
+  Map data © OpenStreetMap contributors (ODbL).
+
+  '

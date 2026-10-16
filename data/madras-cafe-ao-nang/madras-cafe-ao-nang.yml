@@ -1,0 +1,46 @@
+name: Madras Cafè
+description: Café in Ao Nang.
+source_url: ''
+category: cafes
+tags: []
+featured: false
+status: approved
+city: krabi
+area: ao-nang
+geo:
+  lat: 8.032226
+  lng: 98.824023
+location:
+  address: Ao Nang, Krabi
+  city: Krabi
+  country: TH
+  latitude: 8.032226
+  longitude: 98.824023
+phone: "+66821069930"
+hours:
+  mon:
+  - 11:00-24:00
+  tue:
+  - 11:00-24:00
+  wed:
+  - 11:00-24:00
+  thu:
+  - 11:00-24:00
+  fri:
+  - 11:00-24:00
+  sat:
+  - 11:00-24:00
+  sun:
+  - 11:00-24:00
+claimed: false
+updated_by: import
+updated_at: "2026-10-16 02:55"
+markdown: 'Café in Ao Nang.
+
+
+  Sources: <https://www.openstreetmap.org/node/11365983769>
+
+
+  Map data © OpenStreetMap contributors (ODbL).
+
+  '

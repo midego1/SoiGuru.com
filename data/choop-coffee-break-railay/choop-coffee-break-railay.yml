@@ -1,0 +1,30 @@
+name: Choop Coffee Break
+description: Café in Railay.
+source_url: ''
+category: cafes
+tags: []
+featured: false
+status: approved
+city: krabi
+area: railay
+geo:
+  lat: 8.011414
+  lng: 98.838413
+location:
+  address: Ao Nang, Krabi
+  city: Krabi
+  country: TH
+  latitude: 8.011414
+  longitude: 98.838413
+claimed: false
+updated_by: import
+updated_at: "2026-10-16 02:55"
+markdown: 'Café in Railay.
+
+
+  Sources: <https://www.openstreetmap.org/node/4782773121>
+
+
+  Map data © OpenStreetMap contributors (ODbL).
+
+  '

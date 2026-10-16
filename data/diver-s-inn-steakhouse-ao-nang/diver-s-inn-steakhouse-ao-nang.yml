@@ -1,0 +1,35 @@
+name: Diver's Inn Steakhouse
+description: German-style steakhouse in Ao Nang, listed as one of the area's longer-established restaurants.
+source_url: ''
+category: dive-shops
+tags: []
+featured: false
+status: approved
+city: krabi
+area: ao-nang
+address: 27/9 Moo 2 Ao Nang, opposite Siam Commercial Bank
+geo:
+  lat: 8.033046
+  lng: 98.827258
+location:
+  address: 27/9 Moo 2 Ao Nang, opposite Siam Commercial Bank
+  city: Krabi
+  country: TH
+  latitude: 8.033046
+  longitude: 98.827258
+phone: "+6675637297"
+amenities:
+  air-con: false
+  card-accepted: true
+claimed: false
+updated_by: import
+updated_at: "2026-10-16 02:55"
+markdown: 'German-style steakhouse in Ao Nang, listed as one of the area''s longer-established restaurants.
+
+
+  Sources: <https://www.openstreetmap.org/node/5511500521>, <https://www.hotels.com/go/thailand/best-restaurants-krabi>, <https://www.thaiholidayguide.com/best-restaurants-krabi/>
+
+
+  Map data © OpenStreetMap contributors (ODbL).
+
+  '

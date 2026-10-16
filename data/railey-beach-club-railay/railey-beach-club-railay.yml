@@ -1,0 +1,30 @@
+name: Railey Beach Club
+description: Hotel in Railay.
+source_url: ''
+category: hotels
+tags: []
+featured: false
+status: approved
+city: krabi
+area: railay
+geo:
+  lat: 8.013143
+  lng: 98.838136
+location:
+  address: Ao Nang, Krabi
+  city: Krabi
+  country: TH
+  latitude: 8.013143
+  longitude: 98.838136
+claimed: false
+updated_by: import
+updated_at: "2026-10-16 02:55"
+markdown: 'Hotel in Railay.
+
+
+  Sources: <https://www.openstreetmap.org/node/12408888643>
+
+
+  Map data © OpenStreetMap contributors (ODbL).
+
+  '

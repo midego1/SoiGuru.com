@@ -1,0 +1,49 @@
+name: Aning Restaurant
+description: Thai, Seafood, International restaurant in Ao Nang.
+source_url: ''
+category: restaurants
+tags: []
+featured: false
+status: approved
+city: krabi
+area: ao-nang
+address: 142 Moo 2, Ao Nang Beach Road, 81000
+geo:
+  lat: 8.032995
+  lng: 98.820263
+location:
+  address: 142 Moo 2, Ao Nang Beach Road, 81000
+  city: Krabi
+  country: TH
+  latitude: 8.032995
+  longitude: 98.820263
+phone: "+66756377667"
+hours:
+  mon:
+  - 10:00-00:00
+  tue:
+  - 10:00-00:00
+  wed:
+  - 10:00-00:00
+  thu:
+  - 10:00-00:00
+  fri:
+  - 10:00-00:00
+  sat:
+  - 10:00-00:00
+  sun:
+  - 10:00-00:00
+amenities:
+  wifi: true
+claimed: false
+updated_by: import
+updated_at: "2026-10-16 02:55"
+markdown: 'Thai, Seafood, International restaurant in Ao Nang.
+
+
+  Sources: <https://www.openstreetmap.org/node/5172484021>
+
+
+  Map data © OpenStreetMap contributors (ODbL).
+
+  '

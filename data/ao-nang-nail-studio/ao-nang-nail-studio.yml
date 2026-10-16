@@ -1,0 +1,35 @@
+name: Ao Nang Nail Studio
+description: Nail studio in Ao Nang offering manicure, pedicure, gel and acrylic nail services, open daily in the evening.
+source_url: https://aonangnailsstudio.com/
+category: nail-salons
+tags: []
+featured: false
+status: approved
+city: krabi
+area: ao-nang
+address: 211 Moo 2, Ao Nang, Mueang Krabi, Krabi 81180
+phone: "+66937953216"
+hours:
+  mon:
+  - 10:00-22:00
+  tue:
+  - 10:00-22:00
+  wed:
+  - 10:00-22:00
+  thu:
+  - 10:00-22:00
+  fri:
+  - 10:00-22:00
+  sat:
+  - 10:00-22:00
+  sun:
+  - 10:00-22:00
+claimed: false
+updated_by: import
+updated_at: "2026-10-16 02:55"
+markdown: 'Nail studio in Ao Nang offering manicure, pedicure, gel and acrylic nail services, open daily in the evening.
+
+
+  Sources: <https://aonangnailsstudio.com/>, <https://aonangnails.com/>
+
+  '

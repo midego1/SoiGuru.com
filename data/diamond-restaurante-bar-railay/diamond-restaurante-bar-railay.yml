@@ -1,0 +1,47 @@
+name: Diamond - Restaurante - Bar
+description: Thai, Asian restaurant in Railay.
+source_url: ''
+category: restaurants
+tags: []
+featured: false
+status: approved
+city: krabi
+area: railay
+geo:
+  lat: 8.012389
+  lng: 98.84315
+location:
+  address: Ao Nang, Krabi
+  city: Krabi
+  country: TH
+  latitude: 8.012389
+  longitude: 98.84315
+hours:
+  mon:
+  - 09:00-22:00
+  tue:
+  - 09:00-22:00
+  wed:
+  - 09:00-22:00
+  thu:
+  - 09:00-22:00
+  fri:
+  - 09:00-22:00
+  sat:
+  - 09:00-22:00
+  sun:
+  - 09:00-22:00
+amenities:
+  wifi: true
+claimed: false
+updated_by: import
+updated_at: "2026-10-16 02:55"
+markdown: 'Thai, Asian restaurant in Railay.
+
+
+  Sources: <https://www.openstreetmap.org/node/4720540191>
+
+
+  Map data © OpenStreetMap contributors (ODbL).
+
+  '

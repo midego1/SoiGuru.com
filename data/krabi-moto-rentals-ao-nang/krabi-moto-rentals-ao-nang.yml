@@ -1,0 +1,23 @@
+name: Krabi Moto Rentals
+description: Ao Nang scooter and motorbike hire with hotel delivery in Ao Nang, helmets included and a cash-only security
+  deposit.
+source_url: https://www.krabimotorentals.com/
+category: scooter-rental
+tags: []
+featured: false
+status: approved
+city: krabi
+area: ao-nang
+address: Moo 6, Soi 2, Ao Nang, Krabi 81180
+amenities:
+  helmet-included: true
+  hotel-pickup: true
+claimed: false
+updated_by: import
+updated_at: "2026-10-16 02:55"
+markdown: 'Ao Nang scooter and motorbike hire with hotel delivery in Ao Nang, helmets included and a cash-only security deposit.
+
+
+  Sources: <https://www.krabimotorentals.com/locations/ao-nang>, <https://www.tripadvisor.com/Attraction_Review-g1507054-d15116802-Reviews-Krabi_Moto_Rentals-Ao_Nang_Krabi_Province.html>
+
+  '

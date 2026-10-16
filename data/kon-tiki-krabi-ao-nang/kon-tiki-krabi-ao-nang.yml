@@ -1,0 +1,36 @@
+name: Kon-Tiki Krabi
+description: PADI 5 Star IDC dive centre in Ao Nang, established 1999, offering dive trips and PADI courses.
+source_url: https://kontiki-krabi.com
+category: dive-shops
+tags: []
+featured: false
+status: approved
+city: krabi
+area: ao-nang
+address: 873 Moo 2, Ao Nang, Mueang Krabi, Krabi 81180
+hours:
+  mon:
+  - 09:00-17:00
+  tue:
+  - 09:00-17:00
+  wed:
+  - 09:00-17:00
+  thu:
+  - 09:00-17:00
+  fri:
+  - 09:00-17:00
+  sat:
+  - 09:00-17:00
+  sun:
+  - 09:00-17:00
+amenities:
+  padi: true
+claimed: false
+updated_by: import
+updated_at: "2026-10-16 02:55"
+markdown: 'PADI 5 Star IDC dive centre in Ao Nang, established 1999, offering dive trips and PADI courses.
+
+
+  Sources: <https://www.padi.com/dive-center/krabi/kon-tiki-krabi/>, <https://taucher.net/tauchbasis-kon-tiki__krabi__ao_nang-faz6578>
+
+  '

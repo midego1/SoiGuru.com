@@ -1,0 +1,30 @@
+name: Pan Beach Resort Bar & Restaurant
+description: Hotel in Klong Muang.
+source_url: ''
+category: hotels
+tags: []
+featured: false
+status: approved
+city: krabi
+area: klong-muang
+geo:
+  lat: 8.044633
+  lng: 98.78321
+location:
+  address: Ao Nang, Krabi
+  city: Krabi
+  country: TH
+  latitude: 8.044633
+  longitude: 98.78321
+claimed: false
+updated_by: import
+updated_at: "2026-10-16 02:55"
+markdown: 'Hotel in Klong Muang.
+
+
+  Sources: <https://www.openstreetmap.org/node/5478149443>
+
+
+  Map data © OpenStreetMap contributors (ODbL).
+
+  '

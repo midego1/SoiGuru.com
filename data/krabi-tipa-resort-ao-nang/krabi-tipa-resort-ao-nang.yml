@@ -1,0 +1,49 @@
+name: Krabi Tipa Resort
+description: Hotel in Ao Nang.
+source_url: https://www.krabi-tiparesort.com/
+category: hotels
+tags: []
+featured: false
+status: approved
+city: krabi
+area: ao-nang
+geo:
+  lat: 8.033189
+  lng: 98.823314
+location:
+  address: Ao Nang, Krabi
+  city: Krabi
+  country: TH
+  latitude: 8.033189
+  longitude: 98.823314
+phone: "+6675637528"
+hours:
+  mon:
+  - 00:00-24:00
+  tue:
+  - 00:00-24:00
+  wed:
+  - 00:00-24:00
+  thu:
+  - 00:00-24:00
+  fri:
+  - 00:00-24:00
+  sat:
+  - 00:00-24:00
+  sun:
+  - 00:00-24:00
+amenities:
+  wifi: true
+  card-accepted: true
+claimed: false
+updated_by: import
+updated_at: "2026-10-16 02:55"
+markdown: 'Hotel in Ao Nang.
+
+
+  Sources: <https://www.openstreetmap.org/node/13678010948>
+
+
+  Map data © OpenStreetMap contributors (ODbL).
+
+  '

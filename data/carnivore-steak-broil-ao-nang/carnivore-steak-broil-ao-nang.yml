@@ -1,0 +1,36 @@
+name: Carnivore Steak & Broil
+description: Steakhouse on Khlong Hang Road in Ao Nang specialising in broiled steaks and ribs.
+source_url: ''
+category: restaurants
+tags: []
+featured: false
+status: approved
+city: krabi
+area: ao-nang
+address: 127 Khlong Hang Rd, Ao Nang, Krabi 81000
+phone: "+6675661061"
+hours:
+  mon:
+  - 14:00-22:00
+  tue:
+  - 14:00-22:00
+  wed:
+  - 14:00-22:00
+  thu:
+  - 14:00-22:00
+  fri:
+  - 14:00-22:00
+  sat:
+  - 14:00-22:00
+  sun:
+  - 14:00-22:00
+price_band: 2
+claimed: false
+updated_by: import
+updated_at: "2026-10-16 02:55"
+markdown: 'Steakhouse on Khlong Hang Road in Ao Nang specialising in broiled steaks and ribs.
+
+
+  Sources: <https://www.hotels.com/go/thailand/best-restaurants-krabi>, <https://www.thaiholidayguide.com/best-restaurants-krabi/>
+
+  '

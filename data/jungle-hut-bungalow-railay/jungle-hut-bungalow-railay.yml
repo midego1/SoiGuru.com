@@ -1,0 +1,30 @@
+name: Jungle Hut Bungalow
+description: Guesthouse in Railay.
+source_url: ''
+category: hotels
+tags: []
+featured: false
+status: approved
+city: krabi
+area: railay
+geo:
+  lat: 8.0211
+  lng: 98.83259
+location:
+  address: Ao Nang, Krabi
+  city: Krabi
+  country: TH
+  latitude: 8.0211
+  longitude: 98.83259
+claimed: false
+updated_by: import
+updated_at: "2026-10-16 02:55"
+markdown: 'Guesthouse in Railay.
+
+
+  Sources: <https://www.openstreetmap.org/way/1335881387>
+
+
+  Map data © OpenStreetMap contributors (ODbL).
+
+  '

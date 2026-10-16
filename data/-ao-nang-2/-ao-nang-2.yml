@@ -1,0 +1,46 @@
+name: ก๋วยเตี๋ยวโกเด้ง ซอยพีชลากูน่า
+description: Asian restaurant in Ao Nang.
+source_url: ''
+category: restaurants
+tags: []
+featured: false
+status: approved
+city: krabi
+area: ao-nang
+geo:
+  lat: 8.032389
+  lng: 98.82496
+location:
+  address: Ao Nang, Krabi
+  city: Krabi
+  country: TH
+  latitude: 8.032389
+  longitude: 98.82496
+phone: "+66857660211"
+hours:
+  mon:
+  - 13:00-21:00
+  tue:
+  - 13:00-21:00
+  wed:
+  - 13:00-21:00
+  thu:
+  - 13:00-21:00
+  fri:
+  - 13:00-21:00
+  sat:
+  - 13:00-21:00
+  sun:
+  - 13:00-21:00
+claimed: false
+updated_by: import
+updated_at: "2026-10-16 02:55"
+markdown: 'Asian restaurant in Ao Nang.
+
+
+  Sources: <https://www.openstreetmap.org/node/13678315227>
+
+
+  Map data © OpenStreetMap contributors (ODbL).
+
+  '

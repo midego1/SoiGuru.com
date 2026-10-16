@@ -1,0 +1,31 @@
+name: Krabi Resort
+name_th: กระบี่รีสอร์ท
+description: Hotel in Ao Nang.
+source_url: ''
+category: hotels
+tags: []
+featured: false
+status: approved
+city: krabi
+area: ao-nang
+geo:
+  lat: 8.035964
+  lng: 98.818034
+location:
+  address: Ao Nang, Krabi
+  city: Krabi
+  country: TH
+  latitude: 8.035964
+  longitude: 98.818034
+claimed: false
+updated_by: import
+updated_at: "2026-10-16 02:55"
+markdown: 'Hotel in Ao Nang.
+
+
+  Sources: <https://www.openstreetmap.org/node/2241642592>
+
+
+  Map data © OpenStreetMap contributors (ODbL).
+
+  '

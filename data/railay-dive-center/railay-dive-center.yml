@@ -1,0 +1,47 @@
+name: Railay Dive Center
+description: Dive centre in Railay.
+source_url: ''
+category: dive-shops
+tags: []
+featured: false
+status: approved
+city: krabi
+area: railay
+address: Walking Street, Ao Nang, เมืองกระบี่, Krabi, 81000
+geo:
+  lat: 8.011439
+  lng: 98.838414
+location:
+  address: Walking Street, Ao Nang, เมืองกระบี่, Krabi, 81000
+  city: Krabi
+  country: TH
+  latitude: 8.011439
+  longitude: 98.838414
+phone: "+6675819417"
+hours:
+  mon:
+  - 10:00-22:00
+  tue:
+  - 10:00-22:00
+  wed:
+  - 10:00-22:00
+  thu:
+  - 10:00-22:00
+  fri:
+  - 10:00-22:00
+  sat:
+  - 10:00-22:00
+  sun:
+  - 10:00-22:00
+claimed: false
+updated_by: import
+updated_at: "2026-10-16 02:55"
+markdown: 'Dive centre in Railay.
+
+
+  Sources: <https://www.openstreetmap.org/node/4186734159>
+
+
+  Map data © OpenStreetMap contributors (ODbL).
+
+  '

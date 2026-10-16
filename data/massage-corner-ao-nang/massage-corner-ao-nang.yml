@@ -1,0 +1,48 @@
+name: Massage Corner
+description: Massage shop on Ao Nang's main road offering Thai, foot, and head and neck massage plus an office-syndrome treatment.
+source_url: ''
+category: massage
+tags:
+- open-late
+featured: false
+status: approved
+city: krabi
+area: ao-nang
+address: Main road, Ao Nang, Mueang Krabi, Krabi
+geo:
+  lat: 8.039868
+  lng: 98.819473
+location:
+  address: Main road, Ao Nang, Mueang Krabi, Krabi
+  city: Krabi
+  country: TH
+  latitude: 8.039868
+  longitude: 98.819473
+hours:
+  mon:
+  - 10:00-23:00
+  tue:
+  - 10:00-23:00
+  wed:
+  - 10:00-23:00
+  thu:
+  - 10:00-23:00
+  fri:
+  - 10:00-23:00
+  sat:
+  - 10:00-23:00
+  sun:
+  - 10:00-23:00
+claimed: false
+updated_by: import
+updated_at: "2026-10-16 02:55"
+markdown: 'Massage shop on Ao Nang''s main road offering Thai, foot, and head and neck massage plus an office-syndrome treatment.
+
+
+  Sources: <https://www.openstreetmap.org/node/7290066985>, <https://www.visitthailandtoday.com/wellness-spas/krabi/massage-corner>,
+  <https://pelago.com/th/articles/best-thai-massage-in-krabi>
+
+
+  Map data © OpenStreetMap contributors (ODbL).
+
+  '

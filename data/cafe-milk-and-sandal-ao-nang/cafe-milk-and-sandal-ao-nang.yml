@@ -1,0 +1,34 @@
+name: Cafe Milk and Sandal
+description: Café in Ao Nang.
+source_url: https://milkandsandal.netlify.app/
+category: cafes
+tags: []
+featured: false
+status: approved
+city: krabi
+area: ao-nang
+address: 23/26, Beach Road 4203, Ao Nang, Mueang Krabi District, Krabi, 81180
+geo:
+  lat: 8.032635
+  lng: 98.823745
+location:
+  address: 23/26, Beach Road 4203, Ao Nang, Mueang Krabi District, Krabi, 81180
+  city: Krabi
+  country: TH
+  latitude: 8.032635
+  longitude: 98.823745
+amenities:
+  air-con: true
+  wifi: true
+claimed: false
+updated_by: import
+updated_at: "2026-10-16 02:55"
+markdown: 'Café in Ao Nang.
+
+
+  Sources: <https://www.openstreetmap.org/way/1489340439>
+
+
+  Map data © OpenStreetMap contributors (ODbL).
+
+  '

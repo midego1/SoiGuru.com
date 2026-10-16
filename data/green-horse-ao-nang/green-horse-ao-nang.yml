@@ -1,0 +1,45 @@
+name: Green Horse
+description: Restaurant in Ao Nang.
+source_url: ''
+category: restaurants
+tags: []
+featured: false
+status: approved
+city: krabi
+area: ao-nang
+geo:
+  lat: 8.034536
+  lng: 98.818714
+location:
+  address: Ao Nang, Krabi
+  city: Krabi
+  country: TH
+  latitude: 8.034536
+  longitude: 98.818714
+hours:
+  mon:
+  - 11:00-02:00
+  tue:
+  - 11:00-02:00
+  wed:
+  - 11:00-02:00
+  thu:
+  - 11:00-02:00
+  fri:
+  - 11:00-02:00
+  sat:
+  - 11:00-02:00
+  sun:
+  - 11:00-02:00
+claimed: false
+updated_by: import
+updated_at: "2026-10-16 02:55"
+markdown: 'Restaurant in Ao Nang.
+
+
+  Sources: <https://www.openstreetmap.org/way/581603907>
+
+
+  Map data © OpenStreetMap contributors (ODbL).
+
+  '

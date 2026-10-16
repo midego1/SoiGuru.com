@@ -1,0 +1,45 @@
+name: For you restaurant and bar
+description: Restaurant in Ao Nang.
+source_url: ''
+category: restaurants
+tags: []
+featured: false
+status: approved
+city: krabi
+area: ao-nang
+geo:
+  lat: 8.058045
+  lng: 98.840099
+location:
+  address: Ao Nang, Krabi
+  city: Krabi
+  country: TH
+  latitude: 8.058045
+  longitude: 98.840099
+hours:
+  mon:
+  - 10:00-00:00
+  tue:
+  - 10:00-00:00
+  wed:
+  - 10:00-00:00
+  thu:
+  - 10:00-00:00
+  fri:
+  - 10:00-00:00
+  sat:
+  - 10:00-00:00
+  sun:
+  - 10:00-00:00
+claimed: false
+updated_by: import
+updated_at: "2026-10-16 02:55"
+markdown: 'Restaurant in Ao Nang.
+
+
+  Sources: <https://www.openstreetmap.org/node/6846119685>
+
+
+  Map data © OpenStreetMap contributors (ODbL).
+
+  '

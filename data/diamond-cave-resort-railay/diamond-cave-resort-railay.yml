@@ -1,0 +1,30 @@
+name: Diamond Cave Resort
+description: Hotel in Railay.
+source_url: ''
+category: hotels
+tags: []
+featured: false
+status: approved
+city: krabi
+area: railay
+geo:
+  lat: 8.013632
+  lng: 98.842694
+location:
+  address: Ao Nang, Krabi
+  city: Krabi
+  country: TH
+  latitude: 8.013632
+  longitude: 98.842694
+claimed: false
+updated_by: import
+updated_at: "2026-10-16 02:55"
+markdown: 'Hotel in Railay.
+
+
+  Sources: <https://www.openstreetmap.org/node/1141879092>
+
+
+  Map data © OpenStreetMap contributors (ODbL).
+
+  '

@@ -1,0 +1,31 @@
+name: Ayodhaya Palace Krabi Beach Resort & Spa
+description: Hotel in Ao Nang.
+source_url: https://ayodhayapalacebeachresort.com
+category: hotels
+tags: []
+featured: false
+status: approved
+city: krabi
+area: ao-nang
+address: Ao Nang, Mueang Krabi, Krabi
+geo:
+  lat: 8.045837
+  lng: 98.807835
+location:
+  address: Ao Nang, Mueang Krabi, Krabi
+  city: Krabi
+  country: TH
+  latitude: 8.045837
+  longitude: 98.807835
+claimed: false
+updated_by: import
+updated_at: "2026-10-16 02:55"
+markdown: 'Hotel in Ao Nang.
+
+
+  Sources: <https://www.openstreetmap.org/node/12170484056>
+
+
+  Map data © OpenStreetMap contributors (ODbL).
+
+  '

@@ -2,7 +2,9 @@
 
 Content repository for [SoiGuru.com](https://soiguru.com): cities, areas, categories and listings. It uses the Ever Works data format (same layout as `ever-works/awesome-time-tracking-data`) and is read by both site templates through `DATA_REPOSITORY`.
 
-> **All listings in `data/` are SAMPLE businesses** (`sample: true`, tag `sample`, phone numbers starting `+66800`, LINE ids `@sample-…`). They exist for development and design review. Replace them before launch.
+> **Krabi listings are real businesses** (Ao Nang, Railay, Klong Muang), imported on 2026-10-16 from OpenStreetMap (map data © OpenStreetMap contributors, ODbL; each listing links its OSM object under `Sources`) plus web research where OSM had gaps. They are unclaimed (`claimed: false`, `updated_by: import`) until an owner claims them.
+>
+> **Chiang Mai and Lam Plai Mat listings are still SAMPLE businesses** (`sample: true`, tag `sample`, phone numbers starting `+66800`, LINE ids `@sample-…`). Replace them before those cities go live.
 
 ## Layout
 

@@ -1,0 +1,30 @@
+name: thailandia
+description: Café in Ao Nang.
+source_url: ''
+category: cafes
+tags: []
+featured: false
+status: approved
+city: krabi
+area: ao-nang
+geo:
+  lat: 8.032765
+  lng: 98.825667
+location:
+  address: Ao Nang, Krabi
+  city: Krabi
+  country: TH
+  latitude: 8.032765
+  longitude: 98.825667
+claimed: false
+updated_by: import
+updated_at: "2026-10-16 02:55"
+markdown: 'Café in Ao Nang.
+
+
+  Sources: <https://www.openstreetmap.org/node/7066564786>
+
+
+  Map data © OpenStreetMap contributors (ODbL).
+
+  '
