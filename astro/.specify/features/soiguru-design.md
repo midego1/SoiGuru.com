@@ -65,3 +65,7 @@ The design is phone first: one 640px column, and only CategoryResults has a wide
 ## Not in this pass
 
 ClaimFlow and OwnerDashboard (need accounts; Next.js only), contact-tap counting (needs a backend), a self-hosted map style. See `docs/questions.md` Q30.
+
+## Generic routes
+
+The generic template routes (`/item`, `/category`, `/categories`, `/tag`, `/tags`, `/collection`, `/collections`, `/comparison`, `/comparisons`, `/directory`, `/page`, `/pages`) are still built but not shown on soiguru.com: the `soiguru-redirects` integration (`src/integrations/soiguru-redirects.ts`) writes `dist/_redirects` with 301s (`/item/<slug>` → its listing page, the rest → `/`) and the sitemap leaves them out. The 404 page uses the SoiGuru design.

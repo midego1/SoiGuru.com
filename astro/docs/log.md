@@ -3,6 +3,10 @@ title: "Change Log"
 sidebar_label: "Change Log"
 ---
 
+## 2026-10-16 — Generic template pages redirect to SoiGuru pages; 404 in the SoiGuru design
+
+soiguru.com still served ~240 pages of the generic template design (`/item/…`, `/category/…`, `/tag/…`, `/page/…`, `/directory`, `/categories`, `/tags`, `/collections`, `/comparisons`, `/pages/…`), all in the sitemap, with sample items linking to `example.com`. New `soiguru-redirects` integration writes `dist/_redirects` after the build (Cloudflare Workers static assets apply it before serving files): `/item/<slug>` (and `.md`) 301 to the listing page `/<city>/<area>/<slug>/`, every other generic route 301 to `/`. The same prefixes (`GENERIC_PREFIXES`) are filtered out of the sitemap. The routes stay in the code (R11). `404.astro` now uses `SoiGuruLayout` (top bar, EN/TH message, city list, noindex). Spec: `.specify/features/soiguru-design.md` § Generic routes.
+
 ## 2026-10-16 — Claim and Owner links match the Next.js routes
 
 Claim buttons linked to `https://soiguru.midego.net/claim`, which does not exist in the Next.js app (its ClaimFlow is `/<city>/claim`) and showed an error page. `claim_url` now takes a `{city}` placeholder (`claimUrl(config, city, listing?)`), and a new optional `owner_url` (`ownerUrl()`) sends the Owner tab, "For owners" and the landing CTA to the owner dashboard (`/owner`), like the Next.js bottom nav. Bundled `works.yml` updated. Spec: `.specify/features/soiguru-design.md`.
