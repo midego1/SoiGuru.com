@@ -3,6 +3,10 @@ title: "Change Log"
 sidebar_label: "Change Log"
 ---
 
+## 2026-10-16 — Default site URL is soiguru.com
+
+Builds without `SITE_URL` (the Cloudflare Worker `soiguru-minimal` deploy) put `https://example.com` in every canonical, hreflang, sitemap and robots.txt URL. `astro.config.ts` now falls back to `https://soiguru.com`; `SITE_URL` still overrides it. Spec: `.specify/features/soiguru-design.md`.
+
 ## 2026-10-15 — SoiGuru full public site
 
 Search box searches (names, descriptions, amenities, EN/TH); Area and Filters sheets (price, rating, LINE, WhatsApp, verified, amenities) kept in the URL; "Search this area" and prev/next on the map sheet; full-screen photo gallery; Saved places on the device with a `/<city>/saved` page; pre-rendered Thai pages under `/th/` with hreflang (new `soiguru-thai` integration); today-first hours; official LINE/WhatsApp marks. Spec: `.specify/features/soiguru-design.md` § Full public site.

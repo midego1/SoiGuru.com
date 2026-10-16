@@ -31,8 +31,8 @@ export default defineConfig({
 	// Vercel adapter enables ISR for prerendered pages
 	...(isISR ? { adapter: vercel() } : {}),
 
-	// Site URL for sitemap and canonical links
-	site: process.env.SITE_URL || 'https://example.com',
+	// Site URL for sitemap, canonical and hreflang links (SITE_URL overrides, e.g. for previews)
+	site: process.env.SITE_URL || 'https://soiguru.com',
 
 	integrations: [
 		// Preact for lightweight interactive islands
