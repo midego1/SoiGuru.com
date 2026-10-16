@@ -7,6 +7,10 @@ sidebar_position: 99
 
 # Documentation & Specs Change Log
 
+## 2026-10-16
+
+- `spec-054` `apps/web/scripts/clone.cjs` `apps/web/lib/repository.ts` `apps/web/lib/services/*-git.service.ts` `Dockerfile`: the content clone (build time and runtime) checks out `GITHUB_BRANCH` of `DATA_REPOSITORY` when it is set, so SoiGuru can read its content from the `data` branch of the website repo; unset keeps the repository's default branch. Pull and push follow the checked-out branch. The Dockerfile takes `GITHUB_BRANCH` as a build arg ([spec 054](spec/054-soiguru-city-screens/spec.md)).
+
 ## 2026-10-15
 
 - `spec-054` `apps/web/app/[locale]/(soiguru)` `apps/web/lib/soiguru`: SoiGuru Saved tab (`/saved`) and a Save heart on the listing page, stored in the existing `favorites` table ([spec 054](spec/054-soiguru-city-screens/spec.md), PR #1).

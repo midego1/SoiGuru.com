@@ -76,6 +76,10 @@ COPY --from=pruner /app/out/full/ .
 
 ARG DATA_REPOSITORY=""
 ENV DATA_REPOSITORY=${DATA_REPOSITORY}
+# Branch of DATA_REPOSITORY with the content (e.g. `data`) for the build-time clone
+# (scripts/clone.cjs). Empty = the repository's default branch; it is then UNSET for
+# the build so config defaults apply.
+ARG GITHUB_BRANCH=""
 
 # Optional public canonical origin of THIS site (apps/web/lib/utils/url-cleaner.ts
 # getCanonicalOrigin), e.g. a brand domain when the same deployment also answers
@@ -90,6 +94,7 @@ ARG NEXT_PUBLIC_CANONICAL_URL=""
 RUN --mount=type=secret,id=gh_token \
     sh -c 'if [ -s /run/secrets/gh_token ]; then export GH_TOKEN=$(cat /run/secrets/gh_token); fi; \
            if [ -z "$NEXT_PUBLIC_CANONICAL_URL" ]; then unset NEXT_PUBLIC_CANONICAL_URL; fi; \
+           if [ -z "$GITHUB_BRANCH" ]; then unset GITHUB_BRANCH; fi; \
            pnpm exec turbo build --filter=@ever-works/web...'
 
 # ---- runner ----------------------------------------------------------------

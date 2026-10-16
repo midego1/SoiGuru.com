@@ -9,6 +9,9 @@ loadEnvConfig(process.cwd());
 
 const token = process.env.GH_TOKEN;
 const url = process.env.DATA_REPOSITORY;
+// Branch of DATA_REPOSITORY that holds the content (e.g. the `data` branch of the website
+// repo). Unset = the repository's default branch, as before.
+const branch = process.env.GITHUB_BRANCH?.trim() || undefined;
 
 if (!url) {
   console.warn("Warning: 'DATA_REPOSITORY' environment variable is missing.");
@@ -41,6 +44,7 @@ async function main() {
       dir: dest,
       author: { name: "website" },
       singleBranch: true,
+      ...(branch ? { ref: branch } : {}),
     };
 
     if (token) {
@@ -51,7 +55,7 @@ async function main() {
     return;
   }
 
-  console.log("Cloning content repository to", dest);
+  console.log("Cloning content repository to", dest, branch ? `(branch ${branch})` : "(default branch)");
 
   const cloneOptions = {
     fs,
@@ -59,6 +63,7 @@ async function main() {
     url,
     dir: dest,
     singleBranch: true,
+    ...(branch ? { ref: branch } : {}),
   }
 
   if (token) {
