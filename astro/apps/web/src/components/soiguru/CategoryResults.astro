@@ -21,7 +21,7 @@ import Sheet from './Sheet.astro';
 import ResultFilters from './ResultFilters.astro';
 import { directionsUrl } from '../../lib/soiguru/geo';
 import { jsonForScript } from '../../lib/soiguru/format';
-import { getSoiGuru, claimUrl, type Area, type City, type Listing } from '../../lib/soiguru/data';
+import { getSoiGuru, claimUrl, cityListings, type Area, type City, type Listing } from '../../lib/soiguru/data';
 
 interface Props {
     city: City;
@@ -44,7 +44,14 @@ interface Props {
 }
 
 const { city, listings, noun, area, lockArea = false, search = false, inlineSearch = false, title, titleTh } = Astro.props;
-const claim = claimUrl((await getSoiGuru()).config, city);
+const sg = await getSoiGuru();
+const claim = claimUrl(sg.config, city);
+// Sidebar: every category with places in the city, the current page marked.
+const inCity = cityListings(sg, city);
+const here = Astro.url.pathname.replace(/\/$/, '');
+const categoryLinks = sg.categories
+    .map((c) => ({ c, n: inCity.filter((l) => l.category?.id === c.id).length, href: `/${city.id}/${c.id}` }))
+    .filter((x) => x.n > 0);
 const areaOptions = lockArea
     ? []
     : city.areas
@@ -105,7 +112,23 @@ const center = area?.geo ?? city.geo ?? pins[0] ?? { lat: 13.75, lng: 100.5 };
     }
     <aside class="sg-rside" aria-label="Filters">
         <ResultFilters city={city} priceBands={priceBands} amenityOptions={amenityOptions} areas={areaOptions} />
-        <button type="button" class="tkg-btn tkg-btn-ghost tkg-btn-sm" data-f-clear><span data-th="ล้างตัวกรอง">Clear filters</span></button>
+        <button type="button" class="tkg-btn tkg-btn-ghost tkg-btn-sm sg-rside-clear" data-f-clear><span data-th="ล้างตัวกรอง">Clear filters</span></button>
+        {
+            categoryLinks.length > 0 && (
+                <nav class="sg-fieldset sg-rside-cats" aria-label="Categories">
+                    <p class="sg-rside-legend" data-th="หมวดหมู่">Categories</p>
+                    <div class="sg-rf-list">
+                        {categoryLinks.map(({ c, n, href }) => (
+                            <a class:list={['sg-rf-opt', { 'tkg-chip-on': here === href }]} href={href} aria-current={here === href ? 'page' : undefined}>
+                                <Icon name={c.icon} />
+                                <span data-th={c.name_th}>{c.name}</span>
+                                <small>{n}</small>
+                            </a>
+                        ))}
+                    </div>
+                </nav>
+            )
+        }
     </aside>
     <div class="tkg-filterbar" role="toolbar" aria-label="Filters">
         <div class="tkg-seg sg-view-seg" role="group" aria-label="View">

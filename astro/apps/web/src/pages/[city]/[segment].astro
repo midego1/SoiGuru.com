@@ -52,6 +52,7 @@ const siteUrl = (Astro.site?.href ?? '').replace(/\/$/, '');
     city={city}
     wide
     noindex={listings.length === 0}
+    footer
     jsonLd={[breadcrumbJsonLd(siteUrl, [[config.company_name, '/'], [city.name, `/${city.id}`], [title, path]])]}
 >
     <TopBar back={{ href: `/${city.id}`, label: `Back to ${city.name}` }} title={titleTh ? `${title} · ${titleTh}` : title} subtitle={subtitle} nav={{ city, ownerHref: ownerUrl(config, city) }}>
