@@ -6,8 +6,10 @@ copyright_year: 2026
 company_website: https://soiguru.com
 app_url: https://soiguru.com
 site_url: https://soiguru.com
-claim_url: https://soiguru.midego.net/{city}/claim
-owner_url: https://soiguru.midego.net/owner
+claim_url: https://owner.soiguru.com/{city}/claim
+owner_url: https://owner.soiguru.com/owner
+# theme: soiguru (moodboard: sea and sun, IBM Plex) or navy (navy and orange, Bricolage + Figtree)
+theme: soiguru
 # contact_email: set to show "Report wrong info" (pending from Michiel)
 content_table: false
 pagination:
