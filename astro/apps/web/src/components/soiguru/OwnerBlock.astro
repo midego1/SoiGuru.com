@@ -1,8 +1,12 @@
 ---
 /**
- * OwnerBlock — the "For business owners" band of the website mockup: the pitch on the left,
- * the claim banner (`public/images/claim-banner.webp`, a link to the claim flow) on the right.
- * The pitch carries what is included, the accent button and the price. Stacks on phones. The compact OwnerCta stays for places that need one line.
+ * OwnerBlock — the "For business owners" band: the pitch on the left, the claim banner
+ * (`public/images/claim-banner.webp`, a link to the claim flow) on the right.
+ *
+ * The pitch fills the banner's height: headline and lead, a "Find your shop" search (owners
+ * check that they are already listed, with the city's place count), three steps (find,
+ * claim, keep it up to date; what an owner gets is folded into the steps), then the claim
+ * button and the price. Stacks on phones. The compact OwnerCta stays for places that need one line.
  */
 import Icon from './Icon.astro';
 
@@ -10,14 +14,35 @@ interface Props {
     /** Claim flow URL; nothing renders without one */
     href?: string;
     cityName?: string;
+    /** City for the "Find your shop" search (`/<city>/search?q=`); no search without it */
+    cityId?: string;
+    /** Places listed in the city, for the line under the search */
+    count?: number;
 }
 
-const { href, cityName } = Astro.props;
-const perks: [string, string][] = [
-    ['Your own login, edit any time', 'มีบัญชีของคุณเอง แก้ไขได้ทุกเวลา'],
-    ['Opening hours, photos and a menu', 'เวลาเปิด-ปิด รูปภาพ และเมนู'],
-    ['LINE and WhatsApp buttons', 'ปุ่ม LINE และ WhatsApp'],
-    ['Verified owner badge', 'ป้ายยืนยันเจ้าของร้าน'],
+const { href, cityName, cityId, count } = Astro.props;
+const steps: { icon: string; title: string; title_th: string; text: string; text_th: string }[] = [
+    {
+        icon: 'search',
+        title: 'Find your shop',
+        title_th: 'ค้นหาร้านของคุณ',
+        text: 'It is probably here already, with the details we could find.',
+        text_th: 'ร้านของคุณน่าจะอยู่ที่นี่แล้ว พร้อมข้อมูลที่เราหาได้',
+    },
+    {
+        icon: 'shield',
+        title: 'Claim it',
+        title_th: 'เคลมร้าน',
+        text: 'Tap Claim, show you are the owner and get the Verified owner badge.',
+        text_th: 'แตะเคลม ยืนยันว่าคุณเป็นเจ้าของ และรับป้ายยืนยันเจ้าของร้าน',
+    },
+    {
+        icon: 'edit',
+        title: 'Keep it up to date',
+        title_th: 'อัปเดตได้ทุกเวลา',
+        text: 'Your own login for hours, photos, a menu, and LINE and WhatsApp buttons.',
+        text_th: 'บัญชีของคุณเองสำหรับเวลาเปิด-ปิด รูปภาพ เมนู และปุ่ม LINE และ WhatsApp',
+    },
 ];
 ---
 
@@ -26,28 +51,64 @@ const perks: [string, string][] = [
         <section class="sg-wrap sg-owner-sec" aria-labelledby="sg-owner-h">
             <div class="sg-owner">
                 <div class="sg-owner-pitch">
-                    <p class="sg-eyebrow" data-th="สำหรับเจ้าของธุรกิจ">For business owners</p>
-                    <h2 class="sg-h-xl" id="sg-owner-h" data-th="ร้านของคุณน่าจะอยู่ที่นี่แล้ว เคลมเลย">
-                        Your shop is probably already listed. Claim it.
-                    </h2>
-                    <p class="sg-lead" data-th="เข้าสู่ระบบ แก้ไขเวลาเปิด-ปิด เพิ่มรูปภาพ LINE หรือ WhatsApp นักท่องเที่ยวเห็นข้อมูลที่ถูกต้อง คุณได้ลูกค้า">
-                        Log in, fix your hours, add photos and your LINE or WhatsApp{cityName ? ` in ${cityName}` : ''}. Visitors see the right
-                        info, you get the customers.
-                    </p>
-                    <ul class="sg-ticks sg-ticks-2">
-                        {perks.map(([en, th]) => (
+                    <div>
+                        <p class="sg-eyebrow" data-th="สำหรับเจ้าของธุรกิจ">For business owners</p>
+                        <h2 class="sg-h-xl" id="sg-owner-h" data-th="ร้านของคุณน่าจะอยู่ที่นี่แล้ว เคลมเลย">
+                            Your shop is probably already listed. Claim it.
+                        </h2>
+                        <p class="sg-lead" data-th="เข้าสู่ระบบ แก้ไขเวลาเปิด-ปิด เพิ่มรูปภาพ LINE หรือ WhatsApp นักท่องเที่ยวเห็นข้อมูลที่ถูกต้อง คุณได้ลูกค้า">
+                            Log in, fix your hours, add photos and your LINE or WhatsApp{cityName ? ` in ${cityName}` : ''}. Visitors see the right
+                            info, you get the customers.
+                        </p>
+                    </div>
+
+                    {
+                        cityId && (
+                            <form class="sg-owner-find" action={`/${cityId}/search`} method="get" role="search">
+                                <label>
+                                    <Icon name="search" />
+                                    <span class="sg-visually-hidden">Find your shop</span>
+                                    <input type="search" name="q" placeholder="Your shop's name · ชื่อร้านของคุณ" autocomplete="off" enterkeyhint="search" />
+                                </label>
+                                <button type="submit" class="sg-btn sg-btn-ink" data-umami-event="owner-find-shop" data-th="ค้นหาร้าน">
+                                    Find my shop
+                                </button>
+                            </form>
+                        )
+                    }
+                    {
+                        cityId && count !== undefined && count > 0 && (
+                            <p class="sg-owner-count">
+                                <Icon name="check" class="tkg-i-16" />
+                                <span data-th={`${count} สถานที่ใน${cityName ?? ''}อยู่ในรายการแล้ว`}>
+                                    {count} places in {cityName} are already listed.
+                                </span>
+                            </p>
+                        )
+                    }
+
+                    <ol class="sg-steps">
+                        {steps.map((s, i) => (
                             <li>
-                                <Icon name="check" />
-                                <span data-th={th}>{en}</span>
+                                <span class="sg-step-num" aria-hidden="true">
+                                    {i + 1}
+                                </span>
+                                <span class="sg-step-mark" aria-hidden="true">
+                                    <Icon name={s.icon} />
+                                </span>
+                                <strong data-th={s.title_th}>{s.title}</strong>
+                                <span data-th={s.text_th}>{s.text}</span>
                             </li>
                         ))}
-                    </ul>
+                    </ol>
+
                     <div class="sg-owner-cta">
                         <a class="sg-btn sg-btn-accent sg-btn-lg" href={href} data-umami-event="claim-cta" data-th="เคลมร้านของคุณ">
                             Claim your listing
                         </a>
                         <p class="sg-price-alt">
-                            <strong>฿100</strong>{" "}<span data-th="/ เดือน หรือ ฿1,000 / ปี ร้านของคุณอยู่ในรายการฟรีเสมอ">/ month or ฿1,000 / year. Your listing stays free either way.</span>
+                            <strong>฿100</strong>{' '}
+                            <span data-th="/ เดือน หรือ ฿1,000 / ปี ร้านของคุณอยู่ในรายการฟรีเสมอ">/ month or ฿1,000 / year. Your listing stays free either way.</span>
                         </p>
                     </div>
                 </div>

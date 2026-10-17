@@ -90,6 +90,6 @@ const jsonLd = [
             </div>
         </section>
 
-        <OwnerBlock href={ownerHref} />
+        <OwnerBlock href={ownerHref} cityName={cities.length === 1 ? first?.name : undefined} cityId={cities.length === 1 ? first?.id : undefined} count={first && cities.length === 1 ? cityListings(data, first).length : undefined} />
     </main>
 </SoiGuruLayout>

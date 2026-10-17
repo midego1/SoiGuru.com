@@ -164,6 +164,6 @@ const trust: [string, string][] = [
             )
         }
 
-        <OwnerBlock cityName={city.name} href={claimUrl(config, city)} />
+        <OwnerBlock cityName={city.name} cityId={city.id} count={listings.length} href={claimUrl(config, city)} />
     </main>
 </SoiGuruLayout>

@@ -3,6 +3,10 @@ title: "Change Log"
 sidebar_label: "Change Log"
 ---
 
+## 2026-10-17 — Owner block fills its space
+
+The owner block's pitch column now spans the banner's height: headline and lead, a "Find your shop" search (`/<city>/search?q=`, `data-umami-event="owner-find-shop"`) with the city's place count, three steps (find, claim, keep it up to date; the four perks are folded into them) and the claim button with the price. `OwnerBlock` takes `cityId` and `count`; the landing passes them when there is one city. Steps are compact rows on phones. Spec: `.specify/features/soiguru-design.md`.
+
 ## 2026-10-17 — The owner's Ao Nang list (169 places) and 8 new categories
 
 `ao-nang-new-businesses.csv` (173 rows) imported into the `data` branch (a1dd3db) and the bundled `.content/`: 169 listings, 4 left out as closed in OpenStreetMap (`disused:*`). New categories bars, shops, gyms-muay-thai, clinics-pharmacies, laundry, barbers-salons, coworking, other, with priorities by weight; the site draws them with new icons (glass, bag, glove, cross, washer, scissors, laptop, dots in `icons.ts`, mapped in `CATEGORY_ICONS`). City home tiles show every category with places (16 now), and "Open now" takes one place per category in turn so the first cards are varied. `lineUrl()` keeps full `https://line.me/…` links as given. Spec: `.specify/features/soiguru-design.md`.
