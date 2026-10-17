@@ -1,6 +1,7 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { fetchItem } from '@/lib/content';
 import { listingPhotos } from '@/lib/services/google-places.service';
+import { siteConfig } from '@/lib/config';
 
 /**
  * GET /api/places/photos/{slug} — Google photos for one SoiGuru listing (spec 056), for the
@@ -17,6 +18,30 @@ const SITES = (process.env.PUBLIC_SITE_ORIGINS || 'https://soiguru.com,https://w
 function cors(request: NextRequest): Record<string, string> {
 	const origin = request.headers.get('origin') ?? '';
 	return SITES.includes(origin) ? { 'Access-Control-Allow-Origin': origin, Vary: 'Origin' } : { Vary: 'Origin' };
+}
+
+/**
+ * The public origin for the photo links. Behind Dokploy's proxy `request.url` is the container
+ * address (`https://0.0.0.0:3000`), so use the forwarded host when it is one of ours
+ * (`PLACES_PHOTO_ORIGIN`, `NEXT_PUBLIC_APP_URL`, the site URL, or a subdomain of a public site
+ * such as owner.soiguru.com), else the first of those.
+ */
+function publicOrigin(request: NextRequest): string {
+	const known = [process.env.PLACES_PHOTO_ORIGIN, process.env.NEXT_PUBLIC_APP_URL, siteConfig.url]
+		.map((u) => {
+			try {
+				return u ? new URL(u).origin : undefined;
+			} catch {
+				return undefined;
+			}
+		})
+		.filter((o): o is string => !!o && !/\/\/(localhost|0\.0\.0\.0|127\.)/.test(o));
+	const host = request.headers.get('x-forwarded-host') ?? request.headers.get('host');
+	const fromHeader = host ? `https://${host.split(',')[0].trim()}` : undefined;
+	const domains = SITES.map((o) => new URL(o).hostname.replace(/^www\./, ''));
+	const hostname = fromHeader ? new URL(fromHeader).hostname : '';
+	if (fromHeader && (known.includes(fromHeader) || domains.some((d) => hostname.endsWith(`.${d}`)))) return fromHeader;
+	return known[0] ?? new URL(request.url).origin;
 }
 
 export async function OPTIONS(request: NextRequest) {
@@ -43,7 +68,7 @@ export async function GET(request: NextRequest, { params }: { params: Promise<{ 
 			area: typeof meta.area === 'string' ? meta.area : undefined,
 			city: typeof meta.city === 'string' ? meta.city : undefined
 		});
-		const base = new URL(request.url).origin;
+		const base = publicOrigin(request);
 		return NextResponse.json({ photos: photos.map((p) => ({ ...p, url: `${base}${p.url}` })) }, { headers });
 	} catch (error) {
 		console.error('[places/photos]', slug, error instanceof Error ? error.message : error);
