@@ -199,12 +199,11 @@ if (root) {
             : '';
         const where = areaName || (root.dataset['where'] ?? '');
         // Nothing open by default: all places are shown, so the heading counts them all.
-        countOpen.textContent = noneOpen ? `${pool.length} ${noun}` : text.openNow(open.length);
-        countTotal.textContent = state.bounds
-            ? text.inArea(pool.length, noun)
-            : noneOpen
-              ? text.inWhere(where)
-              : text.ofTotal(pool.length, noun, where);
+        // "N open now · of M in <where>" only while the open-now filter is on; otherwise (night,
+        // or nothing open) the heading counts every place shown.
+        const allShown = !state.open || noneOpen;
+        countOpen.textContent = allShown ? `${pool.length} ${noun}` : text.openNow(open.length);
+        countTotal.textContent = state.bounds ? text.inArea(pool.length, noun) : allShown ? text.inWhere(where) : text.ofTotal(pool.length, noun, where);
         countShort.textContent = text.openNow(open.length);
         empty.hidden = pool.length > 0 && visible.length > 0;
         showMore.hidden = visible.length <= state.limit;

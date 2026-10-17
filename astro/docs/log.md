@@ -3,9 +3,13 @@ title: "Change Log"
 sidebar_label: "Change Log"
 ---
 
+## 2026-10-17 — Results head tidied; no active bar in the sidebar
+
+Desktop results head: breadcrumb, title and "N places" on the left with the search field beside the title; the toolbar under it closes with a hairline. The count above the cards is one line ("5 restaurants in Krabi") and counts every place shown whenever the open-now filter is off (night) or nothing is open; "N open now · of M" only while the filter is on. The sidebar's current category has no left bar, only the sea-tint ground.
+
 ## 2026-10-17 — Results sidebar as two cards
 
-The desktop results sidebar is two cards in the house style: "Filters" (area, price, show only, good to know; "Clear all" in the head) and "Categories" (every category with places in the city, with a count pill; the current one on sea-tint with a sea bar). 264px column so the longest name fits.
+The desktop results sidebar is two cards in the house style: "Filters" (area, price, show only, good to know; "Clear all" in the head) and "Categories" (every category with places in the city, with a count pill; the current one on sea-tint). 264px column so the longest name fits.
 
 ## 2026-10-17 — Results pages (desktop) cleaned up
 

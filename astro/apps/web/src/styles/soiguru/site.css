@@ -2667,7 +2667,7 @@ html[data-lang='en'] .sg-sf-lang[data-lang-set='en'] {
 
 /* ---------- results sidebar: two cards in the house style ----------
    "Filters" (area, price, show only, good to know; Clear all in the head) and "Categories"
-   (every category with places in the city, the current one on sea-tint with a sea bar). */
+   (every category with places in the city, the current one on sea-tint). */
 .sg-rside-card {
     padding: 18px 18px 16px;
     box-shadow: var(--shadow-card);
@@ -2767,16 +2767,6 @@ html[data-lang='en'] .sg-sf-lang[data-lang-set='en'] {
     color: var(--sea);
     font-weight: 700;
 }
-.sg-page .sg-rside-link.is-on::before {
-    content: '';
-    position: absolute;
-    left: 0;
-    top: 9px;
-    bottom: 9px;
-    width: 3px;
-    border-radius: 3px;
-    background: var(--sea);
-}
 .sg-rside-link.is-on .sg-rside-n {
     background: var(--surface);
     color: var(--sea);
@@ -2796,5 +2786,58 @@ html[data-lang='en'] .sg-sf-lang[data-lang-set='en'] {
     /* room for the longest category name ("Clinics & pharmacies") on one line */
     .sg-page-wide .sg-results[data-view='list'] {
         grid-template-columns: 264px minmax(0, 1fr) minmax(240px, 360px);
+    }
+}
+
+/* ---------- results head (desktop): title row with the search field beside it, the toolbar
+   under a hairline, so the head reads as one block ---------- */
+@media (min-width: 960px) {
+    .sg-page-wide .sg-results[data-view='list'] {
+        grid-template-areas: 'head head search' 'bar bar bar' 'side list list';
+        grid-template-rows: auto auto auto;
+    }
+    .sg-page-wide .sg-results[data-view='list'] > .sg-rhead {
+        padding-top: 28px;
+    }
+    .sg-page-wide .sg-results[data-view='list'] > .sg-rhead .sg-h-lg {
+        margin-top: 8px;
+        font-size: 34px;
+        line-height: 1.1;
+    }
+    .sg-page-wide .sg-results[data-view='list'] > .sg-rhead .sg-sec-sub {
+        display: block;
+        margin-top: 6px;
+        color: var(--ink-muted);
+    }
+    .sg-page-wide .sg-results[data-view='list'] > [data-inline-search],
+    :root:not([data-theme='navy']) .sg-page-wide .sg-results[data-view='list'] > [data-inline-search] {
+        align-self: end;
+        margin: 0 0 2px;
+    }
+    .sg-page-wide .sg-results[data-view='list'] > .tkg-filterbar {
+        margin-top: 22px;
+        padding-bottom: 18px;
+        border-bottom: 1px solid var(--line);
+    }
+    .sg-page-wide .sg-results[data-view='list'] > .sg-rside {
+        padding-top: 24px;
+    }
+    .sg-page-wide .sg-results[data-view='list'] > .sg-results-list > .tkg-section {
+        padding-top: 24px !important;
+    }
+    .sg-page-wide .sg-results[data-view='list'] .tkg-section-h h2 {
+        font-size: 15px;
+        font-weight: 600;
+        color: var(--ink-muted);
+    }
+    .sg-page-wide .sg-results[data-view='list'] .tkg-section-h h2 [data-count-open] {
+        color: var(--ink);
+        font-weight: 700;
+    }
+    /* one line: "5 restaurants in Krabi" */
+    .sg-page-wide .sg-results[data-view='list'] .tkg-section-h h2 small {
+        display: inline;
+        margin-left: 4px;
+        font-size: 15px;
     }
 }
