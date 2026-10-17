@@ -894,9 +894,10 @@ export function CredentialsForm({
 						}
 						type="submit"
 						className={cn(
-							'w-full h-10 bg-gray-900 text-white dark:bg-white dark:text-gray-900 text-sm font-medium rounded-sm',
-							'hover:bg-theme-primary/90 focus:outline-none',
-							'focus:ring-2 focus:ring-theme-primary/30 transition-colors duration-150',
+							// Primary action in the active preset's brand colour (sea for SoiGuru, spec 055)
+							'w-full h-11 bg-theme-primary text-white text-sm font-semibold rounded-[10px]',
+							'hover:bg-theme-accent focus:outline-none',
+							'focus-visible:ring-2 focus-visible:ring-theme-primary focus-visible:ring-offset-2 transition-colors duration-150',
 							'disabled:opacity-50 disabled:cursor-not-allowed'
 						)}
 						isLoading={

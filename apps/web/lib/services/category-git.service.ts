@@ -91,6 +91,8 @@ export class CategoryGitService {
       dir: this.config.dataDir,
       url,
       singleBranch: true,
+      // Content branch of DATA_REPOSITORY (e.g. `data`); unset = the repository's default branch.
+      ...(process.env.GITHUB_BRANCH ? { ref: process.env.GITHUB_BRANCH } : {}),
     });
   }
 

@@ -138,7 +138,7 @@ export async function GET(request: NextRequest) {
 		const provider = validateProvider(searchParams.get('provider'));
 		const headers = request.headers;
 		const detectedCountry = getCountryFromHeaders(headers, provider);
-		const currency = detectedCountry ? getCurrencyFromCountry(detectedCountry) : 'USD';
+		const currency = detectedCountry ? getCurrencyFromCountry(detectedCountry) : 'THB';
 
 		// Return with detection flag for better monitoring
 		return NextResponse.json({
@@ -153,7 +153,7 @@ export async function GET(request: NextRequest) {
 		// This allows the app to continue functioning while still enabling monitoring
 		return NextResponse.json(
 			{
-				currency: 'USD',
+				currency: 'THB',
 				country: null,
 				detected: false
 			},

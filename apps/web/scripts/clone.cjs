@@ -10,8 +10,9 @@ loadEnvConfig(process.cwd());
 const token = process.env.GH_TOKEN;
 const url = process.env.DATA_REPOSITORY;
 // Optional branch of the content repo (e.g. a `data` branch inside the website repo).
-// Unset = the remote default branch.
-const branch = process.env.DATA_REPOSITORY_BRANCH && process.env.DATA_REPOSITORY_BRANCH.trim();
+// DATA_REPOSITORY_BRANCH, else GITHUB_BRANCH (older deployments); unset = the remote default branch.
+const branch = (process.env.DATA_REPOSITORY_BRANCH && process.env.DATA_REPOSITORY_BRANCH.trim()) ||
+  (process.env.GITHUB_BRANCH && process.env.GITHUB_BRANCH.trim()) || undefined;
 const refOptions = branch ? { ref: branch } : {};
 
 if (!url) {
@@ -56,7 +57,7 @@ async function main() {
     return;
   }
 
-  console.log("Cloning content repository to", dest);
+  console.log("Cloning content repository to", dest, branch ? `(branch ${branch})` : "(default branch)");
 
   const cloneOptions = {
     fs,

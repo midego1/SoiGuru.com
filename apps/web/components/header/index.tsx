@@ -149,7 +149,8 @@ const NAVIGATION_CONFIG: Array<{
 ];
 
 const STYLES = {
-	navbar: 'bg-white/75 dark:bg-[#0a0a0a]/75 backdrop-blur-md border-b border-gray-200/50 dark:border-white/6 sticky top-0 z-50',
+	// `sg-header`: SoiGuru preset hook (solid surface, line border, ink links; app/soiguru-theme.css)
+	navbar: 'sg-header bg-white/75 dark:bg-[#0a0a0a]/75 backdrop-blur-md border-b border-gray-200/50 dark:border-white/6 sticky top-0 z-50',
 	container: 'flex items-center justify-between w-full min-h-[60px] sm:min-h-[64px] md:min-h-[68px] lg:min-h-[65px]',
 	navContent: 'hidden lg:flex gap-5 xl:gap-6 2xl:gap-6 mr-6 xl:mr-8 2xl:mr-10',
 	navbarMenuToggle: 'lg:hidden transition-transform duration-150',
@@ -194,6 +195,9 @@ function HeaderNavSkeleton() {
 export default function Header() {
 	const [_isMenuOpen, setIsMenuOpen] = useState(false);
 	const { user } = useCurrentUser();
+	const tShell = useTranslations('admin.SHELL');
+	// Admins get a visible way into the admin (the avatar menu alone was easy to miss).
+	const isAdminUser = (user as { isAdmin?: boolean } | null | undefined)?.isAdmin === true;
 	const { features } = useFeatureFlagsWithSimulation();
 	const { hasGlobalSurveys, isPending: _surveysPending } = useHasGlobalSurveys();
 	const { categoriesEnabled } = useCategoriesEnabled();
@@ -423,6 +427,16 @@ export default function Header() {
 				<NavbarItem className={STYLES.largeUp}>
 					<NavigationControls />
 				</NavbarItem>
+				{isAdminUser && (
+					<NavbarItem>
+						<Link
+							href="/admin"
+							className="inline-flex min-h-10 items-center rounded-full bg-theme-primary px-4 text-sm font-semibold text-white hover:opacity-90"
+						>
+							{tShell('ADMIN')}
+						</Link>
+					</NavbarItem>
+				)}
 				<NavbarItem className={STYLES.largeUp}>
 					<NotificationBell />
 				</NavbarItem>
@@ -433,7 +447,7 @@ export default function Header() {
 				</NavbarItem>
 			</NavbarContent>
 		),
-		[headerSettings.settingsEnabled]
+		[headerSettings.settingsEnabled, isAdminUser, tShell]
 	);
 
 	const _containerWidth = useContainerWidth();
@@ -467,6 +481,16 @@ export default function Header() {
 
 				{/* Mobile: Right Section */}
 				<NavbarContent className="lg:hidden" justify="end">
+				{isAdminUser && (
+					<NavbarItem>
+						<Link
+							href="/admin"
+							className="inline-flex min-h-10 items-center rounded-full bg-theme-primary px-3 text-sm font-semibold text-white hover:opacity-90"
+						>
+							{tShell('ADMIN')}
+						</Link>
+					</NavbarItem>
+				)}
 					<NavbarItem>
 						<NotificationBell />
 					</NavbarItem>

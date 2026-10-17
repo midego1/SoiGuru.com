@@ -2,6 +2,10 @@ import type { Metadata } from 'next';
 import { siteConfig } from '@/lib/config';
 import './tailwind.css';
 import './[locale]/globals.scss';
+// SoiGuru preset look (spec 055). Imported after the template globals so its
+// rules win at equal specificity; every rule is scoped to the active preset.
+import './soiguru-theme.css';
+import { soiguruFontVariables } from '@/lib/soiguru/fonts';
 import { LayoutProvider, ThemeProvider } from '@/components/providers';
 import { ensureBackgroundJobsInitialized } from '@/app/api/cron/jobs/background-jobs-init';
 import { getBaseUrl } from '@/lib/utils/url-cleaner';
@@ -46,7 +50,7 @@ export default async function RootLayout({ children }: { children: React.ReactNo
 	const dir = RTL_LOCALES.includes(locale as Locale) ? 'rtl' : 'ltr';
 
 	return (
-		<html lang={locale} dir={dir} suppressHydrationWarning>
+		<html lang={locale} dir={dir} className={soiguruFontVariables} suppressHydrationWarning>
 			<head>
 				{/*
 					Returning-visitor locale redirect. Reads `NEXT_LOCALE` cookie

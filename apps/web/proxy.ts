@@ -4,6 +4,7 @@
 // -------------------------------------------------------
 
 import createIntlMiddleware from 'next-intl/middleware';
+import { isIndexableHost } from '@/lib/seo/indexing';
 import { routing } from './i18n/routing';
 
 import { NextRequest, NextResponse } from 'next/server';
@@ -50,7 +51,7 @@ async function adminApiEdgeGuard(req: NextRequest): Promise<NextResponse | null>
 
 	if (cfg.provider === 'next-auth' || cfg.provider === 'both') {
 		try {
-			const token = await getToken({ req, secret: authSecret });
+			const token = (await decodeAuthJsToken(req)) as import('next-auth/jwt').JWT | null;
 			if (token) return null;
 		} catch {
 			// Fall through to alternate provider / 401.
@@ -312,7 +313,7 @@ async function supabaseClientGuard(req: NextRequest, baseRes: NextResponse): Pro
 async function nextAuthGuard(req: NextRequest, baseRes: NextResponse): Promise<NextResponse> {
 	try {
 		// Use JWT token check (Edge-compatible)
-		const token = await getToken({ req, secret: authSecret });
+		const token = (await decodeAuthJsToken(req)) as import('next-auth/jwt').JWT | null;
 		if (token?.isAdmin === true) {
 			if (process.env.NODE_ENV === 'development') {
 				console.log('[Middleware] Admin access granted via token');
@@ -383,6 +384,16 @@ async function supabaseGuard(req: NextRequest, baseRes: NextResponse): Promise<N
 /* ──────────────────────────────────── Main middleware ─────────────────────────────────── */
 
 export default async function proxy(req: NextRequest) {
+	const res = await handle(req);
+	// Pages on a host that is not the canonical site (owner/admin subdomain, server alias)
+	// tell search engines and AI crawlers not to index them (lib/seo/indexing.ts).
+	if (!isIndexableHost(req.headers.get('x-forwarded-host') ?? req.headers.get('host'))) {
+		res.headers.set('X-Robots-Tag', 'noindex, nofollow');
+	}
+	return res;
+}
+
+async function handle(req: NextRequest) {
 	const cfg = getAuthConfig();
 	const originalPathname = req.nextUrl.pathname;
 
@@ -423,7 +434,7 @@ export default async function proxy(req: NextRequest) {
 			}
 			// User is authenticated - check if admin (redirect to /admin, unless viewing a profile)
 			if (!isProfileRoute) {
-				const token = await getToken({ req, secret: authSecret });
+				const token = (await decodeAuthJsToken(req)) as import('next-auth/jwt').JWT | null;
 				if (token?.isAdmin === true) {
 					const url = req.nextUrl.clone();
 					url.pathname = `${localePrefix}/admin`;
@@ -508,7 +519,7 @@ export default async function proxy(req: NextRequest) {
 			}
 			// User is authenticated via NextAuth - check NextAuth admin status (skip for profile routes)
 			if (!isProfileRoute) {
-				const token = await getToken({ req, secret: authSecret });
+				const token = (await decodeAuthJsToken(req)) as import('next-auth/jwt').JWT | null;
 				if (token?.isAdmin === true) {
 					const url = req.nextUrl.clone();
 					url.pathname = `${localePrefix}/admin`;
@@ -541,7 +552,7 @@ export default async function proxy(req: NextRequest) {
 	// Redirect authenticated users away from /auth/* pages (signin, register, etc.)
 	if (pathWithoutLocale.startsWith('/auth/')) {
 		if (cfg.provider === 'next-auth') {
-			const token = await getToken({ req, secret: authSecret });
+			const token = (await decodeAuthJsToken(req)) as import('next-auth/jwt').JWT | null;
 			if (token) {
 				const target = token.isAdmin ? '/admin' : '/client/dashboard';
 				const url = req.nextUrl.clone();
@@ -582,7 +593,7 @@ export default async function proxy(req: NextRequest) {
 			}
 		} else if (cfg.provider === 'both') {
 			// Check NextAuth first
-			const token = await getToken({ req, secret: authSecret });
+			const token = (await decodeAuthJsToken(req)) as import('next-auth/jwt').JWT | null;
 			if (token) {
 				const target = token.isAdmin ? '/admin' : '/client/dashboard';
 				const url = req.nextUrl.clone();

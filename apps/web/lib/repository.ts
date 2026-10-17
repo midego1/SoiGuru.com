@@ -14,7 +14,9 @@ import { getPrimaryContentConfigPath, hasContentConfigFile } from "./content-con
  * branch, as before. Set GITHUB_BRANCH to the same value so admin edits are pushed there too.
  */
 function contentRefOptions(): { ref?: string } {
-  const branch = process.env.DATA_REPOSITORY_BRANCH?.trim();
+  // GITHUB_BRANCH alone also names the content branch (deployments set up before
+  // DATA_REPOSITORY_BRANCH existed, e.g. SoiGuru's `data` branch).
+  const branch = process.env.DATA_REPOSITORY_BRANCH?.trim() || process.env.GITHUB_BRANCH?.trim();
   return branch ? { ref: branch } : {};
 }
 

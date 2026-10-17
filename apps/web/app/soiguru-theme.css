@@ -1,0 +1,287 @@
+/*
+ * SoiGuru preset look for the template chrome, the admin and the client
+ * dashboard (spec 055). The SoiGuru public screens keep their own design
+ * system in app/[locale]/(soiguru)/soiguru.css (scoped under .tkg-root).
+ *
+ * Every rule is scoped to the active theme preset:
+ *   :root:where(:not([data-theme-preset]), [data-theme-preset='soiguru'])
+ * `applyThemeWithPalettes` (lib/theme-color-manager.ts) writes
+ * `data-theme-preset` on <html>; before hydration the attribute is absent and
+ * the SoiGuru look (the deployment default) applies, so there is no flash of
+ * the template's blue. Choosing another preset turns all of this off.
+ *
+ * Approach: CSS-variable overrides first (Tailwind v4 colour variables,
+ * --theme-*, HeroUI variables), then a few targeted class overrides. Rules in
+ * `@layer base` lose to Tailwind utilities on purpose (a component that opts
+ * out with `outline-none` keeps its own focus ring); unlayered rules are the
+ * targeted overrides that must beat a utility.
+ */
+
+/* ── Tokens (moodboard, light) ─────────────────────────────────────────── */
+:root:where(:not([data-theme-preset]), [data-theme-preset='soiguru']) {
+	--sg-surface: #ffffff;
+	--sg-surface-100: #f4f5f2;
+	--sg-surface-200: #e9ebe6;
+	--sg-ink: #14201f;
+	--sg-ink-muted: #5a6665;
+	--sg-line: #dde2df;
+	--sg-line-strong: #9aa6a3;
+	--sg-sea: #0a6b73;
+	--sg-sea-deep: #064a50;
+	--sg-sea-tint: #e2f1f2;
+	--sg-on-sea: #ffffff;
+	--sg-sun: #f2a33a;
+	--sg-sun-tint: #fdf0dc;
+	--sg-open: #137a5b;
+	--sg-closed: #b3261e;
+	--sg-soon: #9a5b00;
+	--sg-radius-sm: 6px;
+	--sg-radius-md: 10px;
+	--sg-radius-lg: 16px;
+	--sg-radius-pill: 999px;
+	--sg-font:
+		var(--font-plex-sans), var(--font-plex-thai), 'IBM Plex Sans', 'IBM Plex Sans Thai', system-ui, -apple-system,
+		'Segoe UI', sans-serif;
+
+	/* Page ground used by ConditionalLayout's <main> and by <body>.
+	   (--background stays white: outline buttons and switches paint with it.) */
+	--app-ground: var(--sg-surface-100);
+
+	/* Tailwind font stack (font-sans utility and the html default) */
+	--font-sans: var(--sg-font);
+	--default-font-family: var(--sg-font);
+
+	/* Theme preset variables, static so the first paint is already SoiGuru.
+	   The provider writes the same values inline after hydration. */
+	--theme-primary: #0a6b73;
+	--theme-primary-rgb: 10, 107, 115;
+	--theme-primary-50: #f0f8f8;
+	--theme-primary-100: #e2f1f2;
+	--theme-primary-200: #c2e2e4;
+	--theme-primary-300: #8fcbd0;
+	--theme-primary-400: #4fa9b0;
+	--theme-primary-500: #0a6b73;
+	--theme-primary-600: #085d64;
+	--theme-primary-700: #064a50;
+	--theme-primary-800: #053c41;
+	--theme-primary-900: #042f33;
+	--theme-primary-950: #021d20;
+	--theme-secondary: #f2a33a;
+	--theme-secondary-rgb: 242, 163, 58;
+	--theme-secondary-50: #fef8ee;
+	--theme-secondary-100: #fdf0dc;
+	--theme-secondary-200: #fbdeb3;
+	--theme-secondary-300: #f8c983;
+	--theme-secondary-400: #f5b55a;
+	--theme-secondary-500: #f2a33a;
+	--theme-secondary-600: #d9871c;
+	--theme-secondary-700: #b46a12;
+	--theme-secondary-800: #8f5312;
+	--theme-secondary-900: #744413;
+	--theme-secondary-950: #432306;
+	--theme-accent: #064a50;
+	--theme-accent-rgb: 6, 74, 80;
+	--theme-accent-50: #eef6f6;
+	--theme-accent-100: #d5ebec;
+	--theme-accent-200: #aed7da;
+	--theme-accent-300: #7bbcc1;
+	--theme-accent-400: #3f949b;
+	--theme-accent-500: #064a50;
+	--theme-accent-600: #053f44;
+	--theme-accent-700: #043438;
+	--theme-accent-800: #03292c;
+	--theme-accent-900: #021f21;
+	--theme-accent-950: #011214;
+	--theme-background: #f4f5f2;
+	--theme-surface: #ffffff;
+	--theme-text: #14201f;
+	--theme-text-secondary: #5a6665;
+
+	/* Neutral scale re-tinted to the moodboard's green-grey (ink, line, sand).
+	   Same lightness steps as Tailwind's gray, so contrast is unchanged. */
+	--color-gray-50: #f4f5f2;
+	--color-gray-100: #e9ebe6;
+	--color-gray-200: #dde2df;
+	--color-gray-300: #c4cbc8;
+	--color-gray-400: #9aa6a3;
+	--color-gray-500: #6b7876;
+	--color-gray-600: #5a6665;
+	--color-gray-700: #3d4948;
+	--color-gray-800: #263130;
+	--color-gray-900: #14201f;
+	--color-gray-950: #0d1211;
+	--color-neutral-50: #f4f5f2;
+	--color-neutral-100: #e9ebe6;
+	--color-neutral-200: #dde2df;
+	--color-neutral-300: #c4cbc8;
+	--color-neutral-400: #9aa6a3;
+	--color-neutral-500: #6b7876;
+	--color-neutral-600: #5a6665;
+	--color-neutral-700: #3d4948;
+	--color-neutral-800: #263130;
+	--color-neutral-900: #14201f;
+	--color-neutral-950: #0d1211;
+
+	/* The template's blue accents (links, spinners, focus borders, info
+	   badges) become sea. */
+	--color-blue-50: #f0f8f8;
+	--color-blue-100: #e2f1f2;
+	--color-blue-200: #c2e2e4;
+	--color-blue-300: #8fcbd0;
+	--color-blue-400: #4fa9b0;
+	--color-blue-500: #0a6b73;
+	--color-blue-600: #0a6b73;
+	--color-blue-700: #064a50;
+	--color-blue-800: #053c41;
+	--color-blue-900: #042f33;
+	--color-blue-950: #021d20;
+
+	/* HeroUI (color="primary", focus rings): HSL triplets */
+	--heroui-primary: 185 84% 25%;
+	--heroui-primary-foreground: 0 0% 100%;
+	--heroui-focus: 185 84% 25%;
+
+	/* Tiptap editor accents */
+	--link-text-color: #0a6b73;
+	--tiptap-ai-insertion-color: #0a6b73;
+	--tt-brand-color-400: #4fa9b0;
+	--tt-brand-color-500: #0a6b73;
+	--tt-brand-color-600: #064a50;
+	--tt-selection-color: rgba(10, 107, 115, 0.25);
+}
+
+/* ── Tokens (moodboard, dark) ──────────────────────────────────────────── */
+:root:where(:not([data-theme-preset]), [data-theme-preset='soiguru']).dark {
+	--sg-surface: #141b1a;
+	--sg-surface-100: #0d1211;
+	--sg-surface-200: #1f2826;
+	--sg-ink: #eef3f1;
+	--sg-ink-muted: #9fb0ac;
+	--sg-line: #2a3533;
+	--sg-line-strong: #60706c;
+	--sg-sea: #5fc9cf;
+	--sg-sea-deep: #064a50;
+	--sg-sea-tint: #163234;
+	--sg-on-sea: #0d1211;
+	--sg-sun-tint: #3a2a12;
+	--app-ground: #0d1211;
+	--heroui-primary: 183 54% 59%;
+	--heroui-primary-foreground: 168 16% 6%;
+	--heroui-focus: 183 54% 59%;
+	--color-blue-400: #5fc9cf;
+	--color-blue-300: #8adde1;
+}
+
+/* The provider writes --theme-primary inline on <html>, so the dark value is
+   set one level down. #1a838b keeps 4.5:1 with white button text and reads
+   on the dark ground. */
+:root:where(:not([data-theme-preset]), [data-theme-preset='soiguru']).dark body {
+	--theme-primary: #1a838b;
+	--theme-primary-rgb: 26, 131, 139;
+}
+
+/* ── Base: font, ground, headings, focus, links ────────────────────────── */
+@layer base {
+	:root:where(:not([data-theme-preset]), [data-theme-preset='soiguru']) body,
+	:root:where(:not([data-theme-preset]), [data-theme-preset='soiguru']) body.font-locale-th {
+		font-family: var(--sg-font);
+		background: var(--app-ground);
+		color: var(--sg-ink);
+	}
+
+	:root:where(:not([data-theme-preset]), [data-theme-preset='soiguru']) :where(h1, h2, h3) {
+		letter-spacing: -0.01em;
+	}
+
+	:root:where(:not([data-theme-preset]), [data-theme-preset='soiguru']) :focus-visible {
+		outline: 2px solid var(--sg-sea);
+		outline-offset: 2px;
+	}
+
+	:root:where(:not([data-theme-preset]), [data-theme-preset='soiguru']) .prose {
+		--tw-prose-links: var(--sg-sea);
+	}
+
+	:root:where(:not([data-theme-preset]), [data-theme-preset='soiguru']) :where(.sg-admin, .sg-signin) a:not([class]) {
+		color: var(--sg-sea);
+	}
+}
+
+/* Dark ground for <main> (the template hard-codes #0a0a0a). */
+:root:where(:not([data-theme-preset]), [data-theme-preset='soiguru']).dark #main-content {
+	background-color: var(--sg-surface-100);
+}
+
+/* ── Template header: surface bar, line border, ink wordmark ───────────── */
+:root:where(:not([data-theme-preset]), [data-theme-preset='soiguru']) .sg-header {
+	background-color: color-mix(in srgb, var(--sg-surface) 94%, transparent);
+	border-bottom-color: var(--sg-line);
+	font-family: var(--sg-font);
+}
+
+:root:where(:not([data-theme-preset]), [data-theme-preset='soiguru']) .sg-wordmark {
+	color: var(--sg-ink);
+	font-weight: 800;
+	letter-spacing: -0.01em;
+}
+
+:root:where(:not([data-theme-preset]), [data-theme-preset='soiguru']) .group:hover .sg-wordmark {
+	color: var(--sg-sea);
+}
+
+/* ── Admin: near-black primary actions become sea ───────────────────────
+   The admin pages draw primary buttons ("Add Category", "Create First
+   Category", form submits), checked toggles and page-header icon tiles with
+   bg-gray-900 (dark: bg-white). Inside the admin shell they take the brand
+   colour instead; hover goes to sea-deep. */
+:root:where(:not([data-theme-preset]), [data-theme-preset='soiguru']) .sg-admin .bg-gray-900,
+:root:where(:not([data-theme-preset]), [data-theme-preset='soiguru']) .sg-admin .bg-black.text-white {
+	background-color: var(--sg-sea);
+}
+
+:root:where(:not([data-theme-preset]), [data-theme-preset='soiguru']) .sg-admin .bg-gray-900.text-white,
+:root:where(:not([data-theme-preset]), [data-theme-preset='soiguru']) .sg-admin .bg-black.text-white {
+	color: var(--sg-on-sea);
+}
+
+:root:where(:not([data-theme-preset]), [data-theme-preset='soiguru']) .sg-admin .bg-gray-900:hover:is(button, a),
+:root:where(:not([data-theme-preset]), [data-theme-preset='soiguru'])
+	.sg-admin
+	.bg-black.text-white:hover:is(button, a) {
+	background-color: var(--sg-sea-deep);
+}
+
+:root:where(:not([data-theme-preset]), [data-theme-preset='soiguru']).dark .sg-admin .dark\:bg-white {
+	background-color: var(--sg-sea);
+}
+
+:root:where(:not([data-theme-preset]), [data-theme-preset='soiguru']).dark
+	.sg-admin
+	.dark\:bg-white:hover:is(button, a) {
+	background-color: #8adde1;
+}
+
+:root:where(:not([data-theme-preset]), [data-theme-preset='soiguru']).dark
+	.sg-admin
+	.dark\:bg-white.dark\:text-gray-900,
+:root:where(:not([data-theme-preset]), [data-theme-preset='soiguru']).dark
+	.sg-admin
+	.dark\:bg-white
+	.dark\:text-gray-900 {
+	color: var(--sg-on-sea);
+}
+
+/* Admin cards: white, 1px line, 16px radius */
+:root:where(:not([data-theme-preset]), [data-theme-preset='soiguru'])
+	.sg-admin
+	:is(.rounded-xl, .rounded-2xl):is(.bg-white, .border):not(button, a, input, select, textarea, [role='button']) {
+	border-radius: var(--sg-radius-lg);
+}
+
+/* ── Touch targets: the admin's primary actions are at least 44px tall on
+   touch screens ──────────────────────────────────────────────────────── */
+@media (pointer: coarse) {
+	:root:where(:not([data-theme-preset]), [data-theme-preset='soiguru']) .sg-admin :is(button, a).bg-gray-900 {
+		min-height: 44px;
+	}
+}

@@ -84,6 +84,8 @@ export class ItemGitService {
       dir: this.config.dataDir,
       url,
       singleBranch: true,
+      // Content branch of DATA_REPOSITORY (e.g. `data`); unset = the repository's default branch.
+      ...(process.env.GITHUB_BRANCH ? { ref: process.env.GITHUB_BRANCH } : {}),
     });
   }
 
@@ -440,8 +442,40 @@ export class ItemGitService {
       if (extItem.images?.length) itemData.images = extItem.images;
       if (extItem.markdown) itemData.markdown = extItem.markdown;
 
+      // Keep keys this service does not manage. Data repos may carry their own item fields
+      // (SoiGuru: city, area, geo, hours, amenities, phone, LINE…); readItems() drops them, so
+      // without this an admin save would erase them. Managed keys always take the new value,
+      // and a managed key that is unset now is removed rather than kept from the old file.
+      const managedKeys = new Set([
+        ...Object.keys(itemData),
+        'deleted_at',
+        'location',
+        'brand',
+        'brand_logo_url',
+        'images',
+        'markdown',
+      ]);
+      let existing: Record<string, unknown> = {};
+      try {
+        const parsed = yaml.parse(await fs.readFile(itemFile, 'utf-8'));
+        if (parsed && typeof parsed === 'object' && !Array.isArray(parsed)) {
+          existing = parsed as Record<string, unknown>;
+        }
+      } catch {
+        // New item, or unreadable file: nothing to keep.
+      }
+      // Keep the file's key order so a save only diffs the fields that changed.
+      const merged: Record<string, unknown> = {};
+      for (const [key, value] of Object.entries(existing)) {
+        const next = managedKeys.has(key) ? itemData[key] : value;
+        if (next !== undefined) merged[key] = next;
+      }
+      for (const [key, value] of Object.entries(itemData)) {
+        if (value !== undefined && !(key in merged)) merged[key] = value;
+      }
+
       // Write item data
-      const content = yaml.stringify(itemData);
+      const content = yaml.stringify(merged);
       await fs.writeFile(itemFile, content, 'utf-8');
     } catch (error) {
       console.error('❌ Error writing item file:', error);
@@ -576,6 +610,36 @@ export class ItemGitService {
       this.removeLocationIndexAsync(updatedItem.slug);
     }
     return updatedItem;
+  }
+
+  /**
+   * Patch keys of an item's YAML file directly, including keys this service
+   * does not model (SoiGuru: hours, amenities, phone, LINE…), then commit and
+   * push. A value of `undefined` removes the key. `updated_at` is set to now.
+   * Returns the file's content after the patch.
+   */
+  async patchItemFields(
+    slug: string,
+    patch: Record<string, unknown>,
+    message: string
+  ): Promise<Record<string, unknown>> {
+    if (!/^[a-z0-9][a-z0-9-]*$/.test(slug)) {
+      throw new Error(`Invalid item slug '${slug}'`);
+    }
+    const itemFile = path.join(this.config.dataDir, 'data', slug, `${slug}.yml`);
+    const parsed = yaml.parse(await fs.readFile(itemFile, 'utf-8'));
+    if (!parsed || typeof parsed !== 'object' || Array.isArray(parsed)) {
+      throw new Error(`Item '${slug}' has no readable YAML`);
+    }
+    const next: Record<string, unknown> = { ...(parsed as Record<string, unknown>) };
+    for (const [key, value] of Object.entries(patch)) {
+      if (value === undefined) delete next[key];
+      else next[key] = value;
+    }
+    next.updated_at = formatDateForYaml();
+    await fs.writeFile(itemFile, yaml.stringify(next), 'utf-8');
+    await this.commitAndPush(message);
+    return next;
   }
 
   async updateItemWithoutCommit(id: string, data: UpdateItemRequest): Promise<ItemData> {

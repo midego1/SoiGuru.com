@@ -48,9 +48,12 @@ import {
 } from '@/lib/utils/settings';
 import { LocaleSuggestionBanner } from '@/components/i18n/locale-suggestion-banner';
 import { getBaseUrl } from '@/lib/utils/url-cleaner';
+import { headers } from 'next/headers';
+import { isIndexableHost, requestHost } from '@/lib/seo/indexing';
 import { generateHreflangAlternates } from '@/lib/seo/hreflang';
 import { DEFAULT_LOCALE } from '@/lib/constants';
 import { analyticsConfig } from '@/lib/config/config-service';
+import { getCities } from '@/lib/soiguru/content';
 
 const appUrl = getBaseUrl();
 
@@ -77,7 +80,9 @@ export async function generateMetadata({ params }: { params: Promise<{ locale: s
 		// scoped to `not-found.tsx`) so public listing/detail pages
 		// are indexable by default. Individual pages can still set
 		// their own `robots` via their own `generateMetadata`.
-		robots: { index: true, follow: true },
+		// …except on a host that is not the canonical site (owner/admin subdomain, server
+		// alias): noindex everywhere, so only the public site is indexed (spec 057).
+		robots: isIndexableHost(requestHost(await headers())) ? { index: true, follow: true } : { index: false, follow: false },
 		openGraph: {
 			title: siteTitle,
 			description: siteDescription,
@@ -149,6 +154,9 @@ export default async function RootLayout({
 	// Read location settings server-side
 	const locationSettings = getLocationSettings();
 
+	// SoiGuru city screens draw their own top bar and bottom nav.
+	const soiguruCityIds = [...(await getCities()).map((c) => c.id), 'cities', 'owner', 'saved'];
+
 	// Locale-detection strategy. `client-banner` (default) shows a small
 	// dismissible banner suggesting the visitor's browser language while
 	// keeping `/` edge-cacheable. `none` disables auto-detection entirely.
@@ -212,7 +220,7 @@ export default async function RootLayout({
 							<Providers config={config}>
 								{/* Global navigation loading bar */}
 								<NavigationLoadingBar />
-								<ConditionalLayout>{children}</ConditionalLayout>
+								<ConditionalLayout chromelessSegments={soiguruCityIds}>{children}</ConditionalLayout>
 								{/* Settings Modal - Shared by header button */}
 								<SettingsModal />
 								{/* AI chat launcher (Spec 023). Returns null when `aiChat.enabled` is false. */}

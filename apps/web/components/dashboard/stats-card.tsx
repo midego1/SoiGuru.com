@@ -2,10 +2,12 @@ import { useId } from 'react';
 import { LucideIcon, TrendingUp, TrendingDown } from 'lucide-react';
 import Link from 'next/link';
 
+// Spec 055: 16px cards with a 1px line border; the icon sits on the brand
+// tint in the brand colour (sea on sea-tint for the SoiGuru preset).
 const CARD_BASE_STYLES =
-    'bg-white dark:bg-white/3 rounded-xl p-5 border border-neutral-200 dark:border-white/8';
-const ICON_CONTAINER_STYLES = 'p-2 bg-neutral-100 dark:bg-white/8 rounded-lg';
-const ICON_STYLES = 'h-4 w-4 text-neutral-500 dark:text-neutral-400';
+    'bg-white dark:bg-white/3 rounded-2xl p-5 border border-neutral-200 dark:border-white/8';
+const ICON_CONTAINER_STYLES = 'p-2 bg-theme-primary-100 dark:bg-theme-primary/15 rounded-[10px]';
+const ICON_STYLES = 'h-4 w-4 text-theme-primary dark:text-theme-primary-300';
 const TITLE_STYLES = 'text-xs font-medium text-neutral-500 dark:text-neutral-400';
 const VALUE_STYLES = 'text-xl font-semibold text-neutral-900 dark:text-white tracking-tight';
 const DESCRIPTION_STYLES = 'mt-1.5 text-xs text-neutral-400 dark:text-neutral-500';

@@ -118,9 +118,11 @@ const nextConfig: NextConfig = {
 
 		return [
 			...mdMirrors,
+			// The site root is the SoiGuru city landing; the template's item
+			// listing stays at /discover.
 			{
 				source: '/:path',
-				destination: '/:path/discover/1'
+				destination: '/:path/cities'
 			},
 			{
 				source: '/:path/discover',

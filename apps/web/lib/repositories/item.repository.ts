@@ -178,6 +178,16 @@ export class ItemRepository {
     return updatedItem;
   }
 
+  /**
+   * Patch raw YAML keys of one item and push the commit (see
+   * `ItemGitService.patchItemFields`). Used by the SoiGuru owner dashboard,
+   * whose fields are not part of `UpdateItemRequest`.
+   */
+  async patchFields(slug: string, patch: Record<string, unknown>, message: string): Promise<Record<string, unknown>> {
+    const gitService = await this.getGitService();
+    return gitService.patchItemFields(slug, patch, message);
+  }
+
   async batchUpdate(updates: Array<{ id: string; data: UpdateItemRequest }>, auditUser?: AuditUser): Promise<ItemData[]> {
     const gitService = await this.getGitService();
     const results: ItemData[] = [];

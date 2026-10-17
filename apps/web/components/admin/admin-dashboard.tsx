@@ -54,8 +54,8 @@ function Section({
             {(title || description) && (
                 <div className="flex items-start gap-3 border-b border-neutral-100 px-5 py-4 dark:border-white/6">
                     {Icon && (
-                        <div className="mt-0.5 flex h-8 w-8 shrink-0 items-center justify-center rounded-lg bg-neutral-100 dark:bg-white/8">
-                            <Icon className="h-4 w-4 text-neutral-500 dark:text-white/40" />
+                        <div className="mt-0.5 flex h-8 w-8 shrink-0 items-center justify-center rounded-lg bg-theme-primary-100 dark:bg-theme-primary/15">
+                            <Icon className="h-4 w-4 text-theme-primary dark:text-theme-primary-300" />
                         </div>
                     )}
                     <div>

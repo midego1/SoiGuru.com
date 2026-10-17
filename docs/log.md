@@ -7,6 +7,25 @@ sidebar_position: 99
 
 # Documentation & Specs Change Log
 
+## 2026-10-17
+
+- `spec-057` `apps/web/lib/seo/indexing.ts` `apps/web/app/robots.ts` `apps/web/app/sitemap.ts` `apps/web/proxy.ts`: only the canonical public site is indexable; on other hosts (owner.soiguru.com, soiguru.midego.net, `owner.`/`admin.` subdomains) robots.txt disallows all, the sitemap is empty and pages send `X-Robots-Tag: noindex, nofollow`. Also: Places photo route passes image bytes through and photo links use the public origin (spec 056).
+- `spec-055` `apps/web/app/soiguru-theme.css` `apps/web/lib/theme-color-manager.ts` `apps/web/components/context/LayoutThemeContext.tsx` `apps/web/app/[locale]/admin` `apps/web/components/admin` `apps/web/components/shared/site-logo`: SoiGuru look for the template header, admin, admin sign-in and client dashboard: new `soiguru` theme preset (default via `NEXT_PUBLIC_THEME_PRESET`, fallback `soiguru`) with fixed palettes and a `data-theme-preset` attribute, IBM Plex Sans + Thai app-wide (shared `lib/soiguru/fonts.ts`), sand ground, Tailwind gray/blue and HeroUI primary re-tinted through preset-scoped variables, sea primary buttons in the admin, `AdminShellBar` with section nav, sea-deep `AdminSignIn` panel, logo mark in the header ([spec 055](spec/055-soiguru-admin-style/spec.md)).
+- admin (spec 055 follow-up): the admin bar no longer repeats the SoiGuru logo and name; THB is the default currency; settings drop-downs open in a portal so the cards no longer clip them. See `docs/spec/055-soiguru-admin-style/`.
+- header (spec 055 follow-up): admins see an "Admin" button in the site header (desktop and phone) that opens `/admin`; before, the way in was only the avatar menu. See `docs/spec/055-soiguru-admin-style/`.
+- `spec-056` `apps/web/app/api/places` `apps/web/lib/services/google-places.service.ts`: Google Places photos for SoiGuru listings (public fallback): photo list per known listing with CORS for soiguru.com, signed redirect to the short-lived photo URL, place ID matched by name and coordinates and kept in memory; off without `GOOGLE_PLACES_API_KEY` ([spec 056](spec/056-soiguru-places-photos/spec.md)).
+
+## 2026-10-16
+
+- `spec-054` `apps/web/scripts/clone.cjs` `apps/web/lib/repository.ts` `apps/web/lib/services/*-git.service.ts` `Dockerfile`: the content clone (build time and runtime) checks out `GITHUB_BRANCH` of `DATA_REPOSITORY` when it is set, so SoiGuru can read its content from the `data` branch of the website repo; unset keeps the repository's default branch. Pull and push follow the checked-out branch. The Dockerfile takes `GITHUB_BRANCH` as a build arg ([spec 054](spec/054-soiguru-city-screens/spec.md)).
+
+## 2026-10-15
+
+- `spec-054` `apps/web/app/[locale]/(soiguru)` `apps/web/lib/soiguru`: SoiGuru Saved tab (`/saved`) and a Save heart on the listing page, stored in the existing `favorites` table ([spec 054](spec/054-soiguru-city-screens/spec.md), PR #1).
+- `spec-054` `apps/web/app/[locale]/(soiguru)` `apps/web/lib/soiguru` `apps/web/lib/db`: SoiGuru ClaimFlow (`/<city>/claim`), OwnerDashboard (`/owner` with Details, Hours, Good to know and Billing) and the admin claim queue (`/owner/review`); new `listing_claims` table (migration 0043); manual verification and payment for now; owner edits patch the listing YAML through `ItemRepository.patchFields` ([spec 054](spec/054-soiguru-city-screens/spec.md), PR #1).
+- `spec-054` `apps/web/lib/services/item-git.service.ts`: admin item saves keep YAML keys the service does not manage (SoiGuru hours, amenities, geo, contacts…) instead of rewriting the file from a whitelist ([spec 054](spec/054-soiguru-city-screens/spec.md), PR #1).
+- `spec-054` `apps/web/app/[locale]/(soiguru)` `apps/web/components/soiguru`: desktop layout from 960px for the SoiGuru screens (top-bar navigation, wide grids, listing right rail) ([spec 054](spec/054-soiguru-city-screens/spec.md), PR #1).
+- `spec-054` `apps/web/app/[locale]/(soiguru)` `apps/web/lib/soiguru` `apps/web/components/soiguru`: SoiGuru city screens ported from the TheKrabiGuide design system: city landing at `/` (the item listing stays at `/discover`), CityHome `/<city>`, CategoryResults `/<city>/<category|area>` with a server-rendered OpenStreetMap tile map, ListingPage `/<city>/<area>/<slug>` with LocalBusiness JSON-LD; open status computed in Asia/Bangkok; EN/TH strings. `apps/web/proxy.ts` now decodes the session JWT through `decodeAuthJsToken` in every guard (the Dokploy secure-cookie patch) ([spec 054](spec/054-soiguru-city-screens/spec.md), PR #1).
 ## 2026-10-15
 
 - `astro`: the SoiGuru Astro site (static, Cloudflare Pages) now lives in this repo as its own pnpm workspace under `astro/`, copied from `midego1/directory-web-minimal-template` branch `design/soiguru`, so both A/B builds share one repo. See [`054-soiguru-astro-site`](spec/054-soiguru-astro-site/spec.md).

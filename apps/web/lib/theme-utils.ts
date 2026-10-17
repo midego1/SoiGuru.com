@@ -385,6 +385,7 @@ export const getThemeColor = (
     corporate: { primary: "#2c3e50", secondary: "#e74c3c" },
     material: { primary: "#673ab7", secondary: "#ff9800" },
     funny: { primary: "#ff4081", secondary: "#ffeb3b" },
+    soiguru: { primary: "#0a6b73", secondary: "#f2a33a" },
   };
 
   return colorMap[themeKey][colorType];
@@ -429,5 +430,6 @@ export const THEME_PRESETS = {
   everworks: { primary: "#3d70ef", secondary: "#00c853" },
   corporate: { primary: "#2c3e50", secondary: "#e74c3c" },
   material: { primary: "#673ab7", secondary: "#ff9800" },
-  funny: { primary: "#ff4081", secondary: "#ffeb3b" }
+  funny: { primary: "#ff4081", secondary: "#ffeb3b" },
+  soiguru: { primary: "#0a6b73", secondary: "#f2a33a" }
 } as const;

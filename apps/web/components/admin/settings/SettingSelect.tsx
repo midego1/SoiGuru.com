@@ -25,7 +25,7 @@ export function SettingSelect({
 	onChange,
 	options,
 	disabled = false,
-	usePortal = false
+	usePortal = true
 }: SettingSelectProps) {
 	const handleSelectionChange = (keys: string[]) => {
 		if (keys.length > 0) {
