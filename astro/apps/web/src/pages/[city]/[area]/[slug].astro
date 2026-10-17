@@ -69,8 +69,9 @@ const similar = (sameArea.length >= 3 ? sameArea : sameCategory).slice(0, 6);
 const shown = listing.images.slice(0, 5);
 // No photos of its own: the drawn category picture, swapped in the browser for up to three
 // Google Places photos from the owner app (`/api/places/photos/<slug>`, spec 056) when it has them.
+// `v` changes when the answer's shape changes, so browsers drop a cached old answer.
 const owner = ownerUrl(config, city);
-const placesApi = owner && listing.images.length === 0 ? `${new URL(owner).origin}/api/places/photos/${listing.slug}` : undefined;
+const placesApi = owner && listing.images.length === 0 ? `${new URL(owner).origin}/api/places/photos/${listing.slug}?v=2` : undefined;
 const more = listing.images.length - shown.length;
 const trail: [string, string][] = [
     [config.company_name, '/'],
