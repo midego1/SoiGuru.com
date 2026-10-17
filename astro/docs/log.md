@@ -3,6 +3,10 @@ title: "Change Log"
 sidebar_label: "Change Log"
 ---
 
+## 2026-10-17 — Backlog written down
+
+PromptPay via Stripe (monthly QR on WhatsApp / LINE, needs a Thai Stripe account), Google Places photos as fallback, publish-on-edit workflow and the one-frontend redirects are recorded in `.specify/features/soiguru-design.md` § Later.
+
 ## 2026-10-17 — Owner block fills its space
 
 The owner block's pitch column now spans the banner's height: headline and lead, a "Find your shop" search (`/<city>/search?q=`, `data-umami-event="owner-find-shop"`) with the city's place count, three steps (find, claim, keep it up to date; the four perks are folded into them) and the claim button with the price. `OwnerBlock` takes `cityId` and `count`; the landing passes them when there is one city. Steps are compact rows on phones. Spec: `.specify/features/soiguru-design.md`.

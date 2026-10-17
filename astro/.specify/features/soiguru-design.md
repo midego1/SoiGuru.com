@@ -89,3 +89,10 @@ The public site follows the layout of the website mockup (artifact "Main" and "L
 - **Drawn map of Thailand** (`ThailandMap`): the city picker panel (cities with counts beside the map; hover lights the pin) and the landing hero card. Outline from Natural Earth (public domain) as one inline SVG path; no tiles or map library.
 - **Owner block**: pitch (eyebrow, headline, lead, "Find your shop" search with the place count, three steps, Claim button, price) beside the claim banner image (`public/images/claim-banner.webp`, linked to the claim flow); stacked on phones.
 - **Favicon**: the logo mark as SVG + ICO + Apple touch icon + 192/512 PNGs with a web manifest (`public/`), linked by `SoiGuruLayout` unless `logo.favicon` is set.
+
+## Later (backlog, 2026-10-17)
+
+- **PromptPay via Stripe** (owner payments, ฿100 / month or ฿1,000 / year). Needs a Stripe account registered in Thailand (Stripe offers PromptPay only to TH accounts, THB only). Yearly: Stripe Checkout with PromptPay QR + card. Monthly: PromptPay cannot be charged automatically, so each month a new Stripe invoice with a PromptPay QR is sent to the owner on WhatsApp / LINE to scan (cards stay available for automatic monthly billing). Build it so PromptPay shows only when the Stripe account supports it.
+- **Google Places photos as fallback** (owner photos first, then up to 3 Places API (New) photos loaded live with the author credit, then the category mark). Needs a `GOOGLE_PLACES_API_KEY`; place IDs may be stored, photos may not be cached.
+- **Publish on edit**: GitHub Action on the `data` branch that rebuilds and deploys soiguru.com (needs the owner's OK and the `CLOUDFLARE_API_TOKEN` / `CLOUDFLARE_ACCOUNT_ID` repo secrets).
+- **One frontend**: owner.soiguru.com public template pages redirect to soiguru.com; the server keeps `/admin`, `/owner`, the claim flow and sign-in.
