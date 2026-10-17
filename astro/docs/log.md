@@ -3,6 +3,10 @@ title: "Change Log"
 sidebar_label: "Change Log"
 ---
 
+## 2026-10-17 — Who added each listing
+
+Listings record who added them in the Ever Works `submitted_by` field (the owner app's admin shows and filters on it); the 169 Ao Nang places are `submitted_by: Grok Bot` (`data` branch 8e3f749, bundled `.content` refreshed). Not shown on the public site.
+
 ## 2026-10-17 — Search and AI (SEO/GEO) for soiguru.com; compact category tiles
 
 `llms.txt`, `llms-full.txt` and `items.json` are SoiGuru-specific (`lib/soiguru/llms.ts`): canonical `/<city>/<area>/<place>/` URLs, opening hours, area, address, phone, LINE, WhatsApp, rating and verified-owner flag; category and area links with counts; no template `.md` mirrors or onboarding link. The template versions stay as the fallback. Pages without places (empty areas) are `noindex` and left out of the sitemap (EN and TH); a noindex page drops the site-wide `index, follow` tag. `/sitemap.xml` redirects to `/sitemap-index.xml`. Category tiles from 720px are one compact line (icon over a short label), filling the row from 1280px and scrolling sideways below. The owner app (owner.soiguru.com, soiguru.midego.net) is closed to crawlers in its own repo (spec 057).

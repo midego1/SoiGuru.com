@@ -2,7 +2,7 @@
 
 Content repository for [SoiGuru.com](https://soiguru.com): cities, areas, categories and listings. It uses the Ever Works data format (same layout as `ever-works/awesome-time-tracking-data`) and is read by both site templates through `DATA_REPOSITORY`.
 
-> **Listings (2026-10-17): the owner's own list for Ao Nang** — 169 businesses imported from `ao-nang-new-businesses.csv` (OpenStreetMap, official websites and aggregators; OSM data © OpenStreetMap contributors, ODbL, linked under `Sources`). Four places marked closed in OSM (`disused:*`) were left out. All are unclaimed (`claimed: false`, `updated_by: import`). Krabi is the only city; categories now include bars, shops, gyms & Muay Thai, clinics & pharmacies, laundry, barbers & salons, coworking and other services.
+> **Listings (2026-10-17): the owner's own list for Ao Nang** — 169 businesses imported from `ao-nang-new-businesses.csv` (OpenStreetMap, official websites and aggregators; OSM data © OpenStreetMap contributors, ODbL, linked under `Sources`). Four places marked closed in OSM (`disused:*`) were left out. All are unclaimed (`claimed: false`, `updated_by: import`) and record who added them: `submitted_by: Grok Bot`. Krabi is the only city; categories now include bars, shops, gyms & Muay Thai, clinics & pharmacies, laundry, barbers & salons, coworking and other services.
 
 ## Layout
 
@@ -46,6 +46,7 @@ SoiGuru fields:
 | `claimed` | boolean | true shows the Verified owner badge; false shows the claim box |
 | `amenities` | map amenity id → boolean | `true` = has it; `false` = notably missing (shown with a cross, e.g. no parking) |
 | `updated_by` | `owner` \| `import` \| `editor` | for the "Updated by the owner 3 days ago" line |
+| `submitted_by` | text, e.g. `Grok Bot`, a user's name or email | who added the listing (Ever Works field; the admin shows and filters on it; not shown on the public site) |
 | `updated_at` | `"YYYY-MM-DD HH:mm"` | quoted; the Next.js template parses exactly this format |
 | `sample` | boolean | true on placeholder listings |
 
