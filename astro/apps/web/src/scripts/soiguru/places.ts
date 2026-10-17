@@ -53,7 +53,7 @@ function photoFigure(photo: PlacesPhoto, name: string, index: number): HTMLEleme
     btn.type = 'button';
     btn.className = 'sg-photo-btn';
     btn.dataset['galleryOpen'] = String(index);
-    btn.setAttribute('aria-label', index === 0 ? 'Open photos' : `Open photo ${index + 1}`);
+    btn.setAttribute('aria-label', index === 0 ? `Open photos of ${name}` : `Open photo ${index + 1} of ${name}`);
     btn.append(photoImg(photo, '', index === 0));
     fig.append(btn, credit(photo));
     return fig;

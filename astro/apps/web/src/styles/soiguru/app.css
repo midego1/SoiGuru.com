@@ -302,10 +302,11 @@ a.tkg-cat {
     stroke-width: 1.5;
 }
 .sg-pin .tkg-m-pin {
-    fill: var(--ink);
-}
-.sg-pin .tkg-m-pin-on {
     fill: var(--sea);
+}
+/* the selected place in the brand's sun colour, so it stands out from the sea pins */
+.sg-pin .tkg-m-pin-on {
+    fill: var(--accent, var(--sea-deep));
 }
 .sg-pin .tkg-m-pin-dot {
     fill: var(--surface);

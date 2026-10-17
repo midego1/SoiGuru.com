@@ -52,6 +52,7 @@ for (let round = 0; openNowCandidates.length < ranked.length; round++)
 const areaCounts = new Map(city.areas.map((a) => [a.id, listings.filter((l) => l.area?.id === a.id).length]));
 const siteUrl = (Astro.site?.href ?? '').replace(/\/$/, '');
 const owner = ownerUrl(config, city);
+// Areas named in the hero: the ones with places (all areas while none has any).
 const areaNames = city.areas.map((a) => a.name);
 // Areas with places; an empty area would open an empty list.
 // Category tiles: every category with places in this city, in priority order.
@@ -79,7 +80,7 @@ const trust: [string, string][] = [
             <div class="sg-wrap sg-hero-grid">
                 <div class="sg-hero-copy">
                     <p class="sg-hero-eyebrow">
-                        {areaNames.length > 0 ? areaNames.join(' · ') : city.province ?? city.name}
+                        {visibleAreas.length > 0 ? visibleAreas.map((a) => a.name).join(' · ') : areaNames.length > 0 ? areaNames.join(' · ') : (city.province ?? city.name)}
                         <span class="sg-hero-time"> · <span data-local-time></span></span>
                     </p>
                     <h1 class="sg-hero-h" data-th={`ทุกร้านใน${city.name_th ?? city.name} ในที่เดียว`}>Every local spot in {city.name}, in one place.</h1>

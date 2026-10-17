@@ -33,7 +33,8 @@ const TEXT = {
         showClosed: (n: number) => `Show ${n} closed now`,
         showPlaces: (n: number) => (n === 1 ? 'Show 1 place' : `Show ${n} places`),
         allAreas: 'All areas',
-        sheetPos: (i: number, n: number) => `${i} of ${n}`
+        sheetPos: (i: number, n: number) => `${i} of ${n}`,
+        noneOpen: 'Nothing here is open right now, so all places are shown. Check the hours before you go.'
     },
     th: {
         openNow: (n: number) => `เปิดอยู่ ${n} แห่ง`,
@@ -43,7 +44,8 @@ const TEXT = {
         showClosed: (n: number) => `ดูที่ปิดอยู่ ${n} แห่ง`,
         showPlaces: (n: number) => `ดู ${n} แห่ง`,
         allAreas: 'ทุกพื้นที่',
-        sheetPos: (i: number, n: number) => `${i} จาก ${n}`
+        sheetPos: (i: number, n: number) => `${i} จาก ${n}`,
+        noneOpen: 'ตอนนี้ยังไม่มีที่ไหนเปิด จึงแสดงทั้งหมด โปรดดูเวลาเปิด-ปิดก่อนไป'
     }
 };
 
@@ -167,12 +169,19 @@ if (root) {
 
     /** Cards currently shown (open ones, or all when "open now" is off). */
     let shownCards: HTMLElement[] = [];
+    /** "Open now" was set by the visitor (link or chip), not by the time of day. */
+    let openChosen = params.has('open');
+    const noneOpenNote = root.querySelector<HTMLElement>('[data-none-open]');
 
     /** Apply filters, sort and paging to the rendered cards. */
     const render = () => {
         const pool = sorted(cards.filter(matches));
         const open = pool.filter(isOpen);
         const closed = pool.filter((c) => !isOpen(c));
+        // Default "open now" with nothing open (a café list at 08:00): show everything with a
+        // note instead of an empty page. When the visitor chose "open now", keep their choice.
+        const noneOpen = state.open && !openChosen && open.length === 0 && closed.length > 0;
+        if (noneOpen) state.closedShown = true;
         const visible = state.open && !state.closedShown ? open : pool;
         shownCards = state.open ? open : pool;
         // Re-order in the DOM: open first, then the rest (when shown).
@@ -195,6 +204,10 @@ if (root) {
         showMore.textContent = text.showMore(visible.length - state.limit);
         showClosed.hidden = !state.open || state.closedShown || closed.length === 0;
         showClosed.textContent = text.showClosed(closed.length);
+        if (noneOpenNote) {
+            noneOpenNote.hidden = !noneOpen;
+            noneOpenNote.textContent = text.noneOpen;
+        }
         clearBounds.hidden = !state.bounds;
 
         openBtn.setAttribute('aria-pressed', String(state.open));
@@ -442,6 +455,7 @@ if (root) {
 
     // --- events -------------------------------------------------------------------
     openBtn.addEventListener('click', () => {
+        openChosen = true;
         state.open = !state.open;
         state.closedShown = false;
         writeUrl();

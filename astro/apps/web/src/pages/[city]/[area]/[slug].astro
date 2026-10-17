@@ -65,6 +65,7 @@ const sameCategory = data.listings
     .sort((a, b) => (b.rating ?? 0) - (a.rating ?? 0));
 const sameArea = sameCategory.filter((l) => area && l.area?.id === area.id);
 const similarIn = sameArea.length >= 3 ? (area?.name ?? city.name) : city.name;
+const similarInTh = sameArea.length >= 3 ? (area?.name_th ?? area?.name ?? city.name_th ?? city.name) : (city.name_th ?? city.name);
 const similar = (sameArea.length >= 3 ? sameArea : sameCategory).slice(0, 6);
 const shown = listing.images.slice(0, 5);
 // No photos of its own: the drawn category picture, swapped in the browser for up to three
@@ -273,7 +274,7 @@ const trail: [string, string][] = [
                                     <ListingCard listing={l} tile distance={d} hidden={i >= 3} />
                                 ))}
                             </div>
-                            <p class="sg-empty" data-open-empty hidden>
+                            <p class="sg-empty" data-open-empty hidden data-th="ตอนนี้ไม่มีที่ใกล้เคียงที่เปิดอยู่">
                                 Nothing nearby is open right now.
                             </p>
                         </section>
@@ -283,7 +284,7 @@ const trail: [string, string][] = [
                     similar.length > 0 && category && (
                         <section class="sg-lp-sec" aria-labelledby="sg-more-h">
                             <div class="sg-sec-h">
-                                <h2 class="sg-h-md" id="sg-more-h">
+                                <h2 class="sg-h-md" id="sg-more-h" data-th={`${category.name_th ?? category.name}อื่นๆ ใน${similarInTh}`}>
                                     More {category.name.toLowerCase()} in {similarIn}
                                 </h2>
                                 <a class="sg-sec-link" href={`/${city.id}/${category.id}`} data-th="ดูทั้งหมด">
@@ -313,7 +314,7 @@ const trail: [string, string][] = [
                 </div>
                 <a class="tkg-btn" href={directionsUrl(listing.geo)} target="_blank" rel="noopener">
                     <Icon name="navigation" />
-                    Directions
+                    <span data-th="เส้นทาง">Directions</span>
                 </a>
             </div>
         )

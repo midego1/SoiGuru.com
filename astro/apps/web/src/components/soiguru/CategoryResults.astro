@@ -21,7 +21,7 @@ import Sheet from './Sheet.astro';
 import ResultFilters from './ResultFilters.astro';
 import { directionsUrl } from '../../lib/soiguru/geo';
 import { jsonForScript } from '../../lib/soiguru/format';
-import type { Area, City, Listing } from '../../lib/soiguru/data';
+import { getSoiGuru, claimUrl, type Area, type City, type Listing } from '../../lib/soiguru/data';
 
 interface Props {
     city: City;
@@ -44,6 +44,7 @@ interface Props {
 }
 
 const { city, listings, noun, area, lockArea = false, search = false, inlineSearch = false, title, titleTh } = Astro.props;
+const claim = claimUrl((await getSoiGuru()).config, city);
 const areaOptions = lockArea
     ? []
     : city.areas
@@ -181,12 +182,28 @@ const center = area?.geo ?? city.geo ?? pins[0] ?? { lat: 13.75, lng: 100.5 };
                     <Icon name="close" /><span data-th="ทั้งหมด">Whole map</span>
                 </button>
             </div>
+            <p class="sg-none-open" data-none-open hidden></p>
             <div class="tkg-list" data-results>
                 {listings.map((listing) => <ListingCard listing={listing} />)}
             </div>
-            <p class="sg-empty" data-results-empty hidden={listings.length > 0}>
+            <p class="sg-empty" data-results-empty hidden={listings.length > 0} data-th={listings.length === 0 ? 'ยังไม่มีรายการที่นี่' : 'ไม่มีที่ตรงกับตัวกรองนี้'}>
                 {listings.length === 0 ? `Nothing listed here yet.` : `No places match these filters.`}
             </p>
+            {
+                listings.length === 0 && (
+                    <div class="sg-empty-actions">
+                        <a class="sg-btn sg-btn-secondary" href={`/${city.id}/search`}>
+                            <Icon name="search" />
+                            <span data-th={`ดูทั้งหมดใน${city.name_th ?? city.name}`}>See all of {city.name}</span>
+                        </a>
+                        {claim && (
+                            <a class="sg-btn sg-btn-accent" href={claim} data-umami-event="list-business" data-th="ลงทะเบียนธุรกิจ">
+                                List your business
+                            </a>
+                        )}
+                    </div>
+                )
+            }
             <div class="tkg-pad" style="padding-top:12px;padding-bottom:16px;display:flex;flex-direction:column;gap:8px">
                 <button type="button" class="tkg-btn tkg-btn-secondary tkg-btn-block" data-show-more hidden><span data-th="ดูเพิ่มเติม">Show more</span></button>
                 <button type="button" class="tkg-btn tkg-btn-secondary tkg-btn-block" data-show-closed hidden></button>

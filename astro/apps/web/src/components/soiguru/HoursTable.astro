@@ -31,7 +31,7 @@ const rows = listing.hours ? hoursRows(listing.hours) : [];
                             <td>
                                 <span data-th={row.labelTh}>{row.label}</span>
                                 <span class="sg-today-label" hidden>
-                                    {' '}· today
+                                    {' '}<span data-th="· วันนี้">· today</span>
                                 </span>
                             </td>
                             {row.closed ? (

@@ -480,12 +480,14 @@ html[data-lang='th'] :is(.sg-h-xl, .sg-h-lg, .sg-hero-h, .sg-lp-title) {
     padding-bottom: 36px;
 }
 .sg-hero-copy {
-    flex: 999 1 560px;
+    flex: 999 1 520px;
     min-width: 0;
 }
+/* bases fit side by side from 960px (520 + 48 + 300); never wider than 460px if it wraps */
 .sg-hero-art {
-    flex: 1 1 380px;
+    flex: 1 1 300px;
     min-width: 0;
+    max-width: 460px;
     display: none;
 }
 .sg-scene {
@@ -1714,8 +1716,9 @@ html[data-lang='en'] .sg-sf-lang[data-lang-set='en'] {
     .sg-tcards:not(.sg-tcards-sm) {
         grid-template-columns: repeat(4, minmax(0, 1fr));
     }
+    /* fixed columns, so one city or area is a card, not a full-width band */
     .sg-areas {
-        grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+        grid-template-columns: repeat(4, minmax(0, 1fr));
     }
 }
 @media (min-width: 1440px) {
@@ -2462,5 +2465,52 @@ html[data-lang='en'] .sg-sf-lang[data-lang-set='en'] {
     .sg-step-num {
         top: 12px;
         right: 12px;
+    }
+}
+
+/* results: nothing open right now (all places shown) and the empty-area actions */
+.sg-none-open {
+    margin: 0 0 12px;
+    padding: 10px 14px;
+    border-radius: var(--radius-lg);
+    background: var(--sun-tint);
+    color: var(--ink);
+    font-size: 14px;
+    line-height: 1.45;
+}
+.sg-empty-actions {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    padding: 0 var(--space-4, 16px) 8px;
+}
+/* phones, map view: the List button sits above the map's count + OpenStreetMap credit line */
+@media (max-width: 959px) {
+    .sg-results[data-view='map'] .sg-fab {
+        bottom: calc(56px + env(safe-area-inset-bottom) + 48px);
+    }
+}
+/* claim banner keeps its own shape (no cream band under it when the pitch is taller);
+   smaller on phones, where it follows the pitch */
+.sg-owner > .sg-owner-banner {
+    align-self: center;
+}
+@media (max-width: 719px) {
+    .sg-owner-banner {
+        flex: 0 1 auto;
+        width: min(240px, 100%);
+    }
+}
+/* phones: the city picker panel spans the screen under the header (it would run off the
+   right edge when anchored to the city button) */
+@media (max-width: 719px) {
+    .sg-citypick > .sg-pop-panel {
+        position: fixed;
+        top: calc(var(--sg-header-h, 64px) + 4px);
+        left: 16px;
+        right: 16px;
+        width: auto;
+        max-height: calc(100dvh - var(--sg-header-h, 64px) - 96px);
+        overflow-y: auto;
     }
 }
