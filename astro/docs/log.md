@@ -3,6 +3,10 @@ title: "Change Log"
 sidebar_label: "Change Log"
 ---
 
+## 2026-10-17 — Category tiles restyled
+
+Category tiles are white cards with a soft shadow, a bare 28px category mark, the label and a short bar under it; hover and focus warm the card to `sun-tint` with the mark and bar in the new `--sun-deep` token. One line from 720px (all 16 fit from 1280px, sideways scroll below), 4 across on phones. Massage uses a new lotus mark.
+
 ## 2026-10-17 — Who added each listing
 
 Listings record who added them in the Ever Works `submitted_by` field (the owner app's admin shows and filters on it); the 169 Ao Nang places are `submitted_by: Grok Bot` (`data` branch 8e3f749, bundled `.content` refreshed). Not shown on the public site.

@@ -30,6 +30,7 @@ export const ICON_PATHS = {
     // Category marks for the city home tiles and the header (stroke style as the rest of the set).
     utensils: '<path d="M7 3v8a2 2 0 0 0 2 2v8M11 3v8M7 3h4M17 3c-2 0-3 3-3 6s1 4 3 4v8"/>',
     coffee: '<path d="M4 9h13v5a5 5 0 0 1-5 5H9a5 5 0 0 1-5-5V9ZM17 11h1.5a2.5 2.5 0 0 1 0 5H17M8 3v3M12 3v3"/>',
+    lotus: '<path d="M12 20c-4 0-7-2.5-8-6 2.5-.5 5 .3 8 3 3-2.7 5.5-3.5 8-3-1 3.5-4 6-8 6Z"/><path d="M12 17c-2-2.5-2.5-6 0-10 2.5 4 2 7.5 0 10Z"/><path d="M8.6 15.4C7.1 13.2 7 10.7 8 8.6M15.4 15.4c1.5-2.2 1.6-4.7.6-6.8"/>',
     spa: '<path d="M12 21c-4-3-7-6-7-10a7 7 0 0 1 14 0c0 4-3 7-7 10ZM12 8v6M9 11h6"/>',
     boat: '<path d="M3 17h18l-2 4H5l-2-4ZM6 17l6-12 6 12M12 5v12"/>',
     scooter: '<circle cx="6" cy="17" r="2.5"/><circle cx="18" cy="17" r="2.5"/><path d="M8.5 17h7l2.5-6h-4M14 7h3"/>',
