@@ -3,6 +3,10 @@ title: "Change Log"
 sidebar_label: "Change Log"
 ---
 
+## 2026-10-17 — Claim and Owner links on owner.soiguru.com
+
+owner.soiguru.com is verified (the owner app's sign-in loads there), so `claim_url` and `owner_url` in works.yml (data branch and the bundled copy) point at `https://owner.soiguru.com/{city}/claim` and `https://owner.soiguru.com/owner`. The data branch also gets `theme: soiguru`. Spec: `.specify/features/soiguru-design.md`.
+
 ## 2026-10-17 — Drawn Thailand map in the city picker and the landing hero
 
 The header's city picker opens a wider panel: the cities (with place counts and province) beside a small drawn map of Thailand; hovering or focusing a city lights its pin. The landing hero shows the same map in a card instead of the karst picture, and the hero city buttons and city cards light their pins. `ThailandMap.astro` draws the outline from `lib/soiguru/thailand.ts` (one SVG path from Natural Earth 1:50m, public domain, via `world-atlas` 2.0.2, generated once; no tiles, no map library), a dotted texture, sea waves and one pin per city; `page.ts` handles `[data-city-hover]`. Spec: `.specify/features/soiguru-design.md` § Website layout.
