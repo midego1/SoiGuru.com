@@ -1,3 +1,6 @@
+pagination:
+  type: standard
+  itemsPerPage: 20
 company_name: SoiGuru
 name: SoiGuru
 item_name: Place
@@ -8,13 +11,8 @@ app_url: https://soiguru.com
 site_url: https://soiguru.com
 claim_url: https://owner.soiguru.com/{city}/claim
 owner_url: https://owner.soiguru.com/owner
-# theme: soiguru (moodboard: sea and sun, IBM Plex) or navy (navy and orange, Bricolage + Figtree)
 theme: soiguru
-# contact_email: set to show "Report wrong info" (pending from Michiel)
 content_table: false
-pagination:
-  type: standard
-  itemsPerPage: 20
 auth:
   credentials: true
 settings:
@@ -38,6 +36,8 @@ settings:
     subscribe_enabled: false
     version_enabled: false
     theme_selector_enabled: false
+  location:
+    enabled: true
 custom_footer:
   - label: footer.TERMS_OF_SERVICE
     path: /pages/terms-of-service
