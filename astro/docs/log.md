@@ -3,6 +3,10 @@ title: "Change Log"
 sidebar_label: "Change Log"
 ---
 
+## 2026-10-17 — Google photos served from soiguru.com itself
+
+Listing-page photos did not load in some browsers (a blocker on the second domain). The soiguru-minimal Worker now has a script (`worker/index.ts`, `run_worker_first: ["/api/places/*"]`) that passes `/api/places/photos/<slug>` and `/api/places/photo` through from the owner app, rewriting photo links to this site; the page asks `/api/places/photos/<slug>?v=3` same-origin. Nothing stored; browser cache 5 minutes. Verified live with owner.soiguru.com blocked in the browser.
+
 ## 2026-10-17 — One drawn scene per category
 
 `CategoryArt` now draws a scene per category instead of a shopfront with an icon badge: noodle bowl (restaurants), cocktail under string lights (bars), coffee cup (cafés), shop window with bags (shops), hotel with palm and pool, massage mat with stones and orchid, karsts and longtail (tours), gloves on the ring ropes (Muay Thai), fish and coral (dive shops), clinic with green cross and pills, washing machine and clothesline (laundry), barber pole, chair and scissors, nail polish bottles, scooter on the road, laptop desk (coworking), shopfront (other). Sky and ground run on beside the scene on the wide listing band. Spec: `.specify/features/soiguru-design.md` § Website layout.

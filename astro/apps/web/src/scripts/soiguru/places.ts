@@ -3,6 +3,7 @@
  * the drawn category picture in `[data-places-photos]`; this asks the owner app for up to three
  * photos and, when there are any, swaps the picture for them with the author credit Google
  * requires ("Photo: <author> on Google"). Any failure keeps the drawing; nothing is shown.
+ * The list and the images come from this site (`/api/places/*`, the Worker in `worker/index.ts`).
  */
 interface PlacesPhoto {
     url: string;
@@ -53,7 +54,7 @@ async function loadPhotos(grid: HTMLElement): Promise<void> {
         if (!res.ok) return;
         const body = (await res.json()) as { photos?: PlacesPhoto[] };
         const photos = (body.photos ?? [])
-            .filter((p) => typeof p.url === 'string' && p.url.startsWith('https://'))
+            .filter((p) => typeof p.url === 'string' && (p.url.startsWith('/api/places/') || p.url.startsWith('https://')))
             .slice(0, 3);
         if (photos.length === 0) return;
         const name = grid.dataset['placesName'] ?? '';
