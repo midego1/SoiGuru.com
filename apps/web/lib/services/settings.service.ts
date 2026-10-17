@@ -3,7 +3,7 @@ import { defaultPricingConfig } from '../types';
 import { FileService } from './file.service';
 
 interface SettingsTheme {
-	type: 'everworks' | 'corporate' | 'material' | 'funny';
+	type: 'everworks' | 'corporate' | 'material' | 'funny' | 'soiguru';
 	primary: string;
 	secondary: string;
 	accent: string;

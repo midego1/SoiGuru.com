@@ -6,7 +6,18 @@ import { useEffect, useState } from 'react';
 import Image from 'next/image';
 import { Link } from '@/i18n/navigation';
 import { IconEverworksSimple } from '@/components/icons/Icons';
+import { SoiGuruMark } from '@/components/soiguru/logo-mark';
 import { isExternalUrl } from '@/lib/utils/custom-navigation';
+
+/**
+ * Fallback mark shown next to the company name when the config has neither a
+ * logo image nor a favicon. `soiguru` (default) draws the SoiGuru karst tile;
+ * `NEXT_PUBLIC_BRAND_MARK=everworks` restores the template's Ever Works icon.
+ */
+const BRAND_MARK = process.env.NEXT_PUBLIC_BRAND_MARK === 'everworks' ? 'everworks' : 'soiguru';
+
+/** Pixel size of the SoiGuru mark per logo size (moodboard: 34px in a top bar). */
+const MARK_SIZES = { sm: 34, md: 36, lg: 44 } as const;
 
 export interface SiteLogoProps {
 	size?: 'sm' | 'md' | 'lg';
@@ -65,7 +76,9 @@ export function SiteLogo({ size = 'md', className = '', showText = true, linkToH
 	};
 
 	const renderLogoContent = () => {
-		if (!mounted) {
+		// Only the image logo depends on the resolved colour scheme; the text
+		// logo (favicon or brand mark + name) renders the same on server and client.
+		if (!mounted && hasImageLogo) {
 			// Return placeholder during SSR to avoid hydration mismatch
 			return <div className={`animate-pulse bg-gray-200 dark:bg-white/8 rounded ${sizeConfig.icon}`} />;
 		}
@@ -103,16 +116,21 @@ export function SiteLogo({ size = 'md', className = '', showText = true, linkToH
 						/>
 					</div>
 				)}
-				{!logoSettings?.favicon && (
+				{!logoSettings?.favicon && BRAND_MARK === 'everworks' && (
 					<div className={`relative ${sizeConfig.iconMargin}`}>
 						<IconEverworksSimple
 							className={`${sizeConfig.icon}`}
 						/>
 					</div>
 				)}
+				{!logoSettings?.favicon && BRAND_MARK === 'soiguru' && (
+					<div className="relative mr-2.5 shrink-0">
+						<SoiGuruMark size={MARK_SIZES[size]} className="block" />
+					</div>
+				)}
 				{showText && (
 					<p
-						className={`font-bold ${sizeConfig.text} transition-colors duration-200 group-hover:text-theme-primary`}
+						className={`sg-wordmark font-bold ${sizeConfig.text} transition-colors duration-200 group-hover:text-theme-primary`}
 					>
 						{config.company_name}
 					</p>

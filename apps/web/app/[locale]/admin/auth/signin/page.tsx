@@ -1,9 +1,14 @@
 "use client";
 
-import { AuthForm } from "@/app/[locale]/auth/components/auth-form";
 import { useParams, useSearchParams } from "next/navigation";
 import { getSafeRedirectPath } from "@/lib/auth/validate-callback-url";
+import { AdminSignIn } from "./admin-sign-in";
 
+/**
+ * Admin sign-in. Spec 055 swaps the template's generic `AuthForm` layout for
+ * the SoiGuru-branded `AdminSignIn`; the form inside is the same
+ * `CredentialsForm` in client mode, and the redirect handling is unchanged.
+ */
 export default function AdminLoginPage() {
   const params = useParams();
   const searchParams = useSearchParams();
@@ -20,14 +25,5 @@ export default function AdminLoginPage() {
     window.location.href = finalRedirectPath;
   };
 
-  return (
-    <div>
-      <AuthForm
-        form="login"
-        showSocialLogin={false}
-        clientMode={true}
-        onSuccess={handleLoginSuccess}
-      />
-    </div>
-  );
-} 
+  return <AdminSignIn onSuccess={handleLoginSuccess} />;
+}

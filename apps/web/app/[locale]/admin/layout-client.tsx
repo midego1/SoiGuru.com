@@ -5,6 +5,7 @@ import { usePathname } from 'next/navigation';
 import { useEffect, useRef } from 'react';
 import { SessionProvider } from 'next-auth/react';
 import { useRouter } from '@/i18n/navigation';
+import { AdminShellBar } from '@/components/admin/admin-shell-bar';
 
 function AdminAuthGuard({ children }: { children: React.ReactNode }) {
 	const { data: session, status } = useSession();
@@ -63,7 +64,7 @@ function AdminAuthGuard({ children }: { children: React.ReactNode }) {
 	// Show loading while redirecting (but not on auth pages)
 	if (!isAuthPage && (!session || !session.user?.isAdmin)) {
 		return (
-			<div className="min-h-screen bg-gray-100 dark:bg-white/3 flex items-center justify-center">
+			<div className="sg-admin min-h-screen bg-[var(--app-ground,#f3f4f6)] dark:bg-white/3 flex items-center justify-center">
 				<div className="text-center">
 					<div className="animate-spin rounded-full h-12 w-12 border-b-2 border-blue-600 mx-auto mb-4"></div>
 					<p className="text-gray-600 dark:text-gray-400">Redirecting...</p>
@@ -78,10 +79,12 @@ function AdminAuthGuard({ children }: { children: React.ReactNode }) {
 		return <>{children}</>;
 	}
 
+	// SoiGuru admin shell (spec 055): sand ground, logo + section nav bar.
+	// `sg-admin` scopes the brand overrides in app/soiguru-theme.css.
 	return (
-		<div className="min-h-screen bg-gray-100 dark:bg-white/3">
-			<header className="p-3 bg-white dark:bg-white/4 dark:text-white text-gray-600 text-sm">Admin Panel</header>
-			<main className="p-8">{children}</main>
+		<div className="sg-admin min-h-screen bg-[var(--app-ground,#f3f4f6)] dark:bg-white/3">
+			<AdminShellBar />
+			<main className="p-4 sm:p-6 lg:p-8">{children}</main>
 		</div>
 	);
 }

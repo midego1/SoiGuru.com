@@ -35,7 +35,9 @@ export function ConditionalLayout({ children, chromelessSegments = [] }: Conditi
       {!hideChrome && <Header />}
       {/* id="main-content" lets skip-to-content anchors target it.
           Required by `skip-link-and-focus.spec.ts`. */}
-      <main id="main-content" className="flex-1 bg-white dark:bg-[#0a0a0a]">
+      {/* --app-ground is the page ground of the active theme preset (sand for
+          SoiGuru, app/soiguru-theme.css); white when no preset sets it. */}
+      <main id="main-content" className="flex-1 bg-[var(--app-ground,#ffffff)] dark:bg-[#0a0a0a]">
         {children}
       </main>
       {!hideChrome && <Footer />}

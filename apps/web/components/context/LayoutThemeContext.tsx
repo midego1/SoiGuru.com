@@ -14,7 +14,15 @@ interface ConfigDefaults {
 // Constants
 const DEFAULT_LAYOUT: LayoutKey = "classic";
 
-const DEFAULT_THEME = "everworks" as const;
+/**
+ * Fallback theme preset. A deployment picks its default with
+ * `NEXT_PUBLIC_THEME_PRESET` (inlined at build time, so every provider
+ * instance agrees); an unset or unknown value falls back to `soiguru`, the
+ * SoiGuru moodboard preset (spec 055). The template's original default,
+ * `everworks`, stays available. `DEFAULT_THEME` is resolved below, after
+ * `THEME_CONFIGS` and `isValidThemeKey` exist.
+ */
+const FALLBACK_THEME = "soiguru" as const;
 
 export enum LayoutHome {
   HOME_ONE = 'Home_One',
@@ -59,7 +67,7 @@ export interface ThemeConfig {
   readonly textSecondary: string;
 }
 
-export type ThemeKey = "everworks" | "corporate" | "material" | "funny";
+export type ThemeKey = "everworks" | "corporate" | "material" | "funny" | "soiguru";
 
 interface LayoutThemeContextType {
   layoutKey: LayoutKey;
@@ -123,6 +131,16 @@ export const THEME_CONFIGS: Record<ThemeKey, ThemeConfig> = {
     surface: "#ffffff",
     text: "#3e2723",
     textSecondary: "#8d6e63",
+  },
+  // SoiGuru moodboard: sea, sun and sea-deep on sand (spec 055)
+  soiguru: {
+    primary: "#0a6b73",
+    secondary: "#f2a33a",
+    accent: "#064a50",
+    background: "#f4f5f2",
+    surface: "#ffffff",
+    text: "#14201f",
+    textSecondary: "#5a6665",
   }
 } as const;
 
@@ -166,8 +184,15 @@ const isValidLayoutKey = (key: string): key is LayoutKey => {
 };
 
 const isValidThemeKey = (key: string): key is ThemeKey => {
-  return key in THEME_CONFIGS;
+  return Object.prototype.hasOwnProperty.call(THEME_CONFIGS, key);
 };
+
+const resolveDefaultTheme = (): ThemeKey => {
+  const preset = process.env.NEXT_PUBLIC_THEME_PRESET;
+  return preset && isValidThemeKey(preset) ? preset : FALLBACK_THEME;
+};
+
+const DEFAULT_THEME: ThemeKey = resolveDefaultTheme();
 
 const isValidLayoutHome = (key: string): key is LayoutHome => {
   return Object.values(LayoutHome).includes(key as LayoutHome);

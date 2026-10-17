@@ -149,7 +149,8 @@ const NAVIGATION_CONFIG: Array<{
 ];
 
 const STYLES = {
-	navbar: 'bg-white/75 dark:bg-[#0a0a0a]/75 backdrop-blur-md border-b border-gray-200/50 dark:border-white/6 sticky top-0 z-50',
+	// `sg-header`: SoiGuru preset hook (solid surface, line border, ink links; app/soiguru-theme.css)
+	navbar: 'sg-header bg-white/75 dark:bg-[#0a0a0a]/75 backdrop-blur-md border-b border-gray-200/50 dark:border-white/6 sticky top-0 z-50',
 	container: 'flex items-center justify-between w-full min-h-[60px] sm:min-h-[64px] md:min-h-[68px] lg:min-h-[65px]',
 	navContent: 'hidden lg:flex gap-5 xl:gap-6 2xl:gap-6 mr-6 xl:mr-8 2xl:mr-10',
 	navbarMenuToggle: 'lg:hidden transition-transform duration-150',

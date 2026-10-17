@@ -77,6 +77,20 @@ export const THEME_INFO: Record<ThemeKey, ThemeInfo> = {
       text: "#3e2723",
       textSecondary: "#8d6e63",
     },
+  },
+  soiguru: {
+    key: "soiguru",
+    label: "SoiGuru",
+    description: "SoiGuru moodboard: sea and sun on sand, IBM Plex Sans",
+    colors: {
+      primary: "#0a6b73",
+      secondary: "#f2a33a",
+      accent: "#064a50",
+      background: "#f4f5f2",
+      surface: "#ffffff",
+      text: "#14201f",
+      textSecondary: "#5a6665",
+    },
   }
 };
 

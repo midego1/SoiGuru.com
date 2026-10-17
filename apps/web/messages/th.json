@@ -1889,6 +1889,24 @@
 		}
 	},
 	"admin": {
+		"SHELL": {
+			"ADMIN": "ผู้ดูแล",
+			"NAV_LABEL": "ส่วนของผู้ดูแลระบบ",
+			"NAV": {
+				"DASHBOARD": "แดชบอร์ด",
+				"ITEMS": "สถานที่",
+				"CATEGORIES": "หมวดหมู่",
+				"TAGS": "แท็ก",
+				"CLAIMS": "คำขอเป็นเจ้าของ",
+				"CLIENTS": "ลูกค้า",
+				"USERS": "ผู้ใช้",
+				"COMMENTS": "ความคิดเห็น",
+				"REPORTS": "รายงาน",
+				"SETTINGS": "ตั้งค่า"
+			},
+			"SIGNIN_EYEBROW": "ผู้ดูแล SoiGuru",
+			"SIGNIN_FOOTNOTE": "สถานที่ในท้องถิ่นทั่วประเทศไทย อัปเดตอยู่เสมอ"
+		},
 		"SHARED": {
 			"SEARCH_PLACEHOLDER": "ค้นหา...",
 			"CLEAR_SEARCH": "ล้างการค้นหา",

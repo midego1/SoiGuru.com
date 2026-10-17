@@ -7,6 +7,10 @@ sidebar_position: 99
 
 # Documentation & Specs Change Log
 
+## 2026-10-17
+
+- `spec-055` `apps/web/app/soiguru-theme.css` `apps/web/lib/theme-color-manager.ts` `apps/web/components/context/LayoutThemeContext.tsx` `apps/web/app/[locale]/admin` `apps/web/components/admin` `apps/web/components/shared/site-logo`: SoiGuru look for the template header, admin, admin sign-in and client dashboard: new `soiguru` theme preset (default via `NEXT_PUBLIC_THEME_PRESET`, fallback `soiguru`) with fixed palettes and a `data-theme-preset` attribute, IBM Plex Sans + Thai app-wide (shared `lib/soiguru/fonts.ts`), sand ground, Tailwind gray/blue and HeroUI primary re-tinted through preset-scoped variables, sea primary buttons in the admin, `AdminShellBar` with section nav, sea-deep `AdminSignIn` panel, logo mark in the header ([spec 055](spec/055-soiguru-admin-style/spec.md)).
+
 ## 2026-10-16
 
 - `spec-054` `apps/web/scripts/clone.cjs` `apps/web/lib/repository.ts` `apps/web/lib/services/*-git.service.ts` `Dockerfile`: the content clone (build time and runtime) checks out `GITHUB_BRANCH` of `DATA_REPOSITORY` when it is set, so SoiGuru can read its content from the `data` branch of the website repo; unset keeps the repository's default branch. Pull and push follow the checked-out branch. The Dockerfile takes `GITHUB_BRANCH` as a build arg ([spec 054](spec/054-soiguru-city-screens/spec.md)).

@@ -1,4 +1,4 @@
-import { IBM_Plex_Sans, IBM_Plex_Sans_Thai } from 'next/font/google';
+import { soiguruFontVariables } from '@/lib/soiguru/fonts';
 import './soiguru.css';
 
 /**
@@ -6,23 +6,9 @@ import './soiguru.css';
  * CategoryResults, ListingPage). The template header and footer are hidden on
  * these routes by `ConditionalLayout`; this wrapper carries the design tokens,
  * the IBM Plex Sans + Plex Sans Thai pair and the 640px phone column.
+ * The font pair is declared once in `lib/soiguru/fonts.ts` and shared with the
+ * root layout (spec 055).
  */
-
-const plexSans = IBM_Plex_Sans({
-	subsets: ['latin', 'latin-ext'],
-	weight: ['400', '500', '600', '700'],
-	variable: '--font-plex-sans',
-	display: 'swap'
-});
-
-const plexThai = IBM_Plex_Sans_Thai({
-	subsets: ['thai'],
-	weight: ['400', '500', '600', '700'],
-	variable: '--font-plex-thai',
-	display: 'swap',
-	preload: false
-});
-
 export default function SoiGuruLayout({ children }: { children: React.ReactNode }) {
-	return <div className={`tkg-root ${plexSans.variable} ${plexThai.variable}`}>{children}</div>;
+	return <div className={`tkg-root ${soiguruFontVariables}`}>{children}</div>;
 }

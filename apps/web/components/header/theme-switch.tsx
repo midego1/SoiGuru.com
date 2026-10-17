@@ -36,6 +36,13 @@ const ThemePreview: React.FC<{ themeKey: ThemeKey }> = React.memo(
           <div className="absolute bottom-1 left-1 w-2 h-1 bg-white/80 rounded-xs" />
           <div className="absolute top-1 right-1 w-1 h-1 bg-white/60 rounded-full" />
         </div>
+      ),
+      soiguru: (
+        <div className="w-12 h-8 bg-[#0a6b73] rounded-sm overflow-hidden relative">
+          <div className="absolute inset-x-0 bottom-0 h-2 bg-[#064a50]" />
+          <div className="absolute bottom-1 left-1 w-3 h-0.5 bg-[#f2a33a] rounded-xs" />
+          <div className="absolute top-1 right-1 w-1 h-1 bg-white/60 rounded-full" />
+        </div>
       )
     };
 

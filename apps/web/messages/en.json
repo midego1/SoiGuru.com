@@ -2128,6 +2128,24 @@
 		}
 	},
 	"admin": {
+		"SHELL": {
+			"ADMIN": "Admin",
+			"NAV_LABEL": "Admin sections",
+			"NAV": {
+				"DASHBOARD": "Dashboard",
+				"ITEMS": "Places",
+				"CATEGORIES": "Categories",
+				"TAGS": "Tags",
+				"CLAIMS": "Claims",
+				"CLIENTS": "Clients",
+				"USERS": "Users",
+				"COMMENTS": "Comments",
+				"REPORTS": "Reports",
+				"SETTINGS": "Settings"
+			},
+			"SIGNIN_EYEBROW": "SoiGuru admin",
+			"SIGNIN_FOOTNOTE": "Local places in Thailand, kept up to date."
+		},
 		"SHARED": {
 			"SEARCH_PLACEHOLDER": "Search...",
 			"CLEAR_SEARCH": "Clear search",
