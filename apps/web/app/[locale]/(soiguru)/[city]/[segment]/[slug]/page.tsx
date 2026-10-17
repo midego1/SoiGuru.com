@@ -68,8 +68,9 @@ export async function generateMetadata({ params }: { params: Params }): Promise<
 		}),
 		alternates: { canonical: ctx.href(path), languages: { en: path, th: `/th${path}` } },
 		openGraph: { title: name, type: 'website', url: ctx.href(path) },
-		// Sample listings are placeholders and must never be indexed.
-		robots: listing.sample ? { index: false, follow: true } : undefined
+		// Sample listings are placeholders and must never be indexed. No `robots` key otherwise,
+		// so the layout's host-based robots applies (an explicit undefined would replace it).
+		...(listing.sample ? { robots: { index: false, follow: true } } : {})
 	};
 }
 

@@ -56,7 +56,8 @@ export async function generateMetadata({ params }: { params: Params }): Promise<
 		title: { absolute: ctx.t('results.metaTitle', { what, place }) },
 		description: ctx.t('results.metaDescription', { what, place }),
 		alternates: { canonical: ctx.href(path), languages: { en: path, th: `/th${path}` } },
-		robots: scope.search ? { index: false, follow: true } : undefined
+		// No `robots` key unless noindex, so the layout's host-based robots applies.
+		...(scope.search ? { robots: { index: false, follow: true } } : {})
 	};
 }
 
