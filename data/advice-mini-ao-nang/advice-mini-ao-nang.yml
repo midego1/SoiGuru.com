@@ -1,0 +1,49 @@
+name: Advice Mini
+description: Electronics repair in Ao Nang.
+source_url: https://www.adviceaonang.com
+category: other
+tags: []
+featured: false
+status: approved
+city: krabi
+area: ao-nang
+geo:
+  lat: 8.039766
+  lng: 98.835117
+location:
+  address: Ao Nang, Krabi
+  city: Krabi
+  country: TH
+  latitude: 8.039766
+  longitude: 98.835117
+phone: "+6675810262"
+hours:
+  mon:
+  - 09:00-19:00
+  tue:
+  - 09:00-19:00
+  wed:
+  - 09:00-19:00
+  thu:
+  - 09:00-19:00
+  fri:
+  - 09:00-19:00
+  sat:
+  - 09:00-19:00
+  sun:
+  - 09:00-17:00
+claimed: false
+updated_by: import
+updated_at: "2026-10-17 01:01"
+markdown: 'Electronics repair in Ao Nang.
+
+
+  Links: <https://www.adviceaonang.com>
+
+
+  Sources: <https://www.openstreetmap.org/node/4353748527>
+
+
+  Map data © OpenStreetMap contributors (ODbL).
+
+  '

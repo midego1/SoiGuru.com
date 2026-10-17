@@ -1,0 +1,44 @@
+name: ROSSMI Barber Shop Aonang
+description: Barbershop in Ao Nang.
+source_url: ''
+category: barbers-salons
+tags: []
+featured: false
+status: approved
+city: krabi
+area: ao-nang
+address: 244 Ao Nang (near Holiday Inn Resort)
+geo:
+  lat: 8.033272
+  lng: 98.826674
+location:
+  address: 244 Ao Nang (near Holiday Inn Resort)
+  city: Krabi
+  country: TH
+  latitude: 8.033272
+  longitude: 98.826674
+phone: "+66963721841"
+hours:
+  mon:
+  - 10:00-21:00
+  tue:
+  - 10:00-21:00
+  wed:
+  - 10:00-21:00
+  thu:
+  - 10:00-21:00
+  fri:
+  - 10:00-21:00
+  sat:
+  - 10:00-21:00
+  sun:
+  - 10:00-21:00
+claimed: false
+updated_by: import
+updated_at: "2026-10-17 01:01"
+markdown: 'Barbershop in Ao Nang.
+
+
+  Sources: <https://exa.ai/library/place/n7nmcnr5sb7>
+
+  '

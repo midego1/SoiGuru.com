@@ -1,0 +1,30 @@
+name: 7-Eleven
+description: Convenience store in Klong Haeng, Ao Nang.
+source_url: ''
+category: shops
+tags: []
+featured: false
+status: approved
+city: krabi
+area: ao-nang
+geo:
+  lat: 8.050354
+  lng: 98.805742
+location:
+  address: Klong Haeng, Ao Nang, Krabi
+  city: Krabi
+  country: TH
+  latitude: 8.050354
+  longitude: 98.805742
+claimed: false
+updated_by: import
+updated_at: "2026-10-17 01:01"
+markdown: 'Convenience store in Klong Haeng, Ao Nang.
+
+
+  Sources: <https://www.openstreetmap.org/way/1231623984>
+
+
+  Map data © OpenStreetMap contributors (ODbL).
+
+  '

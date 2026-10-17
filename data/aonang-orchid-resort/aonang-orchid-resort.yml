@@ -1,0 +1,34 @@
+name: AoNang Orchid Resort
+description: Hotel in Ao Nang.
+source_url: http://www.aonangorchid-resort.com/
+category: hotels
+tags: []
+featured: false
+status: approved
+city: krabi
+area: ao-nang
+geo:
+  lat: 8.03166
+  lng: 98.823995
+location:
+  address: Ao Nang
+  city: Krabi
+  country: TH
+  latitude: 8.03166
+  longitude: 98.823995
+phone: "+6675638426"
+claimed: false
+updated_by: import
+updated_at: "2026-10-17 01:01"
+markdown: 'Hotel in Ao Nang.
+
+
+  Links: <http://www.aonangorchid-resort.com/>
+
+
+  Sources: <https://www.openstreetmap.org/way/363462862>
+
+
+  Map data © OpenStreetMap contributors (ODbL).
+
+  '

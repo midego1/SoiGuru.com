@@ -1,0 +1,33 @@
+name: Somkiert Buri Resort&Spa
+description: Hotel in Ao Nang.
+source_url: https://www.somkietburi.com/
+category: hotels
+tags: []
+featured: false
+status: approved
+city: krabi
+area: ao-nang
+geo:
+  lat: 8.03178
+  lng: 98.826753
+location:
+  address: Ao Nang, Krabi
+  city: Krabi
+  country: TH
+  latitude: 8.03178
+  longitude: 98.826753
+claimed: false
+updated_by: import
+updated_at: "2026-10-17 01:01"
+markdown: 'Hotel in Ao Nang.
+
+
+  Links: <https://www.somkietburi.com/>
+
+
+  Sources: <https://www.openstreetmap.org/way/363443751>
+
+
+  Map data © OpenStreetMap contributors (ODbL).
+
+  '

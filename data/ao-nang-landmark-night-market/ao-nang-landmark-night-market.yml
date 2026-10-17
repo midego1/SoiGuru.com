@@ -1,0 +1,45 @@
+name: Ao-Nang Landmark Night Market
+description: Market in Nopparat Thara, Ao Nang.
+source_url: ''
+category: shops
+tags: []
+featured: false
+status: approved
+city: krabi
+area: ao-nang
+geo:
+  lat: 8.042929
+  lng: 98.812313
+location:
+  address: Ao Nang
+  city: Krabi
+  country: TH
+  latitude: 8.042929
+  longitude: 98.812313
+hours:
+  mon:
+  - 16:00-23:00
+  tue:
+  - 16:00-23:00
+  wed:
+  - 16:00-23:00
+  thu:
+  - 16:00-23:00
+  fri:
+  - 16:00-23:00
+  sat:
+  - 16:00-23:00
+  sun:
+  - 16:00-23:00
+claimed: false
+updated_by: import
+updated_at: "2026-10-17 01:01"
+markdown: 'Market in Nopparat Thara, Ao Nang.
+
+
+  Sources: <https://www.openstreetmap.org/way/1227067969>
+
+
+  Map data © OpenStreetMap contributors (ODbL).
+
+  '

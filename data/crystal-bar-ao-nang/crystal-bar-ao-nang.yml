@@ -1,0 +1,45 @@
+name: Crystal Bar
+description: Bar in Ao Nang.
+source_url: ''
+category: bars
+tags: []
+featured: false
+status: approved
+city: krabi
+area: ao-nang
+geo:
+  lat: 8.032206
+  lng: 98.825087
+location:
+  address: Ao Nang, Krabi
+  city: Krabi
+  country: TH
+  latitude: 8.032206
+  longitude: 98.825087
+hours:
+  mon:
+  - 11:00-03:00
+  tue:
+  - 11:00-03:00
+  wed:
+  - 11:00-03:00
+  thu:
+  - 11:00-03:00
+  fri:
+  - 11:00-03:00
+  sat:
+  - 11:00-03:00
+  sun:
+  - 11:00-03:00
+claimed: false
+updated_by: import
+updated_at: "2026-10-17 01:01"
+markdown: 'Bar in Ao Nang.
+
+
+  Sources: <https://www.openstreetmap.org/node/13678315228>
+
+
+  Map data © OpenStreetMap contributors (ODbL).
+
+  '

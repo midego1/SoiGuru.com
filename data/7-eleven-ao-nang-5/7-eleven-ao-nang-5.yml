@@ -1,0 +1,45 @@
+name: 7-Eleven
+description: Convenience store in Ao Nang.
+source_url: ''
+category: shops
+tags: []
+featured: false
+status: approved
+city: krabi
+area: ao-nang
+geo:
+  lat: 8.036119
+  lng: 98.833673
+location:
+  address: Ao Nang, Krabi
+  city: Krabi
+  country: TH
+  latitude: 8.036119
+  longitude: 98.833673
+hours:
+  mon:
+  - 00:00-24:00
+  tue:
+  - 00:00-24:00
+  wed:
+  - 00:00-24:00
+  thu:
+  - 00:00-24:00
+  fri:
+  - 00:00-24:00
+  sat:
+  - 00:00-24:00
+  sun:
+  - 00:00-24:00
+claimed: false
+updated_by: import
+updated_at: "2026-10-17 01:01"
+markdown: 'Convenience store in Ao Nang.
+
+
+  Sources: <https://www.openstreetmap.org/node/4463907176>
+
+
+  Map data © OpenStreetMap contributors (ODbL).
+
+  '

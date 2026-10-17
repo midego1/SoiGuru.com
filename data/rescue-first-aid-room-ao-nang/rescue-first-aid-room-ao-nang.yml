@@ -1,0 +1,30 @@
+name: Rescue first aid room
+description: Clinic in Nopparat Thara, Ao Nang.
+source_url: ''
+category: clinics-pharmacies
+tags: []
+featured: false
+status: approved
+city: krabi
+area: ao-nang
+geo:
+  lat: 8.046622
+  lng: 98.799662
+location:
+  address: Nopparat Thara, Ao Nang, Krabi
+  city: Krabi
+  country: TH
+  latitude: 8.046622
+  longitude: 98.799662
+claimed: false
+updated_by: import
+updated_at: "2026-10-17 01:01"
+markdown: 'Clinic in Nopparat Thara, Ao Nang.
+
+
+  Sources: <https://www.openstreetmap.org/node/13563253165>
+
+
+  Map data © OpenStreetMap contributors (ODbL).
+
+  '

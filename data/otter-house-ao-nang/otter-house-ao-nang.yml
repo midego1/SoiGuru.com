@@ -1,0 +1,30 @@
+name: Otter House
+description: Laundry in Ao Nang.
+source_url: ''
+category: laundry
+tags: []
+featured: false
+status: approved
+city: krabi
+area: ao-nang
+geo:
+  lat: 8.034601
+  lng: 98.829155
+location:
+  address: Ao Nang, Krabi
+  city: Krabi
+  country: TH
+  latitude: 8.034601
+  longitude: 98.829155
+claimed: false
+updated_by: import
+updated_at: "2026-10-17 01:01"
+markdown: 'Laundry in Ao Nang.
+
+
+  Sources: <https://www.openstreetmap.org/node/12529129801>
+
+
+  Map data © OpenStreetMap contributors (ODbL).
+
+  '

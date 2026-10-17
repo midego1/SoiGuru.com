@@ -1,0 +1,46 @@
+name: ChaPlu Bar
+name_th: ชะพลูบาร์
+description: Bar in Ao Nang.
+source_url: ''
+category: bars
+tags: []
+featured: false
+status: approved
+city: krabi
+area: ao-nang
+geo:
+  lat: 8.031508
+  lng: 98.822802
+location:
+  address: Ao Nang, Krabi
+  city: Krabi
+  country: TH
+  latitude: 8.031508
+  longitude: 98.822802
+hours:
+  mon:
+  - 14:00-23:50
+  tue:
+  - 14:00-23:50
+  wed:
+  - 14:00-23:50
+  thu:
+  - 14:00-23:50
+  fri:
+  - 14:00-23:50
+  sat:
+  - 14:00-23:50
+  sun:
+  - 14:00-23:50
+claimed: false
+updated_by: import
+updated_at: "2026-10-17 01:01"
+markdown: 'Bar in Ao Nang.
+
+
+  Sources: <https://www.openstreetmap.org/node/4631918689>
+
+
+  Map data © OpenStreetMap contributors (ODbL).
+
+  '

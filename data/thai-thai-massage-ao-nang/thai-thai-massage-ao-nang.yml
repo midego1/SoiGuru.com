@@ -1,0 +1,30 @@
+name: Thai Thai Massage
+description: Massage in Ao Nang.
+source_url: ''
+category: massage
+tags: []
+featured: false
+status: approved
+city: krabi
+area: ao-nang
+geo:
+  lat: 8.029331
+  lng: 98.824196
+location:
+  address: Ao Nang, Krabi
+  city: Krabi
+  country: TH
+  latitude: 8.029331
+  longitude: 98.824196
+claimed: false
+updated_by: import
+updated_at: "2026-10-17 01:01"
+markdown: 'Massage in Ao Nang.
+
+
+  Sources: <https://www.openstreetmap.org/node/6021567693>
+
+
+  Map data © OpenStreetMap contributors (ODbL).
+
+  '

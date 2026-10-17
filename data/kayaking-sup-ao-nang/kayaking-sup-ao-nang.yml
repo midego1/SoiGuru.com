@@ -1,0 +1,45 @@
+name: Kayaking SUP
+description: Tour operator in Ao Nang.
+source_url: ''
+category: tours
+tags: []
+featured: false
+status: approved
+city: krabi
+area: ao-nang
+geo:
+  lat: 8.027809
+  lng: 98.825724
+location:
+  address: Ao Nang, Krabi
+  city: Krabi
+  country: TH
+  latitude: 8.027809
+  longitude: 98.825724
+hours:
+  mon:
+  - 09:00-18:00
+  tue:
+  - 09:00-18:00
+  wed:
+  - 09:00-18:00
+  thu:
+  - 09:00-18:00
+  fri:
+  - 09:00-18:00
+  sat:
+  - 09:00-18:00
+  sun:
+  - 09:00-18:00
+claimed: false
+updated_by: import
+updated_at: "2026-10-17 01:01"
+markdown: 'Tour operator in Ao Nang.
+
+
+  Sources: <https://www.openstreetmap.org/node/6021695066>
+
+
+  Map data © OpenStreetMap contributors (ODbL).
+
+  '

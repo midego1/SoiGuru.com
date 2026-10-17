@@ -1,0 +1,32 @@
+name: King New Bungalow
+description: Hotel in Ao Nang.
+source_url: ''
+category: hotels
+tags: []
+featured: false
+status: approved
+city: krabi
+area: ao-nang
+address: 376/29 Moo.2
+geo:
+  lat: 8.039378
+  lng: 98.83343
+location:
+  address: 376/29 Moo.2
+  city: Krabi
+  country: TH
+  latitude: 8.039378
+  longitude: 98.83343
+phone: "+66815576993"
+claimed: false
+updated_by: import
+updated_at: "2026-10-17 01:01"
+markdown: 'Hotel in Ao Nang.
+
+
+  Sources: <https://www.openstreetmap.org/node/3799049162>
+
+
+  Map data © OpenStreetMap contributors (ODbL).
+
+  '

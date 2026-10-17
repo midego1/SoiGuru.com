@@ -1,0 +1,30 @@
+name: Mini Big C
+description: Convenience store in Klong Haeng, Ao Nang.
+source_url: ''
+category: shops
+tags: []
+featured: false
+status: approved
+city: krabi
+area: ao-nang
+geo:
+  lat: 8.051799
+  lng: 98.815982
+location:
+  address: Klong Haeng, Ao Nang, Krabi
+  city: Krabi
+  country: TH
+  latitude: 8.051799
+  longitude: 98.815982
+claimed: false
+updated_by: import
+updated_at: "2026-10-17 01:01"
+markdown: 'Convenience store in Klong Haeng, Ao Nang.
+
+
+  Sources: <https://www.openstreetmap.org/way/1262780301>
+
+
+  Map data © OpenStreetMap contributors (ODbL).
+
+  '

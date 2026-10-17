@@ -1,0 +1,30 @@
+name: Garry's Custom Tailors
+description: Tailor in Ao Nang.
+source_url: ''
+category: other
+tags: []
+featured: false
+status: approved
+city: krabi
+area: ao-nang
+geo:
+  lat: 8.031422
+  lng: 98.822177
+location:
+  address: Ao Nang, Krabi
+  city: Krabi
+  country: TH
+  latitude: 8.031422
+  longitude: 98.822177
+claimed: false
+updated_by: import
+updated_at: "2026-10-17 01:01"
+markdown: 'Tailor in Ao Nang.
+
+
+  Sources: <https://www.openstreetmap.org/node/6229094385>
+
+
+  Map data © OpenStreetMap contributors (ODbL).
+
+  '

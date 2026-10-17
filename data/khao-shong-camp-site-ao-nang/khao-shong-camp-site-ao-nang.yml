@@ -1,0 +1,30 @@
+name: Khao Shong camp site
+description: Hotel in Nopparat Thara, Ao Nang.
+source_url: ''
+category: hotels
+tags: []
+featured: false
+status: approved
+city: krabi
+area: ao-nang
+geo:
+  lat: 8.048049
+  lng: 98.801574
+location:
+  address: Nopparat Thara, Ao Nang, Krabi
+  city: Krabi
+  country: TH
+  latitude: 8.048049
+  longitude: 98.801574
+claimed: false
+updated_by: import
+updated_at: "2026-10-17 01:01"
+markdown: 'Hotel in Nopparat Thara, Ao Nang.
+
+
+  Sources: <https://www.openstreetmap.org/relation/20421153>
+
+
+  Map data © OpenStreetMap contributors (ODbL).
+
+  '

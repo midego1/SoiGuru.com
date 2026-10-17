@@ -1,0 +1,45 @@
+name: Adam Shop
+description: Shop in Klong Haeng, Ao Nang.
+source_url: ''
+category: shops
+tags: []
+featured: false
+status: approved
+city: krabi
+area: ao-nang
+geo:
+  lat: 8.050631
+  lng: 98.806249
+location:
+  address: Klong Haeng, Ao Nang, Krabi
+  city: Krabi
+  country: TH
+  latitude: 8.050631
+  longitude: 98.806249
+hours:
+  mon:
+  - 06:00-20:00
+  tue:
+  - 06:00-20:00
+  wed:
+  - 06:00-20:00
+  thu:
+  - 06:00-20:00
+  fri:
+  - 06:00-20:00
+  sat:
+  - 06:00-20:00
+  sun:
+  - 06:00-20:00
+claimed: false
+updated_by: import
+updated_at: "2026-10-17 01:01"
+markdown: 'Shop in Klong Haeng, Ao Nang.
+
+
+  Sources: <https://www.openstreetmap.org/way/581575785>
+
+
+  Map data © OpenStreetMap contributors (ODbL).
+
+  '

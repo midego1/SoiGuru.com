@@ -1,0 +1,34 @@
+name: Golden Beach Resort
+name_th: โกลเด้น บีช รีสอร์ท
+description: Hotel in Ao Nang.
+source_url: https://goldenbeach-resort.com/
+category: hotels
+tags: []
+featured: false
+status: approved
+city: krabi
+area: ao-nang
+geo:
+  lat: 8.029694
+  lng: 98.824235
+location:
+  address: Ao Nang
+  city: Krabi
+  country: TH
+  latitude: 8.029694
+  longitude: 98.824235
+claimed: false
+updated_by: import
+updated_at: "2026-10-17 01:01"
+markdown: 'Hotel in Ao Nang.
+
+
+  Links: <https://goldenbeach-resort.com/>, <https://www.facebook.com/GoldenbeachResort/>
+
+
+  Sources: <https://www.openstreetmap.org/relation/19746249>, <https://goldenbeach-resort.com/>
+
+
+  Map data © OpenStreetMap contributors (ODbL).
+
+  '

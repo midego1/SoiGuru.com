@@ -1,0 +1,50 @@
+name: Wattanapat hospital ao nang (private)
+description: Hospital in Klong Haeng, Ao Nang.
+source_url: https://www.aonanghospital.com
+category: clinics-pharmacies
+tags: []
+featured: false
+status: approved
+city: krabi
+area: ao-nang
+address: 555 5 Ao Nang
+geo:
+  lat: 8.056604
+  lng: 98.817494
+location:
+  address: 555 5 Ao Nang
+  city: Krabi
+  country: TH
+  latitude: 8.056604
+  longitude: 98.817494
+phone: "+6675815555"
+hours:
+  mon:
+  - 00:00-24:00
+  tue:
+  - 00:00-24:00
+  wed:
+  - 00:00-24:00
+  thu:
+  - 00:00-24:00
+  fri:
+  - 00:00-24:00
+  sat:
+  - 00:00-24:00
+  sun:
+  - 00:00-24:00
+claimed: false
+updated_by: import
+updated_at: "2026-10-17 01:01"
+markdown: 'Hospital in Klong Haeng, Ao Nang.
+
+
+  Links: <https://www.aonanghospital.com>, <https://www.facebook.com/wattanapathospitalaonang>, <https://www.instagram.com/watanapat_aonang/>
+
+
+  Sources: <https://www.openstreetmap.org/way/1227068087>, <https://www.aonanghospital.com>
+
+
+  Map data © OpenStreetMap contributors (ODbL).
+
+  '

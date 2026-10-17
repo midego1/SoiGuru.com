@@ -1,0 +1,34 @@
+name: Aonang Villa Resort
+description: Hotel in Ao Nang.
+source_url: https://www.aonangvilla.com/index.html
+category: hotels
+tags: []
+featured: false
+status: approved
+city: krabi
+area: ao-nang
+geo:
+  lat: 8.030828
+  lng: 98.823633
+location:
+  address: Ao Nang
+  city: Krabi
+  country: TH
+  latitude: 8.030828
+  longitude: 98.823633
+phone: "+6675637271"
+claimed: false
+updated_by: import
+updated_at: "2026-10-17 01:01"
+markdown: 'Hotel in Ao Nang.
+
+
+  Links: <https://www.aonangvilla.com/index.html>
+
+
+  Sources: <https://www.openstreetmap.org/relation/19799652>
+
+
+  Map data © OpenStreetMap contributors (ODbL).
+
+  '

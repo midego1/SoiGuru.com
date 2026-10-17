@@ -1,0 +1,35 @@
+name: Centara Ao Nang Beach Resort & Spa
+name_th: เซ็นทารา อ่าวนาง บีช รีสอร์ท แอนด์ สปา
+description: Hotel in Ao Nang.
+source_url: https://www.centarahotelsresorts.com/centara/cnk
+category: hotels
+tags: []
+featured: false
+status: approved
+city: krabi
+area: ao-nang
+geo:
+  lat: 8.029497
+  lng: 98.825488
+location:
+  address: Ao Nang
+  city: Krabi
+  country: TH
+  latitude: 8.029497
+  longitude: 98.825488
+claimed: false
+updated_by: import
+updated_at: "2026-10-17 01:01"
+markdown: 'Hotel in Ao Nang.
+
+
+  Links: <https://www.centarahotelsresorts.com/centara/cnk>, <https://www.facebook.com/Centara-Ao-Nang-Beach-Resort-Spa-Krabi-352801018731188>,
+  <https://www.instagram.com/centara_aonangbeach/>
+
+
+  Sources: <https://www.openstreetmap.org/relation/19746248>, <https://www.centarahotelsresorts.com/centara/cnk>
+
+
+  Map data © OpenStreetMap contributors (ODbL).
+
+  '

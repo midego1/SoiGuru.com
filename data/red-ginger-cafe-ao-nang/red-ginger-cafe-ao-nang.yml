@@ -1,0 +1,30 @@
+name: Red Ginger Café
+description: Café in Ao Nang.
+source_url: ''
+category: cafes
+tags: []
+featured: false
+status: approved
+city: krabi
+area: ao-nang
+geo:
+  lat: 8.039274
+  lng: 98.817322
+location:
+  address: Ao Nang, Krabi
+  city: Krabi
+  country: TH
+  latitude: 8.039274
+  longitude: 98.817322
+claimed: false
+updated_by: import
+updated_at: "2026-10-17 01:01"
+markdown: 'Café in Ao Nang.
+
+
+  Sources: <https://www.openstreetmap.org/node/11378820453>
+
+
+  Map data © OpenStreetMap contributors (ODbL).
+
+  '

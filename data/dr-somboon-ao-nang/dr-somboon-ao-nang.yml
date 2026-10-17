@@ -1,0 +1,32 @@
+name: Dr. Somboon
+description: Clinic in Ao Nang.
+source_url: ''
+category: clinics-pharmacies
+tags: []
+featured: false
+status: approved
+city: krabi
+area: ao-nang
+address: 249/10 Moo 2
+geo:
+  lat: 8.034252
+  lng: 98.828655
+location:
+  address: 249/10 Moo 2
+  city: Krabi
+  country: TH
+  latitude: 8.034252
+  longitude: 98.828655
+phone: "+6675695303"
+claimed: false
+updated_by: import
+updated_at: "2026-10-17 01:01"
+markdown: 'Clinic in Ao Nang.
+
+
+  Sources: <https://www.openstreetmap.org/node/13737216977>
+
+
+  Map data © OpenStreetMap contributors (ODbL).
+
+  '

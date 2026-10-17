@@ -1,0 +1,44 @@
+name: Krit Barber Shop
+description: Hair salon in Ao Nang.
+source_url: ''
+category: barbers-salons
+tags: []
+featured: false
+status: approved
+city: krabi
+area: ao-nang
+geo:
+  lat: 8.03395
+  lng: 98.828801
+location:
+  address: Ao Nang, Krabi
+  city: Krabi
+  country: TH
+  latitude: 8.03395
+  longitude: 98.828801
+hours:
+  mon:
+  - 09:00-20:00
+  tue:
+  - 09:00-20:00
+  wed: []
+  thu:
+  - 09:00-20:00
+  fri:
+  - 09:00-20:00
+  sat:
+  - 09:00-20:00
+  sun:
+  - 09:00-20:00
+claimed: false
+updated_by: import
+updated_at: "2026-10-17 01:01"
+markdown: 'Hair salon in Ao Nang.
+
+
+  Sources: <https://www.openstreetmap.org/node/11815841030>
+
+
+  Map data © OpenStreetMap contributors (ODbL).
+
+  '

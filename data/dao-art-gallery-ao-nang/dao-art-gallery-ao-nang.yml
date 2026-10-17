@@ -1,0 +1,30 @@
+name: Dao Art Gallery
+description: Art shop in Ao Nang.
+source_url: ''
+category: shops
+tags: []
+featured: false
+status: approved
+city: krabi
+area: ao-nang
+geo:
+  lat: 8.033769
+  lng: 98.82801
+location:
+  address: Ao Nang, Krabi
+  city: Krabi
+  country: TH
+  latitude: 8.033769
+  longitude: 98.82801
+claimed: false
+updated_by: import
+updated_at: "2026-10-17 01:01"
+markdown: 'Art shop in Ao Nang.
+
+
+  Sources: <https://www.openstreetmap.org/node/5273685721>
+
+
+  Map data © OpenStreetMap contributors (ODbL).
+
+  '
