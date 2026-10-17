@@ -31,14 +31,28 @@ const { config, categories } = data;
 const listings = cityListings(data, city);
 const area = defaultArea(city);
 // Candidates for "Open now": the default area first, then the rest of the city, by rating.
-const openNowCandidates = [...listings].sort(
+const ranked = [...listings].sort(
     (a, b) => Number(b.area?.id === area?.id) - Number(a.area?.id === area?.id) || (b.rating ?? 0) - (a.rating ?? 0),
 );
+// Varied: one place per category in turn (category priority order), so the first cards are
+// not four branches of the same chain. The browser keeps the first ones that are open.
+const byCategory = new Map<string, typeof ranked>();
+for (const cat of categories) byCategory.set(cat.id, []);
+for (const l of ranked) {
+    const key = l.category?.id ?? '';
+    if (!byCategory.has(key)) byCategory.set(key, []);
+    byCategory.get(key)!.push(l);
+}
+const openNowCandidates: typeof ranked = [];
+for (let round = 0; openNowCandidates.length < ranked.length; round++)
+    for (const list of byCategory.values()) if (list[round]) openNowCandidates.push(list[round]);
 const areaCounts = new Map(city.areas.map((a) => [a.id, listings.filter((l) => l.area?.id === a.id).length]));
 const siteUrl = (Astro.site?.href ?? '').replace(/\/$/, '');
 const owner = ownerUrl(config, city);
 const areaNames = city.areas.map((a) => a.name);
 // Areas with places; an empty area would open an empty list.
+// Category tiles: every category with places in this city, in priority order.
+const tileCategories = categories.filter((c) => listings.some((l) => l.category?.id === c.id));
 const visibleAreas = city.areas.filter((a) => (areaCounts.get(a.id) ?? 0) > 0);
 const trust: [string, string][] = [
     ['Opening hours you can check', 'เวลาเปิด-ปิดที่ตรวจสอบได้'],
@@ -91,7 +105,7 @@ const trust: [string, string][] = [
             <h2 class="sg-visually-hidden" id="sg-cats-h">Categories</h2>
             <div class="sg-tiles">
                 {
-                    categories.slice(0, 8).map((cat) => (
+                    tileCategories.map((cat) => (
                         <a class="sg-tile" href={`/${city.id}/${cat.id}`}>
                             <span class="sg-tile-mark">
                                 <Icon name={cat.icon} />

@@ -1,0 +1,31 @@
+name: Long Tail Boat Ticket 98.3
+description: Tour operator in Nopparat Thara, Ao Nang.
+source_url: ''
+category: tours
+tags: []
+featured: false
+status: approved
+city: krabi
+area: ao-nang
+address: ถนนคลองแห้ง
+geo:
+  lat: 8.039748
+  lng: 98.814883
+location:
+  address: ถนนคลองแห้ง
+  city: Krabi
+  country: TH
+  latitude: 8.039748
+  longitude: 98.814883
+claimed: false
+updated_by: import
+updated_at: "2026-10-17 01:01"
+markdown: 'Tour operator in Nopparat Thara, Ao Nang.
+
+
+  Sources: <https://www.openstreetmap.org/node/6796227286>
+
+
+  Map data © OpenStreetMap contributors (ODbL).
+
+  '

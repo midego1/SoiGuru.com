@@ -30,6 +30,8 @@ export function whatsappUrl(e164: string): string {
  */
 export function lineUrl(lineId: string): string {
     const id = lineId.trim();
+    // A full LINE link (line.me/ti/p/…, line.me/R/…) is used as given.
+    if (/^https:\/\/line\.me\//.test(id)) return id;
     return id.startsWith('@')
         ? `https://line.me/R/ti/p/${encodeURIComponent(id)}`
         : `https://line.me/R/ti/p/~${encodeURIComponent(id)}`;

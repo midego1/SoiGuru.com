@@ -1,0 +1,38 @@
+name: The Dive Ao Nang
+description: PADI 5 Star dive center in Ao Nang.
+source_url: http://thediveaonang.com
+category: dive-shops
+tags: []
+featured: false
+status: approved
+city: krabi
+area: ao-nang
+address: 372/3 Moo 2, Ao Nang
+phone: "+66822822537"
+hours:
+  mon:
+  - 11:00-20:00
+  tue:
+  - 11:00-20:00
+  wed:
+  - 11:00-20:00
+  thu:
+  - 11:00-20:00
+  fri:
+  - 11:00-20:00
+  sat:
+  - 11:00-20:00
+  sun:
+  - 11:00-20:00
+claimed: false
+updated_by: import
+updated_at: "2026-10-17 01:01"
+markdown: 'PADI 5 Star dive center in Ao Nang.
+
+
+  Links: <http://thediveaonang.com>
+
+
+  Sources: <https://www.padi.com/dive-center/thailand/the-dive-ao-nang-co-ltd/>
+
+  '

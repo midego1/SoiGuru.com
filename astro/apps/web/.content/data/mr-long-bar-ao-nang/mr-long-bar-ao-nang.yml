@@ -1,0 +1,47 @@
+name: Mr. Long Bar
+description: Bar in Ao Nang.
+source_url: ''
+category: bars
+tags: []
+featured: false
+status: approved
+city: krabi
+area: ao-nang
+address: 915, m. 2 Soi 9
+geo:
+  lat: 8.038841
+  lng: 98.838081
+location:
+  address: 915, m. 2 Soi 9
+  city: Krabi
+  country: TH
+  latitude: 8.038841
+  longitude: 98.838081
+phone: "+66644291495"
+hours:
+  mon:
+  - 09:00-24:00
+  tue:
+  - 09:00-24:00
+  wed:
+  - 09:00-24:00
+  thu:
+  - 09:00-24:00
+  fri:
+  - 09:00-24:00
+  sat:
+  - 09:00-24:00
+  sun:
+  - 09:00-24:00
+claimed: false
+updated_by: import
+updated_at: "2026-10-17 01:01"
+markdown: 'Bar in Ao Nang.
+
+
+  Sources: <https://www.openstreetmap.org/node/5665462827>
+
+
+  Map data © OpenStreetMap contributors (ODbL).
+
+  '

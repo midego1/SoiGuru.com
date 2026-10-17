@@ -1,0 +1,31 @@
+name: Ao Nang Pub Crawl
+description: Bar in Ao Nang.
+source_url: ''
+category: bars
+tags: []
+featured: false
+status: approved
+city: krabi
+area: ao-nang
+address: 344/1 Ao Nang
+geo:
+  lat: 8.03608
+  lng: 98.832688
+location:
+  address: 344/1 Ao Nang
+  city: Krabi
+  country: TH
+  latitude: 8.03608
+  longitude: 98.832688
+claimed: false
+updated_by: import
+updated_at: "2026-10-17 01:01"
+markdown: 'Bar in Ao Nang.
+
+
+  Sources: <https://www.openstreetmap.org/node/7040844339>
+
+
+  Map data © OpenStreetMap contributors (ODbL).
+
+  '

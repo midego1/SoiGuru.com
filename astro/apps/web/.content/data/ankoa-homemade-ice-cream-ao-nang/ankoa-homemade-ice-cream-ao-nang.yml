@@ -1,0 +1,45 @@
+name: Ankoa Homemade Ice Cream
+description: Café in Ao Nang.
+source_url: ''
+category: cafes
+tags: []
+featured: false
+status: approved
+city: krabi
+area: ao-nang
+geo:
+  lat: 8.034201
+  lng: 98.818829
+location:
+  address: Ao Nang, Krabi
+  city: Krabi
+  country: TH
+  latitude: 8.034201
+  longitude: 98.818829
+hours:
+  mon:
+  - 14:00-23:00
+  tue:
+  - 14:00-23:00
+  wed:
+  - 14:00-23:00
+  thu:
+  - 14:00-23:00
+  fri:
+  - 14:00-23:00
+  sat:
+  - 14:00-23:00
+  sun:
+  - 14:00-23:00
+claimed: false
+updated_by: import
+updated_at: "2026-10-17 01:01"
+markdown: 'Café in Ao Nang.
+
+
+  Sources: <https://www.openstreetmap.org/node/6484971586>
+
+
+  Map data © OpenStreetMap contributors (ODbL).
+
+  '

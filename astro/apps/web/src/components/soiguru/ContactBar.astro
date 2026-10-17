@@ -26,7 +26,7 @@ const buttons = [
 ].filter((b): b is { href: string; cls: string; icon: string; label: string; th: string | undefined; channel: string } => Boolean(b));
 const facts = [
     listing.phone && formatThaiPhone(listing.phone),
-    listing.line_id && `LINE ${listing.line_id}`,
+    listing.line_id && !listing.line_id.startsWith('http') && `LINE ${listing.line_id}`,
     listing.booking_note,
 ].filter(Boolean);
 ---

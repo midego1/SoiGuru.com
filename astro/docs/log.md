@@ -3,6 +3,10 @@ title: "Change Log"
 sidebar_label: "Change Log"
 ---
 
+## 2026-10-17 — The owner's Ao Nang list (169 places) and 8 new categories
+
+`ao-nang-new-businesses.csv` (173 rows) imported into the `data` branch (a1dd3db) and the bundled `.content/`: 169 listings, 4 left out as closed in OpenStreetMap (`disused:*`). New categories bars, shops, gyms-muay-thai, clinics-pharmacies, laundry, barbers-salons, coworking, other, with priorities by weight; the site draws them with new icons (glass, bag, glove, cross, washer, scissors, laptop, dots in `icons.ts`, mapped in `CATEGORY_ICONS`). City home tiles show every category with places (16 now), and "Open now" takes one place per category in turn so the first cards are varied. `lineUrl()` keeps full `https://line.me/…` links as given. Spec: `.specify/features/soiguru-design.md`.
+
 ## 2026-10-17 — All listings removed; Krabi only
 
 At the owner's request the directory starts from scratch with their own list: the `data` branch (commit 1ffee80) drops every listing (the 490 OpenStreetMap/research listings in Krabi and the 94 samples) and keeps only Krabi in `cities.yml`; the bundled `.content/` is refreshed from it. soiguru.com builds 16 pages; city home and results show the empty states until the owner's list is imported.

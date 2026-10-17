@@ -1,0 +1,46 @@
+name: Yesterday Bar & Café
+description: Bar in Ao Nang.
+source_url: ''
+category: bars
+tags: []
+featured: false
+status: approved
+city: krabi
+area: ao-nang
+geo:
+  lat: 8.032193
+  lng: 98.82396
+location:
+  address: Ao Nang, Krabi
+  city: Krabi
+  country: TH
+  latitude: 8.032193
+  longitude: 98.82396
+phone: "+66954262093"
+hours:
+  mon:
+  - 03:00-02:30
+  tue:
+  - 03:00-02:30
+  wed:
+  - 03:00-02:30
+  thu:
+  - 03:00-02:30
+  fri:
+  - 03:00-02:30
+  sat:
+  - 03:00-02:30
+  sun:
+  - 03:00-02:30
+claimed: false
+updated_by: import
+updated_at: "2026-10-17 01:01"
+markdown: 'Bar in Ao Nang.
+
+
+  Sources: <https://www.openstreetmap.org/node/13678315224>
+
+
+  Map data © OpenStreetMap contributors (ODbL).
+
+  '

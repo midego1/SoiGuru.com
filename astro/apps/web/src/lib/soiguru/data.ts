@@ -244,7 +244,15 @@ const CATEGORY_ICONS: Record<string, IconName> = {
     'scooter-rental': 'scooter',
     'nail-salons': 'nail',
     'dive-shops': 'waves',
-    hotels: 'bed'
+    hotels: 'bed',
+    bars: 'glass',
+    shops: 'bag',
+    'gyms-muay-thai': 'glove',
+    'clinics-pharmacies': 'cross',
+    laundry: 'washer',
+    'barbers-salons': 'scissors',
+    coworking: 'laptop',
+    other: 'dots'
 };
 
 /** The visual themes of the public site (`theme` in works.yml, or `SITE_THEME` at build time). */

@@ -1,0 +1,30 @@
+name: KoDam Kitchen
+description: Restaurant in Ao Nang.
+source_url: ''
+category: restaurants
+tags: []
+featured: false
+status: approved
+city: krabi
+area: ao-nang
+geo:
+  lat: 8.0385
+  lng: 98.819913
+location:
+  address: Ao Nang, Krabi
+  city: Krabi
+  country: TH
+  latitude: 8.0385
+  longitude: 98.819913
+claimed: false
+updated_by: import
+updated_at: "2026-10-17 01:01"
+markdown: 'Restaurant in Ao Nang.
+
+
+  Sources: <https://www.openstreetmap.org/node/13276773801>
+
+
+  Map data © OpenStreetMap contributors (ODbL).
+
+  '

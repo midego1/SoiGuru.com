@@ -1,0 +1,30 @@
+name: Last Fisherman Bar
+description: Bar in Ao Nang.
+source_url: ''
+category: bars
+tags: []
+featured: false
+status: approved
+city: krabi
+area: ao-nang
+geo:
+  lat: 8.028605
+  lng: 98.825071
+location:
+  address: Ao Nang, Krabi
+  city: Krabi
+  country: TH
+  latitude: 8.028605
+  longitude: 98.825071
+claimed: false
+updated_by: import
+updated_at: "2026-10-17 01:01"
+markdown: 'Bar in Ao Nang.
+
+
+  Sources: <https://www.openstreetmap.org/node/1016378256>
+
+
+  Map data © OpenStreetMap contributors (ODbL).
+
+  '

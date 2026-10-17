@@ -2,7 +2,7 @@
 
 Content repository for [SoiGuru.com](https://soiguru.com): cities, areas, categories and listings. It uses the Ever Works data format (same layout as `ever-works/awesome-time-tracking-data`) and is read by both site templates through `DATA_REPOSITORY`.
 
-> **No listings yet (2026-10-17).** All earlier listings (the OpenStreetMap import for Krabi and the sample businesses) were removed to start from the owner's own list. Krabi is the only city; Chiang Mai and Lam Plai Mat were removed from `cities.yml`.
+> **Listings (2026-10-17): the owner's own list for Ao Nang** — 169 businesses imported from `ao-nang-new-businesses.csv` (OpenStreetMap, official websites and aggregators; OSM data © OpenStreetMap contributors, ODbL, linked under `Sources`). Four places marked closed in OSM (`disused:*`) were left out. All are unclaimed (`claimed: false`, `updated_by: import`). Krabi is the only city; categories now include bars, shops, gyms & Muay Thai, clinics & pharmacies, laundry, barbers & salons, coworking and other services.
 
 ## Layout
 

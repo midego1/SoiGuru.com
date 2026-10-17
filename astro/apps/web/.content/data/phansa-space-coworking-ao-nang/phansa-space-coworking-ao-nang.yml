@@ -1,0 +1,37 @@
+name: Phansa.Space Coworking
+description: Coworking space in Ao Nang.
+source_url: http://phansa.space
+category: coworking
+tags: []
+featured: false
+status: approved
+city: krabi
+area: ao-nang
+address: 164/2 Moo 5, Ban Ao Nang
+phone: "+66918850631"
+hours:
+  mon:
+  - 09:00-21:00
+  tue:
+  - 09:00-21:00
+  wed:
+  - 09:00-21:00
+  thu:
+  - 09:00-21:00
+  fri:
+  - 09:00-21:00
+  sat:
+  - 09:00-21:00
+  sun: []
+claimed: false
+updated_by: import
+updated_at: "2026-10-17 01:01"
+markdown: 'Coworking space in Ao Nang.
+
+
+  Links: <http://phansa.space>
+
+
+  Sources: <https://www.ngos1.com/TH/Ban-Ao-Nang/1600487293553674/Phansa.Space-Coworking>
+
+  '

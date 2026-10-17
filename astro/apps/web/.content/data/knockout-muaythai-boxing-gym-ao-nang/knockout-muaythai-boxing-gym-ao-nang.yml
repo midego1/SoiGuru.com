@@ -1,0 +1,55 @@
+name: Knockout Muaythai Boxing Gym
+description: Fitness centre in Ao Nang.
+source_url: https://knockoutmuaythaikrabi.com/
+category: gyms-muay-thai
+tags: []
+featured: false
+status: approved
+city: krabi
+area: ao-nang
+address: 376/18 Moo 2, Ao Nang
+geo:
+  lat: 8.038917
+  lng: 98.83327
+location:
+  address: 376/18 Moo 2, Ao Nang
+  city: Krabi
+  country: TH
+  latitude: 8.038917
+  longitude: 98.83327
+phone: "+66980534901"
+hours:
+  mon:
+  - 07:00-09:00
+  - 15:00-17:00
+  tue:
+  - 07:00-09:00
+  - 15:00-17:00
+  wed:
+  - 07:00-09:00
+  - 15:00-17:00
+  thu:
+  - 07:00-09:00
+  - 15:00-17:00
+  fri:
+  - 07:00-09:00
+  - 15:00-17:00
+  sat:
+  - 07:00-09:00
+  - 15:00-17:00
+  sun: []
+claimed: false
+updated_by: import
+updated_at: "2026-10-17 01:01"
+markdown: 'Fitness centre in Ao Nang.
+
+
+  Links: <https://knockoutmuaythaikrabi.com/>
+
+
+  Sources: <https://www.openstreetmap.org/node/11419252169>, <https://knockoutmuaythaikrabi.com/>, <https://muaythang.com/gyms/knockout-muaythai-boxing-gym>
+
+
+  Map data © OpenStreetMap contributors (ODbL).
+
+  '

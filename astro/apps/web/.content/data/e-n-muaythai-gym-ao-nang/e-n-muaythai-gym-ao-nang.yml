@@ -1,0 +1,45 @@
+name: E.N. Muaythai Gym
+description: Muay Thai gym in Ao Nang.
+source_url: https://enmuaythaigym.com/
+category: gyms-muay-thai
+tags: []
+featured: false
+status: approved
+city: krabi
+area: ao-nang
+address: 691 Sai Thai, Ao Nang
+phone: "+66968718047"
+whatsapp: "+66968718047"
+line_id: https://line.me/483qpbkm
+hours:
+  mon:
+  - 08:00-10:00
+  - 16:00-18:00
+  tue:
+  - 08:00-10:00
+  - 16:00-18:00
+  wed:
+  - 08:00-10:00
+  - 16:00-18:00
+  thu:
+  - 08:00-10:00
+  - 16:00-18:00
+  fri:
+  - 08:00-10:00
+  - 16:00-18:00
+  sat:
+  - 08:00-10:00
+  - 16:00-18:00
+  sun: []
+claimed: false
+updated_by: import
+updated_at: "2026-10-17 01:01"
+markdown: 'Muay Thai gym in Ao Nang.
+
+
+  Links: <https://enmuaythaigym.com/>, <https://www.facebook.com/enmuaythaigym>, <https://www.instagram.com/e.n.muaythaigym>
+
+
+  Sources: <https://enmuaythaigym.com/>, <https://krabimuaythai.com/gym/en>
+
+  '

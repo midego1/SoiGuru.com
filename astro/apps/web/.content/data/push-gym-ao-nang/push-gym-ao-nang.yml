@@ -1,0 +1,30 @@
+name: Push Gym
+description: Sports centre in Ao Nang.
+source_url: ''
+category: gyms-muay-thai
+tags: []
+featured: false
+status: approved
+city: krabi
+area: ao-nang
+geo:
+  lat: 8.03297
+  lng: 98.825189
+location:
+  address: Ao Nang, Krabi
+  city: Krabi
+  country: TH
+  latitude: 8.03297
+  longitude: 98.825189
+claimed: false
+updated_by: import
+updated_at: "2026-10-17 01:01"
+markdown: 'Sports centre in Ao Nang.
+
+
+  Sources: <https://www.openstreetmap.org/node/3676113267>, <https://newasialiving.com/best-gyms-in-krabi/>
+
+
+  Map data © OpenStreetMap contributors (ODbL).
+
+  '

@@ -1,0 +1,51 @@
+name: Kiss Bar Ao Nang
+description: Bar in Ao Nang.
+source_url: https://kissbaraonang.com
+category: bars
+tags: []
+featured: false
+status: approved
+city: krabi
+area: ao-nang
+address: 246/8 Soi RCA Ao Nang
+geo:
+  lat: 8.032485
+  lng: 98.825056
+location:
+  address: 246/8 Soi RCA Ao Nang
+  city: Krabi
+  country: TH
+  latitude: 8.032485
+  longitude: 98.825056
+phone: "+66807779374"
+whatsapp: "+66807779374"
+hours:
+  mon:
+  - 18:00-03:00
+  tue:
+  - 18:00-03:00
+  wed:
+  - 18:00-03:00
+  thu:
+  - 18:00-03:00
+  fri:
+  - 18:00-03:00
+  sat:
+  - 18:00-03:00
+  sun:
+  - 18:00-03:00
+claimed: false
+updated_by: import
+updated_at: "2026-10-17 01:01"
+markdown: 'Bar in Ao Nang.
+
+
+  Links: <https://kissbaraonang.com>, <https://www.facebook.com/KissBarAoNangToo/>, <https://www.instagram.com/kissbaraonang/>
+
+
+  Sources: <https://www.openstreetmap.org/node/3676113261>, <https://kissbaraonang.com>
+
+
+  Map data © OpenStreetMap contributors (ODbL).
+
+  '

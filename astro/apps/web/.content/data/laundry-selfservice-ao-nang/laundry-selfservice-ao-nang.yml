@@ -1,0 +1,30 @@
+name: Laundry Selfservice
+description: Laundry in Klong Haeng, Ao Nang.
+source_url: ''
+category: laundry
+tags: []
+featured: false
+status: approved
+city: krabi
+area: ao-nang
+geo:
+  lat: 8.050353
+  lng: 98.8126
+location:
+  address: Klong Haeng, Ao Nang, Krabi
+  city: Krabi
+  country: TH
+  latitude: 8.050353
+  longitude: 98.8126
+claimed: false
+updated_by: import
+updated_at: "2026-10-17 01:01"
+markdown: 'Laundry in Klong Haeng, Ao Nang.
+
+
+  Sources: <https://www.openstreetmap.org/node/6281038785>
+
+
+  Map data © OpenStreetMap contributors (ODbL).
+
+  '

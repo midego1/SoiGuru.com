@@ -1,0 +1,32 @@
+name: Bangid Barber Pro
+description: Barbershop in Ao Nang.
+source_url: ''
+category: barbers-salons
+tags: []
+featured: false
+status: approved
+city: krabi
+area: ao-nang
+address: Soi 15, Ao Nang
+geo:
+  lat: 8.031425
+  lng: 98.828746
+location:
+  address: Soi 15, Ao Nang
+  city: Krabi
+  country: TH
+  latitude: 8.031425
+  longitude: 98.828746
+phone: "+66807067032"
+claimed: false
+updated_by: import
+updated_at: "2026-10-17 01:01"
+markdown: 'Barbershop in Ao Nang.
+
+
+  Links: <https://www.facebook.com/share/16f764mRAg/>
+
+
+  Sources: <https://exa.ai/library/place/8h1jt7vdxpm>
+
+  '

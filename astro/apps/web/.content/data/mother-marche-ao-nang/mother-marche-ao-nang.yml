@@ -1,0 +1,45 @@
+name: Mother Marche
+description: Supermarket in Klong Haeng, Ao Nang.
+source_url: ''
+category: shops
+tags: []
+featured: false
+status: approved
+city: krabi
+area: ao-nang
+geo:
+  lat: 8.050667
+  lng: 98.813028
+location:
+  address: Klong Haeng, Ao Nang, Krabi
+  city: Krabi
+  country: TH
+  latitude: 8.050667
+  longitude: 98.813028
+hours:
+  mon:
+  - 06:00-22:00
+  tue:
+  - 06:00-22:00
+  wed:
+  - 06:00-22:00
+  thu:
+  - 06:00-22:00
+  fri:
+  - 06:00-22:00
+  sat:
+  - 06:00-22:00
+  sun:
+  - 06:00-22:00
+claimed: false
+updated_by: import
+updated_at: "2026-10-17 01:01"
+markdown: 'Supermarket in Klong Haeng, Ao Nang.
+
+
+  Sources: <https://www.openstreetmap.org/way/1233282846>
+
+
+  Map data © OpenStreetMap contributors (ODbL).
+
+  '

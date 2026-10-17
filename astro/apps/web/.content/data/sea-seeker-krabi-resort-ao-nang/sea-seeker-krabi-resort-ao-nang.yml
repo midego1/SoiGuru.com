@@ -1,0 +1,35 @@
+name: Sea Seeker Krabi Resort
+description: Hotel in Ao Nang.
+source_url: https://www.seaseekerkrabiresort.com/
+category: hotels
+tags: []
+featured: false
+status: approved
+city: krabi
+area: ao-nang
+address: 962 Moo 2 ซอยอ่าวนาง 15
+geo:
+  lat: 8.032208
+  lng: 98.82923
+location:
+  address: 962 Moo 2 ซอยอ่าวนาง 15
+  city: Krabi
+  country: TH
+  latitude: 8.032208
+  longitude: 98.82923
+phone: "+6675817777"
+claimed: false
+updated_by: import
+updated_at: "2026-10-17 01:01"
+markdown: 'Hotel in Ao Nang.
+
+
+  Links: <https://www.seaseekerkrabiresort.com/>, <https://facebook.com/seaseekerkrabiresort/>, <https://www.instagram.com/seaseekerkrabiresort/>
+
+
+  Sources: <https://www.openstreetmap.org/relation/19799648>
+
+
+  Map data © OpenStreetMap contributors (ODbL).
+
+  '

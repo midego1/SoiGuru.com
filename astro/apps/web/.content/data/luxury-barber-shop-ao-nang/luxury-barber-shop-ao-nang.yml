@@ -1,0 +1,35 @@
+name: Luxury Barber Shop
+description: Barbershop in Ao Nang.
+source_url: ''
+category: barbers-salons
+tags: []
+featured: false
+status: approved
+city: krabi
+area: ao-nang
+address: Opposite Aree Tara Resort (ตรงข้ามอารีธารา รีสอร์ท)
+phone: "+66649867413"
+hours:
+  mon:
+  - 10:00-22:00
+  tue:
+  - 10:00-22:00
+  wed:
+  - 10:00-22:00
+  thu:
+  - 10:00-22:00
+  fri:
+  - 10:00-22:00
+  sat:
+  - 10:00-22:00
+  sun:
+  - 10:00-22:00
+claimed: false
+updated_by: import
+updated_at: "2026-10-17 01:01"
+markdown: 'Barbershop in Ao Nang.
+
+
+  Sources: <https://exa.ai/library/places?q=c7524995e846a6f5>
+
+  '

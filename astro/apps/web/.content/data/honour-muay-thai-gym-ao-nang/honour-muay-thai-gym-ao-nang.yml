@@ -1,0 +1,38 @@
+name: Honour Muay Thai Gym
+description: Muay Thai gym in Ao Nang.
+source_url: https://honourmuaythai.com/
+category: gyms-muay-thai
+tags: []
+featured: false
+status: approved
+city: krabi
+area: ao-nang
+address: 905 Tambon Ao Nang
+phone: "+66931981378"
+whatsapp: "+66931981378"
+hours:
+  mon:
+  - 08:00-19:00
+  tue:
+  - 08:00-19:00
+  wed:
+  - 08:00-19:00
+  thu:
+  - 08:00-19:00
+  fri:
+  - 08:00-19:00
+  sat:
+  - 08:00-19:00
+  sun: []
+claimed: false
+updated_by: import
+updated_at: "2026-10-17 01:01"
+markdown: 'Muay Thai gym in Ao Nang.
+
+
+  Links: <https://honourmuaythai.com/>, <https://www.facebook.com/honourmuaythai.thaiboxing>, <https://www.instagram.com/honourmuaythai_aonang_krabi>
+
+
+  Sources: <https://honourmuaythai.com/>, <https://muaythang.com/gyms/honour-muay-thai-ao-nang-krabi>
+
+  '
