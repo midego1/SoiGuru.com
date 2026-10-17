@@ -3,6 +3,10 @@ title: "Change Log"
 sidebar_label: "Change Log"
 ---
 
+## 2026-10-17 — All listings removed; Krabi only
+
+At the owner's request the directory starts from scratch with their own list: the `data` branch (commit 1ffee80) drops every listing (the 490 OpenStreetMap/research listings in Krabi and the 94 samples) and keeps only Krabi in `cities.yml`; the bundled `.content/` is refreshed from it. soiguru.com builds 16 pages; city home and results show the empty states until the owner's list is imported.
+
 ## 2026-10-17 — Favicon
 
 SoiGuru's logo mark (sea-deep tile, white karsts, sun line) as the site icon: `public/favicon.svg`, `favicon.ico` (16/32/48), `apple-touch-icon.png` (180), `icon-192.png`, `icon-512.png` and `site.webmanifest`. `SoiGuruLayout` links them unless works.yml sets `logo.favicon`. Spec: `.specify/features/soiguru-design.md`.
