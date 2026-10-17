@@ -3,6 +3,10 @@ title: "Change Log"
 sidebar_label: "Change Log"
 ---
 
+## 2026-10-17 — Drawn Thailand map in the city picker and the landing hero
+
+The header's city picker opens a wider panel: the cities (with place counts and province) beside a small drawn map of Thailand; hovering or focusing a city lights its pin. The landing hero shows the same map in a card instead of the karst picture, and the hero city buttons and city cards light their pins. `ThailandMap.astro` draws the outline from `lib/soiguru/thailand.ts` (one SVG path from Natural Earth 1:50m, public domain, via `world-atlas` 2.0.2, generated once; no tiles, no map library), a dotted texture, sea waves and one pin per city; `page.ts` handles `[data-city-hover]`. Spec: `.specify/features/soiguru-design.md` § Website layout.
+
 ## 2026-10-16 — Moodboard theme live
 
 The owner chose the moodboard look: bundled works.yml sets `theme: soiguru` again (sea `#0a6b73`, sun `#f2a33a`, sand page `surface-100`, sea-tint category tiles, IBM Plex Sans + Thai). The `soiguru` theme now follows the moodboard's grounds (page on `surface-100`, cards and bars on `surface`). `navy` stays available as a setting. Spec: `.specify/features/soiguru-design.md` § Website layout.

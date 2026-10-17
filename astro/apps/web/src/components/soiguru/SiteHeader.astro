@@ -15,7 +15,8 @@
 import Icon from './Icon.astro';
 import LanguageToggle from './LanguageToggle.astro';
 import Logo from './Logo.astro';
-import { getSoiGuru, claimUrl, ownerUrl, headerLinks, type City } from '../../lib/soiguru/data';
+import ThailandMap from './ThailandMap.astro';
+import { getSoiGuru, cityListings, claimUrl, ownerUrl, headerLinks, type City } from '../../lib/soiguru/data';
 
 interface Props {
     /** The city the page belongs to (picker label, links, search) */
@@ -53,14 +54,25 @@ const listHref = claim ?? owner;
                         <span data-th={city?.name_th}>{city?.name ?? 'Cities'}</span>
                         <Icon name="chevron-down" class="tkg-i-16" />
                     </summary>
-                    <div class="sg-pop-panel">
-                        <p class="sg-pop-title" data-th="เลือกเมือง">Choose a city</p>
-                        {cities.map((c) => (
-                            <a href={`/${c.id}`} aria-current={c.id === city?.id ? 'page' : undefined}>
-                                <span>{c.name}</span>
-                                {c.name_th && <small lang="th">{c.name_th}</small>}
-                            </a>
-                        ))}
+                    <div class="sg-pop-panel sg-citypanel">
+                        <div class="sg-citypanel-list">
+                            <p class="sg-pop-title" data-th="เลือกเมือง">Choose a city</p>
+                            {cities.map((c) => {
+                                const n = cityListings(data, c).length;
+                                return (
+                                    <a href={`/${c.id}`} aria-current={c.id === city?.id ? 'page' : undefined} data-city-hover={c.id}>
+                                        <span class="sg-citypanel-name">
+                                            <span>{c.name}</span>
+                                            <small>{n} {n === 1 ? 'place' : 'places'}{c.province && c.province !== c.name ? ` · ${c.province}` : ''}</small>
+                                        </span>
+                                        {c.name_th && <small lang="th">{c.name_th}</small>}
+                                    </a>
+                                );
+                            })}
+                        </div>
+                        <div class="sg-citypanel-map">
+                            <ThailandMap cities={cities} active={city?.id} uid="pick" labels={false} />
+                        </div>
                     </div>
                 </details>
             )

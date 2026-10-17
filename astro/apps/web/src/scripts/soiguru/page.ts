@@ -240,6 +240,20 @@ document.addEventListener('keydown', (event) => {
     open.querySelector<HTMLElement>('summary')?.focus();
 });
 
+/** Drawn Thailand maps: light a city's pin while its row, button or card is hovered or focused. */
+function lightCity(id: string | undefined): void {
+    for (const pin of document.querySelectorAll<SVGElement>('[data-map-city]')) {
+        pin.classList.toggle('is-hover', pin.dataset['mapCity'] === id);
+    }
+    for (const map of document.querySelectorAll<SVGElement>('[data-thmap]')) map.classList.toggle('has-hover', !!id);
+}
+for (const type of ['pointerover', 'focusin'] as const) {
+    document.addEventListener(type, (event) => {
+        const el = event.target instanceof Element ? event.target.closest<HTMLElement | SVGElement>('[data-city-hover], [data-map-city]') : null;
+        lightCity(el ? (el.dataset['cityHover'] ?? el.dataset['mapCity']) : undefined);
+    });
+}
+
 /** Current UI language (for other scripts). */
 export function currentLang(): Lang {
     return lang;

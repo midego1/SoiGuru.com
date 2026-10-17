@@ -2046,3 +2046,145 @@ html[data-lang='en'] .sg-sf-lang[data-lang-set='en'] {
 :root:not([data-theme='navy']) .sg-page-wide .sg-results[data-view='list'] > .tkg-filterbar {
     background: transparent;
 }
+
+/* ---------- drawn Thailand map (city picker, landing hero) ---------- */
+.sg-thmap {
+    display: block;
+    width: 100%;
+    height: auto;
+    overflow: visible;
+}
+.sg-thmap-land {
+    fill: var(--sea-tint);
+    stroke: var(--sea);
+    stroke-width: 0.8;
+    stroke-linejoin: round;
+}
+.sg-thmap-texture {
+    pointer-events: none;
+}
+.sg-thmap-dot {
+    fill: var(--sea);
+    opacity: 0.22;
+}
+.sg-thmap-sea path {
+    fill: none;
+    stroke: var(--sea);
+    stroke-width: 1.2;
+    stroke-linecap: round;
+    opacity: 0.35;
+}
+.sg-thmap-pin {
+    cursor: pointer;
+}
+.sg-thmap-core {
+    fill: var(--sea);
+    stroke: var(--surface);
+    stroke-width: 1.4;
+    transition: fill 0.15s ease;
+}
+.sg-thmap-halo {
+    fill: var(--sun);
+    opacity: 0;
+    transition: opacity 0.15s ease;
+}
+.sg-thmap-ring {
+    fill: none;
+    stroke: var(--sun);
+    stroke-width: 1.4;
+    opacity: 0;
+    transform-box: fill-box;
+    transform-origin: center;
+}
+.sg-thmap-label {
+    font: 600 9px var(--font-sans);
+    fill: var(--ink);
+    paint-order: stroke;
+    stroke: var(--surface);
+    stroke-width: 2.6px;
+    stroke-linejoin: round;
+    transition: opacity 0.15s ease;
+}
+.sg-thmap.has-hover .sg-thmap-pin:not(.is-hover) .sg-thmap-label {
+    opacity: 0.45;
+}
+.sg-thmap-pin.is-hover .sg-thmap-core,
+.sg-thmap-pin:hover .sg-thmap-core,
+.sg-thmap-pin:focus-visible .sg-thmap-core,
+.sg-thmap:not(.has-hover) .sg-thmap-pin.is-on .sg-thmap-core {
+    fill: var(--ink);
+}
+.sg-thmap-pin.is-hover .sg-thmap-halo,
+.sg-thmap-pin:hover .sg-thmap-halo,
+.sg-thmap-pin:focus-visible .sg-thmap-halo,
+.sg-thmap:not(.has-hover) .sg-thmap-pin.is-on .sg-thmap-halo {
+    opacity: 1;
+}
+.sg-thmap-pin.is-hover .sg-thmap-ring,
+.sg-thmap-pin:hover .sg-thmap-ring,
+.sg-thmap:not(.has-hover) .sg-thmap-pin.is-on .sg-thmap-ring {
+    animation: sg-pin-pulse 1.6s ease-out infinite;
+}
+@keyframes sg-pin-pulse {
+    0% {
+        opacity: 0.9;
+        transform: scale(0.5);
+    }
+    100% {
+        opacity: 0;
+        transform: scale(1.6);
+    }
+}
+@media (prefers-reduced-motion: reduce) {
+    .sg-thmap-ring {
+        animation: none !important;
+    }
+}
+
+/* city picker: list + map card */
+.sg-citypanel {
+    grid-template-columns: minmax(0, 1fr);
+    width: min(520px, calc(100vw - 32px));
+    padding: var(--space-3);
+}
+.sg-citypanel-list {
+    display: grid;
+    gap: 2px;
+    align-content: start;
+}
+.sg-citypanel-name {
+    display: grid;
+    gap: 1px;
+}
+.sg-citypanel-name small {
+    font-weight: 400;
+    font-size: 12px;
+    color: var(--ink-muted);
+}
+.sg-citypanel-map {
+    display: none;
+}
+@media (min-width: 560px) {
+    .sg-citypanel {
+        grid-template-columns: minmax(0, 1fr) 170px;
+        gap: var(--space-3);
+    }
+    .sg-citypanel-map {
+        display: block;
+        padding: var(--space-3);
+        border-radius: var(--radius-lg);
+        background: var(--surface-100);
+    }
+}
+
+/* landing hero: the map in a card on the dark sea */
+.sg-hero-map {
+    flex: 0 1 360px;
+    padding: 24px 28px;
+    border-radius: var(--radius-2xl);
+    background: var(--surface);
+    box-shadow: 0 20px 48px #00000033;
+}
+.sg-hero-map .sg-thmap {
+    max-height: 440px;
+}

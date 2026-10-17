@@ -8,7 +8,7 @@ import SoiGuruLayout from '../layouts/SoiGuruLayout.astro';
 import TopBar from '../components/soiguru/TopBar.astro';
 import Icon from '../components/soiguru/Icon.astro';
 import OwnerBlock from '../components/soiguru/OwnerBlock.astro';
-import KarstScene from '../components/soiguru/KarstScene.astro';
+import ThailandMap from '../components/soiguru/ThailandMap.astro';
 import { getSoiGuru, cityListings, claimUrl, ownerUrl } from '../lib/soiguru/data';
 
 const data = await getSoiGuru();
@@ -46,7 +46,7 @@ const jsonLd = [
                     <div class="sg-hero-cities">
                         {
                             cities.map((city) => (
-                                <a class="sg-btn sg-btn-onhero" href={`/${city.id}`}>
+                                <a class="sg-btn sg-btn-onhero" href={`/${city.id}`} data-city-hover={city.id}>
                                     <Icon name="pin" class="tkg-i-16" />
                                     <span data-th={city.name_th}>{city.name}</span>
                                 </a>
@@ -54,8 +54,8 @@ const jsonLd = [
                         }
                     </div>
                 </div>
-                <div class="sg-hero-art">
-                    <KarstScene />
+                <div class="sg-hero-art sg-hero-map">
+                    <ThailandMap cities={cities} uid="hero" />
                 </div>
             </div>
         </section>
@@ -69,7 +69,7 @@ const jsonLd = [
                     cities.map((city, i) => {
                         const count = cityListings(data, city).length;
                         return (
-                            <a class="sg-area" href={`/${city.id}`} style={`--area-bg: var(--area-${(i % 5) + 1})`}>
+                            <a class="sg-area" href={`/${city.id}`} style={`--area-bg: var(--area-${(i % 5) + 1})`} data-city-hover={city.id}>
                                 <span class="sg-area-art" aria-hidden="true">
                                     <svg viewBox="0 0 200 80" preserveAspectRatio="none" focusable="false">
                                         <path d={i % 2 ? 'M0 80 C30 40 46 22 62 44 C74 20 96 8 110 40 C122 64 140 56 156 66 C170 40 186 46 200 60 V80 Z' : 'M0 80 C18 54 30 30 48 50 C64 18 84 14 98 46 C112 30 130 34 140 56 C156 36 178 28 200 52 V80 Z'} fill="currentColor" />
