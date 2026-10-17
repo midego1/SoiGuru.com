@@ -1,0 +1,59 @@
+name: Doi Trek Tours Lam Plai Mat
+name_th: ดอย เทรค ทัวร์ ลำปลายมาศ
+description: Day trips and private tours with a local guide. In Town centre, Lam Plai Mat.
+description_th: ทริปไปเช้าเย็นกลับและทัวร์ส่วนตัวกับไกด์ท้องถิ่น ที่ตัวเมือง
+source_url: ''
+category: tours
+tags:
+- sample
+- family-friendly
+- isan
+featured: false
+status: approved
+sample: true
+city: lam-plai-mat
+area: town
+address: 248/11 Moo 6, Town centre, Buriram 31130
+geo:
+  lat: 15.02426
+  lng: 102.84116
+location:
+  address: 248/11 Moo 6, Town centre, Buriram 31130
+  city: Lam Plai Mat
+  country: TH
+  latitude: 15.02426
+  longitude: 102.84116
+phone: "+66800001168"
+line_id: '@sample-doitrektourslampla'
+hours:
+  mon:
+  - 08:00-18:00
+  tue: []
+  wed:
+  - 08:00-18:00
+  thu:
+  - 08:00-18:00
+  fri:
+  - 08:00-18:00
+  sat:
+  - 08:00-18:00
+  sun:
+  - 08:00-18:00
+price_band: 2
+rating: 3.9
+rating_count: 91
+claimed: false
+amenities:
+  card-accepted: true
+  english-spoken: true
+updated_by: import
+updated_at: "2026-09-11 18:30"
+markdown: '> **SAMPLE listing.** This business is invented for development and design review. Do not publish.
+
+
+  Day trips and private tours with a local guide. In Town centre, Lam Plai Mat.
+
+
+  Day trips from ฿180 per person. Thai and English spoken.
+
+  '

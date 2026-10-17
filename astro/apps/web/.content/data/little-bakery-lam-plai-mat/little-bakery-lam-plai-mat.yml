@@ -1,0 +1,62 @@
+name: Little Bakery Lam Plai Mat
+name_th: ลิตเติ้ล เบเกอรี่ ลำปลายมาศ
+description: Coffee, fruit shakes and a small breakfast menu. In Town centre, Lam Plai Mat.
+description_th: กาแฟ น้ำผลไม้ปั่น และเมนูอาหารเช้า ที่ตัวเมือง
+source_url: ''
+category: cafes
+tags:
+- sample
+- family-friendly
+- local-favourite
+- isan
+featured: true
+status: approved
+sample: true
+city: lam-plai-mat
+area: town
+address: 138/14 Moo 7, Town centre, Buriram 31130
+geo:
+  lat: 15.03196
+  lng: 102.84765
+location:
+  address: 138/14 Moo 7, Town centre, Buriram 31130
+  city: Lam Plai Mat
+  country: TH
+  latitude: 15.03196
+  longitude: 102.84765
+phone: "+66800001161"
+line_id: '@sample-littlebakerylampla'
+whatsapp: "+66800001161"
+hours:
+  mon:
+  - 08:00-18:00
+  tue:
+  - 08:00-18:00
+  wed:
+  - 08:00-18:00
+  thu:
+  - 08:00-18:00
+  fri:
+  - 08:00-18:00
+  sat:
+  - 08:00-18:00
+  sun:
+  - 08:00-18:00
+price_band: 1
+rating: 3.9
+rating_count: 407
+claimed: false
+amenities:
+  parking: true
+  card-accepted: true
+updated_by: import
+updated_at: "2026-09-07 15:15"
+markdown: '> **SAMPLE listing.** This business is invented for development and design review. Do not publish.
+
+
+  Coffee, fruit shakes and a small breakfast menu. In Town centre, Lam Plai Mat.
+
+
+  Latte ฿250, breakfast sets from ฿900. Thai and English spoken.
+
+  '

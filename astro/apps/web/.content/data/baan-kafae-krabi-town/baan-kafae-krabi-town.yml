@@ -1,0 +1,63 @@
+name: Baan Kafae Krabi Town
+name_th: บ้านกาแฟ เมืองกระบี่
+description: Coffee, fruit shakes and a small breakfast menu. In Krabi Town, Krabi.
+description_th: กาแฟ น้ำผลไม้ปั่น และเมนูอาหารเช้า ที่เมืองกระบี่
+source_url: ''
+category: cafes
+tags:
+- sample
+- local-favourite
+- family-friendly
+featured: false
+status: approved
+sample: true
+city: krabi
+area: krabi-town
+address: 224/6 Moo 3, Krabi Town, Krabi 81180
+geo:
+  lat: 8.06376
+  lng: 98.9122
+location:
+  address: 224/6 Moo 3, Krabi Town, Krabi 81180
+  city: Krabi
+  country: TH
+  latitude: 8.06376
+  longitude: 98.9122
+phone: "+66800001051"
+line_id: '@sample-baankafaekrabitown'
+whatsapp: "+66800001051"
+hours:
+  mon:
+  - 09:00-19:00
+  tue:
+  - 09:00-19:00
+  wed:
+  - 09:00-19:00
+  thu:
+  - 09:00-19:00
+  fri:
+  - 09:00-19:00
+  sat:
+  - 09:00-19:00
+  sun:
+  - 09:00-19:00
+price_band: 2
+rating: 4.4
+rating_count: 110
+claimed: false
+amenities:
+  air-con: true
+  vegetarian: true
+  wifi: true
+  card-accepted: false
+updated_by: import
+updated_at: "2026-08-04 10:00"
+markdown: '> **SAMPLE listing.** This business is invented for development and design review. Do not publish.
+
+
+  Coffee, fruit shakes and a small breakfast menu. In Krabi Town, Krabi.
+
+
+  Latte ฿60, breakfast sets from ฿900. Thai and English spoken.
+
+  '

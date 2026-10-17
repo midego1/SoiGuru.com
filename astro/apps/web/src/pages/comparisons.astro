@@ -1,0 +1,59 @@
+---
+/**
+ * Comparisons Index Page — Lists all available item comparisons.
+ */
+import BaseLayout from '../layouts/BaseLayout.astro';
+import { getContent } from '../lib/content';
+import { generateJsonLd } from '@ever-works/plugin-seo';
+import Breadcrumbs from '@ever-works/ui/astro/Breadcrumbs.astro';
+import EmptyState from '@ever-works/ui/astro/EmptyState.astro';
+
+const { comparisons, config } = await getContent();
+
+const siteUrl = (config.app_url ?? '').replace(/\/$/, '');
+const breadcrumbLd = generateJsonLd('BreadcrumbList', {
+    type: 'BreadcrumbList',
+    items: [
+        { name: 'Home', url: `${siteUrl}/` },
+        { name: 'Comparisons', url: `${siteUrl}/comparisons` },
+    ],
+});
+---
+
+<BaseLayout title="Comparisons" config={config}>
+    <Fragment slot="head">
+        <script is:inline type="application/ld+json" set:html={breadcrumbLd} />
+    </Fragment>
+    <Breadcrumbs items={[{ label: 'Home', href: '/' }, { label: 'Comparisons' }]} />
+
+    <section data-component="comparisons-page">
+        <h1 data-part="heading">Comparisons</h1>
+
+        {comparisons.length === 0 ? (
+            <EmptyState message="No comparisons available yet." />
+        ) : (
+            <div data-part="grid" role="list">
+                {comparisons.map((comp) => (
+                    <article data-component="comparison-card" role="listitem">
+                        <h2 data-part="title">
+                            <a href={`/comparison/${comp.slug}`}>{comp.title}</a>
+                        </h2>
+                        <div data-part="contestants">
+                            <span data-part="item-a">{comp.item_a_name}</span>
+                            <span data-part="vs">vs</span>
+                            <span data-part="item-b">{comp.item_b_name}</span>
+                        </div>
+                        {comp.summary && (
+                            <p data-part="summary">{comp.summary}</p>
+                        )}
+                        {comp.verdict_winner && (
+                            <span data-part="verdict-winner" data-winner={comp.verdict_winner}>
+                                Winner: {comp.verdict_winner === 'item_a' ? comp.item_a_name : comp.verdict_winner === 'item_b' ? comp.item_b_name : 'Tie'}
+                            </span>
+                        )}
+                    </article>
+                ))}
+            </div>
+        )}
+    </section>
+</BaseLayout>

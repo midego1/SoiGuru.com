@@ -1,0 +1,61 @@
+name: Hostel Hideout Krabi Town
+name_th: โฮสเทล ไฮด์เอาท์ เมืองกระบี่
+description: Clean rooms, friendly staff and a quiet location. In Krabi Town, Krabi.
+description_th: ห้องพักสะอาด พนักงานเป็นมิตร ทำเลเงียบสงบ ที่เมืองกระบี่
+source_url: ''
+category: hotels
+tags:
+- sample
+featured: false
+status: approved
+sample: true
+city: krabi
+area: krabi-town
+address: 123/18 Moo 5, Krabi Town, Krabi 81180
+geo:
+  lat: 8.06029
+  lng: 98.92109
+location:
+  address: 123/18 Moo 5, Krabi Town, Krabi 81180
+  city: Krabi
+  country: TH
+  latitude: 8.06029
+  longitude: 98.92109
+phone: "+66800001067"
+line_id: '@sample-hostelhideoutkrabi'
+whatsapp: "+66800001067"
+hours:
+  mon:
+  - 00:00-24:00
+  tue:
+  - 00:00-24:00
+  wed:
+  - 00:00-24:00
+  thu:
+  - 00:00-24:00
+  fri:
+  - 00:00-24:00
+  sat:
+  - 00:00-24:00
+  sun:
+  - 00:00-24:00
+price_band: 2
+rating: 4.9
+rating_count: 185
+claimed: false
+amenities:
+  breakfast: true
+  sea-view: true
+  parking: true
+  wifi: false
+updated_by: import
+updated_at: "2026-08-08 08:30"
+markdown: '> **SAMPLE listing.** This business is invented for development and design review. Do not publish.
+
+
+  Clean rooms, friendly staff and a quiet location. In Krabi Town, Krabi.
+
+
+  Rooms from ฿2500 / night. Card and QR payment accepted.
+
+  '

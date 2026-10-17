@@ -1,0 +1,59 @@
+name: Palm Garden Hotel Nimman
+name_th: ปาล์ม การ์เด้น โฮเทล นิมมาน
+description: Clean rooms, friendly staff and a quiet location. In Nimman, Chiang Mai.
+description_th: ห้องพักสะอาด พนักงานเป็นมิตร ทำเลเงียบสงบ ที่นิมมาน
+source_url: ''
+category: hotels
+tags:
+- sample
+- family-friendly
+- northern-thai
+featured: false
+status: approved
+sample: true
+city: chiang-mai
+area: nimman
+address: 192/14 Moo 3, Nimman, Chiang Mai 50200
+geo:
+  lat: 18.79445
+  lng: 98.972
+location:
+  address: 192/14 Moo 3, Nimman, Chiang Mai 50200
+  city: Chiang Mai
+  country: TH
+  latitude: 18.79445
+  longitude: 98.972
+phone: "+66800001124"
+hours:
+  mon:
+  - 00:00-24:00
+  tue:
+  - 00:00-24:00
+  wed:
+  - 00:00-24:00
+  thu:
+  - 00:00-24:00
+  fri:
+  - 00:00-24:00
+  sat:
+  - 00:00-24:00
+  sun:
+  - 00:00-24:00
+price_band: 1
+rating: 4.7
+rating_count: 238
+claimed: false
+amenities:
+  pool: true
+  breakfast: true
+updated_by: import
+updated_at: "2026-08-02 19:45"
+markdown: '> **SAMPLE listing.** This business is invented for development and design review. Do not publish.
+
+
+  Clean rooms, friendly staff and a quiet location. In Nimman, Chiang Mai.
+
+
+  Rooms from ฿2500 / night. Booking by LINE recommended in high season.
+
+  '

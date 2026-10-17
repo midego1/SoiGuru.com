@@ -39,3 +39,6 @@ yarn-error.log*
 
 # OS metadata
 Thumbs.db
+
+# Astro site (separate workspace, deployed to Cloudflare Pages, not part of this image)
+astro

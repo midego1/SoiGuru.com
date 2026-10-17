@@ -1,0 +1,18 @@
+---
+/**
+ * SaveButton — the heart in the listing's top bar. Saved places are kept on this device
+ * only (no accounts on the public site); the city's Saved tab lists them.
+ * Behaviour in `scripts/soiguru/saved.ts`.
+ */
+import Icon from './Icon.astro';
+
+interface Props {
+    slug: string;
+}
+
+const { slug } = Astro.props;
+---
+
+<button type="button" class="tkg-iconbtn sg-save" data-save={slug} aria-pressed="false" aria-label="Save">
+    <Icon name="heart" />
+</button>

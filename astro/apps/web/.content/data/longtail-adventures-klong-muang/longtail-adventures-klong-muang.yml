@@ -1,0 +1,58 @@
+name: Longtail Adventures Klong Muang
+name_th: ลองเทล แอดเวนเจอร์ คลองม่วง
+description: Day trips and private tours with a local guide. In Klong Muang, Krabi.
+description_th: ทริปไปเช้าเย็นกลับและทัวร์ส่วนตัวกับไกด์ท้องถิ่น ที่คลองม่วง
+source_url: ''
+category: tours
+tags:
+- sample
+- family-friendly
+featured: false
+status: approved
+sample: true
+city: krabi
+area: klong-muang
+address: 106/7 Moo 6, Klong Muang, Krabi 81180
+geo:
+  lat: 8.05957
+  lng: 98.75743
+location:
+  address: 106/7 Moo 6, Klong Muang, Krabi 81180
+  city: Krabi
+  country: TH
+  latitude: 8.05957
+  longitude: 98.75743
+phone: "+66800001079"
+line_id: '@sample-longtailadventures'
+hours:
+  mon:
+  - 08:00-18:00
+  tue: []
+  wed:
+  - 08:00-18:00
+  thu:
+  - 08:00-18:00
+  fri:
+  - 08:00-18:00
+  sat:
+  - 08:00-18:00
+  sun:
+  - 08:00-18:00
+price_band: 2
+rating: 4.7
+rating_count: 235
+claimed: true
+amenities:
+  hotel-pickup: true
+  card-accepted: true
+updated_by: owner
+updated_at: "2026-09-08 16:45"
+markdown: '> **SAMPLE listing.** This business is invented for development and design review. Do not publish.
+
+
+  Day trips and private tours with a local guide. In Klong Muang, Krabi.
+
+
+  Day trips from ฿180 per person. Walk-ins welcome.
+
+  '

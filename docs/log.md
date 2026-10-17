@@ -26,6 +26,12 @@ sidebar_position: 99
 - `spec-054` `apps/web/lib/services/item-git.service.ts`: admin item saves keep YAML keys the service does not manage (SoiGuru hours, amenities, geo, contacts…) instead of rewriting the file from a whitelist ([spec 054](spec/054-soiguru-city-screens/spec.md), PR #1).
 - `spec-054` `apps/web/app/[locale]/(soiguru)` `apps/web/components/soiguru`: desktop layout from 960px for the SoiGuru screens (top-bar navigation, wide grids, listing right rail) ([spec 054](spec/054-soiguru-city-screens/spec.md), PR #1).
 - `spec-054` `apps/web/app/[locale]/(soiguru)` `apps/web/lib/soiguru` `apps/web/components/soiguru`: SoiGuru city screens ported from the TheKrabiGuide design system: city landing at `/` (the item listing stays at `/discover`), CityHome `/<city>`, CategoryResults `/<city>/<category|area>` with a server-rendered OpenStreetMap tile map, ListingPage `/<city>/<area>/<slug>` with LocalBusiness JSON-LD; open status computed in Asia/Bangkok; EN/TH strings. `apps/web/proxy.ts` now decodes the session JWT through `decodeAuthJsToken` in every guard (the Dokploy secure-cookie patch) ([spec 054](spec/054-soiguru-city-screens/spec.md), PR #1).
+## 2026-10-15
+
+- `astro`: the SoiGuru Astro site (static, Cloudflare Pages) now lives in this repo as its own pnpm workspace under `astro/`, copied from `midego1/directory-web-minimal-template` branch `design/soiguru`, so both A/B builds share one repo. See [`054-soiguru-astro-site`](spec/054-soiguru-astro-site/spec.md).
+- `astro`: desktop layout for the SoiGuru Astro screens (960px and up: top-bar navigation, 1200px column, wider grids, two-column listing page). See [`054-soiguru-astro-site`](spec/054-soiguru-astro-site/spec.md) (#2).
+- `astro`: full public SoiGuru site: working search, Area and Filters sheets, "Search this area", photo gallery, Saved, `/th/` Thai pages, official LINE/WhatsApp marks. See [`054-soiguru-astro-site`](spec/054-soiguru-astro-site/spec.md) (#2).
+- `apps/web` `Dockerfile` `turbo.json`: new optional `DATA_REPOSITORY_BRANCH` env var / build arg. When set, the content clone and pull (`scripts/clone.cjs`, `lib/repository.ts`) use that branch of `DATA_REPOSITORY` instead of its default branch, so the content can live on a branch of the website repo (SoiGuru uses an orphan `data` branch). Set `GITHUB_BRANCH` to the same value so admin edits push there. Unset keeps the old behaviour.
 
 ## 2026-10-05
 

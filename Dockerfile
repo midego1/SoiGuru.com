@@ -80,6 +80,9 @@ ENV DATA_REPOSITORY=${DATA_REPOSITORY}
 # (scripts/clone.cjs). Empty = the repository's default branch; it is then UNSET for
 # the build so config defaults apply.
 ARG GITHUB_BRANCH=""
+# Optional branch of DATA_REPOSITORY to clone (e.g. `data`); empty = its default branch.
+ARG DATA_REPOSITORY_BRANCH=""
+ENV DATA_REPOSITORY_BRANCH=${DATA_REPOSITORY_BRANCH}
 
 # Optional public canonical origin of THIS site (apps/web/lib/utils/url-cleaner.ts
 # getCanonicalOrigin), e.g. a brand domain when the same deployment also answers

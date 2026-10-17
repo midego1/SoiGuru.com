@@ -1,0 +1,83 @@
+---
+/**
+ * Category Page — Lists all items in a specific category.
+ *
+ * Uses getStaticPaths to generate one page per category at build time.
+ */
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import { getContent } from '../../lib/content';
+import { generateJsonLd } from '@ever-works/plugin-seo';
+import Breadcrumbs from '@ever-works/ui/astro/Breadcrumbs.astro';
+import ItemGrid from '@ever-works/ui/astro/ItemGrid.astro';
+import EmptyState from '@ever-works/ui/astro/EmptyState.astro';
+import { itemBelongsToCategory, uniquePathAliases } from '../../lib/taxonomy';
+
+export async function getStaticPaths() {
+    const { categories } = await getContent();
+    return categories.flatMap((cat) =>
+        uniquePathAliases(cat.id, cat.name).map((slug) => ({
+            params: { slug },
+            props: { category: cat }
+        }))
+    );
+}
+
+const { category } = Astro.props;
+const { items, config } = await getContent();
+
+// Filter items by this category
+const categoryItems = items.filter((item) => itemBelongsToCategory(item, category));
+
+const breadcrumbItems = [
+    { label: 'Home', href: '/' },
+    { label: 'Categories', href: '/categories' },
+    { label: category.name },
+];
+
+const siteUrl = (config.app_url ?? '').replace(/\/$/, '');
+
+// JSON-LD ItemList for category listing
+const jsonLd = categoryItems.length > 0
+    ? generateJsonLd('ItemList', {
+        type: 'ItemList',
+        items: categoryItems.map((item) => ({
+            name: item.name,
+            url: `/item/${item.slug}`,
+        })),
+    })
+    : null;
+
+// BreadcrumbList JSON-LD: Home → Categories → <Category>
+const breadcrumbLd = generateJsonLd('BreadcrumbList', {
+    type: 'BreadcrumbList',
+    items: [
+        { name: 'Home', url: `${siteUrl}/` },
+        { name: 'Categories', url: `${siteUrl}/categories` },
+        { name: category.name, url: `${siteUrl}/category/${category.id}` },
+    ],
+});
+---
+
+<BaseLayout
+    title={category.name}
+    description={`Browse ${categoryItems.length} ${config.items_name.toLowerCase()} in ${category.name}`}
+    config={config}
+    markdownMirrorUrl={`/category/${category.id}.md`}
+>
+    <Fragment slot="head">
+        {jsonLd && <script is:inline type="application/ld+json" set:html={jsonLd} />}
+        <script is:inline type="application/ld+json" set:html={breadcrumbLd} />
+    </Fragment>
+    <Breadcrumbs items={breadcrumbItems} />
+
+    <section data-component="category-page">
+        <h1 data-part="heading">{category.name}</h1>
+        <p data-part="count">{categoryItems.length} {categoryItems.length === 1 ? config.item_name : config.items_name}</p>
+
+        {categoryItems.length === 0 ? (
+            <EmptyState message={`No ${config.items_name.toLowerCase()} in this category.`} />
+        ) : (
+            <ItemGrid items={categoryItems} columns={3} />
+        )}
+    </section>
+</BaseLayout>

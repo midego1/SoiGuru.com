@@ -1,0 +1,36 @@
+---
+/**
+ * ItemGrid — Grid layout for directory items using Card primitives.
+ *
+ * @example
+ * ```astro
+ * <ItemGrid items={items} columns={3} />
+ * ```
+ */
+import type { ItemGridProps } from '../types.js';
+import ItemCard from './ItemCard.astro';
+
+type Props = ItemGridProps;
+
+const { items, columns = 3, class: className, ...attrs } = Astro.props;
+
+const gridCols: Record<number, string> = {
+    2: 'grid-cols-1 sm:grid-cols-2',
+    3: 'grid-cols-1 sm:grid-cols-2 lg:grid-cols-3',
+    4: 'grid-cols-1 sm:grid-cols-2 lg:grid-cols-4',
+};
+---
+
+<div
+    class:list={[`grid gap-4 ${gridCols[columns] ?? gridCols[3]}`, className]}
+    data-component="item-grid"
+    data-columns={String(columns)}
+    role="list"
+    {...attrs}
+>
+    {items.map((item) => (
+        <div role="listitem" data-part="grid-item">
+            <ItemCard item={item} />
+        </div>
+    ))}
+</div>

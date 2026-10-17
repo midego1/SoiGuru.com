@@ -1,0 +1,10 @@
+{
+    "extends": "@ever-works/tsconfig/astro.json",
+    "compilerOptions": {
+        "paths": {
+            "@/*": ["./src/*"]
+        }
+    },
+    "include": ["src/**/*.ts", "src/**/*.tsx", "src/**/*.astro", "astro.config.ts"],
+    "exclude": ["node_modules", "dist", ".astro"]
+}

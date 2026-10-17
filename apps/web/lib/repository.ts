@@ -8,6 +8,18 @@ import { fsExists, replaceDirectoryAtomically } from "./lib";
 import { coreConfig } from "@/lib/config/config-service";
 import { getPrimaryContentConfigPath, hasContentConfigFile } from "./content-config-file";
 
+/**
+ * Git ref options for the content repository. When DATA_REPOSITORY_BRANCH is set, clone and pull
+ * that branch (e.g. a `data` branch inside the website repo); otherwise use the remote default
+ * branch, as before. Set GITHUB_BRANCH to the same value so admin edits are pushed there too.
+ */
+function contentRefOptions(): { ref?: string } {
+  // GITHUB_BRANCH alone also names the content branch (deployments set up before
+  // DATA_REPOSITORY_BRANCH existed, e.g. SoiGuru's `data` branch).
+  const branch = process.env.DATA_REPOSITORY_BRANCH?.trim() || process.env.GITHUB_BRANCH?.trim();
+  return branch ? { ref: branch } : {};
+}
+
 function getGitAuth(token?: string): GitAuth {
   if (!token) {
     return {};
@@ -132,8 +144,7 @@ async function cloneRepositoryAtomically(url: string, dest: string, auth: GitAut
         url,
         dir: tempDest,
         singleBranch: true,
-        // Content branch of DATA_REPOSITORY (e.g. `data`); unset = the repository's default branch.
-        ...(process.env.GITHUB_BRANCH ? { ref: process.env.GITHUB_BRANCH } : {}),
+        ...contentRefOptions(),
       })
     );
     await replaceDirectoryAtomically(dest, tempDest);
@@ -155,6 +166,7 @@ export async function pullChanges(url: string, dest: string, auth: GitAuth) {
         dir: dest,
         author,
         singleBranch: true,
+        ...contentRefOptions(),
       })
     );
   } catch (err) {
@@ -191,6 +203,7 @@ export async function pullChanges(url: string, dest: string, auth: GitAuth) {
                 dir: dest,
                 author,
                 singleBranch: true,
+                ...contentRefOptions(),
               })
             );
             return;

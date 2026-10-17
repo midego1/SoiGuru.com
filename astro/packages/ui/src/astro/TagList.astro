@@ -1,0 +1,30 @@
+---
+/**
+ * TagList — List of tag badges.
+ *
+ * @example
+ * ```astro
+ * <TagList tags={tags} showCounts />
+ * ```
+ */
+import type { TagListProps } from '../types.js';
+import TagBadge from './TagBadge.astro';
+
+type Props = TagListProps;
+
+const { tags, showCounts = true, class: className, ...attrs } = Astro.props;
+---
+
+<nav class:list={["flex flex-wrap gap-2", className]} data-component="tag-list" aria-label="Tags" {...attrs}>
+    <ul data-part="list" class="flex flex-wrap gap-2">
+        {tags.map((tag) => (
+            <li data-part="list-item">
+                <TagBadge
+                    tag={tag}
+                    count={showCounts ? tag.count : undefined}
+                    href={`/tag/${tag.id}`}
+                />
+            </li>
+        ))}
+    </ul>
+</nav>

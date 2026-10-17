@@ -1,0 +1,29 @@
+---
+/**
+ * Hero — Section with title, subtitle, and CTA using fulldev/ui Button.
+ *
+ * @example
+ * ```astro
+ * <Hero title="Find the best tools" subtitle="Curated directory" ctaText="Browse" ctaHref="/items" />
+ * ```
+ */
+import type { HeroProps } from '../types.js';
+import Button from '../primitives/button/Button.astro';
+
+type Props = HeroProps;
+
+const { title, subtitle, ctaText, ctaHref, class: className, ...attrs } = Astro.props;
+---
+
+<section class:list={["py-16 text-center", className]} data-component="hero" {...attrs}>
+    <h1 data-part="title" class="text-4xl font-bold tracking-tight">{title}</h1>
+    {subtitle && <p data-part="subtitle" class="mx-auto mt-4 max-w-2xl text-lg text-muted-foreground">{subtitle}</p>}
+    {ctaText && ctaHref && (
+        <div class="mt-6">
+            <Button as="a" href={ctaHref} data-part="cta" size="lg">
+                {ctaText}
+            </Button>
+        </div>
+    )}
+    <slot />
+</section>

@@ -1,0 +1,58 @@
+name: Moto Point Lam Plai Mat
+name_th: โมโต พอยท์ ลำปลายมาศ
+description: Automatic scooters by the day, week or month. In Town centre, Lam Plai Mat.
+description_th: เช่ารถมอเตอร์ไซค์ออโต้ รายวัน รายสัปดาห์ หรือรายเดือน ที่ตัวเมือง
+source_url: ''
+category: scooter-rental
+tags:
+- sample
+- isan
+featured: false
+status: approved
+sample: true
+city: lam-plai-mat
+area: town
+address: 191/5 Moo 1, Town centre, Buriram 31130
+geo:
+  lat: 15.02731
+  lng: 102.84271
+location:
+  address: 191/5 Moo 1, Town centre, Buriram 31130
+  city: Lam Plai Mat
+  country: TH
+  latitude: 15.02731
+  longitude: 102.84271
+phone: "+66800001172"
+line_id: '@sample-motopointlamplaima'
+hours:
+  mon:
+  - 09:00-19:00
+  tue:
+  - 09:00-19:00
+  wed:
+  - 09:00-19:00
+  thu:
+  - 09:00-19:00
+  fri:
+  - 09:00-19:00
+  sat:
+  - 09:00-19:00
+  sun: []
+price_band: 2
+rating: 4.9
+rating_count: 233
+claimed: false
+amenities:
+  helmet-included: true
+  english-spoken: true
+updated_by: import
+updated_at: "2026-08-01 11:45"
+markdown: '> **SAMPLE listing.** This business is invented for development and design review. Do not publish.
+
+
+  Automatic scooters by the day, week or month. In Town centre, Lam Plai Mat.
+
+
+  From ฿250 / day. Passport copy required. Booking by LINE recommended in high season.
+
+  '

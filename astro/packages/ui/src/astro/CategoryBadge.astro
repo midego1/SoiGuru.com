@@ -1,0 +1,47 @@
+---
+/**
+ * CategoryBadge — Directory-specific wrapper around fulldev/ui Badge.
+ * Renders a category label with optional icon, count, and link.
+ *
+ * @example
+ * ```astro
+ * <CategoryBadge category={cat} count={12} href="/category/tools" />
+ * ```
+ */
+import type { CategoryBadgeProps } from '../types.js';
+import Badge from '../primitives/badge/Badge.astro';
+
+type Props = CategoryBadgeProps;
+
+const { category, count, href, class: className, ...attrs } = Astro.props;
+---
+
+{href ? (
+    <Badge
+        as="a"
+        href={href}
+        variant="outline"
+        class={className}
+        data-component="category-badge"
+        {...attrs}
+    >
+        {category.icon_url && (
+            <img src={category.icon_url} alt="" data-part="icon" loading="lazy" aria-hidden="true" class="inline-block size-3" />
+        )}
+        <span data-part="name">{category.name}</span>
+        {count !== undefined && <span data-part="count">{count}</span>}
+    </Badge>
+) : (
+    <Badge
+        variant="outline"
+        class={className}
+        data-component="category-badge"
+        {...attrs}
+    >
+        {category.icon_url && (
+            <img src={category.icon_url} alt="" data-part="icon" loading="lazy" aria-hidden="true" class="inline-block size-3" />
+        )}
+        <span data-part="name">{category.name}</span>
+        {count !== undefined && <span data-part="count">{count}</span>}
+    </Badge>
+)}

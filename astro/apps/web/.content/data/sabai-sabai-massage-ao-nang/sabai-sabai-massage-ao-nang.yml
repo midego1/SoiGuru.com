@@ -1,0 +1,58 @@
+name: Sabai Sabai Massage Ao Nang
+name_th: สบาย สบาย นวด อ่าวนาง
+description: Thai, foot and oil massage by experienced therapists. In Ao Nang, Krabi.
+description_th: นวดแผนไทย นวดเท้า และนวดน้ำมัน โดยหมอนวดมีประสบการณ์ ที่อ่าวนาง
+source_url: ''
+category: massage
+tags:
+- sample
+featured: false
+status: approved
+sample: true
+city: krabi
+area: ao-nang
+address: 44/19 Moo 2, Ao Nang, Krabi 81180
+geo:
+  lat: 8.03422
+  lng: 98.81846
+location:
+  address: 44/19 Moo 2, Ao Nang, Krabi 81180
+  city: Krabi
+  country: TH
+  latitude: 8.03422
+  longitude: 98.81846
+phone: "+66800001007"
+line_id: '@sample-sabaisabaimassagea'
+whatsapp: "+66800001007"
+hours:
+  mon:
+  - 09:00-21:00
+  tue:
+  - 09:00-21:00
+  wed:
+  - 09:00-21:00
+  thu:
+  - 09:00-21:00
+  fri:
+  - 09:00-21:00
+  sat:
+  - 09:00-21:00
+  sun: []
+price_band: 2
+rating: 4.1
+rating_count: 35
+claimed: true
+amenities:
+  walk-ins: true
+  english-spoken: true
+updated_by: owner
+updated_at: "2026-09-14 16:15"
+markdown: '> **SAMPLE listing.** This business is invented for development and design review. Do not publish.
+
+
+  Thai, foot and oil massage by experienced therapists. In Ao Nang, Krabi.
+
+
+  One hour Thai massage from ฿300. Family run since 2009.
+
+  '

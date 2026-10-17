@@ -9,9 +9,11 @@ loadEnvConfig(process.cwd());
 
 const token = process.env.GH_TOKEN;
 const url = process.env.DATA_REPOSITORY;
-// Branch of DATA_REPOSITORY that holds the content (e.g. the `data` branch of the website
-// repo). Unset = the repository's default branch, as before.
-const branch = process.env.GITHUB_BRANCH?.trim() || undefined;
+// Optional branch of the content repo (e.g. a `data` branch inside the website repo).
+// DATA_REPOSITORY_BRANCH, else GITHUB_BRANCH (older deployments); unset = the remote default branch.
+const branch = (process.env.DATA_REPOSITORY_BRANCH && process.env.DATA_REPOSITORY_BRANCH.trim()) ||
+  (process.env.GITHUB_BRANCH && process.env.GITHUB_BRANCH.trim()) || undefined;
+const refOptions = branch ? { ref: branch } : {};
 
 if (!url) {
   console.warn("Warning: 'DATA_REPOSITORY' environment variable is missing.");
@@ -44,7 +46,7 @@ async function main() {
       dir: dest,
       author: { name: "website" },
       singleBranch: true,
-      ...(branch ? { ref: branch } : {}),
+      ...refOptions,
     };
 
     if (token) {
@@ -63,7 +65,7 @@ async function main() {
     url,
     dir: dest,
     singleBranch: true,
-    ...(branch ? { ref: branch } : {}),
+      ...refOptions,
   }
 
   if (token) {

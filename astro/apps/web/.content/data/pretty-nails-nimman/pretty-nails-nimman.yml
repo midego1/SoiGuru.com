@@ -1,0 +1,61 @@
+name: Pretty Nails Nimman
+name_th: พริตตี้ เนล นิมมาน
+description: Manicure, pedicure, gel colour and nail art. In Nimman, Chiang Mai.
+description_th: ทำเล็บมือ เล็บเท้า สีเจล และเพ้นท์เล็บ ที่นิมมาน
+source_url: ''
+category: nail-salons
+tags:
+- sample
+- local-favourite
+- northern-thai
+featured: false
+status: approved
+sample: true
+city: chiang-mai
+area: nimman
+address: 209/7 Moo 3, Nimman, Chiang Mai 50200
+geo:
+  lat: 18.79878
+  lng: 98.967
+location:
+  address: 209/7 Moo 3, Nimman, Chiang Mai 50200
+  city: Chiang Mai
+  country: TH
+  latitude: 18.79878
+  longitude: 98.967
+phone: "+66800001121"
+line_id: '@sample-prettynailsnimman'
+hours:
+  mon:
+  - 10:00-19:00
+  tue: []
+  wed:
+  - 10:00-19:00
+  thu:
+  - 10:00-19:00
+  fri:
+  - 10:00-19:00
+  sat:
+  - 10:00-19:00
+  sun:
+  - 10:00-19:00
+price_band: 1
+rating: 4.2
+rating_count: 290
+claimed: false
+amenities:
+  air-con: true
+  gel-acrylic: true
+  card-accepted: true
+  walk-ins: false
+updated_by: import
+updated_at: "2026-10-12 18:00"
+markdown: '> **SAMPLE listing.** This business is invented for development and design review. Do not publish.
+
+
+  Manicure, pedicure, gel colour and nail art. In Nimman, Chiang Mai.
+
+
+  Gel colour from ฿60. Booking by LINE recommended in high season.
+
+  '

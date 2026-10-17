@@ -1,0 +1,61 @@
+name: Palm Garden Hotel Old City
+name_th: ปาล์ม การ์เด้น โฮเทล คูเมือง
+description: Clean rooms, friendly staff and a quiet location. In Old City, Chiang Mai.
+description_th: ห้องพักสะอาด พนักงานเป็นมิตร ทำเลเงียบสงบ ที่คูเมือง
+source_url: ''
+category: hotels
+tags:
+- sample
+- budget
+- northern-thai
+featured: false
+status: approved
+sample: true
+city: chiang-mai
+area: old-city
+address: 222/8 Moo 7, Old City, Chiang Mai 50200
+geo:
+  lat: 18.7863
+  lng: 98.99892
+location:
+  address: 222/8 Moo 7, Old City, Chiang Mai 50200
+  city: Chiang Mai
+  country: TH
+  latitude: 18.7863
+  longitude: 98.99892
+phone: "+66800001109"
+line_id: '@sample-palmgardenhotelold'
+hours:
+  mon:
+  - 00:00-24:00
+  tue:
+  - 00:00-24:00
+  wed:
+  - 00:00-24:00
+  thu:
+  - 00:00-24:00
+  fri:
+  - 00:00-24:00
+  sat:
+  - 00:00-24:00
+  sun:
+  - 00:00-24:00
+price_band: 1
+rating: 3.9
+rating_count: 341
+claimed: false
+amenities:
+  breakfast: true
+  air-con: true
+  pool: false
+updated_by: import
+updated_at: "2026-09-13 11:45"
+markdown: '> **SAMPLE listing.** This business is invented for development and design review. Do not publish.
+
+
+  Clean rooms, friendly staff and a quiet location. In Old City, Chiang Mai.
+
+
+  Rooms from ฿900 / night. Family run since 2009.
+
+  '

@@ -1,0 +1,56 @@
+---
+/**
+ * CollectionCard — Directory-specific wrapper around fulldev/ui Card.
+ * Renders a curated collection with icon, name, description, count.
+ *
+ * @example
+ * ```astro
+ * <CollectionCard collection={collection} itemCount={15} />
+ * ```
+ */
+import type { CollectionCardProps } from '../types.js';
+import Card from '../primitives/card/Card.astro';
+import CardHeader from '../primitives/card/CardHeader.astro';
+import CardTitle from '../primitives/card/CardTitle.astro';
+import CardDescription from '../primitives/card/CardDescription.astro';
+import CardFooter from '../primitives/card/CardFooter.astro';
+
+type Props = CollectionCardProps;
+
+const { collection, itemCount, class: className, ...attrs } = Astro.props;
+---
+
+<Card size="sm" class={className} data-component="collection-card" {...attrs}>
+    <CardHeader>
+        <div class="flex items-start gap-3">
+            {collection.icon_url && (
+                <img
+                    src={collection.icon_url}
+                    alt={`${collection.name} icon`}
+                    data-part="icon"
+                    loading="lazy"
+                    class="size-8 shrink-0 rounded-md object-contain"
+                />
+            )}
+            <div class="min-w-0">
+                <CardTitle>
+                    <a href={`/collection/${collection.slug}`} data-part="name" class="hover:underline">
+                        {collection.name}
+                    </a>
+                </CardTitle>
+                {collection.description && (
+                    <CardDescription data-part="description">
+                        {collection.description}
+                    </CardDescription>
+                )}
+            </div>
+        </div>
+    </CardHeader>
+    {itemCount !== undefined && (
+        <CardFooter>
+            <span data-part="item-count" class="text-xs text-muted-foreground">
+                {itemCount} {itemCount === 1 ? 'item' : 'items'}
+            </span>
+        </CardFooter>
+    )}
+</Card>
