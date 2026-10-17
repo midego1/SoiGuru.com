@@ -111,21 +111,37 @@ const center = area?.geo ?? city.geo ?? pins[0] ?? { lat: 13.75, lng: 100.5 };
         )
     }
     <aside class="sg-rside" aria-label="Filters">
-        <ResultFilters city={city} priceBands={priceBands} amenityOptions={amenityOptions} areas={areaOptions} />
-        <button type="button" class="tkg-btn tkg-btn-ghost tkg-btn-sm sg-rside-clear" data-f-clear><span data-th="ล้างตัวกรอง">Clear filters</span></button>
+        <section class="sg-card sg-rside-card" aria-labelledby="sg-rside-filters-h">
+            <div class="sg-rside-head">
+                <h2 class="sg-rside-title" id="sg-rside-filters-h" data-th="ตัวกรอง">Filters</h2>
+                <button type="button" class="sg-rside-clear" data-f-clear><span data-th="ล้างทั้งหมด">Clear all</span></button>
+            </div>
+            <ResultFilters city={city} priceBands={priceBands} amenityOptions={amenityOptions} areas={areaOptions} />
+        </section>
         {
             categoryLinks.length > 0 && (
-                <nav class="sg-fieldset sg-rside-cats" aria-label="Categories">
-                    <p class="sg-rside-legend" data-th="หมวดหมู่">Categories</p>
-                    <div class="sg-rf-list">
-                        {categoryLinks.map(({ c, n, href }) => (
-                            <a class:list={['sg-rf-opt', { 'tkg-chip-on': here === href }]} href={href} aria-current={here === href ? 'page' : undefined}>
-                                <Icon name={c.icon} />
-                                <span data-th={c.name_th}>{c.name}</span>
-                                <small>{n}</small>
-                            </a>
-                        ))}
+                <nav class="sg-card sg-rside-card sg-rside-cats" aria-labelledby="sg-rside-cats-h">
+                    <div class="sg-rside-head">
+                        <h2 class="sg-rside-title" id="sg-rside-cats-h" data-th="หมวดหมู่">Categories</h2>
+                        <span class="sg-rside-sum" data-th={`${inCity.length} แห่ง`}>
+                            {inCity.length} places
+                        </span>
                     </div>
+                    <ul class="sg-rside-list">
+                        {categoryLinks.map(({ c, n, href }) => (
+                            <li>
+                                <a class:list={['sg-rside-link', { 'is-on': here === href }]} href={href} aria-current={here === href ? 'page' : undefined}>
+                                    <span class="sg-rside-ico">
+                                        <Icon name={c.icon} />
+                                    </span>
+                                    <span class="sg-rside-name" data-th={c.name_th}>
+                                        {c.name}
+                                    </span>
+                                    <span class="sg-rside-n">{n}</span>
+                                </a>
+                            </li>
+                        ))}
+                    </ul>
                 </nav>
             )
         }

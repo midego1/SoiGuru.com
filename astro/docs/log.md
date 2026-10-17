@@ -3,6 +3,10 @@ title: "Change Log"
 sidebar_label: "Change Log"
 ---
 
+## 2026-10-17 — Results sidebar as two cards
+
+The desktop results sidebar is two cards in the house style: "Filters" (area, price, show only, good to know; "Clear all" in the head) and "Categories" (every category with places in the city, with a count pill; the current one on sea-tint with a sea bar). 264px column so the longest name fits.
+
 ## 2026-10-17 — Results pages (desktop) cleaned up
 
 Category, area and search results on desktop: breadcrumb and title span the page; the toolbar (List | Map, Open now, area, sort) and the search field share one row (the field on the right, no white box behind it); the sidebar holds the filters and every category of the city with counts (current one marked), scrolls with the page and no longer cuts the list off. With nothing open by default, the heading counts all places and "Open now" is not shown as pressed. Cards no longer repeat the area under the status (the address, or the distance once known). Results pages close with the footer again, except in map view.
