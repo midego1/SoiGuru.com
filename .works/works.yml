@@ -22,7 +22,7 @@ settings:
   surveys_enabled: false
   comparisons_enabled: false
   header:
-    submit_enabled: false
+    submit_enabled: true
     pricing_enabled: false
     layout_enabled: false
     language_enabled: true
