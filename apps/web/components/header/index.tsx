@@ -195,6 +195,9 @@ function HeaderNavSkeleton() {
 export default function Header() {
 	const [_isMenuOpen, setIsMenuOpen] = useState(false);
 	const { user } = useCurrentUser();
+	const tShell = useTranslations('admin.SHELL');
+	// Admins get a visible way into the admin (the avatar menu alone was easy to miss).
+	const isAdminUser = (user as { isAdmin?: boolean } | null | undefined)?.isAdmin === true;
 	const { features } = useFeatureFlagsWithSimulation();
 	const { hasGlobalSurveys, isPending: _surveysPending } = useHasGlobalSurveys();
 	const { categoriesEnabled } = useCategoriesEnabled();
@@ -424,6 +427,16 @@ export default function Header() {
 				<NavbarItem className={STYLES.largeUp}>
 					<NavigationControls />
 				</NavbarItem>
+				{isAdminUser && (
+					<NavbarItem>
+						<Link
+							href="/admin"
+							className="inline-flex min-h-10 items-center rounded-full bg-theme-primary px-4 text-sm font-semibold text-white hover:opacity-90"
+						>
+							{tShell('ADMIN')}
+						</Link>
+					</NavbarItem>
+				)}
 				<NavbarItem className={STYLES.largeUp}>
 					<NotificationBell />
 				</NavbarItem>
@@ -434,7 +447,7 @@ export default function Header() {
 				</NavbarItem>
 			</NavbarContent>
 		),
-		[headerSettings.settingsEnabled]
+		[headerSettings.settingsEnabled, isAdminUser, tShell]
 	);
 
 	const _containerWidth = useContainerWidth();
@@ -468,6 +481,16 @@ export default function Header() {
 
 				{/* Mobile: Right Section */}
 				<NavbarContent className="lg:hidden" justify="end">
+				{isAdminUser && (
+					<NavbarItem>
+						<Link
+							href="/admin"
+							className="inline-flex min-h-10 items-center rounded-full bg-theme-primary px-3 text-sm font-semibold text-white hover:opacity-90"
+						>
+							{tShell('ADMIN')}
+						</Link>
+					</NavbarItem>
+				)}
 					<NavbarItem>
 						<NotificationBell />
 					</NavbarItem>
