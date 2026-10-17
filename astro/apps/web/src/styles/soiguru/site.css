@@ -1283,6 +1283,37 @@ html[data-lang='en'] .sg-sf-lang[data-lang-set='en'] {
 .sg-pphoto figcaption a {
     color: inherit;
 }
+.sg-pphoto > .sg-photo-btn {
+    width: 100%;
+    height: 100%;
+}
+/* Google photos in the full-screen gallery: the credit sits on the photo */
+.sg-gallery-track figure {
+    position: relative;
+    min-height: 0;
+}
+.sg-gallery-track figure img {
+    min-height: 0;
+    max-height: 100%;
+}
+.sg-gallery-track figure figcaption {
+    position: absolute;
+    left: 50%;
+    bottom: 16px;
+    transform: translateX(-50%);
+    max-width: calc(100% - 32px);
+    padding: 4px 12px;
+    border-radius: var(--radius-pill);
+    background: var(--overlay);
+    color: #ffffff;
+    font-size: 13px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+.sg-gallery-track figure figcaption a {
+    color: inherit;
+}
 @media (min-width: 720px) {
     .sg-pgrid-art {
         grid-auto-rows: 260px;

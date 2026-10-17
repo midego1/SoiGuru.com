@@ -3,6 +3,10 @@ title: "Change Log"
 sidebar_label: "Change Log"
 ---
 
+## 2026-10-17 — Google photos open the gallery
+
+Google photos on the listing page are buttons that open the full-screen gallery at the tapped photo (1600px version, author credit on the photo, arrows, swipe, Esc). The gallery dialog is rendered when photos may arrive; `gallery.ts` finds openers and slides at click time so photos added later work.
+
 ## 2026-10-17 — Google photos served from soiguru.com itself
 
 Listing-page photos did not load in some browsers (a blocker on the second domain). The soiguru-minimal Worker now has a script (`worker/index.ts`, `run_worker_first: ["/api/places/*"]`) that passes `/api/places/photos/<slug>` and `/api/places/photo` through from the owner app, rewriting photo links to this site; the page asks `/api/places/photos/<slug>?v=3` same-origin. Nothing stored; browser cache 5 minutes. Verified live with owner.soiguru.com blocked in the browser.

@@ -320,7 +320,7 @@ const trail: [string, string][] = [
     }
 
     {
-        listing.images.length > 0 && (
+        (listing.images.length > 0 || placesApi) && (
             <dialog class="sg-gallery" data-gallery aria-label={`Photos of ${listing.name}`}>
                 <div class="sg-gallery-bar">
                     <span data-gallery-pos>1 / {listing.images.length}</span>
@@ -335,7 +335,7 @@ const trail: [string, string][] = [
                         </figure>
                     ))}
                 </div>
-                {listing.images.length > 1 && (
+                {(listing.images.length > 1 || placesApi) && (
                     <>
                         <button type="button" class="sg-gallery-step sg-gallery-prev" data-gallery-step="-1" aria-label="Previous photo">
                             <Icon name="chevron-left" />
