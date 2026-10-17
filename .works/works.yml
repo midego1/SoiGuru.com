@@ -38,6 +38,7 @@ settings:
     theme_selector_enabled: false
   location:
     enabled: true
+    provider: google
 custom_footer:
   - label: footer.TERMS_OF_SERVICE
     path: /pages/terms-of-service
