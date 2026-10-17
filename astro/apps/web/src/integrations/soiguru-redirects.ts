@@ -55,6 +55,8 @@ export function buildRedirects(listings: Map<string, string>): string {
     for (const prefix of GENERIC_PREFIXES) {
         lines.push(`${prefix} / 301`, `${prefix}/ / 301`, `${prefix}/* / 301`);
     }
+    // Crawlers often guess /sitemap.xml; the sitemap integration writes sitemap-index.xml.
+    lines.push('/sitemap.xml /sitemap-index.xml 301');
     return `${lines.join('\n')}\n`;
 }
 

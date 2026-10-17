@@ -11,10 +11,20 @@
  */
 
 import type { APIRoute } from 'astro';
+import { getSoiGuru } from '../lib/soiguru/data';
+import { soiguruLlmsFull } from '../lib/soiguru/llms';
 import { getContent } from '../lib/content';
 import { generateLlmsFullTxt } from '@ever-works/plugin-seo';
 
-export const GET: APIRoute = async () => {
+export const GET: APIRoute = async ({ site }) => {
+    // SoiGuru: canonical place URLs with hours, area and contacts (the template version below is the fallback).
+    const sg = await getSoiGuru();
+    if (sg.cities.length > 0) {
+        const siteUrl = (site?.href ?? 'https://soiguru.com').replace(/\/$/, '');
+        return new Response(soiguruLlmsFull(sg, siteUrl), {
+            headers: { 'Content-Type': 'text/plain; charset=utf-8', 'Cache-Control': 'public, max-age=300, s-maxage=900', 'X-Robots-Tag': 'noindex' }
+        });
+    }
     const { items, categories, tags, comparisons, config } = await getContent();
 
     const description =

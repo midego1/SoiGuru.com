@@ -3,6 +3,10 @@ title: "Change Log"
 sidebar_label: "Change Log"
 ---
 
+## 2026-10-17 — Search and AI (SEO/GEO) for soiguru.com; compact category tiles
+
+`llms.txt`, `llms-full.txt` and `items.json` are SoiGuru-specific (`lib/soiguru/llms.ts`): canonical `/<city>/<area>/<place>/` URLs, opening hours, area, address, phone, LINE, WhatsApp, rating and verified-owner flag; category and area links with counts; no template `.md` mirrors or onboarding link. The template versions stay as the fallback. Pages without places (empty areas) are `noindex` and left out of the sitemap (EN and TH); a noindex page drops the site-wide `index, follow` tag. `/sitemap.xml` redirects to `/sitemap-index.xml`. Category tiles from 720px are one compact line (icon over a short label), filling the row from 1280px and scrolling sideways below. The owner app (owner.soiguru.com, soiguru.midego.net) is closed to crawlers in its own repo (spec 057).
+
 ## 2026-10-17 — Full site design pass
 
 Every page type checked at 360, 390, 768, 1024, 1280 and 1920px, light and dark, EN and TH, with menus, city picker, sheets and map view open (no sideways scroll, no overflow, no broken images or script errors). Fixed: results with the default "Open now" and nothing open now show all places with a note instead of an empty list; empty areas offer "See all of <city>" and "List your business"; one city or area card no longer stretches across the page (4 fixed columns from 960px); the city hero names only areas with places; the city picker fits phones (full width under the header); the hero drawing no longer drops under the text at 960 to 1099px; the claim banner keeps its shape (no cream band) and is smaller on phones; the phone map's List button clears the OpenStreetMap credit; list rows show the category drawing; map pins in sea with the selected one in sun; Thai strings for "today", the nearby empty note, "More … in …", the sticky Directions button and the empty-results text.

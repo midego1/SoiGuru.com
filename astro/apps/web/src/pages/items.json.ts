@@ -6,9 +6,19 @@
  */
 
 import type { APIRoute } from 'astro';
+import { getSoiGuru } from '../lib/soiguru/data';
+import { soiguruItemsJson } from '../lib/soiguru/llms';
 import { getContent } from '../lib/content';
 
-export const GET: APIRoute = async () => {
+export const GET: APIRoute = async ({ site }) => {
+    // SoiGuru: canonical place URLs with hours, area and contacts (the template version below is the fallback).
+    const sg = await getSoiGuru();
+    if (sg.cities.length > 0) {
+        const siteUrl = (site?.href ?? 'https://soiguru.com').replace(/\/$/, '');
+        return new Response(JSON.stringify(soiguruItemsJson(sg, siteUrl)), {
+            headers: { 'Content-Type': 'application/json; charset=utf-8', 'Cache-Control': 'public, max-age=300, s-maxage=900' }
+        });
+    }
     const { items, config } = await getContent();
 
     const siteUrl = (config.app_url ?? '').replace(/\/$/, '');

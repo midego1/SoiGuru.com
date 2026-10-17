@@ -75,7 +75,8 @@ const metaTags = generateMetaTags({ title, description, url: canonical, type: 'w
         <meta name="theme-color" content={theme === 'navy' ? '#10272b' : '#064a50'} />
         <title>{title}</title>
         {
-            metaTags.map((tag) =>
+            // A noindex page drops the site-wide "index, follow" so the two never conflict.
+            metaTags.filter((tag) => !(noindex && tag.value === 'robots')).map((tag) =>
                 tag.key === 'property' ? <meta property={tag.value} content={tag.content} /> : <meta name={tag.value} content={tag.content} />,
             )
         }

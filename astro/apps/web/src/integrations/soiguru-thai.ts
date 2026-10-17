@@ -94,7 +94,13 @@ export function soiguruThai(): AstroIntegration {
                         .filter((p) => !/<meta name="robots" content="noindex"/.test(p.html))
                         .map((p) => `<url><loc>${site}${thPath(p.path)}</loc></url>`)
                         .join('');
-                    await writeFile(sitemapFile, xml.replace('</urlset>', `${urls}</urlset>`));
+                    // Drop English pages marked noindex (an area with no places yet) from the sitemap.
+                    let kept = xml;
+                    for (const p of pages.filter((p) => /<meta name="robots" content="noindex"/.test(p.html))) {
+                        const loc = `${site}${p.path === '/' ? '/' : p.path.replace(/\/?$/, '/')}`;
+                        kept = kept.replace(new RegExp(`<url><loc>${loc.replace(/[.*+?^${}()|[\]\\]/g, '\\$&')}</loc>.*?</url>`), '');
+                    }
+                    await writeFile(sitemapFile, kept.replace('</urlset>', `${urls}</urlset>`));
                 } catch {
                     logger.warn('sitemap-0.xml not found; Thai pages are not in the sitemap');
                 }

@@ -2514,3 +2514,42 @@ html[data-lang='en'] .sg-sf-lang[data-lang-set='en'] {
         overflow-y: auto;
     }
 }
+/* category tiles from 720px: one compact line (icon over a short label, no Thai subline),
+   stretching to fill the row on wide screens and scrolling sideways when they do not fit.
+   Phones keep the 4-across grid so every category stays in view. */
+@media (min-width: 720px) {
+    .sg-tiles {
+        display: flex;
+        gap: 6px;
+        overflow-x: auto;
+        scrollbar-width: none;
+        padding-bottom: 2px;
+    }
+    .sg-tiles::-webkit-scrollbar {
+        display: none;
+    }
+    .sg-page a.sg-tile {
+        flex: 1 0 auto;
+        min-width: 56px;
+        align-items: center;
+        text-align: center;
+        gap: 6px;
+        padding: 10px 4px;
+    }
+    .sg-tile-mark {
+        width: 36px;
+        height: 36px;
+        border-radius: 11px;
+    }
+    .sg-tile-mark .tkg-i {
+        width: 20px;
+        height: 20px;
+    }
+    .sg-tile-label {
+        font-size: 12.5px;
+        white-space: nowrap;
+    }
+    .sg-tile small {
+        display: none;
+    }
+}
