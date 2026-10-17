@@ -1,3 +1,6 @@
+pagination:
+  type: standard
+  itemsPerPage: 20
 company_name: SoiGuru
 name: SoiGuru
 item_name: Place
@@ -6,12 +9,10 @@ copyright_year: 2026
 company_website: https://soiguru.com
 app_url: https://soiguru.com
 site_url: https://soiguru.com
-claim_url: https://soiguru.midego.net/claim
-# contact_email: set to show "Report wrong info" (pending from Michiel)
+claim_url: https://owner.soiguru.com/{city}/claim
+owner_url: https://owner.soiguru.com/owner
+theme: soiguru
 content_table: false
-pagination:
-  type: standard
-  itemsPerPage: 20
 auth:
   credentials: true
 settings:
@@ -21,11 +22,11 @@ settings:
   surveys_enabled: false
   comparisons_enabled: false
   header:
-    submit_enabled: false
+    submit_enabled: true
     pricing_enabled: false
     layout_enabled: false
     language_enabled: true
-    theme_enabled: false
+    theme_enabled: true
     theme_default: light
   homepage:
     hero_enabled: false
@@ -35,6 +36,9 @@ settings:
     subscribe_enabled: false
     version_enabled: false
     theme_selector_enabled: false
+  location:
+    enabled: true
+    provider: google
 custom_footer:
   - label: footer.TERMS_OF_SERVICE
     path: /pages/terms-of-service

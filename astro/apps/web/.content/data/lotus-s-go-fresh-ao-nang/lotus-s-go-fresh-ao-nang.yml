@@ -1,0 +1,47 @@
+name: Lotus's go fresh
+description: Convenience store in Ao Nang.
+source_url: ''
+category: shops
+tags: []
+featured: false
+status: approved
+city: krabi
+area: ao-nang
+geo:
+  lat: 8.040494
+  lng: 98.83519
+location:
+  address: Ao Nang, Krabi
+  city: Krabi
+  country: TH
+  latitude: 8.040494
+  longitude: 98.83519
+phone: "+66756372889"
+hours:
+  mon:
+  - 06:00-22:00
+  tue:
+  - 06:00-22:00
+  wed:
+  - 06:00-22:00
+  thu:
+  - 06:00-22:00
+  fri:
+  - 06:00-22:00
+  sat:
+  - 06:00-22:00
+  sun:
+  - 06:00-22:00
+claimed: false
+submitted_by: Grok Bot
+updated_by: import
+updated_at: "2026-10-17 01:01"
+markdown: 'Convenience store in Ao Nang.
+
+
+  Sources: <https://www.openstreetmap.org/way/581586163>
+
+
+  Map data © OpenStreetMap contributors (ODbL).
+
+  '

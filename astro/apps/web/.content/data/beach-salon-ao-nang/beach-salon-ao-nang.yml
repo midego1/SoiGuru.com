@@ -1,0 +1,49 @@
+name: Beach Salon
+description: Beauty salon in Ao Nang.
+source_url: https://www.goldenbeach-resort.com/
+category: barbers-salons
+tags: []
+featured: false
+status: approved
+city: krabi
+area: ao-nang
+geo:
+  lat: 8.02938
+  lng: 98.824147
+location:
+  address: Ao Nang, Krabi
+  city: Krabi
+  country: TH
+  latitude: 8.02938
+  longitude: 98.824147
+hours:
+  mon:
+  - 10:00-22:00
+  tue:
+  - 10:00-22:00
+  wed:
+  - 10:00-22:00
+  thu:
+  - 10:00-22:00
+  fri:
+  - 10:00-22:00
+  sat:
+  - 10:00-22:00
+  sun:
+  - 10:00-22:00
+claimed: false
+submitted_by: Grok Bot
+updated_by: import
+updated_at: "2026-10-17 01:01"
+markdown: 'Beauty salon in Ao Nang.
+
+
+  Links: <https://www.goldenbeach-resort.com/>, <https://www.facebook.com/GoldenbeachResort/>
+
+
+  Sources: <https://www.openstreetmap.org/node/4631930089>, <https://www.goldenbeach-resort.com/>
+
+
+  Map data © OpenStreetMap contributors (ODbL).
+
+  '

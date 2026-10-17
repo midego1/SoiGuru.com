@@ -1,0 +1,18 @@
+---
+/**
+ * Logo — the SoiGuru mark from the website mockup: two limestone karsts on a dark tile, with
+ * the accent line of the sea under them. Colours come from the theme tokens.
+ */
+interface Props {
+    /** Size in px */
+    size?: number;
+}
+
+const { size = 34 } = Astro.props;
+---
+
+<svg class="sg-logo-mark" width={size} height={size} viewBox="0 0 34 34" aria-hidden="true" focusable="false">
+    <rect width="34" height="34" rx="9" fill="var(--hero-bg)"></rect>
+    <path d="M6 25 L12 12 L16 19 L20 9 L28 25 Z" fill="#ffffff"></path>
+    <path d="M6 27 H28" stroke="var(--accent)" stroke-width="2.5" stroke-linecap="round"></path>
+</svg>

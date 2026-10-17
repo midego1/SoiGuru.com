@@ -1,0 +1,57 @@
+---
+/**
+ * HeroSearch — the big search of the website hero (mockup): what (16px+ input, no iOS zoom),
+ * where (the city's areas, "All of <city>" first) and the accent Search button. Submits to
+ * `/<city>/search?q=&area=`, which the results script reads. Below it the quick chips
+ * "Open now" and "Near me" from the design system's search bar.
+ */
+import Icon from './Icon.astro';
+import type { City, Area } from '../../lib/soiguru/data';
+
+interface Props {
+    city: City;
+    /** Area preselected in the "where" list (none = all of the city) */
+    area?: Area;
+}
+
+const { city, area } = Astro.props;
+---
+
+<form class="sg-hs" action={`/${city.id}/search`} method="get" role="search">
+    <label class="sg-hs-what">
+        <Icon name="search" />
+        <span class="sg-visually-hidden">What are you looking for</span>
+        <input type="search" name="q" placeholder="Seafood, massage, scooter… · นวด, เช่ารถ" autocomplete="off" enterkeyhint="search" />
+    </label>
+    {
+        city.areas.length > 0 && (
+            <label class="sg-hs-where">
+                <Icon name="pin" />
+                <span class="sg-visually-hidden">Area</span>
+                <select name="area">
+                    <option value="" selected={!area}>All of {city.name}</option>
+                    {city.areas.map((a) => (
+                        <option value={a.id} selected={a.id === area?.id}>
+                            {a.name}
+                        </option>
+                    ))}
+                </select>
+            </label>
+        )
+    }
+    <button class="sg-btn sg-btn-accent sg-hs-go" type="submit" data-th="ค้นหา">Search</button>
+</form>
+<div class="sg-hs-chips">
+    <a class="sg-hero-chip" href={`/${city.id}/search?open=1`}>
+        <Icon name="clock" class="tkg-i-16" />
+        <span data-th="เปิดอยู่ตอนนี้">Open now</span>
+    </a>
+    <a class="sg-hero-chip" href={`/${city.id}/search?sort=nearest`} data-near-me>
+        <Icon name="pin" class="tkg-i-16" />
+        <span data-th="ใกล้ฉัน">Near me</span>
+    </a>
+    <a class="sg-hero-chip" href={`/${city.id}/search?view=map`}>
+        <Icon name="map" class="tkg-i-16" />
+        <span data-th="แผนที่">Map</span>
+    </a>
+</div>

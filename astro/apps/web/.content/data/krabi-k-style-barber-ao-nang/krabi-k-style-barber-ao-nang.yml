@@ -1,0 +1,29 @@
+name: Krabi K Style Barber
+description: Barbershop in Ao Nang.
+source_url: ''
+category: barbers-salons
+tags: []
+featured: false
+status: approved
+city: krabi
+area: ao-nang
+address: 2RP9+CHW Ao Nang
+geo:
+  lat: 8.036104
+  lng: 98.818953
+location:
+  address: 2RP9+CHW Ao Nang
+  city: Krabi
+  country: TH
+  latitude: 8.036104
+  longitude: 98.818953
+claimed: false
+submitted_by: Grok Bot
+updated_by: import
+updated_at: "2026-10-17 01:01"
+markdown: 'Barbershop in Ao Nang.
+
+
+  Sources: <https://exa.ai/library/place/ht0y66lqz76>
+
+  '

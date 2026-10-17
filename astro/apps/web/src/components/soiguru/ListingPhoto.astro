@@ -1,9 +1,9 @@
 ---
 /**
- * ListingPhoto — the listing's first photo, or (no photo) a `surface-200` placeholder
- * with the category icon in `ink-muted`. Never a stock image.
+ * ListingPhoto — the listing's first photo, or (no photo) the drawn category scene
+ * (`CategoryArt`, cropped to the square). Never a stock image.
  */
-import Icon from './Icon.astro';
+import CategoryArt from './CategoryArt.astro';
 import type { Listing } from '../../lib/soiguru/data';
 
 interface Props {
@@ -27,7 +27,7 @@ const src = listing.images[index];
         </div>
     ) : (
         <div class="tkg-photo sg-photo-empty" aria-hidden="true">
-            <Icon name={listing.category?.icon ?? 'image'} class="tkg-i-24" />
+            <CategoryArt category={listing.category} />
         </div>
     )
 }

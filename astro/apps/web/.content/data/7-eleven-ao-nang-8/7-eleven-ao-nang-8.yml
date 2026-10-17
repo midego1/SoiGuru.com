@@ -1,0 +1,31 @@
+name: 7-Eleven
+description: Convenience store in Nopparat Thara, Ao Nang.
+source_url: ''
+category: shops
+tags: []
+featured: false
+status: approved
+city: krabi
+area: ao-nang
+geo:
+  lat: 8.042671
+  lng: 98.81105
+location:
+  address: Nopparat Thara, Ao Nang, Krabi
+  city: Krabi
+  country: TH
+  latitude: 8.042671
+  longitude: 98.81105
+claimed: false
+submitted_by: Grok Bot
+updated_by: import
+updated_at: "2026-10-17 01:01"
+markdown: 'Convenience store in Nopparat Thara, Ao Nang.
+
+
+  Sources: <https://www.openstreetmap.org/node/11360073176>
+
+
+  Map data © OpenStreetMap contributors (ODbL).
+
+  '

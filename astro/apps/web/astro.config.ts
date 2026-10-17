@@ -6,6 +6,7 @@ import tailwindcss from '@tailwindcss/vite';
 import { everWorksIntegration } from '@ever-works/astro-integration';
 import { getPluginRunner, getContent } from './src/lib/content';
 import { soiguruThai } from './src/integrations/soiguru-thai';
+import { soiguruRedirects, GENERIC_PREFIXES } from './src/integrations/soiguru-redirects';
 
 /**
  * Astro Configuration
@@ -31,19 +32,29 @@ export default defineConfig({
 	// Vercel adapter enables ISR for prerendered pages
 	...(isISR ? { adapter: vercel() } : {}),
 
-	// Site URL for sitemap and canonical links
-	site: process.env.SITE_URL || 'https://example.com',
+	// Site URL for sitemap, canonical and hreflang links (SITE_URL overrides, e.g. for previews)
+	site: process.env.SITE_URL || 'https://soiguru.com',
 
 	integrations: [
 		// Preact for lightweight interactive islands
 		// compat: true aliases react → preact/compat so shadcn/ui components work as-is
 		preact({ compat: true }),
 
-		// Auto-generate sitemap.xml (city search pages are noindex, so they stay out)
-		sitemap({ filter: (page) => !/\/(search|saved)\/?$/.test(new URL(page).pathname) }),
+		// Auto-generate sitemap.xml (city search pages are noindex, so they stay out, and the
+		// generic template routes redirect to SoiGuru pages, so they stay out too)
+		sitemap({
+			filter: (page) => {
+				const path = new URL(page).pathname;
+				if (/\/(search|saved)\/?$/.test(path)) return false;
+				return !GENERIC_PREFIXES.some((prefix) => path === prefix || path.startsWith(`${prefix}/`));
+			},
+		}),
 
 		// SoiGuru: Thai copies of every SoiGuru page under /th/ (after the sitemap, which it extends)
 		soiguruThai(),
+
+		// SoiGuru: 301s from the generic template routes (/item, /category, /tag, …) to SoiGuru pages
+		soiguruRedirects(),
 
 		// Ever Works plugin build hooks (onBeforeBuild, onAfterBuild)
 		// + webhook endpoint injection when ISR is enabled

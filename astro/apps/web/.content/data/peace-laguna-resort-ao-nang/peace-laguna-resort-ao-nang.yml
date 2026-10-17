@@ -1,0 +1,34 @@
+name: Peace Laguna Resort
+description: Hotel in Ao Nang.
+source_url: https://www.peacelagunaresort.com/
+category: hotels
+tags: []
+featured: false
+status: approved
+city: krabi
+area: ao-nang
+geo:
+  lat: 8.030574
+  lng: 98.825215
+location:
+  address: Ao Nang
+  city: Krabi
+  country: TH
+  latitude: 8.030574
+  longitude: 98.825215
+claimed: false
+submitted_by: Grok Bot
+updated_by: import
+updated_at: "2026-10-17 01:01"
+markdown: 'Hotel in Ao Nang.
+
+
+  Links: <https://www.peacelagunaresort.com/>, <https://www.facebook.com/peacelagunaresortandspa/>, <https://www.instagram.com/peacelagunaresortandspa/>
+
+
+  Sources: <https://www.openstreetmap.org/relation/19746246>, <https://www.peacelagunaresort.com/>
+
+
+  Map data © OpenStreetMap contributors (ODbL).
+
+  '

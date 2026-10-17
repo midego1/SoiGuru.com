@@ -3,6 +3,106 @@ title: "Change Log"
 sidebar_label: "Change Log"
 ---
 
+## 2026-10-17 — Who added each listing
+
+Listings record who added them in the Ever Works `submitted_by` field (the owner app's admin shows and filters on it); the 169 Ao Nang places are `submitted_by: Grok Bot` (`data` branch 8e3f749, bundled `.content` refreshed). Not shown on the public site.
+
+## 2026-10-17 — Search and AI (SEO/GEO) for soiguru.com; compact category tiles
+
+`llms.txt`, `llms-full.txt` and `items.json` are SoiGuru-specific (`lib/soiguru/llms.ts`): canonical `/<city>/<area>/<place>/` URLs, opening hours, area, address, phone, LINE, WhatsApp, rating and verified-owner flag; category and area links with counts; no template `.md` mirrors or onboarding link. The template versions stay as the fallback. Pages without places (empty areas) are `noindex` and left out of the sitemap (EN and TH); a noindex page drops the site-wide `index, follow` tag. `/sitemap.xml` redirects to `/sitemap-index.xml`. Category tiles from 720px are one compact line (icon over a short label), filling the row from 1280px and scrolling sideways below. The owner app (owner.soiguru.com, soiguru.midego.net) is closed to crawlers in its own repo (spec 057).
+
+## 2026-10-17 — Full site design pass
+
+Every page type checked at 360, 390, 768, 1024, 1280 and 1920px, light and dark, EN and TH, with menus, city picker, sheets and map view open (no sideways scroll, no overflow, no broken images or script errors). Fixed: results with the default "Open now" and nothing open now show all places with a note instead of an empty list; empty areas offer "See all of <city>" and "List your business"; one city or area card no longer stretches across the page (4 fixed columns from 960px); the city hero names only areas with places; the city picker fits phones (full width under the header); the hero drawing no longer drops under the text at 960 to 1099px; the claim banner keeps its shape (no cream band) and is smaller on phones; the phone map's List button clears the OpenStreetMap credit; list rows show the category drawing; map pins in sea with the selected one in sun; Thai strings for "today", the nearby empty note, "More … in …", the sticky Directions button and the empty-results text.
+
+## 2026-10-17 — Google photos open the gallery
+
+Google photos on the listing page are buttons that open the full-screen gallery at the tapped photo (1600px version, author credit on the photo, arrows, swipe, Esc). The gallery dialog is rendered when photos may arrive; `gallery.ts` finds openers and slides at click time so photos added later work.
+
+## 2026-10-17 — Google photos served from soiguru.com itself
+
+Listing-page photos did not load in some browsers (a blocker on the second domain). The soiguru-minimal Worker now has a script (`worker/index.ts`, `run_worker_first: ["/api/places/*"]`) that passes `/api/places/photos/<slug>` and `/api/places/photo` through from the owner app, rewriting photo links to this site; the page asks `/api/places/photos/<slug>?v=3` same-origin. Nothing stored; browser cache 5 minutes. Verified live with owner.soiguru.com blocked in the browser.
+
+## 2026-10-17 — One drawn scene per category
+
+`CategoryArt` now draws a scene per category instead of a shopfront with an icon badge: noodle bowl (restaurants), cocktail under string lights (bars), coffee cup (cafés), shop window with bags (shops), hotel with palm and pool, massage mat with stones and orchid, karsts and longtail (tours), gloves on the ring ropes (Muay Thai), fish and coral (dive shops), clinic with green cross and pills, washing machine and clothesline (laundry), barber pole, chair and scissors, nail polish bottles, scooter on the road, laptop desk (coworking), shopfront (other). Sky and ground run on beside the scene on the wide listing band. Spec: `.specify/features/soiguru-design.md` § Website layout.
+
+## 2026-10-17 — Drawn category pictures and Google photos on listing pages
+
+Places without photos show a drawn category picture (`CategoryArt`: shopfront or karst-and-sea scene, colour per category, category icon on a badge) on photo cards and the listing page, instead of the bare icon. The listing page then loads up to three Google Places photos from the owner app (`/api/places/photos/<slug>`, Next app spec 056) with the author credit and keeps the drawing when there are none. Also fixes an `astro check` error in the city home's open-now round-robin. Spec: `.specify/features/soiguru-design.md` § Website layout.
+
+## 2026-10-17 — Backlog written down
+
+PromptPay via Stripe (monthly QR on WhatsApp / LINE, needs a Thai Stripe account), Google Places photos as fallback, publish-on-edit workflow and the one-frontend redirects are recorded in `.specify/features/soiguru-design.md` § Later.
+
+## 2026-10-17 — Owner block fills its space
+
+The owner block's pitch column now spans the banner's height: headline and lead, a "Find your shop" search (`/<city>/search?q=`, `data-umami-event="owner-find-shop"`) with the city's place count, three steps (find, claim, keep it up to date; the four perks are folded into them) and the claim button with the price. `OwnerBlock` takes `cityId` and `count`; the landing passes them when there is one city. Steps are compact rows on phones. Spec: `.specify/features/soiguru-design.md`.
+
+## 2026-10-17 — The owner's Ao Nang list (169 places) and 8 new categories
+
+`ao-nang-new-businesses.csv` (173 rows) imported into the `data` branch (a1dd3db) and the bundled `.content/`: 169 listings, 4 left out as closed in OpenStreetMap (`disused:*`). New categories bars, shops, gyms-muay-thai, clinics-pharmacies, laundry, barbers-salons, coworking, other, with priorities by weight; the site draws them with new icons (glass, bag, glove, cross, washer, scissors, laptop, dots in `icons.ts`, mapped in `CATEGORY_ICONS`). City home tiles show every category with places (16 now), and "Open now" takes one place per category in turn so the first cards are varied. `lineUrl()` keeps full `https://line.me/…` links as given. Spec: `.specify/features/soiguru-design.md`.
+
+## 2026-10-17 — All listings removed; Krabi only
+
+At the owner's request the directory starts from scratch with their own list: the `data` branch (commit 1ffee80) drops every listing (the 490 OpenStreetMap/research listings in Krabi and the 94 samples) and keeps only Krabi in `cities.yml`; the bundled `.content/` is refreshed from it. soiguru.com builds 16 pages; city home and results show the empty states until the owner's list is imported.
+
+## 2026-10-17 — Favicon
+
+SoiGuru's logo mark (sea-deep tile, white karsts, sun line) as the site icon: `public/favicon.svg`, `favicon.ico` (16/32/48), `apple-touch-icon.png` (180), `icon-192.png`, `icon-512.png` and `site.webmanifest`. `SoiGuruLayout` links them unless works.yml sets `logo.favicon`. Spec: `.specify/features/soiguru-design.md`.
+
+## 2026-10-17 — Claim banner in the owner block
+
+The owner block's price card is replaced by the owner's claim banner ("Your shop. One tap away.", `public/images/claim-banner.webp`, 720×1280, linked to the claim flow, `data-umami-event="claim-banner"`). What is included, the "Claim your listing" button and the price (฿100 / month or ฿1,000 / year) move into the pitch column. Spec: `.specify/features/soiguru-design.md` § Website layout.
+
+## 2026-10-17 — Claim and Owner links on owner.soiguru.com
+
+owner.soiguru.com is verified (the owner app's sign-in loads there), so `claim_url` and `owner_url` in works.yml (data branch and the bundled copy) point at `https://owner.soiguru.com/{city}/claim` and `https://owner.soiguru.com/owner`. The data branch also gets `theme: soiguru`. Spec: `.specify/features/soiguru-design.md`.
+
+## 2026-10-17 — Drawn Thailand map in the city picker and the landing hero
+
+The header's city picker opens a wider panel: the cities (with place counts and province) beside a small drawn map of Thailand; hovering or focusing a city lights its pin. The landing hero shows the same map in a card instead of the karst picture, and the hero city buttons and city cards light their pins. `ThailandMap.astro` draws the outline from `lib/soiguru/thailand.ts` (one SVG path from Natural Earth 1:50m, public domain, via `world-atlas` 2.0.2, generated once; no tiles, no map library), a dotted texture, sea waves and one pin per city; `page.ts` handles `[data-city-hover]`. Spec: `.specify/features/soiguru-design.md` § Website layout.
+
+## 2026-10-16 — Moodboard theme live
+
+The owner chose the moodboard look: bundled works.yml sets `theme: soiguru` again (sea `#0a6b73`, sun `#f2a33a`, sand page `surface-100`, sea-tint category tiles, IBM Plex Sans + Thai). The `soiguru` theme now follows the moodboard's grounds (page on `surface-100`, cards and bars on `surface`). `navy` stays available as a setting. Spec: `.specify/features/soiguru-design.md` § Website layout.
+
+## 2026-10-16 — Results pages as a directory (design A); map on demand
+
+Results pages (category, area, search) open as a directory instead of a list beside a map. Desktop: breadcrumb and title ("Restaurants in Krabi", N places), a toolbar (List | Map, Open now, area, sort, search), a filter sidebar (`ResultFilters`: area with counts, price, show only, good to know; sticky) and a grid of cards (photo or category mark on top). "Map" switches to the split view (list beside the map, fitting the window, Show more / Show closed pinned). Phones: compact rows and a floating Map / List button above the tab bar; the map strip above the list is gone. The filter groups are one component rendered in the sidebar and the Filters sheet, both handled by `results.ts` at document level; switching to Map refits the pins once the map is visible. Spec: `.specify/features/soiguru-design.md` § Website layout.
+
+## 2026-10-16 — Menu in the tab bar; desktop results fit the window; navy theme live
+
+Phones: the tab bar gains a Menu tab (Home, Search, Saved, Owner, Menu) that opens a bottom sheet with the city's links, the cities, EN / ไทย and the owner links; the header's menu button shows only from 960 to 1099px. Desktop results pages (category, area, search) fit the window: no page scroll, the list scrolls in its own column with "Show more" / "Show closed" pinned under it, the map fills the height. Bundled works.yml sets `theme: navy` (the owner chose the navy / orange look). Spec: `.specify/features/soiguru-design.md` § Website layout.
+
+## 2026-10-16 — Bottom tab bar on every phone page; map in the listing sidebar; wider desktop
+
+Feedback on the website layout. Phones: the bottom tab bar (Home, Search, Saved, Owner) did not show on every page, so `SoiGuruLayout` now places `BottomNav` itself on every page (the page's city, else the first city), `position: fixed` to the bottom of the screen with room left under the page; the listing's Directions bar sits right above it. The menu carries Search, Saved and the EN / ไทย switch (moved out of the bar below 560px so it fits 360px); a header search icon shows only from 960 to 1099px. Listing page: the Location map moved from the main column into the side column (hours → location → claim); Nearby and a new "More <category> in <area>" section are photo-card grids (a swipeable row on phones); the side column sticks only on windows at least 1040px tall. Desktop: the content column grows to 1440px from 1440px wide, the open-now grid is 4 columns (5 from 1440px, `data-limit-xl`), category tiles sit in one row of 8, area cards stretch, and results pages from 1360px show a 46% list with two columns of cards beside the map. Spec: `.specify/features/soiguru-design.md` § Website layout.
+
+## 2026-10-16 — Website layout from the SoiGuru mockup; theme setting; Umami
+
+The public site now uses the layout of the website mockup (Main / Listing screens) with the design system's colours and type (sea and sun, IBM Plex), phone first and responsive (390 / 768 / 1280 tested): a website header (logo mark, city picker, Eat & drink / Cafés / Things to do / Stay / Map, EN / ไทย, Owner login, List your business; a menu on phones), a hero with a what + where search, category tiles with their own marks, "Open now" photo cards, "Browse by area" cards (areas with places only), the owner block (฿100 / month), a footer with the OpenStreetMap credit, and a two-column listing page (breadcrumb, photo grid, chips, title, action buttons, About, Good to know, Location, Nearby; sticky Opening hours, claim card and report link). New `site.css` and components `SiteHeader`, `SiteFooter`, `Logo`, `HeroSearch`, `KarstScene`, `OwnerBlock`; `ListingCard` gains `tile`. New setting `theme` in works.yml (or `SITE_THEME` at build): `soiguru` (default) or `navy`, the mockup's own navy / orange palette with Bricolage Grotesque and Figtree. Merged `develop` (Umami `script.js` + `recorder.js` in `SoiGuruLayout`); contact, claim, list-your-business and owner-login buttons carry `data-umami-event`. Spec: `.specify/features/soiguru-design.md` § Website layout.
+
+## 2026-10-16 — Real Krabi listings; bundled content refreshed
+
+The bundled `.content/` is refreshed from the `data` branch (commit 264fa81): 490 real businesses in Ao Nang, Railay and Klong Muang (461 from OpenStreetMap with coordinates and ODbL attribution, 29 from web research), the 102 Krabi sample listings removed. `soiguru-redirects` now writes two lines per listing (`/item/<slug>`, `/item/<slug>/`) instead of three, so the file stays under the 2,000 static redirects Cloudflare Workers allow; `/item/<slug>.md` falls through to `/`. Spec: `.specify/features/soiguru-design.md` § Generic routes.
+
+## 2026-10-16 — Owner links point at owner.soiguru.com
+
+The Next.js owner app now also answers on `owner.soiguru.com` (Cloudflare-proxied DNS to the Dokploy server). Bundled `works.yml`: `claim_url: https://owner.soiguru.com/{city}/claim`, `owner_url: https://owner.soiguru.com/owner`. Spec: `.specify/features/soiguru-design.md`.
+
+## 2026-10-16 — Generic template pages redirect to SoiGuru pages; 404 in the SoiGuru design
+
+soiguru.com still served ~240 pages of the generic template design (`/item/…`, `/category/…`, `/tag/…`, `/page/…`, `/directory`, `/categories`, `/tags`, `/collections`, `/comparisons`, `/pages/…`), all in the sitemap, with sample items linking to `example.com`. New `soiguru-redirects` integration writes `dist/_redirects` after the build (Cloudflare Workers static assets apply it before serving files): `/item/<slug>` (and `.md`) 301 to the listing page `/<city>/<area>/<slug>/`, every other generic route 301 to `/`. The same prefixes (`GENERIC_PREFIXES`) are filtered out of the sitemap. The routes stay in the code (R11). `404.astro` now uses `SoiGuruLayout` (top bar, EN/TH message, city list, noindex). Spec: `.specify/features/soiguru-design.md` § Generic routes.
+
+## 2026-10-16 — Claim and Owner links match the Next.js routes
+
+Claim buttons linked to `https://soiguru.midego.net/claim`, which does not exist in the Next.js app (its ClaimFlow is `/<city>/claim`) and showed an error page. `claim_url` now takes a `{city}` placeholder (`claimUrl(config, city, listing?)`), and a new optional `owner_url` (`ownerUrl()`) sends the Owner tab, "For owners" and the landing CTA to the owner dashboard (`/owner`), like the Next.js bottom nav. Bundled `works.yml` updated. Spec: `.specify/features/soiguru-design.md`.
+
+## 2026-10-16 — Default site URL is soiguru.com
+
+Builds without `SITE_URL` (the Cloudflare Worker `soiguru-minimal` deploy) put `https://example.com` in every canonical, hreflang, sitemap and robots.txt URL. `astro.config.ts` now falls back to `https://soiguru.com`; `SITE_URL` still overrides it. Spec: `.specify/features/soiguru-design.md`.
+
 ## 2026-10-15 — SoiGuru full public site
 
 Search box searches (names, descriptions, amenities, EN/TH); Area and Filters sheets (price, rating, LINE, WhatsApp, verified, amenities) kept in the URL; "Search this area" and prev/next on the map sheet; full-screen photo gallery; Saved places on the device with a `/<city>/saved` page; pre-rendered Thai pages under `/th/` with hreflang (new `soiguru-thai` integration); today-first hours; official LINE/WhatsApp marks. Spec: `.specify/features/soiguru-design.md` § Full public site.

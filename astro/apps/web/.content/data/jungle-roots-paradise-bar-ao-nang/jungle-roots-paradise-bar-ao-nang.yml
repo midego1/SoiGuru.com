@@ -1,0 +1,48 @@
+name: Jungle Roots Paradise Bar
+description: Bar in Ao Nang.
+source_url: ''
+category: bars
+tags: []
+featured: false
+status: approved
+city: krabi
+area: ao-nang
+address: 1 Soi 9
+geo:
+  lat: 8.036812
+  lng: 98.838946
+location:
+  address: 1 Soi 9
+  city: Krabi
+  country: TH
+  latitude: 8.036812
+  longitude: 98.838946
+phone: "+66856705108"
+hours:
+  mon:
+  - 00:00-24:00
+  tue:
+  - 00:00-24:00
+  wed:
+  - 00:00-24:00
+  thu:
+  - 00:00-24:00
+  fri:
+  - 00:00-24:00
+  sat:
+  - 00:00-24:00
+  sun:
+  - 00:00-24:00
+claimed: false
+submitted_by: Grok Bot
+updated_by: import
+updated_at: "2026-10-17 01:01"
+markdown: 'Bar in Ao Nang.
+
+
+  Sources: <https://www.openstreetmap.org/node/4879004826>
+
+
+  Map data © OpenStreetMap contributors (ODbL).
+
+  '

@@ -5,7 +5,12 @@
  * `font-display: swap`, SEO meta from plugin-seo, optional JSON-LD, and the small page
  * script that computes open status, distances and the language swap in the browser.
  *
- * Phone first: one 640px column; `wide` lets a screen (results) use the full width.
+ * Website layout (the SoiGuru mockup): full-width header and footer with content in a
+ * 1200px column, phone first and responsive. `wide` lets a screen (results) use the full
+ * width and leaves out the footer. The theme (`theme` in works.yml or `SITE_THEME`) sets
+ * `data-theme` on `<html>`; `navy` also loads Bricolage Grotesque and Figtree.
+ * The phone tab bar (BottomNav) is added here on every page, fixed to the bottom of the
+ * screen below 960px; pages put other bottom bars (Directions) in the `nav` slot.
  *
  * Every SoiGuru page also exists in Thai under `/th/…`: the `soiguru-thai` integration
  * writes those copies after the build from this HTML (`data-path-en` names the twin).
@@ -13,9 +18,13 @@
 import { generateMetaTags } from '@ever-works/plugin-seo';
 import type { SiteConfig } from '@ever-works/core';
 import { jsonForScript } from '../lib/soiguru/format';
+import { getSoiGuru, ownerUrl, siteTheme, type City } from '../lib/soiguru/data';
+import SiteFooter from '../components/soiguru/SiteFooter.astro';
+import BottomNav from '../components/soiguru/BottomNav.astro';
 import '../styles/soiguru/tokens.css';
 import '../styles/soiguru/components.css';
 import '../styles/soiguru/app.css';
+import '../styles/soiguru/site.css';
 
 interface Props {
     /** Full document title */
@@ -32,23 +41,42 @@ interface Props {
     wide?: boolean;
     /** Keep the page out of search results (e.g. the search page) */
     noindex?: boolean;
+    /** City of the page (footer links) */
+    city?: City;
+    /** Show the website footer (default: not on `wide` screens) */
+    footer?: boolean;
 }
 
-const { title, description, config, path, jsonLd = [], timeZone = 'Asia/Bangkok', wide = false, noindex = false } = Astro.props;
+const { title, description, config, path, jsonLd = [], timeZone = 'Asia/Bangkok', wide = false, noindex = false, city } = Astro.props;
+const footer = Astro.props.footer ?? !wide;
+// Phone tab bar (Home, Search, Saved, Owner) on every page, for the page's city or the first one.
+const { cities } = await getSoiGuru();
+const navCity = city ?? cities[0];
+const tab = navCity
+    ? path === `/${navCity.id}`
+        ? 'home'
+        : path === `/${navCity.id}/search`
+          ? 'search'
+          : path === `/${navCity.id}/saved`
+            ? 'saved'
+            : undefined
+    : undefined;
+const theme = siteTheme(config);
 const siteUrl = (Astro.site?.href ?? 'https://soiguru.com/').replace(/\/$/, '');
 const canonical = `${siteUrl}${path}`;
 const metaTags = generateMetaTags({ title, description, url: canonical, type: 'website' }, {});
 ---
 
 <!doctype html>
-<html lang="en" data-lang="en" data-path-en={path}>
+<html lang="en" data-lang="en" data-path-en={path} data-theme={theme}>
     <head>
         <meta charset="utf-8" />
         <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
-        <meta name="theme-color" content="#0a6b73" />
+        <meta name="theme-color" content={theme === 'navy' ? '#10272b' : '#064a50'} />
         <title>{title}</title>
         {
-            metaTags.map((tag) =>
+            // A noindex page drops the site-wide "index, follow" so the two never conflict.
+            metaTags.filter((tag) => !(noindex && tag.value === 'robots')).map((tag) =>
                 tag.key === 'property' ? <meta property={tag.value} content={tag.content} /> : <meta name={tag.value} content={tag.content} />,
             )
         }
@@ -57,13 +85,32 @@ const metaTags = generateMetaTags({ title, description, url: canonical, type: 'w
         <link rel="alternate" hreflang="en" href={canonical} />
         <link rel="alternate" hreflang="th" href={`${siteUrl}/th${path === '/' ? '/' : path}`} />
         <link rel="alternate" hreflang="x-default" href={canonical} />
-        {config.logo?.favicon && <link rel="icon" href={config.logo.favicon} />}
+        {
+            config.logo?.favicon ? (
+                <link rel="icon" href={config.logo.favicon} />
+            ) : (
+                <>
+                    <link rel="icon" href="/favicon.ico" sizes="48x48" />
+                    <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
+                    <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
+                    <link rel="manifest" href="/site.webmanifest" />
+                </>
+            )
+        }
         <link rel="preconnect" href="https://fonts.googleapis.com" />
         <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
         <link
             rel="stylesheet"
             href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@400;500;600;700&family=IBM+Plex+Sans+Thai:wght@400;500;600;700&display=swap"
         />
+        {
+            theme === 'navy' && (
+                <link
+                    rel="stylesheet"
+                    href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,500;12..96,700;12..96,800&family=Figtree:wght@400;500;600;700&display=swap"
+                />
+            )
+        }
         {jsonLd.map((ld) => <script is:inline type="application/ld+json" set:html={jsonForScript(ld)} />)}
         <script is:inline defer src="https://umami.midego.net/script.js" data-website-id="f0546456-1d42-40ae-9008-6be2c6510eaa"></script>
         <script is:inline defer src="https://umami.midego.net/recorder.js" data-website-id="f0546456-1d42-40ae-9008-6be2c6510eaa"></script>
@@ -72,6 +119,9 @@ const metaTags = generateMetaTags({ title, description, url: canonical, type: 'w
     <body data-tz={timeZone}>
         <div class:list={['sg-page', { 'sg-page-wide': wide }]}>
             <slot />
+            {footer && <SiteFooter city={city} />}
+            <slot name="nav" />
+            {navCity && <BottomNav city={navCity} active={tab} ownerHref={ownerUrl(config, navCity)} />}
         </div>
         <script>
             import '../scripts/soiguru/page';

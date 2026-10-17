@@ -9,7 +9,9 @@
  * - the "Open now" short list on the city home,
  * - the EN / ไทย language: `/th/…` pages are Thai from the server; elsewhere a stored
  *   Thai choice swaps every `[data-th]` text. The toggle goes to the other language's URL,
- * - today's row first in hours tables (the design's "today first").
+ * - today's row first in hours tables (the design's "today first"),
+ * - the header's city picker and menu (`details[data-pop]`): one open at a time, closed by a
+ *   click outside or Escape.
  *
  * Other scripts listen for `sg:refresh` (statuses recomputed) and `sg:location`.
  */
@@ -135,11 +137,12 @@ function refreshUpdated(now: Date): void {
     }
 }
 
-/** City home: keep the first N open (or closing soon) cards of the "Open now" list (`data-limit-wide` on desktop). */
+/** City home: keep the first N open (or closing soon) cards of the "Open now" list (`data-limit-wide` on desktop, `data-limit-xl` from 1440px). */
 function refreshOpenNow(): void {
     for (const section of document.querySelectorAll<HTMLElement>('[data-open-now]')) {
+        const xl = section.dataset['limitXl'] !== undefined && matchMedia('(min-width: 1440px)').matches;
         const wide = section.dataset['limitWide'] !== undefined && matchMedia('(min-width: 960px)').matches;
-        const limit = Number((wide ? section.dataset['limitWide'] : section.dataset['limit']) ?? 3);
+        const limit = Number((xl ? section.dataset['limitXl'] : wide ? section.dataset['limitWide'] : section.dataset['limit']) ?? 3);
         const cards = [...section.querySelectorAll<HTMLElement>('[data-listing]')];
         const open = cards.filter((c) => c.dataset['open'] === '1');
         const shown = new Set(open.slice(0, limit));
@@ -216,6 +219,40 @@ document.addEventListener('click', (event) => {
         refreshStatuses();
     }
 });
+
+/** Close the header's open pop-ups except `keep`. */
+function closePops(keep?: Element | null): void {
+    for (const pop of document.querySelectorAll<HTMLDetailsElement>('details[data-pop][open]')) {
+        if (pop !== keep) pop.open = false;
+    }
+}
+
+document.addEventListener('click', (event) => {
+    const target = event.target instanceof Element ? event.target : null;
+    closePops(target?.closest('details[data-pop]'));
+});
+
+document.addEventListener('keydown', (event) => {
+    if (event.key !== 'Escape') return;
+    const open = document.querySelector<HTMLDetailsElement>('details[data-pop][open]');
+    if (!open) return;
+    open.open = false;
+    open.querySelector<HTMLElement>('summary')?.focus();
+});
+
+/** Drawn Thailand maps: light a city's pin while its row, button or card is hovered or focused. */
+function lightCity(id: string | undefined): void {
+    for (const pin of document.querySelectorAll<SVGElement>('[data-map-city]')) {
+        pin.classList.toggle('is-hover', pin.dataset['mapCity'] === id);
+    }
+    for (const map of document.querySelectorAll<SVGElement>('[data-thmap]')) map.classList.toggle('has-hover', !!id);
+}
+for (const type of ['pointerover', 'focusin'] as const) {
+    document.addEventListener(type, (event) => {
+        const el = event.target instanceof Element ? event.target.closest<HTMLElement | SVGElement>('[data-city-hover], [data-map-city]') : null;
+        lightCity(el ? (el.dataset['cityHover'] ?? el.dataset['mapCity']) : undefined);
+    });
+}
 
 /** Current UI language (for other scripts). */
 export function currentLang(): Lang {

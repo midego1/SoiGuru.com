@@ -1,0 +1,31 @@
+name: Pad Thai
+description: Fast food in Ao Nang.
+source_url: ''
+category: restaurants
+tags: []
+featured: false
+status: approved
+city: krabi
+area: ao-nang
+geo:
+  lat: 8.034045
+  lng: 98.819141
+location:
+  address: Ao Nang, Krabi
+  city: Krabi
+  country: TH
+  latitude: 8.034045
+  longitude: 98.819141
+claimed: false
+submitted_by: Grok Bot
+updated_by: import
+updated_at: "2026-10-17 01:01"
+markdown: 'Fast food in Ao Nang.
+
+
+  Sources: <https://www.openstreetmap.org/node/6910855286>
+
+
+  Map data © OpenStreetMap contributors (ODbL).
+
+  '

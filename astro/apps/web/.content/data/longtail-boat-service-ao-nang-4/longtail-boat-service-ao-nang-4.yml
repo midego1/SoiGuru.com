@@ -1,0 +1,32 @@
+name: Longtail Boat Service
+name_th: สหกรณ์เรือหางยาวบริการตำบลอ่าวนาง จำกัด
+description: Tour operator in Nopparat Thara, Ao Nang.
+source_url: ''
+category: tours
+tags: []
+featured: false
+status: approved
+city: krabi
+area: ao-nang
+geo:
+  lat: 8.046764
+  lng: 98.800208
+location:
+  address: Nopparat Thara, Ao Nang, Krabi
+  city: Krabi
+  country: TH
+  latitude: 8.046764
+  longitude: 98.800208
+claimed: false
+submitted_by: Grok Bot
+updated_by: import
+updated_at: "2026-10-17 01:01"
+markdown: 'Tour operator in Nopparat Thara, Ao Nang.
+
+
+  Sources: <https://www.openstreetmap.org/node/10221157838>
+
+
+  Map data © OpenStreetMap contributors (ODbL).
+
+  '

@@ -3,48 +3,100 @@
   name_th: ร้านอาหาร
   icon: home
   description: Thai kitchens, seafood, street food and international restaurants.
-  priority: 8
+  priority: 16
+- id: bars
+  name: Bars
+  name_th: บาร์
+  icon: globe
+  description: Beach bars, pubs, rooftop and live-music bars.
+  priority: 15
 - id: cafes
   name: Cafés
   name_th: คาเฟ่
   icon: cash
   description: Coffee, breakfast and bakeries.
-  priority: 7
+  priority: 14
+- id: shops
+  name: Shops
+  name_th: ร้านค้า
+  icon: card
+  description: Convenience stores, supermarkets, markets, clothes and souvenir shops.
+  priority: 13
+- id: hotels
+  name: Hotels
+  name_th: โรงแรม
+  icon: calendar
+  description: Hotels, resorts and guesthouses.
+  priority: 12
 - id: massage
   name: Massage
   name_th: นวด
   icon: heart
   description: Thai massage, foot massage and spas.
-  priority: 6
+  priority: 11
 - id: tours
   name: Tours
   name_th: ทัวร์
   icon: map
   description: Island hopping, longtail boats, day trips and guides.
-  priority: 5
-- id: scooter-rental
-  name: Scooter rental
-  short_name: Scooters
-  name_th: เช่ามอเตอร์ไซค์
+  priority: 10
+- id: gyms-muay-thai
+  name: Gyms & Muay Thai
+  short_name: Muay Thai
+  name_th: ยิมและมวยไทย
   icon: bolt
-  description: Scooter and motorbike hire by the day or month.
-  priority: 4
+  description: Muay Thai camps, boxing and fitness gyms.
+  priority: 9
+- id: dive-shops
+  name: Dive shops
+  name_th: ร้านดำน้ำ
+  icon: globe
+  description: Dive courses, fun dives and snorkel trips.
+  priority: 8
+- id: clinics-pharmacies
+  name: Clinics & pharmacies
+  short_name: Health
+  name_th: คลินิกและร้านขายยา
+  icon: plus
+  description: Hospitals, clinics, doctors and pharmacies.
+  priority: 7
+- id: laundry
+  name: Laundry
+  name_th: ร้านซักรีด
+  icon: calendar
+  description: Laundry services and self-service washing machines.
+  priority: 6
+- id: barbers-salons
+  name: Barbers & salons
+  short_name: Barbers
+  name_th: ร้านตัดผม
+  icon: star
+  description: Barbershops and hair salons.
+  priority: 5
 - id: nail-salons
   name: Nail salons
   short_name: Nails
   name_th: ร้านทำเล็บ
   icon: star
   description: Manicure, pedicure, gel and acrylic.
+  priority: 4
+- id: scooter-rental
+  name: Scooter rental
+  short_name: Scooters
+  name_th: เช่ามอเตอร์ไซค์
+  icon: bolt
+  description: Scooter and motorbike hire by the day or month.
   priority: 3
-- id: dive-shops
-  name: Dive shops
-  name_th: ร้านดำน้ำ
+- id: coworking
+  name: Coworking
+  name_th: โคเวิร์กกิ้งสเปซ
   icon: globe
-  description: Dive courses, fun dives and snorkel trips.
+  description: Coworking spaces with desks and fast Wi-Fi.
   priority: 2
-- id: hotels
-  name: Hotels
-  name_th: โรงแรม
-  icon: calendar
-  description: Hotels, resorts and guesthouses.
+- id: other
+  name: Other services
+  short_name: Services
+  name_th: บริการอื่นๆ
+  icon: info
+  description: Tailors, repairs, lockers and other local services.
   priority: 1

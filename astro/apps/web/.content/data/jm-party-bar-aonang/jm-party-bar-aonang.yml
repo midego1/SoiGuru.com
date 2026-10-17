@@ -1,0 +1,47 @@
+name: JM Party Bar Aonang
+description: Bar in Ao Nang.
+source_url: ''
+category: bars
+tags: []
+featured: false
+status: approved
+city: krabi
+area: ao-nang
+geo:
+  lat: 8.032026
+  lng: 98.825294
+location:
+  address: Ao Nang, Krabi
+  city: Krabi
+  country: TH
+  latitude: 8.032026
+  longitude: 98.825294
+phone: "+66926715665"
+hours:
+  mon:
+  - 18:00-02:00
+  tue:
+  - 18:00-02:00
+  wed:
+  - 18:00-02:00
+  thu:
+  - 18:00-02:00
+  fri:
+  - 18:00-02:00
+  sat:
+  - 18:00-02:00
+  sun:
+  - 18:00-02:00
+claimed: false
+submitted_by: Grok Bot
+updated_by: import
+updated_at: "2026-10-17 01:01"
+markdown: 'Bar in Ao Nang.
+
+
+  Sources: <https://www.openstreetmap.org/node/3676113296>
+
+
+  Map data © OpenStreetMap contributors (ODbL).
+
+  '

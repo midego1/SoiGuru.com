@@ -1,0 +1,31 @@
+name: Photo copy & Print
+description: Stationery shop in Ao Nang.
+source_url: ''
+category: shops
+tags: []
+featured: false
+status: approved
+city: krabi
+area: ao-nang
+geo:
+  lat: 8.037739
+  lng: 98.833397
+location:
+  address: Ao Nang, Krabi
+  city: Krabi
+  country: TH
+  latitude: 8.037739
+  longitude: 98.833397
+claimed: false
+submitted_by: Grok Bot
+updated_by: import
+updated_at: "2026-10-17 01:01"
+markdown: 'Stationery shop in Ao Nang.
+
+
+  Sources: <https://www.openstreetmap.org/node/9435668444>
+
+
+  Map data © OpenStreetMap contributors (ODbL).
+
+  '

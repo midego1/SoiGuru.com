@@ -1,0 +1,31 @@
+name: Supsangdao Resort
+description: Hotel in Klong Haeng, Ao Nang.
+source_url: ''
+category: hotels
+tags: []
+featured: false
+status: approved
+city: krabi
+area: ao-nang
+geo:
+  lat: 8.056302
+  lng: 98.818499
+location:
+  address: Ao Nang
+  city: Krabi
+  country: TH
+  latitude: 8.056302
+  longitude: 98.818499
+claimed: false
+submitted_by: Grok Bot
+updated_by: import
+updated_at: "2026-10-17 01:01"
+markdown: 'Hotel in Klong Haeng, Ao Nang.
+
+
+  Sources: <https://www.openstreetmap.org/way/1227068085>
+
+
+  Map data © OpenStreetMap contributors (ODbL).
+
+  '

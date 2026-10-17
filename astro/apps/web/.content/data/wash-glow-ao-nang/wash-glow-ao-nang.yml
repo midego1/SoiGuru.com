@@ -1,0 +1,46 @@
+name: Wash & glow
+description: Laundry in Ao Nang.
+source_url: ''
+category: laundry
+tags: []
+featured: false
+status: approved
+city: krabi
+area: ao-nang
+geo:
+  lat: 8.034432
+  lng: 98.828899
+location:
+  address: Ao Nang, Krabi
+  city: Krabi
+  country: TH
+  latitude: 8.034432
+  longitude: 98.828899
+hours:
+  mon:
+  - 09:00-19:00
+  tue:
+  - 09:00-19:00
+  wed:
+  - 09:00-19:00
+  thu:
+  - 09:00-19:00
+  fri:
+  - 09:00-19:00
+  sat:
+  - 09:00-19:00
+  sun:
+  - 09:00-19:00
+claimed: false
+submitted_by: Grok Bot
+updated_by: import
+updated_at: "2026-10-17 01:01"
+markdown: 'Laundry in Ao Nang.
+
+
+  Sources: <https://www.openstreetmap.org/node/11836134913>
+
+
+  Map data © OpenStreetMap contributors (ODbL).
+
+  '

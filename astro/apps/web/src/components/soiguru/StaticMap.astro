@@ -11,12 +11,14 @@ interface Props {
     /** Map height in px */
     height?: number;
     zoom?: number;
+    /** Widest the map is drawn, in px (tiles are loaded to cover it) */
+    width?: number;
 }
 
-const { point, height = 160, zoom = 16 } = Astro.props;
+const { point, height = 160, zoom = 16, width = 640 } = Astro.props;
 const px = worldPixel(point, zoom);
-// Cover up to 640px wide and `height` tall around the point.
-const halfW = 320;
+// Cover up to `width` px wide and `height` tall around the point.
+const halfW = Math.ceil(width / 2);
 const halfH = Math.ceil(height / 2);
 const x0 = Math.floor((px.x - halfW) / TILE_SIZE);
 const x1 = Math.floor((px.x + halfW) / TILE_SIZE);

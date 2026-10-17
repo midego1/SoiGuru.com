@@ -1,0 +1,78 @@
+---
+/**
+ * ResultFilters — the filter groups of a results page: area (with counts), price, "show only"
+ * (rated 4+, LINE, WhatsApp, verified owners) and amenities. Rendered twice by
+ * CategoryResults: in the Filters sheet (phones) and in the left sidebar (desktop list view).
+ * Both copies are plain `[data-f-*]` / `[data-area-set]` buttons that `results.ts` handles at
+ * document level, so they stay in sync.
+ */
+import Icon from './Icon.astro';
+import type { City } from '../../lib/soiguru/data';
+
+interface Props {
+    city: City;
+    priceBands: number[];
+    amenityOptions: [string, { name: string; name_th?: string; count: number }][];
+    /** Area filter with counts (sidebar only; phones use the Area sheet) */
+    areas?: { id: string; name: string; name_th?: string; count: number }[];
+}
+
+const { city, priceBands, amenityOptions, areas = [] } = Astro.props;
+---
+
+{
+    areas.length > 1 && (
+        <fieldset class="sg-fieldset">
+            <legend data-th="พื้นที่">Area</legend>
+            <div class="sg-rf-list">
+                <button type="button" class="sg-rf-opt" data-area-set="">
+                    <span>All of {city.name}</span>
+                    <small>{areas.reduce((n, a) => n + a.count, 0)}</small>
+                </button>
+                {areas.map((a) => (
+                    <button type="button" class="sg-rf-opt" data-area-set={a.id} data-area-name={a.name} data-area-name-th={a.name_th}>
+                        <span>{a.name}</span>
+                        <small>{a.count}</small>
+                    </button>
+                ))}
+            </div>
+        </fieldset>
+    )
+}
+{
+    priceBands.length > 1 && (
+        <fieldset class="sg-fieldset">
+            <legend data-th="ราคา">Price</legend>
+            <div class="sg-chip-wrap">
+                {priceBands.map((p) => (
+                    <button type="button" class="tkg-chip" data-f-price={p} aria-pressed="false">
+                        {'฿'.repeat(p)}
+                    </button>
+                ))}
+            </div>
+        </fieldset>
+    )
+}
+<fieldset class="sg-fieldset">
+    <legend data-th="ตัวเลือก">Show only</legend>
+    <div class="sg-chip-wrap">
+        <button type="button" class="tkg-chip" data-f-toggle="rating" aria-pressed="false"><Icon name="star" /><span data-th="คะแนน 4 ขึ้นไป">Rated 4+</span></button>
+        <button type="button" class="tkg-chip" data-f-toggle="line" aria-pressed="false"><Icon name="line" />LINE</button>
+        <button type="button" class="tkg-chip" data-f-toggle="wa" aria-pressed="false"><Icon name="whatsapp" />WhatsApp</button>
+        <button type="button" class="tkg-chip" data-f-toggle="verified" aria-pressed="false"><Icon name="shield" /><span data-th="เจ้าของยืนยันแล้ว">Verified owners</span></button>
+    </div>
+</fieldset>
+{
+    amenityOptions.length > 0 && (
+        <fieldset class="sg-fieldset">
+            <legend data-th="สิ่งอำนวยความสะดวก">Good to know</legend>
+            <div class="sg-chip-wrap">
+                {amenityOptions.map(([id, a]) => (
+                    <button type="button" class="tkg-chip" data-f-amenity={id} aria-pressed="false">
+                        <span data-th={a.name_th}>{a.name}</span>
+                    </button>
+                ))}
+            </div>
+        </fieldset>
+    )
+}

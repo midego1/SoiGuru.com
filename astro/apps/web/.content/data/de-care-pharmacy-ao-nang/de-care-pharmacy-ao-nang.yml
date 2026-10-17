@@ -1,0 +1,46 @@
+name: De Care Pharmacy
+description: Pharmacy in Ao Nang.
+source_url: ''
+category: clinics-pharmacies
+tags: []
+featured: false
+status: approved
+city: krabi
+area: ao-nang
+geo:
+  lat: 8.03434
+  lng: 98.818812
+location:
+  address: Ao Nang, Krabi
+  city: Krabi
+  country: TH
+  latitude: 8.03434
+  longitude: 98.818812
+hours:
+  mon:
+  - 08:00-24:00
+  tue:
+  - 08:00-24:00
+  wed:
+  - 08:00-24:00
+  thu:
+  - 08:00-24:00
+  fri:
+  - 08:00-24:00
+  sat:
+  - 08:00-24:00
+  sun:
+  - 08:00-24:00
+claimed: false
+submitted_by: Grok Bot
+updated_by: import
+updated_at: "2026-10-17 01:01"
+markdown: 'Pharmacy in Ao Nang.
+
+
+  Sources: <https://www.openstreetmap.org/node/3678616712>
+
+
+  Map data © OpenStreetMap contributors (ODbL).
+
+  '

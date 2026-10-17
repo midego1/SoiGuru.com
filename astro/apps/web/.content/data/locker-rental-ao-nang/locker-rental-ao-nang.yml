@@ -1,0 +1,50 @@
+name: Locker Rental
+description: Luggage and lockers in Ao Nang.
+source_url: https://www.lockbox-th.com/
+category: other
+tags: []
+featured: false
+status: approved
+city: krabi
+area: ao-nang
+geo:
+  lat: 8.03259
+  lng: 98.823744
+location:
+  address: Ao Nang, Krabi
+  city: Krabi
+  country: TH
+  latitude: 8.03259
+  longitude: 98.823744
+phone: "+6620090595"
+hours:
+  mon:
+  - 00:00-24:00
+  tue:
+  - 00:00-24:00
+  wed:
+  - 00:00-24:00
+  thu:
+  - 00:00-24:00
+  fri:
+  - 00:00-24:00
+  sat:
+  - 00:00-24:00
+  sun:
+  - 00:00-24:00
+claimed: false
+submitted_by: Grok Bot
+updated_by: import
+updated_at: "2026-10-17 01:01"
+markdown: 'Luggage and lockers in Ao Nang.
+
+
+  Links: <https://www.lockbox-th.com/>, <https://www.facebook.com/LockBoxTH>, <https://www.instagram.com/lockboxth/>
+
+
+  Sources: <https://www.openstreetmap.org/way/1489340440>, <https://www.lockbox-th.com/>
+
+
+  Map data © OpenStreetMap contributors (ODbL).
+
+  '

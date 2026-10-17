@@ -1,0 +1,32 @@
+name: Longtail Boat Service
+name_th: ชมรมผู้ประกอบการเรือหางยาวอ่าวนาง
+description: Tour operator in Ao Nang.
+source_url: ''
+category: tours
+tags: []
+featured: false
+status: approved
+city: krabi
+area: ao-nang
+geo:
+  lat: 8.031072
+  lng: 98.822294
+location:
+  address: Ao Nang, Krabi
+  city: Krabi
+  country: TH
+  latitude: 8.031072
+  longitude: 98.822294
+claimed: false
+submitted_by: Grok Bot
+updated_by: import
+updated_at: "2026-10-17 01:01"
+markdown: 'Tour operator in Ao Nang.
+
+
+  Sources: <https://www.openstreetmap.org/node/10211668669>
+
+
+  Map data © OpenStreetMap contributors (ODbL).
+
+  '

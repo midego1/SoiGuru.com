@@ -1,18 +1,19 @@
 ---
 /**
- * CityHome (`/<city>`) — the front door for one city, within one thumb-scroll: search,
- * the 8 categories, what is open now, the areas, and one quiet owner call-to-action.
+ * CityHome (`/<city>`) — the front door for one city, in the website mockup's layout: the
+ * hero (headline, what + where search, trust ticks, karst picture), the 8 category tiles,
+ * "Open now" photo cards, "Browse by area" cards, the owner block and the footer.
  * Rendered at build time with the city's data so it paints before any script; the
  * "open now" list is narrowed in the browser, which knows the time.
  */
 import SoiGuruLayout from '../../layouts/SoiGuruLayout.astro';
 import TopBar from '../../components/soiguru/TopBar.astro';
 import Icon from '../../components/soiguru/Icon.astro';
-import SearchBar from '../../components/soiguru/SearchBar.astro';
+import HeroSearch from '../../components/soiguru/HeroSearch.astro';
+import KarstScene from '../../components/soiguru/KarstScene.astro';
 import ListingCard from '../../components/soiguru/ListingCard.astro';
-import OwnerCta from '../../components/soiguru/OwnerCta.astro';
-import BottomNav from '../../components/soiguru/BottomNav.astro';
-import { getSoiGuru, cityListings, defaultArea, claimUrl, type City } from '../../lib/soiguru/data';
+import OwnerBlock from '../../components/soiguru/OwnerBlock.astro';
+import { getSoiGuru, cityListings, defaultArea, claimUrl, ownerUrl, type City } from '../../lib/soiguru/data';
 import { breadcrumbJsonLd } from '../../lib/soiguru/jsonld';
 
 export async function getStaticPaths() {
@@ -30,12 +31,38 @@ const { config, categories } = data;
 const listings = cityListings(data, city);
 const area = defaultArea(city);
 // Candidates for "Open now": the default area first, then the rest of the city, by rating.
-const openNowCandidates = [...listings].sort(
+const ranked = [...listings].sort(
     (a, b) => Number(b.area?.id === area?.id) - Number(a.area?.id === area?.id) || (b.rating ?? 0) - (a.rating ?? 0),
 );
+// Varied: one place per category in turn (category priority order), so the first cards are
+// not four branches of the same chain. The browser keeps the first ones that are open.
+const byCategory = new Map<string, typeof ranked>();
+for (const cat of categories) byCategory.set(cat.id, []);
+for (const l of ranked) {
+    const key = l.category?.id ?? '';
+    if (!byCategory.has(key)) byCategory.set(key, []);
+    byCategory.get(key)!.push(l);
+}
+const openNowCandidates: typeof ranked = [];
+for (let round = 0; openNowCandidates.length < ranked.length; round++)
+    for (const list of byCategory.values()) {
+        const l = list[round];
+        if (l) openNowCandidates.push(l);
+    }
 const areaCounts = new Map(city.areas.map((a) => [a.id, listings.filter((l) => l.area?.id === a.id).length]));
 const siteUrl = (Astro.site?.href ?? '').replace(/\/$/, '');
-const owner = claimUrl(config);
+const owner = ownerUrl(config, city);
+// Areas named in the hero: the ones with places (all areas while none has any).
+const areaNames = city.areas.map((a) => a.name);
+// Areas with places; an empty area would open an empty list.
+// Category tiles: every category with places in this city, in priority order.
+const tileCategories = categories.filter((c) => listings.some((l) => l.category?.id === c.id));
+const visibleAreas = city.areas.filter((a) => (areaCounts.get(a.id) ?? 0) > 0);
+const trust: [string, string][] = [
+    ['Opening hours you can check', 'เวลาเปิด-ปิดที่ตรวจสอบได้'],
+    ['Call, LINE or WhatsApp in one tap', 'โทร LINE หรือ WhatsApp ในแตะเดียว'],
+    ['English and Thai', 'ภาษาอังกฤษและไทย'],
+];
 ---
 
 <SoiGuruLayout
@@ -44,44 +71,69 @@ const owner = claimUrl(config);
     config={config}
     path={`/${city.id}`}
     timeZone={city.timezone}
+    city={city}
     jsonLd={[breadcrumbJsonLd(siteUrl, [[config.company_name, '/'], [city.name, `/${city.id}`]])]}
 >
     <TopBar city={city} nav={{ city, active: 'home', ownerHref: owner }} />
-    <main>
-        <div class="sg-header">
-            <div class="tkg-small tkg-muted sg-context">
-                <Icon name="pin" class="tkg-i-16" />
-                {' '}<span data-th={area?.name_th ?? city.name_th}>{area?.name ?? city.name}</span> · <span data-local-time></span>
+    <main class="sg-main-full">
+        <section class="sg-hero">
+            <div class="sg-wrap sg-hero-grid">
+                <div class="sg-hero-copy">
+                    <p class="sg-hero-eyebrow">
+                        {visibleAreas.length > 0 ? visibleAreas.map((a) => a.name).join(' · ') : areaNames.length > 0 ? areaNames.join(' · ') : (city.province ?? city.name)}
+                        <span class="sg-hero-time"> · <span data-local-time></span></span>
+                    </p>
+                    <h1 class="sg-hero-h" data-th={`ทุกร้านใน${city.name_th ?? city.name} ในที่เดียว`}>Every local spot in {city.name}, in one place.</h1>
+                    <p class="sg-hero-lead" data-th="ร้านอาหาร นวด ทัวร์ เช่ารถ และทุกร้านในระหว่างนั้น พร้อมเวลาเปิด-ปิด LINE และเส้นทาง">
+                        Restaurants, massage, tours, rentals and every shop in between, with opening hours, LINE and directions.
+                    </p>
+                    <HeroSearch city={city} />
+                    <ul class="sg-hero-ticks">
+                        {
+                            trust.map(([en, th]) => (
+                                <li>
+                                    <Icon name="check" class="tkg-i-16" />
+                                    <span data-th={th}>{en}</span>
+                                </li>
+                            ))
+                        }
+                    </ul>
+                </div>
+                <div class="sg-hero-art">
+                    <KarstScene />
+                </div>
             </div>
-            <h1 class="tkg-display"><span data-th="ค้นหาทุกอย่าง">Find anything</span><br /><span data-th={city.name_th ? `ใน${city.name_th}` : ''}>in {city.name}</span></h1>
-            <SearchBar city={city} hints area={area} />
-        </div>
+        </section>
 
-        <section class="tkg-section" style="padding-top:20px">
-            <div class="tkg-section-h"><h2 data-th="หมวดหมู่">Categories</h2></div>
-            <div class="tkg-cats">
+        <section class="sg-wrap sg-sec sg-sec-first" aria-labelledby="sg-cats-h">
+            <h2 class="sg-visually-hidden" id="sg-cats-h">Categories</h2>
+            <div class="sg-tiles">
                 {
-                    categories.slice(0, 8).map((cat) => (
-                        <a class="tkg-cat" href={`/${city.id}/${cat.id}`}>
-                            <Icon name={cat.icon} />
-                            <span>{cat.short_name}</span>
-                            {cat.name_th && <small lang="th">{cat.name_th}</small>}
+                    tileCategories.map((cat) => (
+                        <a class="sg-tile" href={`/${city.id}/${cat.id}`}>
+                            <span class="sg-tile-mark">
+                                <Icon name={cat.icon} />
+                            </span>
+                            <span class="sg-tile-label" data-th={cat.name_th}>{cat.short_name}</span>
+                            {cat.name_th && <small lang="th" class="sg-tile-th">{cat.name_th}</small>}
                         </a>
                     ))
                 }
             </div>
         </section>
 
-        <section class="tkg-section sg-open-now" data-open-now data-limit="3" data-limit-wide="6">
-            <div class="tkg-section-h">
-                <h2>
+        <section class="sg-wrap sg-sec sg-open-now" data-open-now data-limit="4" data-limit-wide="8" data-limit-xl="10">
+            <div class="sg-sec-h">
+                <h2 class="sg-h-lg">
                     <span data-th={`เปิดอยู่ตอนนี้ใน${area?.name_th ?? area?.name ?? city.name_th ?? city.name}`}>Open now in {area?.name ?? city.name}</span>
-                    <small>เปิดอยู่ตอนนี้ · <span data-open-count>{listings.length}</span> open in {city.name}</small>
                 </h2>
-                <a href={`/${city.id}/search?open=1`} data-th="ดูทั้งหมด">See all</a>
+                <p class="sg-sec-sub">
+                    <span data-open-count>{listings.length}</span> <span data-th={`ร้านเปิดอยู่ใน${city.name_th ?? city.name}`}>{`open in ${city.name}`}</span>
+                </p>
+                <a class="sg-sec-link" href={`/${city.id}/search?open=1&view=map`} data-th="ดูทั้งหมดบนแผนที่">See all on the map</a>
             </div>
-            <div class="tkg-list">
-                {openNowCandidates.map((listing, i) => <ListingCard listing={listing} hidden={i >= 3} />)}
+            <div class="sg-tcards">
+                {openNowCandidates.map((listing, i) => <ListingCard listing={listing} tile hidden={i >= 4} />)}
             </div>
             <p class="sg-empty" data-open-empty hidden={listings.length > 0}>
                 {listings.length === 0 ? `No places are listed in ${city.name} yet.` : `Nothing is open right now. Browse a category to see opening hours.`}
@@ -89,19 +141,26 @@ const owner = claimUrl(config);
         </section>
 
         {
-            city.areas.length > 0 && (
-                <section class="tkg-section">
-                    <div class="tkg-section-h">
-                        <h2>
-                            <span data-th="พื้นที่">Areas</span>
-                            <small>Where in {city.name}?</small>
-                        </h2>
+            visibleAreas.length > 0 && (
+                <section class="sg-wrap sg-sec" aria-labelledby="sg-areas-h">
+                    <div class="sg-sec-h">
+                        <h2 class="sg-h-lg" id="sg-areas-h" data-th="เลือกตามพื้นที่">Browse by area</h2>
                     </div>
-                    <div class="tkg-chiprow">
-                        {city.areas.map((a) => (
-                            <a class:list={['tkg-chip', { 'tkg-chip-on': a.id === area?.id }]} href={`/${city.id}/${a.id}`}>
-                                {a.name}{' '}
-                                <small>{[a.name_th, areaCounts.get(a.id)].filter((x) => x !== undefined && x !== '').join(' · ')}</small>
+                    <div class="sg-areas">
+                        {visibleAreas.map((a, i) => (
+                            <a class="sg-area" href={`/${city.id}/${a.id}`} style={`--area-bg: var(--area-${(i % 5) + 1})`}>
+                                <span class="sg-area-art" aria-hidden="true">
+                                    <svg viewBox="0 0 200 80" preserveAspectRatio="none" focusable="false">
+                                        <path d={i % 2 ? 'M0 80 C30 40 46 22 62 44 C74 20 96 8 110 40 C122 64 140 56 156 66 C170 40 186 46 200 60 V80 Z' : 'M0 80 C18 54 30 30 48 50 C64 18 84 14 98 46 C112 30 130 34 140 56 C156 36 178 28 200 52 V80 Z'} fill="currentColor" />
+                                    </svg>
+                                </span>
+                                <span class="sg-area-body">
+                                    <span class="sg-area-name">{a.name}</span>
+                                    <span class="sg-area-count">
+                                        {[a.name_th, `${areaCounts.get(a.id) ?? 0} ${areaCounts.get(a.id) === 1 ? 'place' : 'places'}`].filter(Boolean).join(' · ')}
+                                        {a.boat_only ? ' · boat only' : ''}
+                                    </span>
+                                </span>
                             </a>
                         ))}
                     </div>
@@ -109,9 +168,6 @@ const owner = claimUrl(config);
             )
         }
 
-        <div class="tkg-section" style="padding-bottom:24px">
-            <OwnerCta cityName={city.name} href={owner} />
-        </div>
+        <OwnerBlock cityName={city.name} cityId={city.id} count={listings.length} href={claimUrl(config, city)} />
     </main>
-    <BottomNav city={city} active="home" ownerHref={owner} />
 </SoiGuruLayout>

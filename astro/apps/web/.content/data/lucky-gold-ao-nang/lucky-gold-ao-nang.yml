@@ -1,0 +1,31 @@
+name: Lucky Gold
+description: Jewellery shop in Ao Nang.
+source_url: ''
+category: shops
+tags: []
+featured: false
+status: approved
+city: krabi
+area: ao-nang
+geo:
+  lat: 8.037382
+  lng: 98.833429
+location:
+  address: Ao Nang, Krabi
+  city: Krabi
+  country: TH
+  latitude: 8.037382
+  longitude: 98.833429
+claimed: false
+submitted_by: Grok Bot
+updated_by: import
+updated_at: "2026-10-17 01:01"
+markdown: 'Jewellery shop in Ao Nang.
+
+
+  Sources: <https://www.openstreetmap.org/node/9435641177>
+
+
+  Map data © OpenStreetMap contributors (ODbL).
+
+  '

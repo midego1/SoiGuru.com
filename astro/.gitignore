@@ -67,3 +67,6 @@ coverage/
 
 # Multi-option-support scratch verification dirs (per docs/plans/multi-option-support.md)
 tmp/
+
+# Wrangler local state (wrangler dev / deploy)
+.wrangler/

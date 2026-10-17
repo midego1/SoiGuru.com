@@ -8,7 +8,7 @@ import SoiGuruLayout from '../../layouts/SoiGuruLayout.astro';
 import TopBar from '../../components/soiguru/TopBar.astro';
 import Icon from '../../components/soiguru/Icon.astro';
 import CategoryResults from '../../components/soiguru/CategoryResults.astro';
-import { getSoiGuru, cityListings, claimUrl, type Area, type Category, type City } from '../../lib/soiguru/data';
+import { getSoiGuru, cityListings, ownerUrl, type Area, type Category, type City } from '../../lib/soiguru/data';
 import { breadcrumbJsonLd } from '../../lib/soiguru/jsonld';
 
 export async function getStaticPaths() {
@@ -49,15 +49,17 @@ const siteUrl = (Astro.site?.href ?? '').replace(/\/$/, '');
     config={config}
     path={path}
     timeZone={city.timezone}
+    city={city}
     wide
+    noindex={listings.length === 0}
     jsonLd={[breadcrumbJsonLd(siteUrl, [[config.company_name, '/'], [city.name, `/${city.id}`], [title, path]])]}
 >
-    <TopBar back={{ href: `/${city.id}`, label: `Back to ${city.name}` }} title={titleTh ? `${title} · ${titleTh}` : title} subtitle={subtitle} nav={{ city, ownerHref: claimUrl(config) }}>
+    <TopBar back={{ href: `/${city.id}`, label: `Back to ${city.name}` }} title={titleTh ? `${title} · ${titleTh}` : title} subtitle={subtitle} nav={{ city, ownerHref: ownerUrl(config, city) }}>
         <button type="button" class="tkg-iconbtn" data-search-toggle aria-expanded="false" aria-label={`Search ${title}`}>
             <Icon name="search" />
         </button>
     </TopBar>
     <main>
-        <CategoryResults city={city} listings={listings} noun={noun} area={area} lockArea={!!area} ownerHref={claimUrl(config)} inlineSearch />
+        <CategoryResults city={city} listings={listings} noun={noun} area={area} lockArea={!!area} ownerHref={ownerUrl(config, city)} inlineSearch title={category ? category.name : 'Places'} titleTh={category ? category.name_th : 'สถานที่'} />
     </main>
 </SoiGuruLayout>

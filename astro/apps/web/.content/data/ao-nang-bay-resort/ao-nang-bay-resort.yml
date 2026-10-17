@@ -1,0 +1,35 @@
+name: Ao Nang Bay Resort
+description: Hotel in Ao Nang.
+source_url: https://www.aonangbayresort.com/
+category: hotels
+tags: []
+featured: false
+status: approved
+city: krabi
+area: ao-nang
+geo:
+  lat: 8.038312
+  lng: 98.819149
+location:
+  address: Ao Nang, Krabi
+  city: Krabi
+  country: TH
+  latitude: 8.038312
+  longitude: 98.819149
+phone: "+6675612990"
+claimed: false
+submitted_by: Grok Bot
+updated_by: import
+updated_at: "2026-10-17 01:01"
+markdown: 'Hotel in Ao Nang.
+
+
+  Links: <https://www.aonangbayresort.com/>, <https://www.facebook.com/aonangbay/>
+
+
+  Sources: <https://www.openstreetmap.org/relation/19880707>, <https://www.aonangbayresort.com/>
+
+
+  Map data © OpenStreetMap contributors (ODbL).
+
+  '

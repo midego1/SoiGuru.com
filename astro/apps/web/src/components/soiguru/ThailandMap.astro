@@ -1,0 +1,63 @@
+---
+/**
+ * ThailandMap — SoiGuru's own drawn map of Thailand (no tiles, no library): the country in
+ * `sea-tint` with a dotted texture, the Andaman and the Gulf as soft wave lines, and one pin per
+ * city. Each pin is a link to the city. Hovering or focusing anything with
+ * `data-city-hover="<id>"` on the page (city rows, buttons, cards) lights up that city's pin
+ * (`page.ts`); `active` lights one from the start (the current city).
+ */
+import { THAILAND_PATH, THAILAND_VIEW, thailandPoint } from '../../lib/soiguru/thailand';
+import type { City } from '../../lib/soiguru/data';
+
+interface Props {
+    cities: City[];
+    /** City lit from the start */
+    active?: string;
+    /** Unique id for the SVG pattern when the map is on a page twice */
+    uid: string;
+    /** Show city names next to the pins */
+    labels?: boolean;
+    class?: string;
+}
+
+const { cities, active, uid, labels = true, class: className } = Astro.props;
+const pad = 8;
+const vb = `${-pad} ${-pad} ${THAILAND_VIEW.width + pad * 2} ${THAILAND_VIEW.height + pad * 2}`;
+const pins = cities
+    .filter((c) => c.geo)
+    .map((c) => {
+        const p = thailandPoint(c.geo!.lat, c.geo!.lng);
+        // Labels go to the side with more room: right of pins in the west, left in the east.
+        return { city: c, x: p.x, y: p.y, right: p.x < THAILAND_VIEW.width * 0.55 };
+    });
+---
+
+<svg class:list={['sg-thmap', className]} viewBox={vb} role="img" aria-label="Map of Thailand with the SoiGuru cities" data-thmap>
+    <defs>
+        <pattern id={`sg-dots-${uid}`} width="4" height="4" patternUnits="userSpaceOnUse">
+            <circle cx="1" cy="1" r="0.55" class="sg-thmap-dot"></circle>
+        </pattern>
+    </defs>
+    <g class="sg-thmap-sea" aria-hidden="true">
+        <path d="M2 196 q6 -4 12 0 t12 0"></path>
+        <path d="M6 230 q6 -4 12 0 t12 0"></path>
+        <path d="M70 182 q6 -4 12 0 t12 0"></path>
+        <path d="M88 226 q6 -4 12 0 t12 0"></path>
+    </g>
+    <path class="sg-thmap-land" d={THAILAND_PATH}></path>
+    <path class="sg-thmap-texture" d={THAILAND_PATH} fill={`url(#sg-dots-${uid})`}></path>
+    {
+        pins.map(({ city, x, y, right }) => (
+            <a href={`/${city.id}`} class:list={['sg-thmap-pin', { 'is-on': city.id === active }]} data-map-city={city.id} aria-label={city.name}>
+                <circle class="sg-thmap-ring" cx={x.toFixed(1)} cy={y.toFixed(1)} r="9"></circle>
+                <circle class="sg-thmap-halo" cx={x.toFixed(1)} cy={y.toFixed(1)} r="5.5"></circle>
+                <circle class="sg-thmap-core" cx={x.toFixed(1)} cy={y.toFixed(1)} r="3.2"></circle>
+                {labels && (
+                    <text class="sg-thmap-label" x={(right ? x + 9 : x - 9).toFixed(1)} y={(y + 3.5).toFixed(1)} text-anchor={right ? 'start' : 'end'}>
+                        {city.name}
+                    </text>
+                )}
+            </a>
+        ))
+    }
+</svg>

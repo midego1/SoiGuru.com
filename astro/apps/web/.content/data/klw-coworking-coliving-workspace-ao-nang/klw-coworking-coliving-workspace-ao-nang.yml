@@ -1,0 +1,48 @@
+name: KLW Coworking Coliving Workspace
+description: Coworking space in Ao Nang.
+source_url: ''
+category: coworking
+tags: []
+featured: false
+status: approved
+city: krabi
+area: ao-nang
+address: 624 Areeya PhuBeach Resort, Ao Nang
+geo:
+  lat: 8.0742
+  lng: 98.836846
+location:
+  address: 624 Areeya PhuBeach Resort, Ao Nang
+  city: Krabi
+  country: TH
+  latitude: 8.0742
+  longitude: 98.836846
+hours:
+  mon:
+  - 00:00-24:00
+  tue:
+  - 00:00-24:00
+  wed:
+  - 00:00-24:00
+  thu:
+  - 00:00-24:00
+  fri:
+  - 00:00-24:00
+  sat:
+  - 00:00-24:00
+  sun:
+  - 00:00-24:00
+claimed: false
+submitted_by: Grok Bot
+updated_by: import
+updated_at: "2026-10-17 01:01"
+markdown: 'Coworking space in Ao Nang.
+
+
+  Links: <https://www.facebook.com/Krabicoworkingcoliving>
+
+
+  Sources: <https://exa.ai/library/place/vxs4pzy9fdl>, <https://digitalnomadindex.com/spaces/thailand/krabi/mueang-krabi-district/klw-coworking-coliving-workspace-mueang-krabi-district>,
+  <https://shatterboxkitchenbar.com/ao-nang-krabi-local-guide/best-places-to-work-remotely-ao-nang>
+
+  '

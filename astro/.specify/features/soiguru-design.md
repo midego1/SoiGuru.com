@@ -28,7 +28,7 @@ Category and area ids share the second URL segment; `soiguru-data` keeps them di
 - `cities.yml` (cities with `areas`, `timezone`, `default_area`, `geo`) and `amenities.yml` (id → EN/TH label) are SoiGuru extensions read through `readContentYaml()` in `src/lib/content.ts`.
 - Items keep every extra YAML key (core item loader spreads the raw YAML). `src/lib/soiguru/data.ts` narrows them into a typed `Listing`: `city`, `area`, `name_th`, `description_th`, `address`, `geo`, `phone`, `line_id`, `whatsapp`, `hours`, `hours_note`, `booking_note`, `price_band`, `rating`, `rating_count`, `claimed`, `amenities`, `updated_by`, `updated_at`, `sample`.
 - Categories: the core category loader now passes extra keys through (`name_th`, `short_name`, `icon`), re-validating its known keys. Higher `priority` sorts first (as in `soiguru-data` and the Next.js template).
-- `works.yml`: optional `claim_url` (Claim buttons and the Owner tab; hidden without it) and `contact_email` ("Report wrong info"; hidden without it).
+- `works.yml`: optional `claim_url` (Claim buttons; `{city}` is replaced by the city id; hidden without it), `owner_url` (Owner tab and "For owners"; falls back to the city's `claim_url`) and `contact_email` ("Report wrong info"; hidden without it).
 
 ## Behaviour
 
@@ -42,6 +42,8 @@ Category and area ids share the second URL segment; `soiguru-data` keeps them di
 - **Structured data**: `LocalBusiness` subtype per category with `openingHoursSpecification`, `geo`, `address`, `priceRange`, `aggregateRating`, `amenityFeature`; `BreadcrumbList` on city, results and listing pages.
 
 ## Desktop layout (960px and up)
+
+> Superseded by § Website layout for the landing, CityHome, ListingPage and 404; still describes CategoryResults, search and saved.
 
 The design is phone first: one 640px column, and only CategoryResults has a wide version (list 420px on the left, map filling the rest). Desktop visitors saw a phone column in the middle of the screen, so every screen now extends to desktop in the same style:
 
@@ -60,8 +62,38 @@ The design is phone first: one 640px column, and only CategoryResults has a wide
 - **Thai URLs**: the `soiguru-thai` integration (`src/integrations/soiguru-thai.ts`) copies every SoiGuru page to `/th/…` after the build, swapping `[data-th]` texts, internal links, `lang`, canonical and `og:url`, and adds the Thai URLs to the sitemap. Pages carry `hreflang` en / th / x-default. The EN / ไทย toggle moves between the two URLs.
 - **Hours**: today's row moves to the top of the table.
 - **LINE / WhatsApp**: official marks from Simple Icons 13.21.0 (CC0) inlined in `icons.ts`.
-- **Claim** links go to `claim_url` in `works.yml` (`https://soiguru.midego.net/claim`).
+- **Claim** links go to `claim_url` in `works.yml` (`https://owner.soiguru.com/{city}/claim`, the Next.js ClaimFlow, with `?listing=<slug>` on a listing). The Owner tab, "For owners" and the landing CTA go to `owner_url` (`https://owner.soiguru.com/owner`, the Next.js owner dashboard).
 
 ## Not in this pass
 
 ClaimFlow and OwnerDashboard (need accounts; Next.js only), contact-tap counting (needs a backend), a self-hosted map style. See `docs/questions.md` Q30.
+
+## Generic routes
+
+The generic template routes (`/item`, `/category`, `/categories`, `/tag`, `/tags`, `/collection`, `/collections`, `/comparison`, `/comparisons`, `/directory`, `/page`, `/pages`) are still built but not shown on soiguru.com: the `soiguru-redirects` integration (`src/integrations/soiguru-redirects.ts`) writes `dist/_redirects` with 301s (`/item/<slug>` → its listing page, the rest → `/`) and the sitemap leaves them out. The 404 page uses the SoiGuru design.
+
+## Website layout
+
+The public site follows the layout of the website mockup (artifact "Main" and "Listing" screens) drawn with this design system's tokens. Phone first; breakpoints 720px (tablet), 960px (desktop), 1100px (header links in the bar). Content sits in a 1200px column (`.sg-wrap`); the hero and footer span the window.
+
+- **Header** (`SiteHeader`, every page; back-mode pages keep their app bar on phones and show the header above a title row from 960px): logo mark + wordmark, city picker (`<details>`), the city's links (Eat & drink, Cafés, Things to do, Stay, Map = `/<city>/search?view=map`), EN / ไทย, Owner login (`owner_url`), List your business (`claim_url`). Phones: logo and city in the header; the bottom tab bar (Home, Search, Saved, Owner, Menu) is on every page, fixed to the bottom of the screen (placed by `SoiGuruLayout`); Menu opens a bottom sheet with the links, the cities, EN / ไทย, Owner login and List your business. From 960 to 1099px the header has a menu button; from 1100px the links sit in the bar. On the listing page a search field replaces the links.
+- **CityHome**: hero on the dark sea ground (eyebrow with the areas and local time, headline, what + where search posting `q` and `area` to `/<city>/search`, Open now / Near me / Map chips, three trust ticks, a drawn karst scene from 960px); category tiles for every category with places (4-up on phones, 8 per row from 960px); "Open now" photo cards (4 on phones, 8 on desktop, 10 from 1440px; one place per category in turn; a category mark when there is no photo); "Browse by area" cards for areas with places; the owner block; footer.
+- **Landing**: the same hero with one button per city, city cards, owner block, footer.
+- **ListingPage**: breadcrumb (city / area / category / name); photo grid (1 big + up to 4); chips (category, Verified owner, Sample), title, Thai name, status · rating · price · area/distance; action row (first channel in the accent colour, then LINE, WhatsApp, Directions, Save, Share); About, Good to know pills, then the body sections. Side column (between head and body on phones; sticky from 960px on windows at least 1040px tall): Opening hours card with the provenance line, Location card (220px static map, Directions, address), claim card, out-of-date note, report link. The main column ends with Nearby · open now and "More <category> in <area>" (the area when it has 3+, else the city) as photo-card grids, swipeable rows on phones. Phones keep the sticky Directions bar.
+- **Footer**: brand line, cities with counts, business links, the other language, © and the OpenStreetMap (ODbL) credit.
+- **Theme**: `theme` in works.yml, or `SITE_THEME` at build time, sets `<html data-theme>`. `soiguru` (default): sea `#0a6b73`, sun `#f2a33a` accent with ink text, IBM Plex Sans + Thai, light and dark. `navy`: the mockup's own palette (navy `#10272b`, orange `#c2410c` with white text, teal `#0b5f5b`), Bricolage Grotesque headings, Figtree text, IBM Plex Sans Thai for Thai; light only. Same pages and markup; only tokens and fonts change.
+- **Analytics**: Umami (`script.js`, `recorder.js`) in `SoiGuruLayout`; buttons carry `data-umami-event` (`contact-<channel>`, `claim-listing`, `claim-cta`, `list-business`, `owner-login`).
+- **Wide screens**: the content column is 1200px, 1440px from a 1440px window. Open-now cards: 4 columns from 960px (8 shown), 5 from 1440px (10 shown). Results pages from 1360px: list 46% with two card columns, map beside it.
+- **Results** (category, area, search), design A: a directory by default. Desktop: breadcrumb, title and count, toolbar (List | Map, Open now, area, sort, search), a sticky filter sidebar (area with counts, price, show only, good to know) beside a grid of cards. Map view: the list beside the map, fitting the window (no page scroll), Show more / Show closed pinned under the list. Phones: compact rows; a floating Map / List button above the tab bar.
+- **Live theme**: `soiguru`, the moodboard (bundled works.yml): page on `surface-100` (sand), cards and bars on `surface`, category tiles on `sea-tint`.
+- **Drawn map of Thailand** (`ThailandMap`): the city picker panel (cities with counts beside the map; hover lights the pin) and the landing hero card. Outline from Natural Earth (public domain) as one inline SVG path; no tiles or map library.
+- **Owner block**: pitch (eyebrow, headline, lead, "Find your shop" search with the place count, three steps, Claim button, price) beside the claim banner image (`public/images/claim-banner.webp`, linked to the claim flow); stacked on phones.
+- **Places without photos**: a drawn scene per category (`CategoryArt`: noodle bowl, cocktail, coffee cup, shop window, hotel, massage mat, karsts and longtail, boxing gloves on ring ropes, fish and coral, clinic cross, washing machine, barber pole, nail polish, scooter, laptop desk; shopfront for other or unknown categories), with an accent colour per category (one of the five area colours); no icon badge. Used on photo cards and on the listing page. On the listing page the browser then asks the owner app for Google Places photos (`<owner origin>/api/places/photos/<slug>`, spec 056 of the Next app; `scripts/soiguru/places.ts`) and swaps in up to three, each with "Photo: <author> on Google" linking to the author. No answer within 8 s, an error or no photos keeps the drawing.
+- **Favicon**: the logo mark as SVG + ICO + Apple touch icon + 192/512 PNGs with a web manifest (`public/`), linked by `SoiGuruLayout` unless `logo.favicon` is set.
+
+## Later (backlog, 2026-10-17)
+
+- **PromptPay via Stripe** (owner payments, ฿100 / month or ฿1,000 / year). Needs a Stripe account registered in Thailand (Stripe offers PromptPay only to TH accounts, THB only). Yearly: Stripe Checkout with PromptPay QR + card. Monthly: PromptPay cannot be charged automatically, so each month a new Stripe invoice with a PromptPay QR is sent to the owner on WhatsApp / LINE to scan (cards stay available for automatic monthly billing). Build it so PromptPay shows only when the Stripe account supports it.
+- **Google Places photos as fallback** (owner photos first, then up to 3 Places API (New) photos loaded live with the author credit, then the category drawing). Listing page done (see Website layout); photo cards still show the drawing (one Places call per card would cost too much). Key `GOOGLE_PLACES_API_KEY` is set on the owner app; place IDs may be stored, photos may not be cached.
+- **Publish on edit**: GitHub Action on the `data` branch that rebuilds and deploys soiguru.com (needs the owner's OK and the `CLOUDFLARE_API_TOKEN` / `CLOUDFLARE_ACCOUNT_ID` repo secrets).
+- **One frontend**: owner.soiguru.com public template pages redirect to soiguru.com; the server keeps `/admin`, `/owner`, the claim flow and sign-in.
