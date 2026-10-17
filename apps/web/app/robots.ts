@@ -1,6 +1,8 @@
 import { MetadataRoute } from 'next';
 import { getBaseUrl } from '@/lib/utils/url-cleaner';
 import { buildAiCrawlerRules, resolveAiCrawlerPolicy } from '@/lib/seo/ai-crawlers';
+import { headers } from 'next/headers';
+import { isIndexableHost, requestHost } from '@/lib/seo/indexing';
 
 // Rendered per request, never prerendered. The image is built without
 // NEXT_PUBLIC_APP_URL (the deploy platform injects it at runtime), so a
@@ -10,7 +12,13 @@ import { buildAiCrawlerRules, resolveAiCrawlerPolicy } from '@/lib/seo/ai-crawle
 // deployment's own origin.
 export const dynamic = 'force-dynamic';
 
-export default function robots(): MetadataRoute.Robots {
+export default async function robots(): Promise<MetadataRoute.Robots> {
+	// Not the canonical host (an owner/admin subdomain or server alias): closed to every
+	// crawler, no sitemap, so only the public site is indexed (lib/seo/indexing.ts).
+	if (!isIndexableHost(requestHost(await headers()))) {
+		return { rules: [{ userAgent: '*', disallow: '/' }] };
+	}
+
 	// The site's public origin: NEXT_PUBLIC_CANONICAL_URL when pinned, else the
 	// app URL. The same value every canonical tag and sitemap <loc> is built on.
 	const appUrl = getBaseUrl();

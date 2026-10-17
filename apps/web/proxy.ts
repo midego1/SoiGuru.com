@@ -4,6 +4,7 @@
 // -------------------------------------------------------
 
 import createIntlMiddleware from 'next-intl/middleware';
+import { isIndexableHost } from '@/lib/seo/indexing';
 import { routing } from './i18n/routing';
 
 import { NextRequest, NextResponse } from 'next/server';
@@ -383,6 +384,16 @@ async function supabaseGuard(req: NextRequest, baseRes: NextResponse): Promise<N
 /* ──────────────────────────────────── Main middleware ─────────────────────────────────── */
 
 export default async function proxy(req: NextRequest) {
+	const res = await handle(req);
+	// Pages on a host that is not the canonical site (owner/admin subdomain, server alias)
+	// tell search engines and AI crawlers not to index them (lib/seo/indexing.ts).
+	if (!isIndexableHost(req.headers.get('x-forwarded-host') ?? req.headers.get('host'))) {
+		res.headers.set('X-Robots-Tag', 'noindex, nofollow');
+	}
+	return res;
+}
+
+async function handle(req: NextRequest) {
 	const cfg = getAuthConfig();
 	const originalPathname = req.nextUrl.pathname;
 

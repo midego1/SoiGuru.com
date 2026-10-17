@@ -1,4 +1,6 @@
 import { MetadataRoute } from 'next';
+import { headers } from 'next/headers';
+import { isIndexableHost, requestHost } from '@/lib/seo/indexing';
 import {
 	getCachedAllPostSummaries,
 	getCachedComparisons,
@@ -464,6 +466,8 @@ const generateDynamicRoutes = async (
 
 // Main sitemap generator
 export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
+	// Not the canonical host: no URLs to offer (lib/seo/indexing.ts).
+	if (!isIndexableHost(requestHost(await headers()))) return [];
 	try {
 		const baseUrl = getBaseUrl();
 		const sections = await getSitemapSections();
