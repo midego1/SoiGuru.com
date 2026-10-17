@@ -21,12 +21,12 @@ On a non-indexable host:
 
 - `robots.txt` is `User-agent: * / Disallow: /` with no sitemap (search and AI crawlers).
 - `sitemap.xml` is empty.
-- Every page routed through `proxy.ts` carries `X-Robots-Tag: noindex, nofollow`.
+- Every page has `<meta name="robots" content="noindex, nofollow">` (`app/[locale]/layout.tsx` metadata), and `proxy.ts` also sets `X-Robots-Tag: noindex, nofollow` where Next.js passes middleware headers through.
 
 Generic template deployments, reached on their own canonical host, are unchanged.
 
 ## Acceptance
 
 - `curl https://owner.soiguru.com/robots.txt` → `Disallow: /`, no `Sitemap:` line.
-- `curl -I https://owner.soiguru.com/` → `x-robots-tag: noindex, nofollow`.
+- `https://owner.soiguru.com/` HTML has `<meta name="robots" content="noindex, nofollow">`.
 - `https://owner.soiguru.com/sitemap.xml` has no `<url>` entries.

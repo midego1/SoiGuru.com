@@ -48,6 +48,8 @@ import {
 } from '@/lib/utils/settings';
 import { LocaleSuggestionBanner } from '@/components/i18n/locale-suggestion-banner';
 import { getBaseUrl } from '@/lib/utils/url-cleaner';
+import { headers } from 'next/headers';
+import { isIndexableHost, requestHost } from '@/lib/seo/indexing';
 import { generateHreflangAlternates } from '@/lib/seo/hreflang';
 import { DEFAULT_LOCALE } from '@/lib/constants';
 import { analyticsConfig } from '@/lib/config/config-service';
@@ -78,7 +80,9 @@ export async function generateMetadata({ params }: { params: Promise<{ locale: s
 		// scoped to `not-found.tsx`) so public listing/detail pages
 		// are indexable by default. Individual pages can still set
 		// their own `robots` via their own `generateMetadata`.
-		robots: { index: true, follow: true },
+		// …except on a host that is not the canonical site (owner/admin subdomain, server
+		// alias): noindex everywhere, so only the public site is indexed (spec 057).
+		robots: isIndexableHost(requestHost(await headers())) ? { index: true, follow: true } : { index: false, follow: false },
 		openGraph: {
 			title: siteTitle,
 			description: siteDescription,
