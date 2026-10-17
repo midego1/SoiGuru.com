@@ -2514,42 +2514,100 @@ html[data-lang='en'] .sg-sf-lang[data-lang-set='en'] {
         overflow-y: auto;
     }
 }
-/* category tiles from 720px: one compact line (icon over a short label, no Thai subline),
-   stretching to fill the row on wide screens and scrolling sideways when they do not fit.
-   Phones keep the 4-across grid so every category stays in view. */
+/* category tiles (all widths): a white card with a soft shadow, the category mark large and
+   bare, the label, and a short bar under it. Hover or focus warms the card to sun-tint with the
+   mark and bar in sun-deep. Phones: 4 across; from 720px one line that fills the row and
+   scrolls sideways when the tiles do not fit. */
+.sg-page a.sg-tile {
+    position: relative;
+    gap: 6px;
+    padding: 14px 6px 10px;
+    border: 1px solid transparent;
+    border-radius: 16px;
+    background: var(--surface);
+    box-shadow: 0 1px 2px #14201f0d, 0 6px 18px #14201f0f;
+    transition: background-color 0.15s ease, box-shadow 0.15s ease, border-color 0.15s ease;
+}
+:root:not([data-theme='navy']) .sg-page a.sg-tile {
+    background: var(--surface);
+}
+.sg-tile-mark {
+    width: auto;
+    height: auto;
+    background: none;
+    box-shadow: none;
+    border-radius: 0;
+    color: var(--sea);
+}
+.sg-tile-mark .tkg-i,
+.sg-tile-mark .tkg-i svg {
+    width: 28px;
+    height: 28px;
+}
+.sg-tile-mark .tkg-i svg {
+    stroke-width: 1.5;
+}
+.sg-tile-label {
+    font-weight: 600;
+    font-size: 12.5px;
+    white-space: nowrap;
+}
+.sg-page a.sg-tile::after {
+    content: '';
+    display: block;
+    width: 20px;
+    height: 3px;
+    margin-top: 2px;
+    border-radius: 3px;
+    background: var(--line);
+    transition: background-color 0.15s ease;
+}
+.sg-page a.sg-tile:hover,
+.sg-page a.sg-tile:focus-visible,
+.sg-page a.sg-tile[aria-current='page'],
+:root:not([data-theme='navy']) .sg-page a.sg-tile:hover,
+:root:not([data-theme='navy']) .sg-page a.sg-tile:focus-visible {
+    background: var(--sun-tint);
+    border-color: color-mix(in srgb, var(--sun-deep, var(--accent)) 25%, transparent);
+    box-shadow: 0 8px 22px color-mix(in srgb, var(--sun-deep, var(--accent)) 22%, transparent);
+}
+.sg-page a.sg-tile:hover .sg-tile-mark,
+.sg-page a.sg-tile:focus-visible .sg-tile-mark,
+.sg-page a.sg-tile[aria-current='page'] .sg-tile-mark {
+    color: var(--sun-deep, var(--accent));
+}
+.sg-page a.sg-tile:hover::after,
+.sg-page a.sg-tile:focus-visible::after,
+.sg-page a.sg-tile[aria-current='page']::after {
+    background: var(--sun-deep, var(--accent));
+}
+.sg-tile small {
+    display: none;
+}
+@media (prefers-reduced-motion: reduce) {
+    .sg-page a.sg-tile,
+    .sg-page a.sg-tile::after {
+        transition: none;
+    }
+}
 @media (min-width: 720px) {
     .sg-tiles {
         display: flex;
-        gap: 6px;
+        gap: 7px;
         overflow-x: auto;
         scrollbar-width: none;
-        padding-bottom: 2px;
+        /* room for the shadow, which the scroll box would clip */
+        padding: 6px 4px 22px;
+        margin: -6px -4px -22px;
     }
     .sg-tiles::-webkit-scrollbar {
         display: none;
     }
     .sg-page a.sg-tile {
         flex: 1 0 auto;
-        min-width: 56px;
+        min-width: 60px;
         align-items: center;
         text-align: center;
-        gap: 6px;
-        padding: 10px 4px;
-    }
-    .sg-tile-mark {
-        width: 36px;
-        height: 36px;
-        border-radius: 11px;
-    }
-    .sg-tile-mark .tkg-i {
-        width: 20px;
-        height: 20px;
-    }
-    .sg-tile-label {
-        font-size: 12.5px;
-        white-space: nowrap;
-    }
-    .sg-tile small {
-        display: none;
+        padding: 14px 6px 10px;
     }
 }

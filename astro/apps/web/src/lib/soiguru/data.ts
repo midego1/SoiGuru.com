@@ -239,7 +239,7 @@ let cached: Promise<SoiGuruData> | null = null;
 const CATEGORY_ICONS: Record<string, IconName> = {
     restaurants: 'utensils',
     cafes: 'coffee',
-    massage: 'spa',
+    massage: 'lotus',
     tours: 'boat',
     'scooter-rental': 'scooter',
     'nail-salons': 'nail',

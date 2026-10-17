@@ -15,6 +15,8 @@
   --on-sea: #ffffff;
   --sun: #f2a33a;
   --sun-tint: #fdf0dc;
+  /* deeper sun for small marks on a sun-tint ground (selected category tile) */
+  --sun-deep: #e8590c;
   --open: #137a5b;
   --closed: #b3261e;
   --soon: #9a5b00;
@@ -54,6 +56,7 @@
     --sea-tint: #163234;
     --on-sea: #0d1211;
     --sun-tint: #3a2a12;
+    --sun-deep: #f6a55a;
     --open: #5fd3a3;
     --closed: #ff8a80;
     --soon: #f4b860;
