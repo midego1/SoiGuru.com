@@ -1225,50 +1225,19 @@ html[data-lang='en'] .sg-sf-lang[data-lang-set='en'] {
     }
 }
 
-/* drawn category picture for places without photos (CategoryArt) */
+/* drawn category picture for places without photos (CategoryArt): one scene per category;
+   sky and ground continue beside the scene on wide bands */
 .sg-art {
     position: relative;
     width: 100%;
     height: 100%;
     overflow: hidden;
-    background: var(--sea-tint);
+    background: linear-gradient(to bottom, var(--sky, var(--sea-tint)) var(--gy, 80%), var(--ground, var(--surface-200)) var(--gy, 80%));
 }
 .sg-art > svg {
     display: block;
     width: 100%;
     height: 100%;
-}
-.sg-art-badge {
-    position: absolute;
-    left: 50%;
-    top: 50%;
-    transform: translate(-50%, -22%);
-    display: inline-flex;
-    align-items: center;
-    justify-content: center;
-    width: 56px;
-    height: 56px;
-    border-radius: 18px;
-    background: var(--surface);
-    color: var(--art, var(--sea));
-    box-shadow: 0 0 0 4px var(--art, var(--sea)), var(--shadow-card);
-}
-.sg-art-lg.sg-art-street {
-    background: linear-gradient(to bottom, var(--sea-tint) 83.4%, var(--surface-200) 83.4%);
-}
-.sg-art-lg.sg-art-sea {
-    background: linear-gradient(to bottom, var(--sea-tint) 68.4%, var(--sea) 68.4%);
-}
-.sg-art-lg .sg-art-badge {
-    width: 84px;
-    height: 84px;
-    border-radius: 26px;
-    box-shadow: 0 0 0 6px var(--art, var(--sea)), var(--shadow-card);
-}
-.sg-art-lg .sg-art-badge .tkg-i,
-.sg-art-lg .sg-art-badge svg {
-    width: 36px;
-    height: 36px;
 }
 /* listing page without photos: the drawing, later swapped for Google photos (places.ts) */
 .sg-pgrid-art {

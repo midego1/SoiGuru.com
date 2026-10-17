@@ -3,6 +3,10 @@ title: "Change Log"
 sidebar_label: "Change Log"
 ---
 
+## 2026-10-17 — One drawn scene per category
+
+`CategoryArt` now draws a scene per category instead of a shopfront with an icon badge: noodle bowl (restaurants), cocktail under string lights (bars), coffee cup (cafés), shop window with bags (shops), hotel with palm and pool, massage mat with stones and orchid, karsts and longtail (tours), gloves on the ring ropes (Muay Thai), fish and coral (dive shops), clinic with green cross and pills, washing machine and clothesline (laundry), barber pole, chair and scissors, nail polish bottles, scooter on the road, laptop desk (coworking), shopfront (other). Sky and ground run on beside the scene on the wide listing band. Spec: `.specify/features/soiguru-design.md` § Website layout.
+
 ## 2026-10-17 — Drawn category pictures and Google photos on listing pages
 
 Places without photos show a drawn category picture (`CategoryArt`: shopfront or karst-and-sea scene, colour per category, category icon on a badge) on photo cards and the listing page, instead of the bare icon. The listing page then loads up to three Google Places photos from the owner app (`/api/places/photos/<slug>`, Next app spec 056) with the author credit and keeps the drawing when there are none. Also fixes an `astro check` error in the city home's open-now round-robin. Spec: `.specify/features/soiguru-design.md` § Website layout.

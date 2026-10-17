@@ -1,60 +1,321 @@
 ---
 /**
- * CategoryArt — the drawn picture for a place without photos: a small scene in the theme's
- * colours with the category icon on a badge in front. Two scenes: `sea` (karsts, the Andaman
- * and a longtail boat, for tours, diving and stays) and `street` (a shopfront with a striped
- * awning and string lights, for everything else). The awning and badge colour comes from the
- * category, so neighbouring cards differ. On the wide listing-page band (`lg`) the scene keeps
- * its shape in the middle and the sky and ground run on to both sides. Decorative: the name next to it says what it is.
- * Never a stock image.
+ * CategoryArt — the drawn picture for a place without photos: one small scene per category in
+ * the theme's colours (a noodle bowl for restaurants, a coffee cup for cafés, a scooter for
+ * rentals, boxing gloves on the ring ropes for Muay Thai, and so on). Unknown categories get
+ * the shopfront. The accent colour of each scene (`--art`) comes from the category, so
+ * neighbouring cards differ. Decorative: the name next to it says what it is. Never a stock image.
+ *
+ * Cards crop the scene to fill (`slice`); the wide listing-page band (`lg`) keeps the scene's
+ * shape in the middle and runs its sky and ground on to both sides (`--sky`, `--ground`, `--gy`).
  */
-import Icon from './Icon.astro';
 import type { Category } from '../../lib/soiguru/data';
 
 interface Props {
     category?: Category;
-    /** `sm` for cards (smaller badge), `lg` for the listing page */
+    /** `sm` for cards, `lg` for the listing page band */
     size?: 'sm' | 'lg';
     class?: string;
 }
 
-const SEA = new Set(['tours', 'dive-shops', 'hotels']);
+type Scene =
+    | 'restaurants'
+    | 'cafes'
+    | 'massage'
+    | 'tours'
+    | 'scooter-rental'
+    | 'nail-salons'
+    | 'dive-shops'
+    | 'hotels'
+    | 'bars'
+    | 'shops'
+    | 'gyms-muay-thai'
+    | 'clinics-pharmacies'
+    | 'laundry'
+    | 'barbers-salons'
+    | 'coworking'
+    | 'other';
+
+/** Sky and ground colours and where the ground starts (share of the 240px height). */
+const GROUNDS: Record<Scene, [string, string, number]> = {
+    restaurants: ['var(--sea-tint)', 'var(--area-3)', 75],
+    cafes: ['var(--sea-tint)', 'var(--area-3)', 83.4],
+    massage: ['var(--sun-tint)', 'var(--surface-200)', 79],
+    tours: ['var(--sea-tint)', 'var(--sea)', 68.4],
+    'scooter-rental': ['var(--sea-tint)', 'var(--surface-200)', 87.5],
+    'nail-salons': ['var(--sun-tint)', 'var(--surface)', 79],
+    'dive-shops': ['var(--sea)', 'var(--sun-tint)', 87.5],
+    hotels: ['var(--sea-tint)', 'var(--sea)', 85.4],
+    bars: ['var(--hero-bg)', 'var(--area-3)', 79],
+    shops: ['var(--sea-tint)', 'var(--surface-200)', 83.4],
+    'gyms-muay-thai': ['var(--sea-tint)', 'var(--surface-200)', 87.5],
+    'clinics-pharmacies': ['var(--sea-tint)', 'var(--surface-200)', 87.5],
+    laundry: ['var(--sea-tint)', 'var(--surface-200)', 87.5],
+    'barbers-salons': ['var(--sun-tint)', 'var(--surface-200)', 87.5],
+    coworking: ['var(--sea-tint)', 'var(--area-3)', 79],
+    other: ['var(--sea-tint)', 'var(--surface-200)', 83.4],
+};
+
 const { category, size = 'sm', class: className } = Astro.props;
 const id = category?.id ?? 'other';
-const scene = SEA.has(id) ? 'sea' : 'street';
+const scene: Scene = id in GROUNDS ? (id as Scene) : 'other';
 // A stable colour per category, from the five area colours.
 const hash = [...id].reduce((n, c) => (n * 31 + c.charCodeAt(0)) >>> 0, 7);
 const tone = `var(--area-${(hash % 5) + 1})`;
-const stripes = Array.from({ length: 10 }, (_, i) => i);
+const [sky, ground, gy] = GROUNDS[scene];
+const awning = Array.from({ length: 10 }, (_, i) => i);
+// Unique ids for the barber pole's stripe pattern when a page shows it more than once.
+const uid = `sg-art-${Math.random().toString(36).slice(2, 8)}`;
+const shopfront = scene === 'shops' || scene === 'other';
 ---
 
-<div class:list={['sg-art', `sg-art-${size}`, `sg-art-${scene}`, className]} style={`--art: ${tone}`} aria-hidden="true">
+<div
+    class:list={['sg-art', `sg-art-${size}`, className]}
+    style={`--art: ${tone}; --sky: ${sky}; --ground: ${ground}; --gy: ${gy}%`}
+    data-scene={scene}
+    aria-hidden="true"
+>
     <svg viewBox="0 0 400 240" preserveAspectRatio={size === 'lg' ? 'xMidYMax meet' : 'xMidYMid slice'} focusable="false">
-        <rect width="400" height="240" fill="var(--sea-tint)"></rect>
-        <circle cx="332" cy="58" r="26" fill="var(--sun)"></circle>
+        <rect width="400" height="240" fill="var(--sky)"></rect>
+
         {
-            scene === 'sea' ? (
+            scene === 'restaurants' && (
                 <>
+                    <circle cx="336" cy="50" r="22" fill="var(--sun)" />
+                    <rect y="180" width="400" height="60" fill="var(--ground)" />
+                    <path d="M0 180 h400" stroke="var(--hero-bg)" stroke-width="3" opacity="0.25" />
+                    <ellipse cx="320" cy="198" rx="44" ry="9" fill="var(--surface)" />
+                    <path d="M300 194 q8 -14 16 0 q8 -14 16 0" fill="var(--accent)" />
+                    <path d="M170 64 c-10 -12 10 -20 0 -34 M200 58 c-10 -12 10 -20 0 -34 M230 64 c-10 -12 10 -20 0 -34" fill="none" stroke="var(--surface)" stroke-width="5" stroke-linecap="round" />
+                    <path d="M118 110 h164 a82 74 0 0 1 -164 0 Z" fill="var(--surface)" stroke="var(--art)" stroke-width="5" />
+                    <path d="M132 150 h136" stroke="var(--art)" stroke-width="5" stroke-dasharray="10 8" />
+                    <ellipse cx="200" cy="110" rx="82" ry="13" fill="var(--sun)" />
+                    <path d="M140 108 q10 -8 20 0 t20 0 t20 0 t20 0 t20 0" fill="none" stroke="var(--accent)" stroke-width="4" stroke-linecap="round" />
+                    <circle cx="172" cy="104" r="7" fill="var(--open)" />
+                    <circle cx="232" cy="106" r="6" fill="var(--accent)" />
+                    <path d="M236 40 L300 116 M252 34 L310 112" stroke="var(--hero-bg)" stroke-width="6" stroke-linecap="round" />
+                    <rect x="172" y="182" width="56" height="10" rx="5" fill="var(--art)" />
+                </>
+            )
+        }
+
+        {
+            scene === 'cafes' && (
+                <>
+                    <circle cx="60" cy="54" r="22" fill="var(--sun)" />
+                    <rect y="200" width="400" height="40" fill="var(--ground)" />
+                    <path d="M176 74 c-10 -12 10 -20 0 -34 M206 70 c-10 -12 10 -20 0 -34 M236 74 c-10 -12 10 -20 0 -34" fill="none" stroke="var(--surface)" stroke-width="5" stroke-linecap="round" />
+                    <ellipse cx="205" cy="200" rx="92" ry="13" fill="var(--surface)" stroke="var(--art)" stroke-width="4" />
+                    <path d="M262 112 a24 24 0 0 1 0 48" fill="none" stroke="var(--art)" stroke-width="10" />
+                    <path d="M140 92 h130 v66 a34 34 0 0 1 -34 34 h-62 a34 34 0 0 1 -34 -34 Z" fill="var(--surface)" stroke="var(--art)" stroke-width="5" />
+                    <ellipse cx="205" cy="94" rx="63" ry="9" fill="var(--area-3)" />
+                    <path d="M190 92 q15 -8 30 0" fill="none" stroke="var(--sun-tint)" stroke-width="4" stroke-linecap="round" />
+                    <rect x="140" y="128" width="130" height="14" fill="var(--art)" />
+                    <path d="M300 196 c6 -34 74 -34 80 0 c-10 -6 -18 -6 -24 2 c-6 -10 -26 -10 -32 0 c-6 -8 -14 -8 -24 -2 Z" fill="var(--sun)" stroke="var(--area-3)" stroke-width="3" stroke-linejoin="round" />
+                    <path d="M40 200 v-28 h40 v28" fill="var(--surface)" stroke="var(--line)" stroke-width="3" />
+                    <path d="M50 172 c-2 -18 22 -18 20 0" fill="none" stroke="var(--area-4)" stroke-width="6" />
+                </>
+            )
+        }
+
+        {
+            scene === 'massage' && (
+                <>
+                    <rect y="190" width="400" height="50" fill="var(--ground)" />
+                    <path d="M40 40 h120 v110 h-120 Z" fill="var(--surface)" stroke="var(--line)" stroke-width="3" />
+                    <path d="M100 40 v110 M40 95 h120" stroke="var(--line)" stroke-width="3" />
+                    <rect x="70" y="160" width="270" height="30" rx="15" fill="var(--art)" />
+                    <rect x="70" y="160" width="270" height="10" rx="5" fill="var(--surface)" opacity="0.35" />
+                    <rect x="88" y="132" width="70" height="30" rx="15" fill="var(--surface)" stroke="var(--line)" stroke-width="3" />
+                    <path d="M106 132 v30 M140 132 v30" stroke="var(--line)" stroke-width="2" />
+                    <ellipse cx="300" cy="152" rx="30" ry="9" fill="var(--hero-bg)" />
+                    <ellipse cx="300" cy="138" rx="22" ry="7" fill="var(--ink-muted)" />
+                    <ellipse cx="300" cy="126" rx="14" ry="6" fill="var(--hero-bg)" />
+                    <path d="M240 156 c0 -40 -6 -70 10 -96" fill="none" stroke="var(--area-4)" stroke-width="4" stroke-linecap="round" />
+                    <g fill="var(--accent)">
+                        <ellipse cx="250" cy="52" rx="10" ry="16" />
+                        <ellipse cx="240" cy="64" rx="16" ry="9" />
+                        <ellipse cx="262" cy="64" rx="16" ry="9" />
+                    </g>
+                    <circle cx="251" cy="62" r="5" fill="var(--sun)" />
+                    <rect x="196" y="140" width="18" height="22" rx="3" fill="var(--surface)" />
+                    <path d="M205 140 c-6 -8 0 -16 0 -20 c6 6 6 14 0 20" fill="var(--sun)" />
+                </>
+            )
+        }
+
+        {
+            scene === 'tours' && (
+                <>
+                    <circle cx="332" cy="58" r="26" fill="var(--sun)" />
                     <path d="M0 168 C22 96 48 76 64 94 C78 56 104 46 118 76 C130 104 138 138 148 168 Z" fill="var(--area-1)" opacity="0.5" />
                     <path d="M120 168 C138 116 150 80 176 66 C194 56 210 76 216 104 C226 86 242 88 252 116 C262 142 268 156 272 168 Z" fill="var(--art)" />
                     <path d="M256 168 C270 138 286 124 302 130 C316 108 336 104 350 126 C366 150 380 160 400 168 Z" fill="var(--area-5)" opacity="0.75" />
-                    <rect y="164" width="400" height="76" fill="var(--sea)" />
+                    <rect y="164" width="400" height="76" fill="var(--ground)" />
                     <path d="M24 190 h56 M118 212 h70 M240 196 h64 M326 220 h56 M60 230 h40" stroke="var(--on-sea)" stroke-width="3" stroke-linecap="round" opacity="0.35" />
-                    <g transform="translate(232 186)">
-                        <path d="M0 14 C24 24 74 24 102 11 L106 3 C78 11 32 13 5 6 Z" fill="var(--hero-bg)" />
-                        <path d="M102 11 L120 -5" stroke="var(--hero-bg)" stroke-width="3" stroke-linecap="round" />
-                        <path d="M32 8 V-6 h28 V8" fill="none" stroke="var(--hero-bg)" stroke-width="3" stroke-linejoin="round" />
-                        <path d="M28 -6 h36" stroke="var(--accent)" stroke-width="4" stroke-linecap="round" />
+                    <g transform="translate(150 184)">
+                        <path d="M0 16 C30 28 92 28 128 13 L133 3 C96 13 40 15 6 7 Z" fill="var(--hero-bg)" />
+                        <path d="M128 13 L150 -8" stroke="var(--hero-bg)" stroke-width="3" stroke-linecap="round" />
+                        <path d="M40 9 V-10 h36 V9" fill="none" stroke="var(--hero-bg)" stroke-width="3" stroke-linejoin="round" />
+                        <path d="M36 -10 h44" stroke="var(--accent)" stroke-width="4" stroke-linecap="round" />
+                        <path d="M2 4 l-8 -10 M6 2 l-2 -12" stroke="var(--accent)" stroke-width="3" stroke-linecap="round" />
                     </g>
                 </>
-            ) : (
+            )
+        }
+
+        {
+            scene === 'scooter-rental' && (
                 <>
+                    <circle cx="70" cy="56" r="24" fill="var(--sun)" />
+                    <path d="M0 150 C30 110 60 100 80 120 C100 90 130 88 150 120 L150 150 Z" fill="var(--area-1)" opacity="0.3" />
+                    <path d="M260 150 C280 116 310 104 330 124 C350 100 380 104 400 130 V150 Z" fill="var(--area-5)" opacity="0.3" />
+                    <rect y="210" width="400" height="30" fill="var(--ground)" />
+                    <path d="M20 226 h40 M100 226 h40 M180 226 h40 M260 226 h40 M340 226 h40" stroke="var(--surface)" stroke-width="4" stroke-linecap="round" />
+                    <circle cx="130" cy="184" r="28" fill="var(--hero-bg)" />
+                    <circle cx="130" cy="184" r="11" fill="var(--surface)" />
+                    <circle cx="282" cy="184" r="28" fill="var(--hero-bg)" />
+                    <circle cx="282" cy="184" r="11" fill="var(--surface)" />
+                    <path d="M98 168 C98 136 140 126 190 138 L236 138 L262 90 L280 90 L300 176 L262 176 C254 150 222 150 214 176 H160 C154 150 106 150 98 168 Z" fill="var(--art)" />
+                    <path d="M262 90 l-2 -18 M248 72 h30" stroke="var(--hero-bg)" stroke-width="6" stroke-linecap="round" />
+                    <rect x="112" y="122" width="78" height="16" rx="8" fill="var(--hero-bg)" />
+                    <circle cx="292" cy="104" r="9" fill="var(--sun)" />
+                    <path d="M200 176 h20" stroke="var(--surface)" stroke-width="4" stroke-linecap="round" />
+                    <path d="M106 140 l-12 -2" stroke="var(--accent)" stroke-width="6" stroke-linecap="round" />
+                    <path d="M330 120 h40 v30 h-40 Z" fill="var(--surface)" stroke="var(--line)" stroke-width="3" />
+                    <path d="M340 132 h20 M340 140 h14" stroke="var(--accent)" stroke-width="3" stroke-linecap="round" />
+                    <path d="M350 150 v60" stroke="var(--line)" stroke-width="4" />
+                </>
+            )
+        }
+
+        {
+            scene === 'nail-salons' && (
+                <>
+                    <rect y="190" width="400" height="50" fill="var(--ground)" />
+                    <path d="M0 190 h400" stroke="var(--line)" stroke-width="3" />
+                    <g>
+                        <rect x="104" y="112" width="56" height="78" rx="14" fill="var(--accent)" />
+                        <rect x="118" y="70" width="28" height="44" rx="6" fill="var(--hero-bg)" />
+                        <rect x="112" y="124" width="10" height="40" rx="5" fill="var(--surface)" opacity="0.45" />
+                    </g>
+                    <g>
+                        <rect x="176" y="98" width="62" height="92" rx="16" fill="var(--art)" />
+                        <rect x="192" y="50" width="30" height="50" rx="6" fill="var(--hero-bg)" />
+                        <rect x="185" y="112" width="10" height="46" rx="5" fill="var(--surface)" opacity="0.45" />
+                    </g>
+                    <g>
+                        <rect x="254" y="122" width="50" height="68" rx="12" fill="var(--sun)" />
+                        <rect x="266" y="86" width="26" height="38" rx="6" fill="var(--hero-bg)" />
+                        <rect x="262" y="132" width="9" height="34" rx="4" fill="var(--surface)" opacity="0.5" />
+                    </g>
+                    <path d="M40 176 l60 -14" stroke="var(--ink-muted)" stroke-width="8" stroke-linecap="round" />
+                    <g fill="var(--sun)">
+                        <path d="M70 60 l4 10 l10 4 l-10 4 l-4 10 l-4 -10 l-10 -4 l10 -4 Z" />
+                        <path d="M330 44 l3 8 l8 3 l-8 3 l-3 8 l-3 -8 l-8 -3 l8 -3 Z" />
+                        <path d="M352 120 l3 7 l7 3 l-7 3 l-3 7 l-3 -7 l-7 -3 l7 -3 Z" />
+                    </g>
+                    <ellipse cx="340" cy="186" rx="26" ry="6" fill="var(--sun-tint)" />
+                    <circle cx="332" cy="178" r="7" fill="var(--accent)" />
+                    <circle cx="348" cy="180" r="6" fill="var(--art)" />
+                </>
+            )
+        }
+
+        {
+            scene === 'dive-shops' && (
+                <>
+                    <path d="M80 0 L140 0 L60 210 L20 210 Z M220 0 L260 0 L230 210 L190 210 Z" fill="var(--surface)" opacity="0.1" />
+                    <rect y="210" width="400" height="30" fill="var(--ground)" />
+                    <path d="M40 210 c-6 -30 10 -40 4 -64 M52 210 c4 -24 18 -30 14 -50" fill="none" stroke="var(--area-4)" stroke-width="7" stroke-linecap="round" />
+                    <path d="M320 210 c0 -20 -14 -24 -14 -40 c0 -10 12 -12 14 0 c2 -14 16 -14 16 0 c2 -10 14 -8 12 4 c-2 12 -14 18 -14 36 Z" fill="var(--accent)" />
+                    <path d="M120 120 c26 -26 62 -26 84 0 c-22 26 -58 26 -84 0 Z" fill="var(--sun)" />
+                    <path d="M204 120 l22 -18 v36 Z" fill="var(--sun)" />
+                    <circle cx="140" cy="116" r="5" fill="var(--hero-bg)" />
+                    <path d="M160 104 v32 M176 102 v36" stroke="var(--accent)" stroke-width="5" />
+                    <path d="M250 70 c14 -14 34 -14 46 0 c-12 14 -32 14 -46 0 Z" fill="var(--surface)" />
+                    <path d="M296 70 l14 -10 v20 Z" fill="var(--surface)" />
+                    <circle cx="262" cy="68" r="3.5" fill="var(--hero-bg)" />
+                    <path d="M290 160 c10 -10 24 -10 32 0 c-8 10 -22 10 -32 0 Z M322 160 l10 -7 v14 Z" fill="var(--art)" />
+                    <g fill="none" stroke="var(--surface)" stroke-width="3" opacity="0.7">
+                        <circle cx="108" cy="92" r="6" />
+                        <circle cx="98" cy="70" r="4" />
+                        <circle cx="104" cy="50" r="7" />
+                        <circle cx="240" cy="40" r="5" />
+                        <circle cx="232" cy="22" r="3" />
+                    </g>
+                    <path d="M200 210 c-2 -14 6 -18 0 -30" fill="none" stroke="var(--area-4)" stroke-width="6" stroke-linecap="round" />
+                </>
+            )
+        }
+
+        {
+            scene === 'hotels' && (
+                <>
+                    <circle cx="70" cy="50" r="22" fill="var(--sun)" />
+                    <rect y="205" width="400" height="35" fill="var(--ground)" />
+                    <path d="M40 220 h60 M150 228 h70 M260 218 h80" stroke="var(--surface)" stroke-width="3" stroke-linecap="round" opacity="0.6" />
+                    <rect x="120" y="54" width="170" height="151" fill="var(--surface)" stroke="var(--line)" stroke-width="3" />
+                    <rect x="112" y="42" width="186" height="16" rx="4" fill="var(--art)" />
+                    {[0, 1, 2, 3].map((r) =>
+                        [0, 1, 2, 3].map((c) => <rect x={136 + c * 38} y={70 + r * 30} width="24" height="18" rx="2" fill="var(--sea-tint)" stroke="var(--line)" stroke-width="2" />)
+                    )}
+                    <rect x="186" y="184" width="38" height="21" fill="var(--art)" />
+                    <path d="M120 205 h170" stroke="var(--line)" stroke-width="3" />
+                    <path d="M342 205 c-4 -50 -2 -90 10 -126" fill="none" stroke="var(--area-3)" stroke-width="8" stroke-linecap="round" />
+                    <g fill="var(--area-4)">
+                        <path d="M352 80 c-20 -16 -42 -10 -52 6 c18 -6 34 -4 52 -6 Z" />
+                        <path d="M352 80 c20 -16 42 -10 52 6 c-18 -6 -34 -4 -52 -6 Z" />
+                        <path d="M352 80 c-6 -22 -28 -32 -44 -26 c16 6 30 14 44 26 Z" />
+                        <path d="M352 80 c6 -22 28 -32 44 -26 c-16 6 -30 14 -44 26 Z" />
+                    </g>
+                </>
+            )
+        }
+
+        {
+            scene === 'bars' && (
+                <>
+                    <circle cx="330" cy="50" r="18" fill="var(--sun)" />
+                    <circle cx="338" cy="44" r="16" fill="var(--sky)" />
+                    <g fill="var(--surface)" opacity="0.8">
+                        <circle cx="60" cy="40" r="2" />
+                        <circle cx="120" cy="24" r="1.6" />
+                        <circle cx="270" cy="30" r="2" />
+                        <circle cx="380" cy="90" r="1.6" />
+                        <circle cx="30" cy="96" r="1.6" />
+                    </g>
+                    <path d="M0 64 Q 100 96 200 64 T 400 64" fill="none" stroke="var(--ink-muted)" stroke-width="1.5" opacity="0.7" />
+                    {[24, 64, 104, 144, 184, 224, 264, 304, 344, 384].map((x) => (
+                        <circle cx={x} cy={64 + 16 * Math.sin(((x % 200) / 200) * Math.PI)} r="4" fill="var(--sun)" />
+                    ))}
+                    <rect y="190" width="400" height="50" fill="var(--ground)" />
+                    <path d="M0 190 h400" stroke="var(--sun)" stroke-width="3" opacity="0.5" />
+                    <path d="M132 106 h96 l-48 52 Z" fill="var(--accent)" opacity="0.9" />
+                    <path d="M180 158 v28 M160 188 h40" stroke="var(--surface)" stroke-width="5" stroke-linecap="round" />
+                    <path d="M132 106 h96" stroke="var(--surface)" stroke-width="4" stroke-linecap="round" />
+                    <path d="M200 106 l26 -40" stroke="var(--surface)" stroke-width="3" />
+                    <path d="M196 72 a34 34 0 0 1 60 -14 Z" fill="var(--art)" stroke="var(--surface)" stroke-width="2" />
+                    <circle cx="140" cy="104" r="12" fill="var(--open)" stroke="var(--surface)" stroke-width="3" />
+                    <path d="M262 190 v-60 c0 -10 10 -14 10 -26 v-20 h14 v20 c0 12 10 16 10 26 v60 Z" fill="var(--area-4)" />
+                    <rect x="262" y="140" width="34" height="22" fill="var(--sun)" />
+                    <path d="M58 190 v-42 h40 v42" fill="var(--sun)" opacity="0.85" />
+                    <path d="M58 148 h40" stroke="var(--surface)" stroke-width="8" stroke-linecap="round" />
+                    <path d="M98 158 a10 10 0 0 1 0 20" fill="none" stroke="var(--surface)" stroke-width="4" />
+                </>
+            )
+        }
+
+        {
+            shopfront && (
+                <>
+                    <circle cx="332" cy="58" r="26" fill="var(--sun)" />
                     <path d="M0 120 C18 70 40 56 54 72 C66 44 88 38 100 62 C110 84 116 104 122 120 Z" fill="var(--area-1)" opacity="0.35" />
                     <path d="M290 120 C304 92 318 80 332 88 C344 68 362 64 374 84 C386 104 394 114 400 120 Z" fill="var(--area-5)" opacity="0.35" />
-                    <rect y="200" width="400" height="40" fill="var(--surface-200)" />
+                    <rect y="200" width="400" height="40" fill="var(--ground)" />
                     <rect x="70" y="64" width="260" height="140" rx="4" fill="var(--surface)" />
                     <rect x="70" y="64" width="260" height="18" fill="var(--art)" />
-                    {stripes.map((i) => (
+                    {awning.map((i) => (
                         <path
                             d={`M${70 + i * 26} 82 h26 v18 a13 13 0 0 1 -26 0 Z`}
                             fill={i % 2 === 0 ? 'var(--art)' : 'var(--surface)'}
@@ -63,8 +324,23 @@ const stripes = Array.from({ length: 10 }, (_, i) => i);
                         />
                     ))}
                     <rect x="92" y="128" width="58" height="76" rx="3" fill="var(--sea-tint)" stroke="var(--line)" stroke-width="2" />
-                    <rect x="250" y="128" width="58" height="50" rx="3" fill="var(--sea-tint)" stroke="var(--line)" stroke-width="2" />
-                    <path d="M150 204 h100" stroke="var(--line)" stroke-width="2" />
+                    <rect x="172" y="128" width="136" height="50" rx="3" fill="var(--sea-tint)" stroke="var(--line)" stroke-width="2" />
+                    {scene === 'shops' ? (
+                        <>
+                            <path d="M186 178 v-30 h30 v30 Z" fill="var(--accent)" />
+                            <path d="M193 148 a8 8 0 0 1 16 0" fill="none" stroke="var(--hero-bg)" stroke-width="3" />
+                            <path d="M226 178 v-38 h34 v38 Z" fill="var(--art)" />
+                            <path d="M234 140 a9 9 0 0 1 18 0" fill="none" stroke="var(--hero-bg)" stroke-width="3" />
+                            <path d="M270 178 v-24 h26 v24 Z" fill="var(--sun)" />
+                            <path d="M276 154 a7 7 0 0 1 14 0" fill="none" stroke="var(--hero-bg)" stroke-width="3" />
+                        </>
+                    ) : (
+                        <>
+                            <path d="M184 172 h112 M190 156 h40 M240 156 h50" stroke="var(--art)" stroke-width="6" stroke-linecap="round" />
+                            <circle cx="196" cy="142" r="6" fill="var(--sun)" />
+                            <circle cx="214" cy="142" r="6" fill="var(--accent)" />
+                        </>
+                    )}
                     <path d="M0 40 Q 35 58 70 46 M330 46 Q 365 58 400 40" fill="none" stroke="var(--ink-muted)" stroke-width="1.5" opacity="0.6" />
                     {[14, 34, 54, 346, 366, 386].map((x) => (
                         <circle cx={x} cy={x < 200 ? 46 + Math.sin(x / 20) * 4 : 47 + Math.sin(x / 20) * 4} r="3.5" fill="var(--sun)" />
@@ -74,8 +350,140 @@ const stripes = Array.from({ length: 10 }, (_, i) => i);
                 </>
             )
         }
+
+        {
+            scene === 'gyms-muay-thai' && (
+                <>
+                    <rect y="210" width="400" height="30" fill="var(--ground)" />
+                    <rect x="36" y="60" width="16" height="150" rx="4" fill="var(--hero-bg)" />
+                    <rect x="348" y="60" width="16" height="150" rx="4" fill="var(--hero-bg)" />
+                    <path d="M52 92 h296" stroke="var(--accent)" stroke-width="8" stroke-linecap="round" />
+                    <path d="M52 132 h296" stroke="var(--surface)" stroke-width="8" stroke-linecap="round" />
+                    <path d="M52 172 h296" stroke="var(--art)" stroke-width="8" stroke-linecap="round" />
+                    <path d="M170 92 v30 M232 92 v26" stroke="var(--hero-bg)" stroke-width="3" />
+                    <g transform="translate(140 118)">
+                        <path d="M6 30 c-12 -30 4 -50 30 -50 c26 0 40 20 30 50 l-6 28 h-46 Z" fill="var(--accent)" />
+                        <path d="M10 22 c-14 -4 -18 16 -4 22" fill="var(--accent)" stroke="var(--sky)" stroke-width="3" />
+                        <rect x="12" y="56" width="50" height="22" rx="4" fill="var(--surface)" />
+                        <path d="M22 62 h30 M22 70 h30" stroke="var(--line)" stroke-width="2" />
+                        <path d="M24 -8 c8 -6 22 -6 30 0" fill="none" stroke="var(--surface)" stroke-width="4" opacity="0.5" stroke-linecap="round" />
+                    </g>
+                    <g transform="translate(202 114)">
+                        <path d="M6 30 c-12 -30 4 -50 30 -50 c26 0 40 20 30 50 l-6 28 h-46 Z" fill="var(--art)" />
+                        <path d="M62 22 c14 -4 18 16 4 22" fill="var(--art)" stroke="var(--sky)" stroke-width="3" />
+                        <rect x="10" y="56" width="50" height="22" rx="4" fill="var(--surface)" />
+                        <path d="M20 62 h30 M20 70 h30" stroke="var(--line)" stroke-width="2" />
+                        <path d="M18 -8 c8 -6 22 -6 30 0" fill="none" stroke="var(--surface)" stroke-width="4" opacity="0.5" stroke-linecap="round" />
+                    </g>
+                    <circle cx="44" cy="58" r="10" fill="var(--sun)" />
+                    <circle cx="356" cy="58" r="10" fill="var(--sun)" />
+                </>
+            )
+        }
+
+        {
+            scene === 'clinics-pharmacies' && (
+                <>
+                    <circle cx="340" cy="50" r="22" fill="var(--sun)" />
+                    <rect y="210" width="400" height="30" fill="var(--ground)" />
+                    <rect x="100" y="70" width="200" height="140" rx="4" fill="var(--surface)" stroke="var(--line)" stroke-width="3" />
+                    <rect x="100" y="70" width="200" height="22" fill="var(--art)" />
+                    <rect x="120" y="116" width="50" height="40" rx="3" fill="var(--sea-tint)" stroke="var(--line)" stroke-width="2" />
+                    <rect x="230" y="116" width="50" height="40" rx="3" fill="var(--sea-tint)" stroke="var(--line)" stroke-width="2" />
+                    <rect x="180" y="150" width="40" height="60" rx="3" fill="var(--sea-tint)" stroke="var(--line)" stroke-width="2" />
+                    <circle cx="200" cy="58" r="30" fill="var(--surface)" stroke="var(--open)" stroke-width="5" />
+                    <path d="M200 40 v36 M182 58 h36" stroke="var(--open)" stroke-width="12" stroke-linecap="round" />
+                    <g transform="rotate(-30 52 170)">
+                        <rect x="20" y="158" width="64" height="26" rx="13" fill="var(--surface)" stroke="var(--line)" stroke-width="2" />
+                        <path d="M52 158 h19 a13 13 0 0 1 0 26 h-19 Z" fill="var(--accent)" />
+                    </g>
+                    <g transform="rotate(20 350 180)">
+                        <rect x="322" y="168" width="56" height="22" rx="11" fill="var(--surface)" stroke="var(--line)" stroke-width="2" />
+                        <path d="M350 168 h17 a11 11 0 0 1 0 22 h-17 Z" fill="var(--art)" />
+                    </g>
+                </>
+            )
+        }
+
+        {
+            scene === 'laundry' && (
+                <>
+                    <rect y="210" width="400" height="30" fill="var(--ground)" />
+                    <path d="M0 40 Q 60 60 120 40" fill="none" stroke="var(--ink-muted)" stroke-width="2" />
+                    <path d="M22 46 h30 l6 10 l-8 4 v30 h-26 v-30 l-8 -4 Z" fill="var(--accent)" />
+                    <path d="M72 50 h28 l6 8 l-6 4 v24 h-28 v-24 l-6 -4 Z" fill="var(--sun)" />
+                    <rect x="130" y="60" width="140" height="150" rx="12" fill="var(--surface)" stroke="var(--line)" stroke-width="3" />
+                    <path d="M130 92 h140" stroke="var(--line)" stroke-width="3" />
+                    <circle cx="150" cy="76" r="6" fill="var(--art)" />
+                    <circle cx="170" cy="76" r="6" fill="var(--sun)" />
+                    <rect x="200" y="70" width="54" height="12" rx="4" fill="var(--sea-tint)" />
+                    <circle cx="200" cy="150" r="46" fill="var(--sea-tint)" stroke="var(--art)" stroke-width="8" />
+                    <path d="M158 156 q10 -10 21 0 t21 0 t21 0 t21 0 v8 a42 42 0 0 1 -84 0 Z" fill="var(--sea)" />
+                    <circle cx="186" cy="138" r="5" fill="var(--surface)" opacity="0.8" />
+                    <circle cx="214" cy="130" r="3.5" fill="var(--surface)" opacity="0.8" />
+                    <path d="M300 210 l8 -50 h70 l8 50 Z" fill="var(--art)" />
+                    <path d="M314 160 c4 -16 18 -18 26 -4 c8 -14 22 -12 26 4" fill="var(--surface)" stroke="var(--line)" stroke-width="2" />
+                    <path d="M312 180 h62 M310 194 h66" stroke="var(--surface)" stroke-width="2" opacity="0.5" />
+                </>
+            )
+        }
+
+        {
+            scene === 'barbers-salons' && (
+                <>
+                    <defs>
+                        <pattern id={`${uid}-pole`} width="30" height="36" patternUnits="userSpaceOnUse" patternTransform="rotate(-30)">
+                            <rect width="30" height="36" fill="var(--surface)" />
+                            <rect width="30" height="12" fill="var(--accent)" />
+                            <rect y="18" width="30" height="8" fill="var(--area-2)" />
+                        </pattern>
+                    </defs>
+                    <rect y="210" width="400" height="30" fill="var(--ground)" />
+                    <path d="M0 220 h400" stroke="var(--line)" stroke-width="2" stroke-dasharray="20 20" />
+                    <rect x="66" y="56" width="32" height="128" rx="16" fill={`url(#${uid}-pole)`} stroke="var(--line)" stroke-width="3" />
+                    <rect x="62" y="44" width="40" height="16" rx="6" fill="var(--hero-bg)" />
+                    <rect x="62" y="182" width="40" height="16" rx="6" fill="var(--hero-bg)" />
+                    <ellipse cx="200" cy="70" rx="44" ry="50" fill="var(--sea-tint)" stroke="var(--line)" stroke-width="5" />
+                    <path d="M180 50 l20 -16 M184 70 l30 -26" stroke="var(--surface)" stroke-width="4" stroke-linecap="round" opacity="0.8" />
+                    <rect x="164" y="112" width="72" height="52" rx="14" fill="var(--art)" />
+                    <rect x="152" y="152" width="96" height="22" rx="10" fill="var(--art)" />
+                    <rect x="146" y="146" width="16" height="10" rx="5" fill="var(--hero-bg)" />
+                    <rect x="238" y="146" width="16" height="10" rx="5" fill="var(--hero-bg)" />
+                    <path d="M200 174 v26 M176 210 h48" stroke="var(--hero-bg)" stroke-width="8" stroke-linecap="round" />
+                    <g transform="translate(300 90) rotate(20)">
+                        <circle cx="-12" cy="60" r="12" fill="none" stroke="var(--hero-bg)" stroke-width="6" />
+                        <circle cx="16" cy="62" r="12" fill="none" stroke="var(--hero-bg)" stroke-width="6" />
+                        <path d="M-4 50 L14 -20 M8 50 L-6 -20" stroke="var(--ink-muted)" stroke-width="7" stroke-linecap="round" />
+                        <circle cx="2" cy="22" r="3.5" fill="var(--hero-bg)" />
+                    </g>
+                </>
+            )
+        }
+
+        {
+            scene === 'coworking' && (
+                <>
+                    <rect x="40" y="30" width="130" height="90" rx="4" fill="var(--surface)" stroke="var(--line)" stroke-width="3" />
+                    <rect x="48" y="38" width="114" height="74" fill="var(--sun-tint)" />
+                    <circle cx="140" cy="60" r="12" fill="var(--sun)" />
+                    <path d="M48 112 C70 80 90 76 104 92 C116 74 136 72 162 100 V112 Z" fill="var(--area-1)" opacity="0.6" />
+                    <rect y="190" width="400" height="50" fill="var(--ground)" />
+                    <path d="M0 190 h400" stroke="var(--hero-bg)" stroke-width="3" opacity="0.25" />
+                    <rect x="150" y="92" width="130" height="86" rx="8" fill="var(--hero-bg)" />
+                    <rect x="160" y="102" width="110" height="66" rx="3" fill="var(--sea-tint)" />
+                    <path d="M172 118 h50 M172 132 h80 M172 146 h36" stroke="var(--art)" stroke-width="6" stroke-linecap="round" />
+                    <path d="M130 178 h170 l-10 12 h-150 Z" fill="var(--surface)" stroke="var(--line)" stroke-width="2" />
+                    <path d="M316 190 v-36 h30 v36 Z" fill="var(--surface)" stroke="var(--art)" stroke-width="4" />
+                    <path d="M346 162 a10 10 0 0 1 0 20" fill="none" stroke="var(--art)" stroke-width="4" />
+                    <path d="M324 146 c-4 -8 4 -12 0 -20 M338 146 c-4 -8 4 -12 0 -20" fill="none" stroke="var(--ink-muted)" stroke-width="3" stroke-linecap="round" />
+                    <path d="M60 190 l6 -36 h36 l6 36 Z" fill="var(--accent)" />
+                    <g fill="var(--area-4)">
+                        <ellipse cx="72" cy="140" rx="9" ry="20" transform="rotate(-24 72 140)" />
+                        <ellipse cx="96" cy="138" rx="9" ry="20" transform="rotate(24 96 138)" />
+                        <ellipse cx="84" cy="128" rx="9" ry="24" />
+                    </g>
+                </>
+            )
+        }
     </svg>
-    <span class="sg-art-badge">
-        <Icon name={category?.icon ?? 'image'} class={size === 'lg' ? 'tkg-i-24' : undefined} />
-    </span>
 </div>
