@@ -3,6 +3,10 @@ title: "Change Log"
 sidebar_label: "Change Log"
 ---
 
+## 2026-10-17 — Claim banner in the owner block
+
+The owner block's price card is replaced by the owner's claim banner ("Your shop. One tap away.", `public/images/claim-banner.webp`, 720×1280, linked to the claim flow, `data-umami-event="claim-banner"`). What is included, the "Claim your listing" button and the price (฿100 / month or ฿1,000 / year) move into the pitch column. Spec: `.specify/features/soiguru-design.md` § Website layout.
+
 ## 2026-10-17 — Claim and Owner links on owner.soiguru.com
 
 owner.soiguru.com is verified (the owner app's sign-in loads there), so `claim_url` and `owner_url` in works.yml (data branch and the bundled copy) point at `https://owner.soiguru.com/{city}/claim` and `https://owner.soiguru.com/owner`. The data branch also gets `theme: soiguru`. Spec: `.specify/features/soiguru-design.md`.

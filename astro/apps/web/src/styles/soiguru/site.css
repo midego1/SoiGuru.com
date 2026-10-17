@@ -2188,3 +2188,49 @@ html[data-lang='en'] .sg-sf-lang[data-lang-set='en'] {
 .sg-hero-map .sg-thmap {
     max-height: 440px;
 }
+
+/* owner block: claim banner on the right, what is included + button in the pitch */
+.sg-ticks-2 {
+    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+    margin: 20px 0 22px;
+}
+.sg-owner-cta {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 12px 18px;
+}
+.sg-owner-cta .sg-price-alt {
+    margin: 0;
+    max-width: 320px;
+}
+.sg-owner-cta .sg-price-alt strong {
+    color: var(--ink);
+    font-size: 16px;
+}
+.sg-owner-banner {
+    flex: 0 1 300px;
+    display: block;
+    margin-inline: auto;
+    width: min(300px, 100%);
+    border-radius: var(--radius-xl);
+    overflow: hidden;
+    box-shadow: 0 14px 36px #14201f26;
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+.sg-owner-banner:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 20px 44px #14201f33;
+}
+.sg-owner-banner img {
+    display: block;
+    width: 100%;
+    height: auto;
+}
+@media (prefers-reduced-motion: reduce) {
+    .sg-owner-banner,
+    .sg-owner-banner:hover {
+        transition: none;
+        transform: none;
+    }
+}

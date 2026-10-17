@@ -1,8 +1,8 @@
 ---
 /**
  * OwnerBlock — the "For business owners" band of the website mockup: the pitch on the left,
- * the price card (฿100 / month, what is included, the accent button) on the right. Stacks on
- * phones. The compact OwnerCta stays for places that need one line.
+ * the claim banner (`public/images/claim-banner.webp`, a link to the claim flow) on the right.
+ * The pitch carries what is included, the accent button and the price. Stacks on phones. The compact OwnerCta stays for places that need one line.
  */
 import Icon from './Icon.astro';
 
@@ -34,14 +34,7 @@ const perks: [string, string][] = [
                         Log in, fix your hours, add photos and your LINE or WhatsApp{cityName ? ` in ${cityName}` : ''}. Visitors see the right
                         info, you get the customers.
                     </p>
-                </div>
-                <div class="sg-price-card">
-                    <div class="sg-price">
-                        <span class="sg-price-num">฿100</span>
-                        <span class="sg-price-per" data-th="/ เดือน">/ month</span>
-                    </div>
-                    <p class="sg-price-alt" data-th="หรือ ฿1,000 / ปี ร้านของคุณอยู่ในรายการฟรีเสมอ">or ฿1,000 / year. Your listing stays free either way.</p>
-                    <ul class="sg-ticks">
+                    <ul class="sg-ticks sg-ticks-2">
                         {perks.map(([en, th]) => (
                             <li>
                                 <Icon name="check" />
@@ -49,10 +42,25 @@ const perks: [string, string][] = [
                             </li>
                         ))}
                     </ul>
-                    <a class="sg-btn sg-btn-accent sg-btn-lg sg-btn-block" href={href} data-umami-event="claim-cta" data-th="เคลมร้านของคุณ">
-                        Claim your listing
-                    </a>
+                    <div class="sg-owner-cta">
+                        <a class="sg-btn sg-btn-accent sg-btn-lg" href={href} data-umami-event="claim-cta" data-th="เคลมร้านของคุณ">
+                            Claim your listing
+                        </a>
+                        <p class="sg-price-alt">
+                            <strong>฿100</strong>{" "}<span data-th="/ เดือน หรือ ฿1,000 / ปี ร้านของคุณอยู่ในรายการฟรีเสมอ">/ month or ฿1,000 / year. Your listing stays free either way.</span>
+                        </p>
+                    </div>
                 </div>
+                <a class="sg-owner-banner" href={href} data-umami-event="claim-banner">
+                    <img
+                        src="/images/claim-banner.webp"
+                        alt="SoiGuru: Your shop. One tap away. Keep your hours and contact details up to date. Claim this listing."
+                        width="720"
+                        height="1280"
+                        loading="lazy"
+                        decoding="async"
+                    />
+                </a>
             </div>
         </section>
     )
