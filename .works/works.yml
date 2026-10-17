@@ -26,7 +26,7 @@ settings:
     pricing_enabled: false
     layout_enabled: false
     language_enabled: true
-    theme_enabled: false
+    theme_enabled: true
     theme_default: light
   homepage:
     hero_enabled: false
