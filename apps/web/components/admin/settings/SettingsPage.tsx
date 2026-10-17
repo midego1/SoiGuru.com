@@ -628,7 +628,7 @@ export function SettingsPage() {
 										description={t('SPONSOR_ADS_WEEKLY_PRICE_DESC')}
 										value={settings.monetization?.sponsor_ads?.weekly_price ?? 100}
 										onChange={(value) => updateSetting('monetization.sponsor_ads.weekly_price', value)}
-										currency={settings.monetization?.sponsor_ads?.currency ?? 'USD'}
+										currency={settings.monetization?.sponsor_ads?.currency ?? 'THB'}
 										placeholder="100.00"
 										disabled={saving}
 									/>
@@ -637,14 +637,14 @@ export function SettingsPage() {
 										description={t('SPONSOR_ADS_MONTHLY_PRICE_DESC')}
 										value={settings.monetization?.sponsor_ads?.monthly_price ?? 300}
 										onChange={(value) => updateSetting('monetization.sponsor_ads.monthly_price', value)}
-										currency={settings.monetization?.sponsor_ads?.currency ?? 'USD'}
+										currency={settings.monetization?.sponsor_ads?.currency ?? 'THB'}
 										placeholder="300.00"
 										disabled={saving}
 									/>
 									<SettingSelect
 										label={t('SPONSOR_ADS_CURRENCY_LABEL')}
 										description={t('SPONSOR_ADS_CURRENCY_DESC')}
-										value={settings.monetization?.sponsor_ads?.currency ?? 'USD'}
+										value={settings.monetization?.sponsor_ads?.currency ?? 'THB'}
 										onChange={(value) => updateSetting('monetization.sponsor_ads.currency', value)}
 										options={[
 											// Major currencies

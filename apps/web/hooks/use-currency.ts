@@ -6,7 +6,8 @@ import { useCurrentUser } from '@/hooks/use-current-user';
 import { useCallback } from 'react';
 
 // Constants
-const DEFAULT_CURRENCY = 'USD' as const;
+// SoiGuru: Thai baht (฿) unless the visitor or the account chose another currency.
+const DEFAULT_CURRENCY = 'THB' as const;
 const CURRENCY_QUERY_KEY = ['user-currency'] as const;
 
 // Types

@@ -11,7 +11,7 @@ interface CurrencyContextType {
 }
 
 const DEFAULT_CURRENCY_CONTEXT: CurrencyContextType = {
-	currency: 'USD',
+	currency: 'THB',
 	country: null,
 	isLoading: false,
 	updateCurrency: () => undefined

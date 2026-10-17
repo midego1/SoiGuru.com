@@ -94,3 +94,9 @@ languages in one product read as two products.
 - The template header shows the logo mark and the SoiGuru wordmark.
 - The SoiGuru public and owner screens look as before.
 - `pnpm --filter @ever-works/web lint` and `exec tsc --noEmit` pass.
+
+## Follow-up (2026-10-17)
+
+- Admin bar: the "Admin" label and section nav only; the site header carries the logo and name.
+- Currency: THB (฿) is the default (hook, context, currency API fallback, sponsor-ads setting); the other supported currencies stay selectable.
+- Settings drop-downs (`SettingSelect`) render in a portal by default, so the accordion cards do not clip their options.

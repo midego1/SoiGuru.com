@@ -2,10 +2,9 @@
 
 import { useTranslations } from 'next-intl';
 import { Link, usePathname } from '@/i18n/navigation';
-import { SoiGuruMark } from '@/components/soiguru/logo-mark';
 
 /**
- * SoiGuru admin top bar (spec 055): logo mark + wordmark + "Admin" label and a
+ * SoiGuru admin top bar (spec 055): the "Admin" label (the site header above carries the logo) and a
  * horizontal section nav. The active item is sea on sea-tint; every item is a
  * 44px touch target. On narrow screens the nav scrolls sideways instead of
  * wrapping. Replaces the template's plain "Admin Panel" strip.
@@ -53,8 +52,7 @@ export function AdminShellBar() {
 					href="/admin"
 					className="flex min-h-11 shrink-0 items-center gap-2.5 rounded-[10px] text-[var(--sg-ink,#14201f)]"
 				>
-					<SoiGuruMark size={34} />
-					<span className="text-[17px] font-extrabold tracking-[-0.01em]">SoiGuru</span>
+					{/* The site header above already shows the SoiGuru logo and name: here only the section label. */}
 					<span className="rounded-full bg-[var(--sg-sun-tint,#fdf0dc)] px-2 py-0.5 text-xs font-semibold text-[var(--sg-ink,#14201f)]">
 						{t('ADMIN')}
 					</span>
