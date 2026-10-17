@@ -3,6 +3,10 @@ title: "Change Log"
 sidebar_label: "Change Log"
 ---
 
+## 2026-10-17 — Favicon
+
+SoiGuru's logo mark (sea-deep tile, white karsts, sun line) as the site icon: `public/favicon.svg`, `favicon.ico` (16/32/48), `apple-touch-icon.png` (180), `icon-192.png`, `icon-512.png` and `site.webmanifest`. `SoiGuruLayout` links them unless works.yml sets `logo.favicon`. Spec: `.specify/features/soiguru-design.md`.
+
 ## 2026-10-17 — Claim banner in the owner block
 
 The owner block's price card is replaced by the owner's claim banner ("Your shop. One tap away.", `public/images/claim-banner.webp`, 720×1280, linked to the claim flow, `data-umami-event="claim-banner"`). What is included, the "Claim your listing" button and the price (฿100 / month or ฿1,000 / year) move into the pitch column. Spec: `.specify/features/soiguru-design.md` § Website layout.

@@ -88,3 +88,4 @@ The public site follows the layout of the website mockup (artifact "Main" and "L
 - **Live theme**: `soiguru`, the moodboard (bundled works.yml): page on `surface-100` (sand), cards and bars on `surface`, category tiles on `sea-tint`.
 - **Drawn map of Thailand** (`ThailandMap`): the city picker panel (cities with counts beside the map; hover lights the pin) and the landing hero card. Outline from Natural Earth (public domain) as one inline SVG path; no tiles or map library.
 - **Owner block**: pitch (eyebrow, headline, lead, what is included, Claim button, price) beside the claim banner image (`public/images/claim-banner.webp`, linked to the claim flow); stacked on phones.
+- **Favicon**: the logo mark as SVG + ICO + Apple touch icon + 192/512 PNGs with a web manifest (`public/`), linked by `SoiGuruLayout` unless `logo.favicon` is set.

@@ -84,7 +84,18 @@ const metaTags = generateMetaTags({ title, description, url: canonical, type: 'w
         <link rel="alternate" hreflang="en" href={canonical} />
         <link rel="alternate" hreflang="th" href={`${siteUrl}/th${path === '/' ? '/' : path}`} />
         <link rel="alternate" hreflang="x-default" href={canonical} />
-        {config.logo?.favicon && <link rel="icon" href={config.logo.favicon} />}
+        {
+            config.logo?.favicon ? (
+                <link rel="icon" href={config.logo.favicon} />
+            ) : (
+                <>
+                    <link rel="icon" href="/favicon.ico" sizes="48x48" />
+                    <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
+                    <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
+                    <link rel="manifest" href="/site.webmanifest" />
+                </>
+            )
+        }
         <link rel="preconnect" href="https://fonts.googleapis.com" />
         <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
         <link
