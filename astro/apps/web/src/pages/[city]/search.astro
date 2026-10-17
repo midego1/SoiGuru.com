@@ -32,6 +32,7 @@ const { config } = data;
     timeZone={city.timezone}
     city={city}
     wide
+    footer
     noindex
 >
     <TopBar back={{ href: `/${city.id}`, label: `Back to ${city.name}` }} title="Search · ค้นหา" subtitle={city.name} nav={{ city, active: 'search', ownerHref: ownerUrl(config, city) }} />

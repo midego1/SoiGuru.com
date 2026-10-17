@@ -2611,3 +2611,86 @@ html[data-lang='en'] .sg-sf-lang[data-lang-set='en'] {
         padding: 14px 6px 10px;
     }
 }
+
+/* ---------- results, desktop list view: one toolbar row, a useful sidebar ----------
+   Breadcrumb and title span the page; the toolbar (List | Map, Open now, area, sort) and the
+   search field share one row (the field on the right); the sidebar holds the filters and the
+   city's categories with counts; the cards fill the rest. */
+.sg-rside-legend {
+    margin: 0 0 var(--space-2);
+    font-size: 13px;
+    font-weight: 600;
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
+    color: var(--ink-muted);
+}
+.sg-rside-cats .sg-rf-opt {
+    justify-content: flex-start;
+    text-decoration: none;
+    min-height: 38px;
+    font-size: 14.5px;
+}
+.sg-rside-cats .sg-rf-opt .tkg-i {
+    width: 18px;
+    height: 18px;
+    color: var(--sea);
+    flex: none;
+}
+.sg-rside-cats .sg-rf-opt small {
+    margin-left: auto;
+}
+.sg-rside-cats .sg-rf-opt.tkg-chip-on .tkg-i {
+    color: var(--sun-deep, var(--accent));
+}
+.sg-rside-clear {
+    justify-self: start;
+    padding-inline: 0;
+}
+.tkg-card-meta > [data-distance]:empty {
+    display: none;
+}
+@media (min-width: 960px) {
+    .sg-page-wide .sg-results[data-view='list'] {
+        grid-template-columns: 240px minmax(0, 1fr) minmax(240px, 360px);
+        grid-template-areas: 'head head head' 'bar bar search' 'side list list';
+        column-gap: 32px;
+    }
+    .sg-page-wide .sg-results[data-view='list'] > .sg-rhead .sg-sec-sub {
+        display: none;
+    }
+    .sg-page-wide .sg-results[data-view='list'] > .tkg-filterbar {
+        align-self: center;
+        margin-top: 20px;
+    }
+    .sg-page-wide .sg-results[data-view='list'] > [data-inline-search],
+    :root:not([data-theme='navy']) .sg-page-wide .sg-results[data-view='list'] > [data-inline-search] {
+        align-self: center;
+        max-width: none;
+        margin-top: 20px;
+        padding: 0;
+        background: transparent;
+        border: 0;
+    }
+    .sg-page-wide .sg-results[data-view='list'] > .sg-rside {
+        padding-top: 24px;
+        gap: var(--space-5, 20px);
+    }
+    .sg-page-wide .sg-results[data-view='list'] > .sg-results-list > .tkg-section {
+        padding-top: 20px !important;
+    }
+    .sg-page-wide .sg-results[data-view='list'] .sg-none-open {
+        margin-bottom: 16px;
+    }
+}
+/* The footer closes list pages; map view fills the window, so it is left out there. */
+.sg-page:has(.sg-results[data-view='map']) > .sg-sf {
+    display: none;
+}
+@media (min-width: 960px) {
+    /* the sidebar now holds filters and every category: it scrolls with the page, so nothing is cut off */
+    .sg-page-wide .sg-results[data-view='list'] > .sg-rside {
+        position: static;
+        max-height: none;
+        overflow: visible;
+    }
+}

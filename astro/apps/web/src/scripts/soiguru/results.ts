@@ -34,7 +34,8 @@ const TEXT = {
         showPlaces: (n: number) => (n === 1 ? 'Show 1 place' : `Show ${n} places`),
         allAreas: 'All areas',
         sheetPos: (i: number, n: number) => `${i} of ${n}`,
-        noneOpen: 'Nothing here is open right now, so all places are shown. Check the hours before you go.'
+        noneOpen: 'Nothing here is open right now, so all places are shown. Check the hours before you go.',
+        inWhere: (where: string) => `in ${where}`
     },
     th: {
         openNow: (n: number) => `เปิดอยู่ ${n} แห่ง`,
@@ -45,7 +46,8 @@ const TEXT = {
         showPlaces: (n: number) => `ดู ${n} แห่ง`,
         allAreas: 'ทุกพื้นที่',
         sheetPos: (i: number, n: number) => `${i} จาก ${n}`,
-        noneOpen: 'ตอนนี้ยังไม่มีที่ไหนเปิด จึงแสดงทั้งหมด โปรดดูเวลาเปิด-ปิดก่อนไป'
+        noneOpen: 'ตอนนี้ยังไม่มีที่ไหนเปิด จึงแสดงทั้งหมด โปรดดูเวลาเปิด-ปิดก่อนไป',
+        inWhere: (where: string) => `ใน${where}`
     }
 };
 
@@ -196,8 +198,13 @@ if (root) {
             ? (currentLang() === 'th' && areaBtn.dataset['areaNameTh']) || areaBtn.dataset['areaName'] || ''
             : '';
         const where = areaName || (root.dataset['where'] ?? '');
-        countOpen.textContent = text.openNow(open.length);
-        countTotal.textContent = state.bounds ? text.inArea(pool.length, noun) : text.ofTotal(pool.length, noun, where);
+        // Nothing open by default: all places are shown, so the heading counts them all.
+        countOpen.textContent = noneOpen ? `${pool.length} ${noun}` : text.openNow(open.length);
+        countTotal.textContent = state.bounds
+            ? text.inArea(pool.length, noun)
+            : noneOpen
+              ? text.inWhere(where)
+              : text.ofTotal(pool.length, noun, where);
         countShort.textContent = text.openNow(open.length);
         empty.hidden = pool.length > 0 && visible.length > 0;
         showMore.hidden = visible.length <= state.limit;
@@ -210,7 +217,7 @@ if (root) {
         }
         clearBounds.hidden = !state.bounds;
 
-        openBtn.setAttribute('aria-pressed', String(state.open));
+        openBtn.setAttribute('aria-pressed', String(state.open && !noneOpen));
         if (areaLabel) areaLabel.textContent = areaName || text.allAreas;
         for (const b of areaButtons) b.classList.toggle('tkg-chip-on', (b.dataset['areaSet'] ?? '') === state.area);
         sortLabel.textContent = sortSelect.selectedOptions[0]?.textContent ?? 'Top rated';

@@ -3,6 +3,10 @@ title: "Change Log"
 sidebar_label: "Change Log"
 ---
 
+## 2026-10-17 — Results pages (desktop) cleaned up
+
+Category, area and search results on desktop: breadcrumb and title span the page; the toolbar (List | Map, Open now, area, sort) and the search field share one row (the field on the right, no white box behind it); the sidebar holds the filters and every category of the city with counts (current one marked), scrolls with the page and no longer cuts the list off. With nothing open by default, the heading counts all places and "Open now" is not shown as pressed. Cards no longer repeat the area under the status (the address, or the distance once known). Results pages close with the footer again, except in map view.
+
 ## 2026-10-17 — Category tiles restyled
 
 Category tiles are white cards with a soft shadow, a bare 28px category mark, the label and a short bar under it; hover and focus warm the card to `sun-tint` with the mark and bar in the new `--sun-deep` token. One line from 720px (all 16 fit from 1280px, sideways scroll below), 4 across on phones. Massage uses a new lotus mark.

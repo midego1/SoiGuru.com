@@ -150,7 +150,7 @@ const dataAttrs = {
                 )
             }
             <span class="tkg-dot" data-distance>
-                {distance !== undefined ? `${formatDistance(distance)}${boat}` : (listing.area?.name ?? listing.city.name)}
+                {distance !== undefined ? `${formatDistance(distance)}${boat}` : (listing.address ?? '')}
             </span>
             {price && <span class="tkg-dot">{price}</span>}
             {listing.sample && <span class="tkg-badge tkg-badge-outline sg-ml-1">Sample</span>}
