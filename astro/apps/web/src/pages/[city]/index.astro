@@ -45,7 +45,10 @@ for (const l of ranked) {
 }
 const openNowCandidates: typeof ranked = [];
 for (let round = 0; openNowCandidates.length < ranked.length; round++)
-    for (const list of byCategory.values()) if (list[round]) openNowCandidates.push(list[round]);
+    for (const list of byCategory.values()) {
+        const l = list[round];
+        if (l) openNowCandidates.push(l);
+    }
 const areaCounts = new Map(city.areas.map((a) => [a.id, listings.filter((l) => l.area?.id === a.id).length]));
 const siteUrl = (Astro.site?.href ?? '').replace(/\/$/, '');
 const owner = ownerUrl(config, city);

@@ -8,6 +8,7 @@
  */
 import Icon from './Icon.astro';
 import ListingPhoto from './ListingPhoto.astro';
+import CategoryArt from './CategoryArt.astro';
 import OpenStatus from './OpenStatus.astro';
 import { priceBand } from '../../lib/soiguru/format';
 import { formatDistance } from '../../lib/soiguru/geo';
@@ -54,9 +55,7 @@ const dataAttrs = {
                 {listing.images[0] ? (
                     <img src={listing.images[0]} alt="" width="400" height="240" loading="lazy" decoding="async" />
                 ) : (
-                    <span class="sg-tcard-mark" aria-hidden="true">
-                        <Icon name={listing.category?.icon ?? 'image'} />
-                    </span>
+                    <CategoryArt category={listing.category} />
                 )}
                 {listing.claimed && (
                     <span class="sg-flag">

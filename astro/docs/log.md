@@ -3,6 +3,10 @@ title: "Change Log"
 sidebar_label: "Change Log"
 ---
 
+## 2026-10-17 — Drawn category pictures and Google photos on listing pages
+
+Places without photos show a drawn category picture (`CategoryArt`: shopfront or karst-and-sea scene, colour per category, category icon on a badge) on photo cards and the listing page, instead of the bare icon. The listing page then loads up to three Google Places photos from the owner app (`/api/places/photos/<slug>`, Next app spec 056) with the author credit and keeps the drawing when there are none. Also fixes an `astro check` error in the city home's open-now round-robin. Spec: `.specify/features/soiguru-design.md` § Website layout.
+
 ## 2026-10-17 — Backlog written down
 
 PromptPay via Stripe (monthly QR on WhatsApp / LINE, needs a Thai Stripe account), Google Places photos as fallback, publish-on-edit workflow and the one-frontend redirects are recorded in `.specify/features/soiguru-design.md` § Later.

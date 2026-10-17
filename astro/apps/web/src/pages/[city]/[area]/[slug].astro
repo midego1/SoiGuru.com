@@ -21,7 +21,8 @@ import StaticMap from '../../../components/soiguru/StaticMap.astro';
 import ClaimBox from '../../../components/soiguru/ClaimBox.astro';
 import ListingCard from '../../../components/soiguru/ListingCard.astro';
 import SaveButton from '../../../components/soiguru/SaveButton.astro';
-import { getSoiGuru, claimUrl, reportUrl, type Listing } from '../../../lib/soiguru/data';
+import CategoryArt from '../../../components/soiguru/CategoryArt.astro';
+import { getSoiGuru, claimUrl, ownerUrl, reportUrl, type Listing } from '../../../lib/soiguru/data';
 import { breadcrumbJsonLd, localBusinessJsonLd } from '../../../lib/soiguru/jsonld';
 import { priceBand, formatDate } from '../../../lib/soiguru/format';
 import { directionsUrl, distanceMetres } from '../../../lib/soiguru/geo';
@@ -66,6 +67,10 @@ const sameArea = sameCategory.filter((l) => area && l.area?.id === area.id);
 const similarIn = sameArea.length >= 3 ? (area?.name ?? city.name) : city.name;
 const similar = (sameArea.length >= 3 ? sameArea : sameCategory).slice(0, 6);
 const shown = listing.images.slice(0, 5);
+// No photos of its own: the drawn category picture, swapped in the browser for up to three
+// Google Places photos from the owner app (`/api/places/photos/<slug>`, spec 056) when it has them.
+const owner = ownerUrl(config, city);
+const placesApi = owner && listing.images.length === 0 ? `${new URL(owner).origin}/api/places/photos/${listing.slug}` : undefined;
 const more = listing.images.length - shown.length;
 const trail: [string, string][] = [
     [config.company_name, '/'],
@@ -109,6 +114,13 @@ const trail: [string, string][] = [
             <span aria-current="page">{listing.name}</span>
         </nav>
 
+        {
+            shown.length === 0 && (
+                <div class="sg-pgrid sg-pgrid-art" data-count="1" data-places-photos={placesApi} data-places-name={listing.name}>
+                    <CategoryArt category={category} size="lg" />
+                </div>
+            )
+        }
         {
             shown.length > 0 && (
                 <div class="sg-pgrid" data-count={shown.length}>
@@ -338,6 +350,7 @@ const trail: [string, string][] = [
 
 <script>
     import '../../../scripts/soiguru/gallery';
+    import '../../../scripts/soiguru/places';
     // Share sheet with the clean URL; falls back to copying it.
     for (const btn of document.querySelectorAll<HTMLButtonElement>('[data-share]')) {
         btn.addEventListener('click', async () => {
