@@ -9,6 +9,7 @@ sidebar_position: 99
 
 ## 2026-10-18
 
+- `spec-059` `apps/web/lib/services/google-places.service.ts` `apps/web/app/api/places` `apps/web/lib/soiguru/places-http.ts`: Google photos faster and on listing cards: stored place IDs skip the search, the photos route returns `placeId`, new `/api/places/cards?slugs=` (first photo per card), daily Google budget `PLACES_DAILY_LIMIT` (default 4000) ([spec 059](spec/059-soiguru-places-speed/spec.md)).
 - `spec-058` `apps/web/app/api/soiguru` `apps/web/app/[locale]/return` `apps/web/app/[locale]/auth` `apps/web/components/soiguru/auth-card.tsx` `apps/web/proxy.ts`: accounts for the public site: who-is-signed-in and saved-places endpoints with credentialed CORS for soiguru.com, `/return?to=` back to the public page after sign-in or sign-out, SoiGuru look for the sign-in, register and sign-out screens (English and Thai), middleware keeps `/auth/signout` and honours safe callbacks for signed-in visitors ([spec 058](spec/058-soiguru-accounts/spec.md), PR #14).
 
 ## 2026-10-17
