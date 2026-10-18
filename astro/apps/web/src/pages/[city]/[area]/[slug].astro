@@ -79,6 +79,12 @@ const more = listing.images.length - shown.length;
 const mapsSearch = mapsSearchUrl([listing.name, listing.address, area?.name, city.name]);
 // Without coordinates: Google's own embedded map for the same search shows the pin (no key needed).
 const mapsEmbed = mapsEmbedUrl([listing.name, listing.address, area?.name, city.name]);
+// Without an address (most listings): the area and city, and the copy icon copies the name, area
+// and GPS coordinates (useful for a taxi or Grab driver).
+const whereText = [area?.name, city.name].filter((v, i, all) => v && all.indexOf(v) === i).join(', ');
+const copyText = listing.address
+    ? listing.address
+    : `${[listing.name, whereText].filter(Boolean).join(', ')}${listing.geo ? ` (${listing.geo.lat}, ${listing.geo.lng})` : ''}`;
 const appleMaps = appleMapsUrl(listing.geo, [listing.name, listing.address, area?.name, city.name]);
 const trail: [string, string][] = [
     [config.company_name, '/'],
@@ -221,13 +227,13 @@ const trail: [string, string][] = [
                                     height="240"
                                 ></iframe>
                             )}
-                            {listing.address && (
+                            {(listing.address || whereText) && (
                                 <p class="sg-lp-address sg-addr-row">
-                                    <span>{listing.address}</span>
-                                    <button type="button" class="sg-copy-btn" data-copy={listing.address} aria-label="Copy address" title="Copy address" data-umami-event="copy-address">
+                                    <span>{listing.address ?? whereText}</span>
+                                    <button type="button" class="sg-copy-btn" data-copy={copyText} aria-label={listing.address ? 'Copy address' : 'Copy location'} title={listing.address ? 'Copy address' : 'Copy location'} data-umami-event="copy-address">
                                         <Icon name="copy" class="tkg-i-16 sg-copy-i" />
                                         <Icon name="check" class="tkg-i-16 sg-copied-i" />
-                                        <span class="sg-visually-hidden" data-copy-label>Copy address</span>
+                                        <span class="sg-visually-hidden" data-copy-label>{listing.address ? 'Copy address' : 'Copy location'}</span>
                                     </button>
                                 </p>
                             )}

@@ -3,6 +3,10 @@ title: "Change Log"
 sidebar_label: "Change Log"
 ---
 
+## 2026-10-18 — Copy icon also without an address
+
+138 of 169 listings have no address, so their Location card had no copy icon. They now show the area and city ("Ao Nang, Krabi") with the same icon, which copies the name, area and GPS coordinates ("Pad Thai, Ao Nang, Krabi (8.034045, 98.819141)"), handy for a taxi or Grab driver.
+
 ## 2026-10-18 — Google photos faster, and on listing cards
 
 Listing page: the Google photo list is preloaded in `<head>`, a quiet placeholder grid shows while it loads, photos fade in at 800px (big) and 480px (small) instead of the drawing jumping away; the drawing comes only when there are no photos. Photo cards without a photo (city home "Open now", nearby, similar, results) get their first Google photo once they scroll near the screen, asked for together (`/api/places/cards`, owner app spec 059), with the author credit. The Worker passes `/api/places/cards` through like the other Places routes. Photos are never stored; place IDs are (`google_place_id` on 138 of 169 listings, data branch 5c0a7a4).
