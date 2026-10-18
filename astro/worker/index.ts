@@ -5,6 +5,8 @@
  *
  * - `/api/places/photos/<slug>` → the owner app's photo list, with each photo link rewritten
  *   to `/api/places/photo?…` on this site.
+ * - `/api/places/cards?slugs=a,b` → the first photo per listing card (spec 059), links rewritten
+ *   the same way.
  * - `/api/places/photo?name=…&sig=…` → the image bytes from the owner app.
  *
  * Nothing is stored (Google's terms): browsers may keep an answer for 5 minutes.
@@ -47,6 +49,29 @@ async function photoList(slug: string, owner: string): Promise<Response> {
     return json({ photos });
 }
 
+/** An owner-app photo link as a link on this site, or null when it is not one. */
+function localPhoto<T extends PlacesPhoto>(p: T): T | null {
+    try {
+        const u = new URL(p.url);
+        return u.pathname === '/api/places/photo' ? { ...p, url: `/api/places/photo${u.search}` } : null;
+    } catch {
+        return null;
+    }
+}
+
+async function cardPhotos(search: string, owner: string): Promise<Response> {
+    const slugs = (new URLSearchParams(search).get('slugs') ?? '')
+        .split(',')
+        .filter((s) => /^[a-z0-9-]{1,120}$/.test(s))
+        .slice(0, 12);
+    if (slugs.length === 0) return json({ photos: {} }, 400);
+    const res = await fetch(`${owner}/api/places/cards?slugs=${slugs.join(',')}`, { headers: { Accept: 'application/json' } });
+    if (!res.ok) return json({ photos: {} }, res.status === 404 ? 404 : 502);
+    const body = (await res.json()) as { photos?: Record<string, PlacesPhoto | null> };
+    const photos = Object.fromEntries(slugs.map((s) => [s, body.photos?.[s] ? localPhoto(body.photos[s]) : null]));
+    return json({ photos });
+}
+
 async function photo(search: string, owner: string): Promise<Response> {
     const res = await fetch(`${owner}/api/places/photo${search}`);
     const type = res.headers.get('content-type') ?? '';
@@ -61,6 +86,7 @@ export default {
         try {
             if (url.pathname.startsWith('/api/places/photos/')) return await photoList(url.pathname.slice('/api/places/photos/'.length), owner);
             if (url.pathname === '/api/places/photo') return await photo(url.search, owner);
+            if (url.pathname === '/api/places/cards') return await cardPhotos(url.search, owner);
         } catch {
             return json({ photos: [] }, 502);
         }

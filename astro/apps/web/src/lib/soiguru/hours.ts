@@ -34,6 +34,12 @@ const DAY_SHORT: Record<Lang, Record<DayKey, string>> = {
     th: { mon: 'จ.', tue: 'อ.', wed: 'พ.', thu: 'พฤ.', fri: 'ศ.', sat: 'ส.', sun: 'อา.' }
 };
 
+/** Full day names for the listing page's per-day hours table. */
+const DAY_LONG: Record<Lang, Record<DayKey, string>> = {
+    en: { mon: 'Monday', tue: 'Tuesday', wed: 'Wednesday', thu: 'Thursday', fri: 'Friday', sat: 'Saturday', sun: 'Sunday' },
+    th: { mon: 'วันจันทร์', tue: 'วันอังคาร', wed: 'วันพุธ', thu: 'วันพฤหัสบดี', fri: 'วันศุกร์', sat: 'วันเสาร์', sun: 'วันอาทิตย์' }
+};
+
 /** Full English day names, as schema.org `dayOfWeek` expects. */
 export const DAY_SCHEMA: Record<DayKey, string> = {
     mon: 'Monday',
@@ -116,8 +122,9 @@ export interface HoursRow {
  * Today-first ordering is left to the browser (today is not known at build time);
  * it marks the row whose `days` contain today.
  */
-export function hoursRows(hours: WeeklyHours, options: { merge?: boolean } = {}): HoursRow[] {
+export function hoursRows(hours: WeeklyHours, options: { merge?: boolean; longNames?: boolean } = {}): HoursRow[] {
     const merge = options.merge ?? true;
+    const names = options.longNames ? DAY_LONG : DAY_SHORT;
     const rows: HoursRow[] = [];
     const key = (r: TimeRange[]) => r.map((x) => `${x.open}-${x.close}`).join(',');
     for (const day of DAY_KEYS) {
@@ -142,8 +149,8 @@ export function hoursRows(hours: WeeklyHours, options: { merge?: boolean } = {})
     for (const row of rows) {
         const first = row.days[0]!;
         const end = row.days[row.days.length - 1]!;
-        row.label = first === end ? DAY_SHORT.en[first] : `${DAY_SHORT.en[first]}–${DAY_SHORT.en[end]}`;
-        row.labelTh = first === end ? DAY_SHORT.th[first] : `${DAY_SHORT.th[first]}–${DAY_SHORT.th[end]}`;
+        row.label = first === end ? names.en[first] : `${names.en[first]}–${names.en[end]}`;
+        row.labelTh = first === end ? names.th[first] : `${names.th[first]}–${names.th[end]}`;
     }
     return rows;
 }
@@ -244,6 +251,49 @@ export function openStatus(hours: WeeklyHours | null, clock: LocalClock, lang: L
     const at = formatMinutes(next.start);
     if (next.start - nowWeek <= 12 * 60) return { state: 'soon', text: t.opensAt(at), isOpen: false };
     return { state: 'closed', text: t.closedOpens(DAY_SHORT[lang][next.day], at), isOpen: false };
+}
+
+/**
+ * Minutes until the place closes (open now) or opens (closed now), for "Closes in 1h 12m"
+ * under today's row. `null` without hours; `allDay` when it never closes.
+ */
+export function nextChange(
+    hours: WeeklyHours | null,
+    clock: LocalClock
+): { isOpen: boolean; minutes: number; allDay: boolean } | null {
+    if (!hours || DAY_KEYS.every((d) => hours[d].length === 0)) return null;
+    const nowWeek = DAY_KEYS.indexOf(clock.day) * 1440 + clock.minutes;
+    const spans: { start: number; end: number }[] = [];
+    DAY_KEYS.forEach((day, i) => {
+        for (const r of hours[day]) {
+            const start = i * 1440 + r.open;
+            const end = i * 1440 + r.close;
+            spans.push({ start, end }, { start: start - MINUTES_PER_WEEK, end: end - MINUTES_PER_WEEK });
+            spans.push({ start: start + MINUTES_PER_WEEK, end: end + MINUTES_PER_WEEK });
+        }
+    });
+    const current = spans.find((s) => s.start <= nowWeek && nowWeek < s.end);
+    if (current) {
+        // Follow ranges that continue straight on (23:00–24:00 then 00:00–02:00).
+        let end = current.end;
+        for (let guard = 0; guard < 14; guard++) {
+            const nextSpan = spans.find((s) => s.start === end);
+            if (!nextSpan) break;
+            end = nextSpan.end;
+        }
+        if (end - nowWeek >= MINUTES_PER_WEEK) return { isOpen: true, minutes: 0, allDay: true };
+        return { isOpen: true, minutes: end - nowWeek, allDay: false };
+    }
+    const next = spans.filter((s) => s.start > nowWeek).sort((a, b) => a.start - b.start)[0];
+    return next ? { isOpen: false, minutes: next.start - nowWeek, allDay: false } : null;
+}
+
+/** "1h 12m", "45m", "3h". */
+export function formatDuration(minutes: number): string {
+    const h = Math.floor(minutes / 60);
+    const m = minutes % 60;
+    if (h === 0) return `${m}m`;
+    return m === 0 ? `${h}h` : `${h}h ${m}m`;
 }
 
 /** Status sentences per language (design README: "always the word plus the time"). */

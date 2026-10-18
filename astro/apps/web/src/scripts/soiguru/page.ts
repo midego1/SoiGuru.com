@@ -16,7 +16,7 @@
  * Other scripts listen for `sg:refresh` (statuses recomputed) and `sg:location`.
  */
 
-import { localClock, openStatus, parseHours, type Lang } from '../../lib/soiguru/hours';
+import { formatDuration, localClock, nextChange, openStatus, parseHours, type Lang } from '../../lib/soiguru/hours';
 import { distanceMetres, formatDistance, walkingMinutes, type LatLng } from '../../lib/soiguru/geo';
 
 const LANG_KEY = 'sg-lang';
@@ -101,6 +101,25 @@ function refreshStatuses(): void {
             if (label) label.hidden = !today;
         });
         if (todayAt > 0) for (const row of [...rows.slice(todayAt), ...rows.slice(0, todayAt)]) row.parentElement?.append(row);
+        // "Closes in 1h 12m" / "Opens in 45m" under today's day name.
+        let change = null;
+        try {
+            change = nextChange(parseHours(JSON.parse(table.dataset['hours'] ?? 'null')), clock);
+        } catch {
+            change = null;
+        }
+        rows.forEach((row, i) => {
+            const next = row.querySelector<HTMLElement>('[data-today-next]');
+            if (!next) return;
+            const show = i === todayAt && change !== null && !change.allDay && change.minutes <= 24 * 60;
+            next.hidden = !show;
+            if (!show || !change) return;
+            const d = formatDuration(change.minutes);
+            next.textContent = change.isOpen
+                ? lang === 'th' ? `ปิดในอีก ${d}` : `Closes in ${d}`
+                : lang === 'th' ? `เปิดในอีก ${d}` : `Opens in ${d}`;
+            next.classList.toggle('is-soon', change.isOpen && change.minutes <= 60);
+        });
     }
     // Local time line on the city home.
     for (const el of document.querySelectorAll<HTMLElement>('[data-local-time]')) {
@@ -123,7 +142,12 @@ function refreshUpdated(now: Date): void {
     for (const el of document.querySelectorAll<HTMLElement>('[data-updated-at]')) {
         const at = Date.parse(el.dataset['updatedAt'] ?? '');
         if (!Number.isFinite(at)) continue;
-        const days = Math.round((at - now.getTime()) / 86_400_000);
+        // Calendar days in the visitor's time zone, so "yesterday" matches the date shown.
+        const midnight = (t: number): number => {
+            const d = new Date(t);
+            return new Date(d.getFullYear(), d.getMonth(), d.getDate()).getTime();
+        };
+        const days = Math.round((midnight(at) - midnight(now.getTime())) / 86_400_000);
         const when = Math.abs(days) < 30 ? rtf.format(days, 'day') : rtf.format(Math.round(days / 30), 'month');
         const who =
             el.dataset['updatedBy'] === 'owner'
