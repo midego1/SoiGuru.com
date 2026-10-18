@@ -133,7 +133,8 @@ function refreshUpdated(now: Date): void {
                 : lang === 'th'
                   ? 'อัปเดต'
                   : 'Updated';
-        el.textContent = `${who} ${when}`;
+        const date = new Intl.DateTimeFormat(lang === 'th' ? 'th-TH' : 'en-GB', { day: 'numeric', month: 'short', year: 'numeric' }).format(at);
+        el.textContent = `${who} ${when} · ${date}`;
     }
 }
 
