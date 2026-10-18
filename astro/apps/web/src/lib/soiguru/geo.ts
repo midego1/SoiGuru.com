@@ -60,10 +60,31 @@ export function directionsUrl(point: LatLng): string {
     return `https://www.google.com/maps/dir/?api=1&destination=${point.lat},${point.lng}`;
 }
 
+/** "Name, address, area, city" without parts already named earlier (an address often ends in the area). */
+function placeQuery(parts: (string | undefined)[]): string {
+    const out: string[] = [];
+    for (const p of parts) {
+        if (p && !out.some((o) => o.toLowerCase().includes(p.toLowerCase()))) out.push(p);
+    }
+    return out.join(', ');
+}
+
 /** Google Maps search for a place without coordinates (name, address, area). */
 export function mapsSearchUrl(parts: (string | undefined)[]): string {
     const url = new URL('https://www.google.com/maps/search/');
     url.searchParams.set('api', '1');
-    url.searchParams.set('query', parts.filter(Boolean).join(', '));
+    url.searchParams.set('query', placeQuery(parts));
+    return url.toString();
+}
+
+/**
+ * Embedded Google map (pin on the search result) for a place without coordinates. Google
+ * content stays on a Google map, and no coordinates are stored.
+ */
+export function mapsEmbedUrl(parts: (string | undefined)[]): string {
+    const url = new URL('https://maps.google.com/maps');
+    url.searchParams.set('q', placeQuery(parts));
+    url.searchParams.set('z', '16');
+    url.searchParams.set('output', 'embed');
     return url.toString();
 }
