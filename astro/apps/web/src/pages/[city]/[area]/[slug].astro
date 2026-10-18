@@ -97,6 +97,7 @@ const trail: [string, string][] = [
     city={city}
     jsonLd={[localBusinessJsonLd(listing, siteUrl), breadcrumbJsonLd(siteUrl, trail)]}
 >
+    {placesApi && <link slot="head" rel="preload" as="fetch" href={placesApi} crossorigin="anonymous" />}
     <SiteHeader city={city} search />
 
     <main class="sg-wrap sg-lp-wrap">
@@ -125,11 +126,21 @@ const trail: [string, string][] = [
         <div class="sg-lp">
             <div class="sg-lp-photos">
             {
-                shown.length === 0 && (
-                    <div class="sg-pgrid sg-pgrid-art" data-count="1" data-places-photos={placesApi} data-places-name={listing.name}>
-                        <CategoryArt category={category} size="lg" />
-                    </div>
-                )
+                shown.length === 0 &&
+                    (placesApi ? (
+                        <div class="sg-pgrid sg-pgrid-wait" data-count="3" data-places-photos={placesApi} data-places-name={listing.name} aria-busy="true">
+                            <div class="sg-pskel" />
+                            <div class="sg-pskel" />
+                            <div class="sg-pskel" />
+                            <template data-places-fallback>
+                                <CategoryArt category={category} size="lg" />
+                            </template>
+                        </div>
+                    ) : (
+                        <div class="sg-pgrid sg-pgrid-art" data-count="1">
+                            <CategoryArt category={category} size="lg" />
+                        </div>
+                    ))
             }
             {
                 shown.length > 0 && (

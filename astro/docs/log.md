@@ -3,6 +3,10 @@ title: "Change Log"
 sidebar_label: "Change Log"
 ---
 
+## 2026-10-18 — Google photos faster, and on listing cards
+
+Listing page: the Google photo list is preloaded in `<head>`, a quiet placeholder grid shows while it loads, photos fade in at 800px (big) and 480px (small) instead of the drawing jumping away; the drawing comes only when there are no photos. Photo cards without a photo (city home "Open now", nearby, similar, results) get their first Google photo once they scroll near the screen, asked for together (`/api/places/cards`, owner app spec 059), with the author credit. Photos are never stored; place IDs will be (`google_place_id`).
+
 ## 2026-10-18 — Hours table: full day names, "Closes in" under today
 
 The listing page's hours table writes the days out (Monday … Sunday, Thai วันจันทร์ …) and shows "Closes in 1h 12m" or "Opens in 45m" in small type under today's day (amber in the last hour; `nextChange()` and `formatDuration()` in `lib/soiguru/hours.ts`, refreshed every minute). "Updated … ago" now counts calendar days in the visitor's time zone, so it matches the date shown.

@@ -3571,3 +3571,79 @@ html[data-lang='en'] .sg-sf-lang[data-lang-set='en'] {
 .sg-today-next.is-soon {
     color: var(--soon);
 }
+
+/* ---------- Google photos: listing placeholder while loading, fade-in, card photos ---------- */
+.sg-pgrid-wait {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+}
+.sg-pskel {
+    min-height: 0;
+    background: linear-gradient(100deg, var(--surface-200) 30%, var(--surface-100) 50%, var(--surface-200) 70%);
+    background-size: 300% 100%;
+    animation: sg-shimmer 1.4s ease-in-out infinite;
+}
+.sg-pgrid-wait > .sg-pskel:first-child {
+    grid-column: span 2;
+    grid-row: span 2;
+}
+@media (min-width: 720px) {
+    .sg-pgrid-wait {
+        grid-template-columns: repeat(3, minmax(0, 1fr));
+    }
+}
+@keyframes sg-shimmer {
+    from {
+        background-position: 100% 0;
+    }
+    to {
+        background-position: 0 0;
+    }
+}
+@keyframes sg-fade-in {
+    from {
+        opacity: 0;
+    }
+    to {
+        opacity: 1;
+    }
+}
+.sg-pphoto img {
+    animation: sg-fade-in 0.35s ease-out;
+}
+@media (prefers-reduced-motion: reduce) {
+    .sg-pskel,
+    .sg-pphoto img,
+    .sg-tcard-gphoto {
+        animation: none;
+    }
+}
+/* cards: the photo covers the drawing once it has loaded */
+.sg-tcard-photo {
+    overflow: hidden;
+}
+.sg-tcard-photo img.sg-tcard-gphoto {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    animation: sg-fade-in 0.35s ease-out;
+}
+.sg-tcard-credit {
+    position: absolute;
+    left: 6px;
+    bottom: 6px;
+    max-width: calc(100% - 12px);
+    padding: 2px 6px;
+    border-radius: var(--radius-pill);
+    background: var(--overlay);
+    color: #ffffff;
+    font-size: 11px;
+    line-height: 1.3;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+.sg-tcard-photo .sg-flag {
+    z-index: 1;
+}

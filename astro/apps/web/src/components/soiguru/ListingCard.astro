@@ -54,7 +54,7 @@ const dataAttrs = {
 {
     tile ? (
         <a class="sg-tcard" href={listing.url} hidden={hidden} {...dataAttrs}>
-            <div class="sg-tcard-photo">
+            <div class="sg-tcard-photo" data-places-card={listing.images[0] ? undefined : listing.slug}>
                 {listing.images[0] ? (
                     <img src={listing.images[0]} alt="" width="400" height="240" loading="lazy" decoding="async" />
                 ) : (
