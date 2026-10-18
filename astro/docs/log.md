@@ -3,6 +3,10 @@ title: "Change Log"
 sidebar_label: "Change Log"
 ---
 
+## 2026-10-18 — Listing page: photos in the main column, map first in the side column; account in the Menu
+
+From 960px the listing photos sit in the main column (one big, two stacked) and the side column runs from the top: Location with the map and pin first (Directions button, distance once known; "Find on Google Maps" for the 14 listings without coordinates), then Opening hours and the claim card. The phone Menu sheet now shows the account panel (Sign in, Create account) instead of only "Owner login"; the header menu drops its duplicate owner button. `mapsSearchUrl()` in `lib/soiguru/geo.ts`.
+
 ## 2026-10-18 — Account menu: profile button, Account tab, saved places in the account
 
 "Owner login" in the header becomes an account menu: a profile button (960px+) and an Account tab on phones (replacing the Owner tab, opens a sheet), both with `AccountPanel`. Signed out: Sign in, Create account, Saved places, Business owner login. Signed in (asked from the owner app, `GET /api/soiguru/me`): initial and name, Saved places, My business or Claim your business, Account settings, Admin for admins, Sign out. Account links return to the current page. Saved places merge into the account on the first visit after signing in and every heart tap is sent to it (`scripts/soiguru/account.ts`, `saved.ts` emits `sg:saved-toggle`). New `accountUrl()` (works.yml `account_url`, else the `owner_url` origin) and a `store` icon. The sign-in, register and sign-out screens on the owner app now use the SoiGuru look (spec 058 there). See `.specify/features/soiguru-design.md` (Accounts). PR #15 (owner app: PR #14).

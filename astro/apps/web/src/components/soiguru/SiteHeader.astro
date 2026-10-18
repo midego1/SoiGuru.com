@@ -6,7 +6,7 @@
  * "List your business" button.
  *
  * Responsive: phones show the logo, city, language and a menu button (the rest moves into the
- * menu panel; the bottom tabs stay); 720px adds "List your business"; 960px adds "Owner login";
+ * menu panel; the bottom tabs stay); 720px adds "List your business"; 960px adds the account menu;
  * 1100px shows the links in the bar and drops the menu. The account
  * menu (`AccountPanel`) shows from 960px; phones reach it from the Account tab. The city picker and the menu are
  * `<details>` disclosures, so they work without a script (page.ts closes them on outside
@@ -167,7 +167,7 @@ const account = accountUrl(config);
                             <LanguageToggle />
                         </div>
                         {
-                            owner && (
+                            owner && !account && (
                                 <a class="sg-btn sg-btn-secondary" href={owner}>
                                     <Icon name="user" />
                                     <span data-th="เข้าสู่ระบบเจ้าของร้าน">Owner login</span>

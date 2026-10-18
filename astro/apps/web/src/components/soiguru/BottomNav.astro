@@ -93,9 +93,17 @@ const tabs = ownerHref || account ? 5 : 4;
         <p class="sg-pop-title" data-th="ภาษา">Language</p>
         <LanguageToggle />
     </div>
+    {
+        account && (
+            <div class="sg-msheet-block">
+                <p class="sg-pop-title" data-th="บัญชี">Account</p>
+                <AccountPanel account={account} city={city} owner={ownerHref} claim={claimUrl(data.config, city)} />
+            </div>
+        )
+    }
     <div class="sg-msheet-block sg-msheet-owner">
         {
-            ownerHref && (
+            ownerHref && !account && (
                 <a class="sg-btn sg-btn-secondary sg-btn-lg sg-btn-block" href={ownerHref} data-umami-event="owner-login">
                     <Icon name="user" />
                     <span data-th="เข้าสู่ระบบเจ้าของร้าน">Owner login</span>
