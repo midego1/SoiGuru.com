@@ -214,6 +214,7 @@ if (root) {
         countOpen.textContent = allShown ? `${pool.length} ${noun}` : text.openNow(open.length);
         countTotal.textContent = state.bounds ? text.inArea(pool.length, noun) : allShown ? text.inWhere(where) : text.ofTotal(pool.length, noun, where);
         countShort.textContent = text.openNow(open.length);
+        for (const el of document.querySelectorAll<HTMLElement>('[data-f-open-count]')) el.textContent = String(open.length);
         empty.hidden = pool.length > 0 && visible.length > 0;
         showMore.hidden = visible.length <= state.limit;
         showMore.textContent = text.showMore(visible.length - state.limit);
@@ -255,6 +256,13 @@ if (root) {
         }
         for (const b of document.querySelectorAll<HTMLButtonElement>('[data-f-rating]'))
             b.setAttribute('aria-checked', String(Number(b.dataset['fRating']) === state.ratingMin));
+        // Desktop sort chip beside the count line mirrors the toolbar select.
+        for (const sel of document.querySelectorAll<HTMLSelectElement>('[data-f-sort-select]')) {
+            sel.value = state.sort;
+            const lbl = sel.parentElement?.querySelector<HTMLElement>('[data-sort-label-desk]');
+            if (lbl) lbl.textContent = sel.selectedOptions[0]?.textContent ?? 'Top rated';
+        }
+        for (const b of document.querySelectorAll<HTMLButtonElement>('[data-f-open]')) b.setAttribute('aria-checked', String(state.open));
         renderPills();
         for (const b of document.querySelectorAll<HTMLButtonElement>('[data-f-amenity]'))
             b.setAttribute('aria-pressed', String(state.amenities.has(b.dataset['fAmenity'] ?? '')));
@@ -320,6 +328,10 @@ if (root) {
             } catch {
                 // Fine without.
             }
+            return;
+        }
+        if (target?.closest('[data-f-open]')) {
+            openBtn.click();
             return;
         }
         const price = target?.closest<HTMLElement>('[data-f-price]');
@@ -547,6 +559,11 @@ if (root) {
         writeUrl();
         render();
     });
+    for (const sel of document.querySelectorAll<HTMLSelectElement>('[data-f-sort-select]'))
+        sel.addEventListener('change', () => {
+            sortSelect.value = sel.value;
+            sortSelect.dispatchEvent(new Event('change'));
+        });
     sortSelect.addEventListener('change', async () => {
         state.sort = sortSelect.value;
         writeUrl();

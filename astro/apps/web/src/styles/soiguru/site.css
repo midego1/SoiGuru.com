@@ -3150,3 +3150,37 @@ html[data-lang='en'] .sg-sf-lang[data-lang-set='en'] {
         margin-top: 16px;
     }
 }
+
+/* ---------- desktop: open now, area and sort live in the Filters card; the toolbar keeps
+   List | Map. Phones keep the chips (no sidebar there), so the sheet hides the Sort and Open
+   sections. ---------- */
+.sg-fsec-desk {
+    display: none;
+}
+@media (min-width: 960px) {
+    .sg-page-wide .sg-results[data-view='list'] > .tkg-filterbar > [data-filter-open],
+    .sg-page-wide .sg-results[data-view='list'] > .tkg-filterbar > [data-area-chip],
+    .sg-page-wide .sg-results[data-view='list'] > .tkg-filterbar > .sg-chip-select {
+        display: none;
+    }
+    .sg-rside .sg-fsec-desk {
+        display: block;
+    }
+}
+/* sort chip beside the count line (desktop list view only) */
+.sg-sort-desk {
+    display: none;
+}
+@media (min-width: 960px) {
+    .sg-page-wide .sg-results[data-view='list'] .tkg-section-h {
+        align-items: center;
+    }
+    .sg-page-wide .sg-results[data-view='list'] .sg-sort-desk {
+        display: inline-flex;
+        margin-left: auto;
+    }
+    .sg-page-wide .sg-results[data-view='list'] .sg-sort-desk > span:first-child {
+        color: var(--ink-muted);
+        font-weight: 500;
+    }
+}

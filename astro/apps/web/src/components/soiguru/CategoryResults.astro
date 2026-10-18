@@ -236,6 +236,16 @@ const center = area?.geo ?? city.geo ?? pins[0] ?? { lat: 13.75, lng: 100.5 };
                     <span data-count-open>{listings.length} {noun}</span>
                     <small data-count-total>in {area?.name ?? city.name}</small>
                 </h2>
+                <label class="tkg-chip sg-chip-select sg-sort-desk">
+                    <span data-th="เรียงตาม">Sort:</span>
+                    <span data-sort-label-desk>Top rated</span>
+                    <Icon name="chevron-down" />
+                    <select data-f-sort-select aria-label="Sort">
+                        <option value="rating" data-th="คะแนนสูงสุด">Top rated</option>
+                        <option value="nearest" data-th="ใกล้ที่สุด">Nearest</option>
+                        <option value="updated" data-th="อัปเดตล่าสุด">Recently updated</option>
+                    </select>
+                </label>
                 <button type="button" class="tkg-btn tkg-btn-ghost tkg-btn-sm" data-clear-bounds hidden>
                     <Icon name="close" /><span data-th="ทั้งหมด">Whole map</span>
                 </button>
