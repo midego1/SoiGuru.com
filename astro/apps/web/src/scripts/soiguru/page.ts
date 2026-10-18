@@ -264,3 +264,39 @@ refreshStatuses();
 void locateIfGranted();
 // Statuses change with the clock; once a minute is plenty.
 setInterval(refreshStatuses, 60_000);
+
+/** "Copy address" (`[data-copy]`): copies the text and says "Copied" for two seconds. */
+document.addEventListener('click', (event) => {
+    const btn = event.target instanceof Element ? event.target.closest<HTMLElement>('[data-copy]') : null;
+    if (!btn) return;
+    const text = btn.dataset['copy'] ?? '';
+    const label = btn.querySelector<HTMLElement>('[data-copy-label]');
+    const done = (): void => {
+        if (!label) return;
+        const th = document.documentElement.dataset['lang'] === 'th';
+        const before = label.textContent;
+        label.textContent = th ? 'คัดลอกแล้ว' : 'Copied';
+        btn.classList.add('is-copied');
+        window.setTimeout(() => {
+            label.textContent = before;
+            btn.classList.remove('is-copied');
+        }, 2000);
+    };
+    const fallback = (): void => {
+        const area = document.createElement('textarea');
+        area.value = text;
+        area.setAttribute('readonly', '');
+        area.style.position = 'fixed';
+        area.style.opacity = '0';
+        document.body.append(area);
+        area.select();
+        try {
+            document.execCommand('copy');
+            done();
+        } finally {
+            area.remove();
+        }
+    };
+    if (navigator.clipboard?.writeText) navigator.clipboard.writeText(text).then(done, fallback);
+    else fallback();
+});

@@ -3,6 +3,10 @@ title: "Change Log"
 sidebar_label: "Change Log"
 ---
 
+## 2026-10-18 — Location card: Google Maps, Apple Maps, Copy address
+
+The Location card offers Google Maps and Apple Maps side by side (directions to the point, or a search for name and address without coordinates) and a Copy address button that says "Copied" for two seconds. `appleMapsUrl()` in `lib/soiguru/geo.ts`, `copy` icon, `[data-copy]` handler in `scripts/soiguru/page.ts`.
+
 ## 2026-10-18 — Listing page: a map for places without coordinates
 
 The 14 listings without coordinates show Google's embedded map for their name and address in the Location card (lazy iframe, no key), so they get a pin too. Coordinates from Google are not stored (Maps terms allow caching them for 30 days at most and only on Google maps); listings with coordinates keep the OpenStreetMap static map. `mapsEmbedUrl()` in `lib/soiguru/geo.ts`.
