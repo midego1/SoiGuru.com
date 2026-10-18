@@ -19,7 +19,7 @@ import { getAuthConfig } from '@/lib/auth/config';
 import { getRuntimeAuthSecret } from '@/lib/auth/auth-secret';
 import { updateSession as supabaseUpdate } from '@/lib/auth/supabase/middleware';
 import { getToken } from 'next-auth/jwt';
-import { createSafeCallbackUrl } from '@/lib/auth/validate-callback-url';
+import { createSafeCallbackUrl, isValidCallbackUrl } from '@/lib/auth/validate-callback-url';
 import { DEFAULT_LOCALE, type Locale } from '@/lib/constants';
 import { isSupportedLocale } from '@/lib/i18n/locale-names';
 
@@ -549,11 +549,20 @@ async function handle(req: NextRequest) {
 		}
 	}
 
-	// Redirect authenticated users away from /auth/* pages (signin, register, etc.)
-	if (pathWithoutLocale.startsWith('/auth/')) {
+	// Redirect authenticated users away from /auth/* pages (signin, register, etc.).
+	// `/auth/signout` is for signed-in users (SoiGuru account menu, spec 058), so it stays.
+	if (pathWithoutLocale.startsWith('/auth/') && !pathWithoutLocale.startsWith('/auth/signout')) {
 		if (cfg.provider === 'next-auth') {
 			const token = (await decodeAuthJsToken(req)) as import('next-auth/jwt').JWT | null;
 			if (token) {
+				// Already signed in: honour a safe relative callback (e.g. SoiGuru's
+				// `/return?to=…`, spec 058), else the dashboard as before.
+				const callback = req.nextUrl.searchParams.get('callbackUrl');
+				if (callback && isValidCallbackUrl(callback) && !/[\\\x00-\x20]/.test(callback)) {
+					const back = NextResponse.redirect(new URL(callback, req.nextUrl.origin));
+					intlResponse.cookies.getAll().forEach((c) => back.cookies.set(c));
+					return back;
+				}
 				const target = token.isAdmin ? '/admin' : '/client/dashboard';
 				const url = req.nextUrl.clone();
 				url.pathname = `${localePrefix}${target}`;

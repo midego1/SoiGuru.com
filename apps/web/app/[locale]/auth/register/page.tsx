@@ -1,4 +1,4 @@
-import { AuthForm } from "../components/auth-form";
+import { SoiGuruAuthCard } from "@/components/soiguru/auth-card";
 import { Metadata } from "next";
 import { getTranslations } from "next-intl/server";
 import { generateHreflangAlternates, getLocalizedUrl } from "@/lib/seo/hreflang";
@@ -35,6 +35,8 @@ export async function generateMetadata({
   };
 }
 
-export default function RegisterPage() {
-  return <AuthForm form="signup" />;
+/** SoiGuru sign-in card (spec 058); the template's `AuthForm` stays for the admin sign-in. */
+export default async function RegisterPage({ params }: { params: Promise<{ locale: string }> }) {
+  const { locale } = await params;
+  return <SoiGuruAuthCard form="signup" locale={locale} />;
 }

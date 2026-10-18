@@ -1,0 +1,221 @@
+/*
+ * SoiGuru account screens (spec 058): slim bar, sand ground, one white card in the
+ * SoiGuru tokens (app/soiguru-theme.css). The template form inside keeps its markup; the
+ * rules below only tune spacing, the primary button and the social buttons.
+ */
+.sg-auth {
+	--a-surface: var(--sg-surface, #ffffff);
+	--a-ground: var(--sg-surface-100, #f4f5f2);
+	--a-ink: var(--sg-ink, #14201f);
+	--a-muted: var(--sg-ink-muted, #5a6665);
+	--a-line: var(--sg-line, #dde2df);
+	--a-sea: var(--sg-sea, #0a6b73);
+	--a-sea-deep: var(--sg-sea-deep, #064a50);
+	--a-sea-tint: var(--sg-sea-tint, #e2f1f2);
+	--a-sun: var(--sg-sun, #f2a33a);
+	min-height: 100dvh;
+	display: flex;
+	flex-direction: column;
+	background: var(--a-ground);
+	color: var(--a-ink);
+	font-family: var(--sg-font, var(--font-plex-sans), var(--font-plex-thai), system-ui, sans-serif);
+}
+.dark .sg-auth {
+	--a-surface: var(--sg-surface, #16201f);
+	--a-ground: var(--sg-surface-100, #0e1615);
+}
+
+.sg-auth-bar {
+	display: flex;
+	align-items: center;
+	justify-content: space-between;
+	gap: 12px;
+	min-height: 64px;
+	padding: 0 max(16px, calc((100% - 1120px) / 2));
+	background: var(--a-surface);
+	border-bottom: 1px solid var(--a-line);
+}
+.sg-auth-brand {
+	display: inline-flex;
+	align-items: center;
+	gap: 10px;
+	font-weight: 700;
+	font-size: 20px;
+	color: var(--a-ink);
+	text-decoration: none;
+}
+.sg-auth-back {
+	display: inline-flex;
+	align-items: center;
+	gap: 4px;
+	min-height: 44px;
+	padding: 0 4px;
+	font-size: 15px;
+	font-weight: 500;
+	color: var(--a-sea);
+	text-decoration: none;
+}
+.sg-auth-back:hover {
+	text-decoration: underline;
+	text-underline-offset: 3px;
+}
+
+.sg-auth-main {
+	flex: 1;
+	display: flex;
+	justify-content: center;
+	align-items: flex-start;
+	padding: 32px 16px 48px;
+}
+@media (min-width: 720px) {
+	.sg-auth-main {
+		padding-top: 56px;
+	}
+}
+
+.sg-auth-card {
+	width: 100%;
+	max-width: 440px;
+	background: var(--a-surface);
+	border: 1px solid var(--a-line);
+	border-top: 4px solid var(--a-sea);
+	border-radius: var(--sg-radius-lg, 16px);
+	padding: 28px 24px 24px;
+	box-shadow:
+		0 1px 2px rgb(20 32 31 / 0.04),
+		0 8px 24px rgb(20 32 31 / 0.06);
+}
+@media (min-width: 480px) {
+	.sg-auth-card {
+		padding: 32px 32px 28px;
+	}
+}
+.sg-auth-title {
+	margin: 0 0 6px;
+	font-size: 24px;
+	line-height: 1.25;
+	font-weight: 700;
+	letter-spacing: -0.01em;
+	color: var(--a-ink);
+}
+.sg-auth-lead {
+	margin: 0 0 20px;
+	font-size: 15px;
+	line-height: 1.5;
+	color: var(--a-muted);
+}
+.sg-auth-perks {
+	list-style: none;
+	margin: 0 0 20px;
+	padding: 12px 14px;
+	display: grid;
+	gap: 8px;
+	background: var(--a-sea-tint);
+	border-radius: var(--sg-radius-md, 10px);
+}
+.sg-auth-perks li {
+	display: flex;
+	align-items: flex-start;
+	gap: 8px;
+	font-size: 14px;
+	line-height: 1.4;
+	color: var(--a-ink);
+}
+.sg-auth-perks svg {
+	flex: none;
+	color: var(--a-sea);
+	margin-top: 1px;
+}
+.sg-auth-note {
+	margin: 20px 0 0;
+	padding-top: 16px;
+	border-top: 1px solid var(--a-line);
+	font-size: 13px;
+	line-height: 1.45;
+	color: var(--a-muted);
+	text-align: center;
+}
+
+/* The template form inside the card */
+.sg-auth-form label {
+	font-size: 14px;
+	color: var(--a-ink);
+}
+.sg-auth-form input {
+	font-size: 16px;
+}
+.sg-auth-form button[type='submit']:not([name='provider']) {
+	min-height: 48px;
+	border-radius: var(--sg-radius-md, 10px);
+	font-size: 16px;
+	font-weight: 600;
+}
+.sg-auth-form form > div + div {
+	margin-top: 2px;
+}
+.sg-auth-form button[name='provider'] {
+	width: 48px !important;
+	height: 48px !important;
+	min-width: 48px !important;
+	border-radius: var(--sg-radius-md, 10px) !important;
+}
+.sg-auth-form button[name='provider'] span {
+	font-size: 20px;
+}
+
+/* The template's own cards on the other /auth screens (forgot and new password, verification) */
+.sg-auth-main > :not(.sg-auth-card) {
+	width: 100%;
+	max-width: 1024px;
+}
+
+.sg-auth-actions {
+	display: grid;
+	gap: 10px;
+	margin-top: 20px;
+}
+.sg-auth-btn {
+	display: inline-flex;
+	align-items: center;
+	justify-content: center;
+	min-height: 48px;
+	padding: 0 16px;
+	border-radius: var(--sg-radius-md, 10px);
+	border: 1px solid transparent;
+	background: var(--a-sea);
+	color: #fff;
+	font: inherit;
+	font-size: 16px;
+	font-weight: 600;
+	text-decoration: none;
+	cursor: pointer;
+	width: 100%;
+}
+.sg-auth-btn:hover {
+	background: var(--a-sea-deep);
+}
+.sg-auth-btn-secondary {
+	background: var(--a-surface);
+	color: var(--a-ink);
+	border-color: var(--sg-line-strong, #9aa6a3);
+}
+.sg-auth-btn-secondary:hover {
+	background: var(--sg-surface-200, #e9ebe6);
+}
+.sg-auth-btn:focus-visible,
+.sg-auth-back:focus-visible,
+.sg-auth-brand:focus-visible {
+	outline: 2px solid var(--a-sea);
+	outline-offset: 2px;
+}
+
+/* "New to SoiGuru? / Create account": a full-width secondary button */
+.sg-auth-form .text-center.mt-5 a {
+	display: flex !important;
+	width: 100%;
+	min-height: 44px;
+	justify-content: center;
+	align-items: center;
+	border-radius: var(--sg-radius-md, 10px) !important;
+	font-size: 15px !important;
+}
