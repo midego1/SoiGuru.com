@@ -3244,3 +3244,177 @@ html[data-lang='en'] .sg-sf-lang[data-lang-set='en'] {
         padding-top: 16px !important;
     }
 }
+
+/* ---------- account menu: header profile button (960px+) and the Account tab's sheet ---------- */
+.sg-page .sg-btn-sea {
+    background: var(--sea);
+    color: var(--on-sea);
+}
+.sg-page .sg-btn-sea:hover {
+    background: var(--sea-deep);
+}
+.sg-acct-pop {
+    display: none;
+}
+@media (min-width: 960px) {
+    .sg-acct-pop {
+        display: block;
+    }
+}
+/* pages without the tab bar (the city landing) keep the button on phones */
+.sg-page:not(:has(> .sg-nav)) .sg-acct-pop {
+    display: block;
+}
+.sg-acct-btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 44px;
+    height: 44px;
+    border-radius: 50%;
+    border: 1px solid var(--line-strong);
+    background: var(--surface);
+    color: var(--ink);
+    cursor: pointer;
+}
+.sg-acct-btn::-webkit-details-marker {
+    display: none;
+}
+.sg-acct-btn:hover,
+.sg-acct-pop[open] > .sg-acct-btn {
+    border-color: var(--sea);
+    background: var(--sea-tint);
+}
+.sg-acct-btn:focus-visible {
+    outline: 2px solid var(--sea);
+    outline-offset: 2px;
+}
+.sg-acct-pop.is-signed-in > .sg-acct-btn {
+    border-color: transparent;
+    background: transparent;
+    padding: 0;
+}
+.sg-acct-panel {
+    left: auto;
+    right: 0;
+    width: min(320px, calc(100vw - 32px));
+    padding: var(--space-3);
+}
+.sg-acct-avatar {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    flex: none;
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    background: var(--sea);
+    color: var(--on-sea);
+    font-weight: 700;
+    font-size: 17px;
+    line-height: 1;
+}
+.sg-acct-avatar[hidden] {
+    display: none;
+}
+.sg-acct-avatar-sm {
+    width: 36px;
+    height: 36px;
+    font-size: 15px;
+}
+.sg-acct {
+    display: grid;
+    gap: var(--space-3);
+}
+.sg-acct-out,
+.sg-acct-in {
+    display: grid;
+    gap: var(--space-3);
+}
+.sg-acct-out[hidden],
+.sg-acct-in[hidden] {
+    display: none;
+}
+.sg-acct-lead {
+    margin: 0;
+    font-size: 15px;
+    line-height: 1.45;
+    color: var(--ink-muted);
+}
+.sg-acct-btns {
+    display: grid;
+    gap: var(--space-2);
+}
+.sg-page .sg-acct-btns .sg-btn,
+.sg-page .sg-acct-signout {
+    min-height: 48px;
+    border-radius: var(--radius-md);
+}
+.sg-acct-links {
+    display: grid;
+    gap: 2px;
+    padding-top: var(--space-2);
+    border-top: 1px solid var(--line);
+}
+.sg-page .sg-acct-links a {
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+    gap: var(--space-3);
+    min-height: 48px;
+    padding: 0 var(--space-3);
+    border-radius: var(--radius-md);
+    color: var(--ink);
+    font-weight: 600;
+    font-size: 15px;
+    text-decoration: none;
+}
+.sg-page .sg-acct-links a[hidden] {
+    display: none;
+}
+.sg-page .sg-acct-links a:hover {
+    background: var(--sea-tint);
+}
+.sg-acct-links .tkg-i {
+    color: var(--sea);
+}
+.sg-acct-links small {
+    margin-left: auto;
+    color: var(--ink-muted);
+    font-weight: 600;
+}
+.sg-acct-who {
+    display: flex;
+    align-items: center;
+    gap: var(--space-3);
+}
+.sg-acct-name {
+    display: grid;
+    min-width: 0;
+}
+.sg-acct-name strong {
+    font-size: 16px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+.sg-acct-name small {
+    color: var(--ink-muted);
+    font-size: 13px;
+}
+/* header: the popover's own links are styled by .sg-acct-links, not the generic panel rules */
+.sg-acct-panel .sg-acct-btns a {
+    justify-content: center;
+}
+/* tab bar: the avatar replaces the person icon once signed in */
+.tkg-nav .sg-nav-acct .sg-acct-avatar-sm {
+    width: 24px;
+    height: 24px;
+    font-size: 12px;
+}
+.tkg-nav .sg-nav-acct.is-signed-in {
+    color: var(--sea);
+}
+.sg-acct-panel a.sg-acct-signout {
+    justify-content: center;
+}

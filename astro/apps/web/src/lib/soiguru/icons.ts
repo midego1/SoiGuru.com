@@ -47,6 +47,7 @@ export const ICON_PATHS = {
     dots: '<circle cx="6" cy="12" r="1.5"/><circle cx="12" cy="12" r="1.5"/><circle cx="18" cy="12" r="1.5"/>',
     share: '<path d="M12 3v12M7 8l5-5 5 5"/><path d="M5 13v6a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2v-6"/>',
     shield: '<path d="M12 3 5 6v6c0 4 3 7 7 9 4-2 7-5 7-9V6l-7-3Z"/><path d="m9 12 2 2 4-4"/>',
+    store: '<path d="M3.5 4h17l-1.2 5.2a2.6 2.6 0 0 1-4.9.5 2.6 2.6 0 0 1-4.8 0 2.6 2.6 0 0 1-4.9-.5L3.5 4Z"/><path d="M5 11.5V20h14v-8.5"/><path d="M10 20v-5h4v5"/>',
     plus: '<path d="M12 5v14M5 12h14"/>',
     close: '<path d="M6 6l12 12M18 6 6 18"/>',
     menu: '<path d="M4 7h16M4 12h16M4 17h16"/>',

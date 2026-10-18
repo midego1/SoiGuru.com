@@ -1,14 +1,17 @@
 ---
 /**
- * BottomNav — the phone tab bar: Home, Search, Saved, Owner and Menu. Saved lists the places
- * saved on this device; Owner goes to the owner app. Menu opens a bottom sheet (`Sheet`) with
+ * BottomNav — the phone tab bar: Home, Search, Saved, Account and Menu. Saved lists the places
+ * saved on this device (and in the account once signed in); Account opens a sheet with the
+ * account menu (`AccountPanel`: sign in, create account, business login; or the signed-in
+ * links). Without an owner app configured the tab is the old Owner link. Menu opens a bottom sheet (`Sheet`) with
  * the header's links (categories, map), the cities, the language and the owner links, so
  * phones need no menu button in the header. Hidden from 960px, where the header has it all.
  */
 import Icon from './Icon.astro';
 import Sheet from './Sheet.astro';
 import LanguageToggle from './LanguageToggle.astro';
-import { getSoiGuru, claimUrl, headerLinks, type City } from '../../lib/soiguru/data';
+import AccountPanel from './AccountPanel.astro';
+import { getSoiGuru, claimUrl, accountUrl, headerLinks, type City } from '../../lib/soiguru/data';
 
 interface Props {
     city: City;
@@ -21,7 +24,8 @@ const { city, active, ownerHref } = Astro.props;
 const data = await getSoiGuru();
 const links = headerLinks(data, city);
 const listHref = claimUrl(data.config, city) ?? ownerHref;
-const tabs = ownerHref ? 5 : 4;
+const account = accountUrl(data.config);
+const tabs = ownerHref || account ? 5 : 4;
 ---
 
 <nav class="tkg-nav sg-nav" aria-label="Main" style={`grid-template-columns: repeat(${tabs}, 1fr)`}>
@@ -35,16 +39,32 @@ const tabs = ownerHref ? 5 : 4;
         <Icon name="heart" /><span data-th="บันทึกไว้">Saved</span>
     </a>
     {
-        ownerHref && (
-            <a href={ownerHref} data-umami-event="owner-tab">
-                <Icon name="user" /><span data-th="เจ้าของร้าน">Owner</span>
-            </a>
+        account ? (
+            <button type="button" class="sg-nav-menu sg-nav-acct" data-sheet-open="account" aria-haspopup="dialog" data-acct data-umami-event="account-tab">
+                <Icon name="user" class="sg-acct-icon" />
+                <span class="sg-acct-avatar sg-acct-avatar-sm" data-acct-initial hidden aria-hidden="true"></span>
+                <span data-th="บัญชี">Account</span>
+            </button>
+        ) : (
+            ownerHref && (
+                <a href={ownerHref} data-umami-event="owner-tab">
+                    <Icon name="user" /><span data-th="เจ้าของร้าน">Owner</span>
+                </a>
+            )
         )
     }
     <button type="button" class="sg-nav-menu" data-sheet-open="menu" aria-haspopup="dialog">
         <Icon name="menu" /><span data-th="เมนู">Menu</span>
     </button>
 </nav>
+
+{
+    account && (
+        <Sheet id="account" title="Account" titleTh="บัญชี">
+            <AccountPanel account={account} city={city} owner={ownerHref} claim={claimUrl(data.config, city)} />
+        </Sheet>
+    )
+}
 
 <Sheet id="menu" title="Menu" titleTh="เมนู">
     <nav class="sg-msheet-links" aria-label={`${city.name} menu`}>

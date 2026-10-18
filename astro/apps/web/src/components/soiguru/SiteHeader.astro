@@ -2,11 +2,13 @@
 /**
  * SiteHeader — the website header from the SoiGuru mockup: logo mark and wordmark, the city
  * picker, the main links (Eat & drink, Cafés, Things to do, Stay, Map), the language toggle,
- * "Owner login" and the "List your business" button.
+ * the account menu (a profile button; "Owner login" when no owner app is configured) and the
+ * "List your business" button.
  *
  * Responsive: phones show the logo, city, language and a menu button (the rest moves into the
  * menu panel; the bottom tabs stay); 720px adds "List your business"; 960px adds "Owner login";
- * 1100px shows the links in the bar and drops the menu. The city picker and the menu are
+ * 1100px shows the links in the bar and drops the menu. The account
+ * menu (`AccountPanel`) shows from 960px; phones reach it from the Account tab. The city picker and the menu are
  * `<details>` disclosures, so they work without a script (page.ts closes them on outside
  * clicks and Escape).
  *
@@ -16,7 +18,8 @@ import Icon from './Icon.astro';
 import LanguageToggle from './LanguageToggle.astro';
 import Logo from './Logo.astro';
 import ThailandMap from './ThailandMap.astro';
-import { getSoiGuru, cityListings, claimUrl, ownerUrl, headerLinks, type City } from '../../lib/soiguru/data';
+import AccountPanel from './AccountPanel.astro';
+import { getSoiGuru, cityListings, claimUrl, ownerUrl, accountUrl, headerLinks, type City } from '../../lib/soiguru/data';
 
 interface Props {
     /** The city the page belongs to (picker label, links, search) */
@@ -37,6 +40,7 @@ const links = homeCity ? headerLinks(data, homeCity) : [];
 const owner = ownerUrl(config, homeCity);
 const claim = homeCity ? claimUrl(config, homeCity) : undefined;
 const listHref = claim ?? owner;
+const account = accountUrl(config);
 ---
 
 <header class:list={['sg-sh', className]}>
@@ -108,10 +112,22 @@ const listHref = claim ?? owner;
             }
             <LanguageToggle />
             {
-                owner && (
-                    <a class="sg-sh-login" href={owner} data-umami-event="owner-login" data-th="เข้าสู่ระบบเจ้าของร้าน">
-                        Owner login
-                    </a>
+                account ? (
+                    <details class="sg-pop sg-acct-pop" data-pop data-acct>
+                        <summary class="sg-acct-btn" aria-label="Account" data-umami-event="account-menu">
+                            <Icon name="user" class="sg-acct-icon" />
+                            <span class="sg-acct-avatar sg-acct-avatar-sm" data-acct-initial hidden aria-hidden="true"></span>
+                        </summary>
+                        <div class="sg-pop-panel sg-acct-panel">
+                            <AccountPanel account={account} city={homeCity} owner={owner} claim={claim} />
+                        </div>
+                    </details>
+                ) : (
+                    owner && (
+                        <a class="sg-sh-login" href={owner} data-umami-event="owner-login" data-th="เข้าสู่ระบบเจ้าของร้าน">
+                            Owner login
+                        </a>
+                    )
                 )
             }
             {
