@@ -3,6 +3,10 @@ title: "Change Log"
 sidebar_label: "Change Log"
 ---
 
+## 2026-10-18 — Results head: breadcrumb, toolbar and search only
+
+Desktop results head is now the breadcrumb, then one row with the toolbar on the left and the search field on the right, under a hairline. The h1 ("Restaurants in Krabi") stays in the page for search engines and screen readers but is visually hidden; the "N places" line is dropped (the count line above the cards says it). The Categories card lists A–Z by default with "Hot" (site order) as the toggle.
+
 ## 2026-10-18 — Results head as one block
 
 Desktop results head: the title block (breadcrumb, title, "N places") on the left; the search field over the toolbar (List | Map, Open now, area, sort) on the right, both right-aligned; one hairline under the whole head (a `::before` grid item). No empty band beside the title any more. The Categories card lists A–Z by default; "Hot" (site order) is the toggle.
