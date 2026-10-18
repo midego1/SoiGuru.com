@@ -3,6 +3,10 @@ title: "Change Log"
 sidebar_label: "Change Log"
 ---
 
+## 2026-10-18 — Results pages: search in the site header; List | Map beside the sort
+
+Desktop results pages show the search field in the site header (TopBar `search`, as listing pages do) instead of the main links; the inline field and the toolbar row are gone, so the head is the breadcrumb only. The List | Map switch sits beside the "Sort:" chip at the right of the count line (a second `.sg-view-seg`; map view keeps the toolbar's). Phones are unchanged.
+
 ## 2026-10-18 — Open now and area in the Filters card; sort beside the count line
 
 Desktop list view: the toolbar keeps List | Map; "Open now" (with the live open count) and "Open 24 hours" are an Open section in the Filters card, the area choice is its Area section (when the city has more than one area with places), and the sort is a "Sort: Top rated" chip at the right of the count line above the cards (mirrors the toolbar select, which phones keep as chips). The sheet on phones hides the desktop-only Open section.

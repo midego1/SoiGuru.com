@@ -55,7 +55,7 @@ const siteUrl = (Astro.site?.href ?? '').replace(/\/$/, '');
     footer
     jsonLd={[breadcrumbJsonLd(siteUrl, [[config.company_name, '/'], [city.name, `/${city.id}`], [title, path]])]}
 >
-    <TopBar back={{ href: `/${city.id}`, label: `Back to ${city.name}` }} title={titleTh ? `${title} · ${titleTh}` : title} subtitle={subtitle} nav={{ city, ownerHref: ownerUrl(config, city) }}>
+    <TopBar back={{ href: `/${city.id}`, label: `Back to ${city.name}` }} title={titleTh ? `${title} · ${titleTh}` : title} subtitle={subtitle} nav={{ city, ownerHref: ownerUrl(config, city) }} search>
         <button type="button" class="tkg-iconbtn" data-search-toggle aria-expanded="false" aria-label={`Search ${title}`}>
             <Icon name="search" />
         </button>

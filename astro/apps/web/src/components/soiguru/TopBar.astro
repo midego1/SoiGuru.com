@@ -28,16 +28,18 @@ interface Props {
     subtitleTh?: string;
     /** City navigation (the city is used by the header; `active` is no longer shown) */
     nav?: { city: City; active?: 'home' | 'search' | 'saved'; ownerHref?: string };
+    /** Desktop header with the search field in place of the links (results pages) */
+    search?: boolean;
 }
 
-const { city, back, title, titleTh, subtitle, subtitleTh, nav } = Astro.props;
+const { city, back, title, titleTh, subtitle, subtitleTh, nav, search = false } = Astro.props;
 const pageCity = city ?? nav?.city;
 ---
 
 {
     back ? (
         <>
-            <SiteHeader city={pageCity} class="sg-sh-desk" />
+            <SiteHeader city={pageCity} class="sg-sh-desk" search={search} />
             <header class="tkg-topbar sg-backbar">
                 <a class="tkg-iconbtn" href={back.href} aria-label={back.label}>
                     <Icon name="chevron-left" />
