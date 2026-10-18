@@ -3,6 +3,10 @@ title: "Change Log"
 sidebar_label: "Change Log"
 ---
 
+## 2026-10-18 — Open now and area in the Filters card; sort beside the count line
+
+Desktop list view: the toolbar keeps List | Map; "Open now" (with the live open count) and "Open 24 hours" are an Open section in the Filters card, the area choice is its Area section (when the city has more than one area with places), and the sort is a "Sort: Top rated" chip at the right of the count line above the cards (mirrors the toolbar select, which phones keep as chips). The sheet on phones hides the desktop-only Open section.
+
 ## 2026-10-18 — Results head: breadcrumb, toolbar and search only
 
 Desktop results head is now the breadcrumb, then one row with the toolbar on the left and the search field on the right, under a hairline. The h1 ("Restaurants in Krabi") stays in the page for search engines and screen readers but is visually hidden; the "N places" line is dropped (the count line above the cards says it). The Categories card lists A–Z by default with "Hot" (site order) as the toggle.

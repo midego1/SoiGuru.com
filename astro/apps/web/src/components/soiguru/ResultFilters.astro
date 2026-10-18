@@ -50,6 +50,39 @@ const ratings: { v: 0 | 3 | 4 | 4.5; label: string; th: string; n: number }[] = 
 
 <div class="sg-fpills" data-f-pills hidden></div>
 
+<details class="sg-fsec sg-fsec-desk" open>
+    <summary>
+        <span data-th="เวลาเปิด">Open</span>
+        <Icon name="chevron-down" class="tkg-i-16" />
+    </summary>
+    <div class="sg-fsec-body">
+        <button type="button" class="sg-fopt" data-f-open role="checkbox" aria-checked="false">
+            <span class="sg-fopt-box" aria-hidden="true">
+                <Icon name="check" class="tkg-i-16" />
+            </span>
+            <Icon name="clock" class="tkg-i-16" />
+            <span class="sg-fopt-label" data-th="เปิดอยู่ตอนนี้">
+                Open now
+            </span>
+            <small data-f-open-count></small>
+        </button>
+        {
+            counts.allDay > 0 && (
+                <button type="button" class="sg-fopt" data-f-toggle="allday" role="checkbox" aria-checked="false">
+                    <span class="sg-fopt-box" aria-hidden="true">
+                        <Icon name="check" class="tkg-i-16" />
+                    </span>
+                    <Icon name="clock" class="tkg-i-16" />
+                    <span class="sg-fopt-label" data-th="เปิด 24 ชั่วโมง">
+                        Open 24 hours
+                    </span>
+                    <small>{counts.allDay}</small>
+                </button>
+            )
+        }
+    </div>
+</details>
+
 {
     areas.length > 1 && (
         <details class="sg-fsec" open>
@@ -136,7 +169,7 @@ const ratings: { v: 0 | 3 | 4 | 4.5; label: string; th: string; n: number }[] = 
     )
 }
 
-<details class="sg-fsec" open={counts.verified > 0 || counts.allDay > 0}>
+<details class="sg-fsec" open={counts.verified > 0}>
     <summary>
         <span data-th="เพิ่มเติม">More</span>
         <Icon name="chevron-down" class="tkg-i-16" />
@@ -152,20 +185,6 @@ const ratings: { v: 0 | 3 | 4 | 4.5; label: string; th: string; n: number }[] = 
             </span>
             <small>{counts.verified}</small>
         </button>
-        {
-            counts.allDay > 0 && (
-                <button type="button" class="sg-fopt" data-f-toggle="allday" role="checkbox" aria-checked="false">
-                    <span class="sg-fopt-box" aria-hidden="true">
-                        <Icon name="check" class="tkg-i-16" />
-                    </span>
-                    <Icon name="clock" class="tkg-i-16" />
-                    <span class="sg-fopt-label" data-th="เปิด 24 ชั่วโมง">
-                        Open 24 hours
-                    </span>
-                    <small>{counts.allDay}</small>
-                </button>
-            )
-        }
     </div>
 </details>
 
