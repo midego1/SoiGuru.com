@@ -30,9 +30,46 @@ interface Listing {
 	lng?: number;
 	area?: string;
 	city?: string;
+	/** Google place ID stored with the listing (`google_place_id` in the content repo); skips the search. */
+	placeId?: string;
+}
+
+/**
+ * Daily budget of Google calls (search, details, photo media), so a busy page cannot run up
+ * the bill: `PLACES_DAILY_LIMIT` (default 4000). Over the limit the routes return no photos
+ * and the site keeps its drawings until the next day (UTC).
+ */
+const DAILY_LIMIT = Math.max(0, Number(process.env.PLACES_DAILY_LIMIT) || 4000);
+let budgetDay = '';
+let budgetUsed = 0;
+
+/** Count one Google call; false when today's budget is spent. */
+export function takeBudget(): boolean {
+	const today = new Date().toISOString().slice(0, 10);
+	if (today !== budgetDay) {
+		budgetDay = today;
+		budgetUsed = 0;
+	}
+	if (budgetUsed >= DAILY_LIMIT) return false;
+	budgetUsed += 1;
+	return true;
 }
 
 const placeIds = new Map<string, string | null>();
+
+/** The fields of a content-repo listing the lookup needs (`geo` or `location`, `google_place_id`). */
+export function placesListing(meta: Record<string, unknown> & { name: string }): Listing {
+	const geo = meta.geo as { lat?: number; lng?: number } | undefined;
+	const loc = meta.location as { latitude?: number; longitude?: number } | undefined;
+	return {
+		name: meta.name,
+		lat: geo?.lat ?? loc?.latitude,
+		lng: geo?.lng ?? loc?.longitude,
+		area: typeof meta.area === 'string' ? meta.area : undefined,
+		city: typeof meta.city === 'string' ? meta.city : undefined,
+		placeId: typeof meta.google_place_id === 'string' ? meta.google_place_id : undefined
+	};
+}
 
 export function placesKey(): string | undefined {
 	const key = process.env.GOOGLE_PLACES_API_KEY?.trim();
@@ -65,8 +102,10 @@ function distanceM(aLat: number, aLng: number, bLat: number, bLng: number): numb
 }
 
 /** Google place ID for a listing (cached in memory; `null` = no confident match). */
-async function findPlaceId(slug: string, listing: Listing, key: string): Promise<string | null> {
+export async function findPlaceId(slug: string, listing: Listing, key: string): Promise<string | null> {
+	if (listing.placeId && /^[\w-]{10,300}$/.test(listing.placeId)) return listing.placeId;
 	if (placeIds.has(slug)) return placeIds.get(slug) ?? null;
+	if (!takeBudget()) return null;
 	const hasGeo = typeof listing.lat === 'number' && typeof listing.lng === 'number';
 	const where = [listing.area?.replace(/-/g, ' '), listing.city ?? 'Krabi', 'Thailand'].filter(Boolean).join(', ');
 	const body: Record<string, unknown> = { textQuery: `${listing.name}, ${where}`, maxResultCount: 3 };
@@ -97,11 +136,21 @@ async function findPlaceId(slug: string, listing: Listing, key: string): Promise
 }
 
 /** Up to three Google photos for a listing, newest list on each call. */
-export async function listingPhotos(slug: string, listing: Listing): Promise<PlacePhoto[]> {
+export async function listingPhotos(slug: string, listing: Listing, max = MAX_PHOTOS): Promise<PlacePhoto[]> {
+	return (await listingPlace(slug, listing, max)).photos;
+}
+
+/** The listing's Google place ID and up to `max` photos. */
+export async function listingPlace(
+	slug: string,
+	listing: Listing,
+	max = MAX_PHOTOS
+): Promise<{ placeId: string | null; photos: PlacePhoto[] }> {
 	const key = placesKey();
-	if (!key) return [];
+	if (!key) return { placeId: null, photos: [] };
 	const id = await findPlaceId(slug, listing, key);
-	if (!id) return [];
+	if (!id) return { placeId: null, photos: [] };
+	if (!takeBudget()) return { placeId: id, photos: [] };
 	const res = await fetch(`${API}/places/${encodeURIComponent(id)}`, {
 		headers: { 'X-Goog-Api-Key': key, 'X-Goog-FieldMask': 'photos' }
 	});
@@ -114,19 +163,21 @@ export async function listingPhotos(slug: string, listing: Listing): Promise<Pla
 			authorAttributions?: { displayName?: string; uri?: string }[];
 		}[];
 	};
-	return (data.photos ?? []).slice(0, MAX_PHOTOS).map((p) => ({
+	const photos = (data.photos ?? []).slice(0, max).map((p) => ({
 		url: `/api/places/photo?name=${encodeURIComponent(p.name)}&sig=${signPhoto(p.name)}`,
 		width: p.widthPx,
 		height: p.heightPx,
 		author: p.authorAttributions?.[0]?.displayName,
 		authorUri: p.authorAttributions?.[0]?.uri
 	}));
+	return { placeId: id, photos };
 }
 
 /** Google's short-lived URL for one photo. */
 export async function photoUri(name: string, maxWidth: number): Promise<string | null> {
 	const key = placesKey();
 	if (!key) return null;
+	if (!takeBudget()) return null;
 	const res = await fetch(`${API}/${name}/media?maxWidthPx=${maxWidth}&skipHttpRedirect=true`, {
 		headers: { 'X-Goog-Api-Key': key }
 	});

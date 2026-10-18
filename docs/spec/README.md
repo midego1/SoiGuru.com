@@ -80,6 +80,7 @@ or architectural change.
 | 056 | [`soiguru-places-photos`](056-soiguru-places-photos/spec.md) | in-progress | Google Places photos for SoiGuru listings without their own photos: `/api/places/photos/<slug>` (CORS for soiguru.com) finds the place by name near the listing and returns up to 3 signed photo links; `/api/places/photo` redirects to the Google photo. The public site shows them on listing pages with the author credit. |
 | 057 | [`soiguru-search-indexing`](057-soiguru-search-indexing/spec.md) | implemented | Only the canonical public site is indexable: on other hosts (owner.soiguru.com, soiguru.midego.net, any `owner.`/`admin.` subdomain) robots.txt disallows all, the sitemap is empty and pages send `X-Robots-Tag: noindex, nofollow`; `SEARCH_INDEXING=on|off` overrides. |
 | 058 | [`soiguru-accounts`](058-soiguru-accounts/spec.md) | implemented | Accounts for the public site: `GET /api/soiguru/me` and `POST /api/soiguru/saved` with credentialed CORS for soiguru.com, `/return?to=` back to the public site after sign-in, SoiGuru-styled `/auth` shell, sign-in and register cards, `/auth/signout`; middleware keeps sign-out and honours safe callbacks. |
+| 059 | [`soiguru-places-speed`](059-soiguru-places-speed/spec.md) | implemented | Google photos faster and on cards: stored place IDs (`google_place_id`) skip the search, `/api/places/photos` returns `placeId`, `/api/places/cards?slugs=` gives one photo per card, daily Google budget `PLACES_DAILY_LIMIT`. |
 
 > **Status legend:**
 > _proposed_ = spec drafted, not yet planned/approved.
