@@ -7,6 +7,7 @@
  * browser scripts (status, distance, filters) in every variant.
  */
 import Icon from './Icon.astro';
+import { hoursRows } from '../../lib/soiguru/hours';
 import ListingPhoto from './ListingPhoto.astro';
 import CategoryArt from './CategoryArt.astro';
 import OpenStatus from './OpenStatus.astro';
@@ -28,6 +29,8 @@ interface Props {
 const { listing, compact, tile, distance, hidden } = Astro.props;
 const price = priceBand(listing.price_band);
 const sub = [listing.category?.name, listing.area?.name].filter(Boolean).join(' · ');
+// Open around the clock every day (the "Open 24 hours" filter).
+const allDay = !!listing.hours && hoursRows(listing.hours).every((r) => r.allDay);
 const subTh = [listing.category?.name_th, listing.area?.name_th ?? listing.area?.name].filter(Boolean).join(' · ');
 const boat = listing.area?.boat_only ? ' · boat' : '';
 const dataAttrs = {
@@ -105,6 +108,8 @@ const dataAttrs = {
     data-search={listing.searchText}
     data-boat={listing.area?.boat_only ? '1' : undefined}
     data-price={listing.price_band}
+    data-phone={listing.phone ? '1' : undefined}
+    data-allday={allDay ? '1' : undefined}
     data-line={listing.line_id ? '1' : undefined}
     data-wa={listing.whatsapp ? '1' : undefined}
     data-verified={listing.claimed ? '1' : undefined}
