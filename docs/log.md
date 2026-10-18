@@ -7,6 +7,10 @@ sidebar_position: 99
 
 # Documentation & Specs Change Log
 
+## 2026-10-18
+
+- `spec-058` `apps/web/app/api/soiguru` `apps/web/app/[locale]/return` `apps/web/app/[locale]/auth` `apps/web/components/soiguru/auth-card.tsx` `apps/web/proxy.ts`: accounts for the public site: who-is-signed-in and saved-places endpoints with credentialed CORS for soiguru.com, `/return?to=` back to the public page after sign-in or sign-out, SoiGuru look for the sign-in, register and sign-out screens (English and Thai), middleware keeps `/auth/signout` and honours safe callbacks for signed-in visitors ([spec 058](spec/058-soiguru-accounts/spec.md)).
+
 ## 2026-10-17
 
 - `spec-057` `apps/web/lib/seo/indexing.ts` `apps/web/app/robots.ts` `apps/web/app/sitemap.ts` `apps/web/proxy.ts`: only the canonical public site is indexable; on other hosts (owner.soiguru.com, soiguru.midego.net, `owner.`/`admin.` subdomains) robots.txt disallows all, the sitemap is empty and pages send `X-Robots-Tag: noindex, nofollow`. Also: Places photo route passes image bytes through and photo links use the public origin (spec 056).

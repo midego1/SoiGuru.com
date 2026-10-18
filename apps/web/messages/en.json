@@ -3741,7 +3741,7 @@
 			"CREATING_ACCOUNT": "Creating account...",
 			"SIGNED_IN": "Signed in!",
 			"ACCOUNT_CREATED": "Account created!",
-			"NEW_TO_PLATFORM": "New to our platform?",
+			"NEW_TO_PLATFORM": "New to SoiGuru?",
 			"ALREADY_HAVE_ACCOUNT": "Already have an account?",
 			"CREATE_ACCOUNT_BUTTON": "Create account",
 			"SIGN_IN_BUTTON": "Sign in",
@@ -5025,6 +5025,27 @@
 			"emptyTitle": "Nothing saved yet",
 			"emptyBody": "Tap the heart on a place to keep it here.",
 			"browse": "Browse {city}"
+		},
+		"account": {
+			"metaSignIn": "Sign in · SoiGuru",
+			"metaRegister": "Create account · SoiGuru",
+			"metaSignOut": "Sign out · SoiGuru",
+			"signInTitle": "Sign in to SoiGuru",
+			"signInBody": "Keep your saved places on every device. Business owners use the same account to update their listing.",
+			"registerTitle": "Create your SoiGuru account",
+			"registerBody": "Free. Save places on every device and claim your business when you are ready.",
+			"perkSaved": "Saved places on your phone and computer",
+			"perkOwner": "Claim your business and keep its hours right",
+			"perkFree": "Free, no spam",
+			"back": "Back to SoiGuru",
+			"ownerNote": "Own a business? Use this account to claim and manage it.",
+			"signOutTitle": "Sign out of SoiGuru?",
+			"signOutBody": "Your saved places stay in your account.",
+			"signOut": "Sign out",
+			"signedOutTitle": "You are signed out",
+			"signedOutBody": "Sign in again to see your saved places on this device.",
+			"signIn": "Sign in",
+			"cancel": "Cancel"
 		}
 	}
 }

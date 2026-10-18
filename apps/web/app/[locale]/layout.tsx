@@ -220,7 +220,7 @@ export default async function RootLayout({
 							<Providers config={config}>
 								{/* Global navigation loading bar */}
 								<NavigationLoadingBar />
-								<ConditionalLayout chromelessSegments={soiguruCityIds}>{children}</ConditionalLayout>
+								<ConditionalLayout chromelessSegments={[...soiguruCityIds, 'auth']}>{children}</ConditionalLayout>
 								{/* Settings Modal - Shared by header button */}
 								<SettingsModal />
 								{/* AI chat launcher (Spec 023). Returns null when `aiChat.enabled` is false. */}

@@ -26,13 +26,16 @@ export function CredentialsForm({
 	hideSwitchButton = false,
 	onSuccess,
 	clientMode = false,
-	callbackUrl: callbackUrlProp
+	callbackUrl: callbackUrlProp,
+	hideHeader = false
 }: PropsWithChildren<{
 	type: 'login' | 'signup';
 	hideSwitchButton?: boolean;
 	onSuccess?: () => void;
 	clientMode?: boolean;
 	callbackUrl?: string;
+	/** Leave out the "Sign in / Welcome back" heading when the page draws its own (SoiGuru, spec 058). */
+	hideHeader?: boolean;
 }>) {
 	const isLogin = type === 'login';
 	const t = useTranslations('auth');
@@ -518,14 +521,16 @@ export function CredentialsForm({
 	return (
 		<div className="w-full">
 			{/* Header */}
-			<div className="mb-5">
-				<h1 className="text-lg font-semibold text-gray-900 dark:text-white">
-					{isLogin ? t('SIGN_IN') : t('CREATE_ACCOUNT')}
-				</h1>
-				<p className="text-gray-500 dark:text-gray-400 text-xs mt-0.5">
-					{isLogin ? tCred('WELCOME_BACK_MESSAGE') : tCred('CREATE_ACCOUNT_MESSAGE')}
-				</p>
-			</div>
+			{!hideHeader && (
+				<div className="mb-5">
+					<h1 className="text-lg font-semibold text-gray-900 dark:text-white">
+						{isLogin ? t('SIGN_IN') : t('CREATE_ACCOUNT')}
+					</h1>
+					<p className="text-gray-500 dark:text-gray-400 text-xs mt-0.5">
+						{isLogin ? tCred('WELCOME_BACK_MESSAGE') : tCred('CREATE_ACCOUNT_MESSAGE')}
+					</p>
+				</div>
+			)}
 
 			{auth.credentials && (
 				<form
@@ -975,7 +980,9 @@ export function CredentialsForm({
 							'hover:bg-theme-primary/5 px-3 py-1.5! rounded-md transition-colors duration-150',
 							'border border-theme-primary/20 hover:border-theme-primary/35'
 						)}
-						href={isLogin ? '/auth/register' : '/auth/signin'}
+						href={`${isLogin ? '/auth/register' : '/auth/signin'}${
+							redirect ? `?callbackUrl=${encodeURIComponent(redirect)}` : ''
+						}`}
 						variant="flat"
 					>
 						{isLogin ? (
