@@ -3,6 +3,10 @@ title: "Change Log"
 sidebar_label: "Change Log"
 ---
 
+## 2026-10-18 — Hours table: full day names, "Closes in" under today
+
+The listing page's hours table writes the days out (Monday … Sunday, Thai วันจันทร์ …) and shows "Closes in 1h 12m" or "Opens in 45m" in small type under today's day (amber in the last hour; `nextChange()` and `formatDuration()` in `lib/soiguru/hours.ts`, refreshed every minute). "Updated … ago" now counts calendar days in the visitor's time zone, so it matches the date shown.
+
 ## 2026-10-18 — Location card without title; copy icon; hours for every day
 
 The Location card drops its title; "Copy address" is now a copy icon beside the address (a check for two seconds after copying). Opening hours list every day on its own row (today first; `hoursRows(hours, { merge: false })`) and always end with the last-update line, now with the date ("Updated 2 days ago · 16 Oct 2026"), or "Last update not known".

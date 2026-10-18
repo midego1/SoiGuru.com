@@ -15,7 +15,7 @@ interface Props {
 
 const { listing } = Astro.props;
 // Every day on its own row (the listing page shows the whole week, today first).
-const rows = listing.hours ? hoursRows(listing.hours, { merge: false }) : [];
+const rows = listing.hours ? hoursRows(listing.hours, { merge: false, longNames: true }) : [];
 ---
 
 <section class="sg-card sg-hours-sec" aria-labelledby="sg-hours-h">
@@ -25,7 +25,7 @@ const rows = listing.hours ? hoursRows(listing.hours, { merge: false }) : [];
     {listing.hours_note && <p class="sg-card-note">{listing.hours_note}</p>}
     {
         rows.length > 0 ? (
-            <table class="tkg-hours" data-hours-table>
+            <table class="tkg-hours" data-hours-table data-hours={listing.hoursJson}>
                 <tbody>
                     {rows.map((row, i) => (
                         <tr data-days={row.days.join(' ')} data-order={i}>
@@ -34,6 +34,7 @@ const rows = listing.hours ? hoursRows(listing.hours, { merge: false }) : [];
                                 <span class="sg-today-label" hidden>
                                     {' '}<span data-th="· วันนี้">· today</span>
                                 </span>
+                                <small class="sg-today-next" data-today-next hidden></small>
                             </td>
                             {row.closed ? (
                                 <td class="tkg-closed-day" data-th="ปิด">
