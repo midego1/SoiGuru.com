@@ -289,7 +289,7 @@ if (root) {
         }
     };
 
-    // Categories card: by count (default) or A–Z, remembered on this device.
+    // Categories card: A–Z (default) or "Hot" (site order: priority, then count), remembered on this device.
     const catList = document.querySelector<HTMLElement>('.sg-rside-list');
     const sortCats = (mode: string) => {
         if (!catList) return;
@@ -304,7 +304,7 @@ if (root) {
     };
     try {
         const saved = localStorage.getItem('sg:cat-sort');
-        if (saved === 'az') sortCats('az');
+        if (saved === 'hot') sortCats('hot');
     } catch {
         // No storage: by count.
     }
@@ -313,7 +313,7 @@ if (root) {
         const target = event.target instanceof Element ? event.target : null;
         const catSort = target?.closest<HTMLElement>('[data-cat-sort]');
         if (catSort) {
-            const mode = catSort.dataset['catSort'] ?? 'count';
+            const mode = catSort.dataset['catSort'] ?? 'az';
             sortCats(mode);
             try {
                 localStorage.setItem('sg:cat-sort', mode);

@@ -52,7 +52,9 @@ const inCity = cityListings(sg, city);
 const here = Astro.url.pathname.replace(/\/$/, '');
 const categoryLinks = sg.categories
     .map((c) => ({ c, n: inCity.filter((l) => l.category?.id === c.id).length, href: `/${city.id}/${c.id}` }))
-    .filter((x) => x.n > 0);
+    .filter((x) => x.n > 0)
+    // A–Z by default; "Hot" (site order: priority, then count) is a toggle, remembered on the device.
+    .sort((a, b) => a.c.name.localeCompare(b.c.name));
 const areaOptions = lockArea
     ? []
     : city.areas
@@ -140,8 +142,8 @@ const center = area?.geo ?? city.geo ?? pins[0] ?? { lat: 13.75, lng: 100.5 };
                     <div class="sg-rside-head">
                         <h2 class="sg-rside-title" id="sg-rside-cats-h" data-th="หมวดหมู่">Categories</h2>
                         <div class="sg-rside-sort" role="group" aria-label="Sort categories">
-                            <button type="button" data-cat-sort="count" aria-pressed="true" data-th="ค่าเริ่มต้น">Default</button>
-                            <button type="button" data-cat-sort="az" aria-pressed="false">A–Z</button>
+                            <button type="button" data-cat-sort="az" aria-pressed="true">A–Z</button>
+                            <button type="button" data-cat-sort="hot" aria-pressed="false" data-th="ยอดนิยม">Hot</button>
                         </div>
                     </div>
                     <ul class="sg-rside-list">
