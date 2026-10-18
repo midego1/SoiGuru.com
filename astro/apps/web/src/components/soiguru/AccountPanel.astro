@@ -1,0 +1,108 @@
+---
+/**
+ * AccountPanel — what the account menu shows (spec: header account menu). Used in the header's
+ * profile popover (desktop) and in the Account sheet of the tab bar (phones).
+ *
+ * The site is static and has no accounts of its own: accounts live in the owner app
+ * (`account` origin). `scripts/soiguru/account.ts` asks that app who is signed in and switches
+ * `[data-acct-out]` (signed out: Sign in, Create account) for `[data-acct-in]` (signed in: the
+ * name, saved places, settings, the business dashboard, sign out). Without the script, or when
+ * the owner app cannot be reached, the signed-out links still work.
+ *
+ * Every link carries the page it was opened on (`data-acct-link`), so signing in comes back
+ * here; the static `href` returns to the site root.
+ */
+import Icon from './Icon.astro';
+import type { City } from '../../lib/soiguru/data';
+
+interface Props {
+    /** Owner app origin, e.g. https://owner.soiguru.com */
+    account: string;
+    /** City for the Saved link */
+    city?: City;
+    /** Owner dashboard (`owner_url`) */
+    owner?: string;
+    /** Claim flow for the city ("Claim your business" when signed in without a listing) */
+    claim?: string;
+}
+
+const { account, city, owner, claim } = Astro.props;
+const back = encodeURIComponent(`/return?to=${encodeURIComponent(Astro.site?.origin ? `${Astro.site.origin}/` : '/')}`);
+const signin = `${account}/auth/signin?callbackUrl=${back}`;
+const register = `${account}/auth/register?callbackUrl=${back}`;
+const signout = `${account}/auth/signout`;
+const saved = city ? `/${city.id}/saved` : undefined;
+---
+
+<div class="sg-acct" data-acct-panel>
+    <div class="sg-acct-out" data-acct-out>
+        <p class="sg-acct-lead" data-th="เข้าสู่ระบบเพื่อเก็บสถานที่ที่บันทึกไว้ได้ทุกอุปกรณ์">Sign in to keep your saved places on every device.</p>
+        <div class="sg-acct-btns">
+            <a class="sg-btn sg-btn-sea sg-btn-block" href={signin} data-acct-link="signin" data-umami-event="account-signin" data-th="เข้าสู่ระบบ">Sign in</a>
+            <a class="sg-btn sg-btn-secondary sg-btn-block" href={register} data-acct-link="register" data-umami-event="account-register" data-th="สร้างบัญชี">Create account</a>
+        </div>
+        <nav class="sg-acct-links" aria-label="Account">
+            {
+                saved && (
+                    <a href={saved}>
+                        <Icon name="heart" />
+                        <span data-th="สถานที่ที่บันทึกไว้">Saved places</span>
+                    </a>
+                )
+            }
+            {
+                owner && (
+                    <a href={owner} class="sg-sh-login" data-umami-event="owner-login">
+                        <Icon name="store" />
+                        <span data-th="เข้าสู่ระบบเจ้าของร้าน">Business owner login</span>
+                    </a>
+                )
+            }
+        </nav>
+    </div>
+    <div class="sg-acct-in" data-acct-in hidden>
+        <div class="sg-acct-who">
+            <span class="sg-acct-avatar" data-acct-initial aria-hidden="true"></span>
+            <span class="sg-acct-name">
+                <strong data-acct-name></strong>
+                <small data-th="เข้าสู่ระบบแล้ว">Signed in</small>
+            </span>
+        </div>
+        <nav class="sg-acct-links" aria-label="Your account">
+            {
+                saved && (
+                    <a href={saved}>
+                        <Icon name="heart" />
+                        <span data-th="สถานที่ที่บันทึกไว้">Saved places</span>
+                        <small data-acct-saved-count></small>
+                    </a>
+                )
+            }
+            {
+                owner && (
+                    <a href={owner} data-acct-owner data-umami-event="account-business">
+                        <Icon name="store" />
+                        <span data-th="ธุรกิจของฉัน">My business</span>
+                    </a>
+                )
+            }
+            {
+                claim && (
+                    <a href={claim} data-acct-claim hidden data-umami-event="account-claim">
+                        <Icon name="store" />
+                        <span data-th="อ้างสิทธิ์ธุรกิจของคุณ">Claim your business</span>
+                    </a>
+                )
+            }
+            <a href={`${account}/client/settings`} data-umami-event="account-settings">
+                <Icon name="user" />
+                <span data-th="ตั้งค่าบัญชี">Account settings</span>
+            </a>
+            <a href={`${account}/admin`} data-acct-admin hidden>
+                <Icon name="shield" />
+                <span data-th="ผู้ดูแลระบบ">Admin</span>
+            </a>
+        </nav>
+        <a class="sg-btn sg-btn-secondary sg-btn-block sg-acct-signout" href={signout} data-acct-link="signout" data-umami-event="account-signout" data-th="ออกจากระบบ">Sign out</a>
+    </div>
+</div>

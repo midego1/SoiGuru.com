@@ -3,6 +3,10 @@ title: "Change Log"
 sidebar_label: "Change Log"
 ---
 
+## 2026-10-18 — Account menu: profile button, Account tab, saved places in the account
+
+"Owner login" in the header becomes an account menu: a profile button (960px+) and an Account tab on phones (replacing the Owner tab, opens a sheet), both with `AccountPanel`. Signed out: Sign in, Create account, Saved places, Business owner login. Signed in (asked from the owner app, `GET /api/soiguru/me`): initial and name, Saved places, My business or Claim your business, Account settings, Admin for admins, Sign out. Account links return to the current page. Saved places merge into the account on the first visit after signing in and every heart tap is sent to it (`scripts/soiguru/account.ts`, `saved.ts` emits `sg:saved-toggle`). New `accountUrl()` (works.yml `account_url`, else the `owner_url` origin) and a `store` icon. The sign-in, register and sign-out screens on the owner app now use the SoiGuru look (spec 058 there). See `.specify/features/soiguru-design.md` (Accounts).
+
 ## 2026-10-18 — Results pages: search in the site header; List | Map beside the sort
 
 Desktop results pages show the search field in the site header (TopBar `search`, as listing pages do) instead of the main links; the inline field and the toolbar row are gone, so the head is the breadcrumb only. The List | Map switch sits beside the "Sort:" chip at the right of the count line (a second `.sg-view-seg`; map view keeps the toolbar's). Phones are unchanged.

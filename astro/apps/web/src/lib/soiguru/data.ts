@@ -349,6 +349,21 @@ export function ownerUrl(config: SiteConfig, city?: Pick<City, 'id'>): string | 
     return str(config['owner_url']) ?? (city ? claimUrl(config, city) : undefined);
 }
 
+/**
+ * Origin of the owner app, where SoiGuru accounts live (sign in, create account, saved places,
+ * the owner dashboard): `account_url` in works.yml, else the origin of `owner_url`. The static
+ * site has no accounts of its own; the header's account menu asks this app who is signed in.
+ */
+export function accountUrl(config: SiteConfig): string | undefined {
+    const raw = str(config['account_url']) ?? str(config['owner_url']);
+    if (!raw) return undefined;
+    try {
+        return new URL(raw).origin;
+    } catch {
+        return undefined;
+    }
+}
+
 /** Where "Report wrong info" goes: a prefilled e-mail to `contact_email` in works.yml. */
 export function reportUrl(config: SiteConfig, listing: Listing): string | undefined {
     const email = str(config['contact_email']);

@@ -1,6 +1,7 @@
 /**
- * Saved places, kept on this device (`localStorage`, versioned key). No accounts on the
- * public site, so nothing leaves the phone. `[data-save="slug"]` toggles a place;
+ * Saved places, kept on this device (`localStorage`, versioned key). The site has no accounts
+ * of its own; once a visitor signs in (owner app, `account.ts`), the list is merged into the
+ * account and kept in step with it. Signed out, nothing leaves the phone. `[data-save="slug"]` toggles a place;
  * `[data-saved-list]` (the Saved tab) shows the saved cards of the city.
  */
 
@@ -22,6 +23,15 @@ function write(slugs: string[]): void {
     } catch {
         // Private mode or storage full: the heart still toggles for this page.
     }
+}
+
+/**
+ * Replace the saved list (the account's list after sign-in, `account.ts`) and redraw the hearts
+ * and the Saved tab.
+ */
+export function setSavedSlugs(slugs: string[]): void {
+    write([...new Set(slugs)]);
+    render();
 }
 
 function render(): void {
@@ -56,8 +66,11 @@ document.addEventListener('click', (event) => {
     if (!btn) return;
     const slug = btn.dataset['save'] ?? '';
     const saved = savedSlugs();
-    write(saved.includes(slug) ? saved.filter((s) => s !== slug) : [slug, ...saved]);
+    const on = !saved.includes(slug);
+    write(on ? [slug, ...saved] : saved.filter((s) => s !== slug));
     render();
+    // Signed in: `account.ts` keeps the account's list in step.
+    document.dispatchEvent(new CustomEvent('sg:saved-toggle', { detail: { slug, on } }));
 });
 window.addEventListener('storage', (e) => {
     if (e.key === KEY) render();
