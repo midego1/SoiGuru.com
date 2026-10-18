@@ -3,6 +3,10 @@ title: "Change Log"
 sidebar_label: "Change Log"
 ---
 
+## 2026-10-18 — Listing page: a map for places without coordinates
+
+The 14 listings without coordinates show Google's embedded map for their name and address in the Location card (lazy iframe, no key), so they get a pin too. Coordinates from Google are not stored (Maps terms allow caching them for 30 days at most and only on Google maps); listings with coordinates keep the OpenStreetMap static map. `mapsEmbedUrl()` in `lib/soiguru/geo.ts`.
+
 ## 2026-10-18 — Listing page: photos in the main column, map first in the side column; account in the Menu
 
 From 960px the listing photos sit in the main column (one big, two stacked) and the side column runs from the top: Location with the map and pin first (Directions button, distance once known; "Find on Google Maps" for the 14 listings without coordinates), then Opening hours and the claim card. The phone Menu sheet now shows the account panel (Sign in, Create account) instead of only "Owner login"; the header menu drops its duplicate owner button. `mapsSearchUrl()` in `lib/soiguru/geo.ts`.

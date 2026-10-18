@@ -3489,3 +3489,15 @@ html[data-lang='en'] .sg-sf-lang[data-lang-set='en'] {
         grid-row: span 2;
     }
 }
+/* listing without coordinates: Google's embedded map for the name and address */
+.sg-where-embed {
+    display: block;
+    width: 100%;
+    height: 240px;
+    border: 0;
+    border-radius: var(--radius-lg);
+    background: var(--surface-200);
+}
+.sg-where-embed + .sg-lp-address {
+    margin-top: 12px;
+}

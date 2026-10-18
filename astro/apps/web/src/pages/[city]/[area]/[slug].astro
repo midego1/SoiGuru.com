@@ -25,7 +25,7 @@ import CategoryArt from '../../../components/soiguru/CategoryArt.astro';
 import { getSoiGuru, claimUrl, ownerUrl, reportUrl, type Listing } from '../../../lib/soiguru/data';
 import { breadcrumbJsonLd, localBusinessJsonLd } from '../../../lib/soiguru/jsonld';
 import { priceBand, formatDate } from '../../../lib/soiguru/format';
-import { directionsUrl, distanceMetres, mapsSearchUrl } from '../../../lib/soiguru/geo';
+import { directionsUrl, distanceMetres, mapsEmbedUrl, mapsSearchUrl } from '../../../lib/soiguru/geo';
 
 export async function getStaticPaths() {
     const { listings } = await getSoiGuru();
@@ -77,6 +77,8 @@ const placesApi = owner && listing.images.length === 0 ? `/api/places/photos/${l
 const more = listing.images.length - shown.length;
 // Without coordinates: a Google Maps search for the name and address (no pin to draw).
 const mapsSearch = mapsSearchUrl([listing.name, listing.address, area?.name, city.name]);
+// Without coordinates: Google's own embedded map for the same search shows the pin (no key needed).
+const mapsEmbed = mapsEmbedUrl([listing.name, listing.address, area?.name, city.name]);
 const trail: [string, string][] = [
     [config.company_name, '/'],
     [city.name, `/${city.id}`],
@@ -200,7 +202,18 @@ const trail: [string, string][] = [
                                     Location
                                 </h2>
                             </div>
-                            {listing.geo && <StaticMap point={listing.geo} height={240} width={480} />}
+                            {listing.geo ? (
+                                <StaticMap point={listing.geo} height={240} width={480} />
+                            ) : (
+                                <iframe
+                                    class="sg-where-embed"
+                                    src={mapsEmbed}
+                                    title={`Map: ${listing.name}`}
+                                    loading="lazy"
+                                    referrerpolicy="no-referrer-when-downgrade"
+                                    height="240"
+                                ></iframe>
+                            )}
                             {listing.address && <p class="sg-lp-address">{listing.address}</p>}
                             {listing.geo && (
                                 <p class="sg-where-dist" data-lat={listing.geo.lat} data-lng={listing.geo.lng} data-boat={area?.boat_only ? '1' : undefined}>
