@@ -59,3 +59,11 @@ export function worldPixel(point: LatLng, zoom: number): { x: number; y: number 
 export function directionsUrl(point: LatLng): string {
     return `https://www.google.com/maps/dir/?api=1&destination=${point.lat},${point.lng}`;
 }
+
+/** Google Maps search for a place without coordinates (name, address, area). */
+export function mapsSearchUrl(parts: (string | undefined)[]): string {
+    const url = new URL('https://www.google.com/maps/search/');
+    url.searchParams.set('api', '1');
+    url.searchParams.set('query', parts.filter(Boolean).join(', '));
+    return url.toString();
+}

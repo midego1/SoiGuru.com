@@ -3418,3 +3418,74 @@ html[data-lang='en'] .sg-sf-lang[data-lang-set='en'] {
 .sg-acct-panel a.sg-acct-signout {
     justify-content: center;
 }
+
+/* ---------- listing page, 2026-10-18: photos in the main column, the side column from the top
+   (Location with the map and pin first, then hours and claim) ---------- */
+.sg-lp-photos {
+    min-width: 0;
+}
+.sg-lp-photos > .sg-pgrid {
+    margin-top: 0;
+}
+.sg-lp {
+    grid-template-areas: 'photos' 'head' 'side' 'body';
+}
+.sg-lp-photos {
+    grid-area: photos;
+}
+.sg-where-dist {
+    margin: 4px 0 0;
+    font-size: 14px;
+    color: var(--ink-muted);
+}
+.sg-where-dist:has(> [data-distance]:empty) {
+    display: none;
+}
+.sg-page a.sg-where-go {
+    margin-top: 12px;
+    min-height: 48px;
+    border-radius: var(--radius-md);
+}
+@media (min-width: 960px) {
+    .sg-lp {
+        grid-template-areas: 'photos side' 'head side' 'body side';
+        grid-template-rows: auto auto 1fr;
+    }
+    /* one big photo and two stacked beside it; more photos open in the gallery */
+    .sg-lp-photos > .sg-pgrid:not(.sg-pgrid-art) {
+        grid-template-columns: repeat(3, minmax(0, 1fr));
+        grid-auto-rows: 170px;
+    }
+    .sg-lp-photos > .sg-pgrid[data-count='1'] {
+        grid-template-columns: minmax(0, 1fr);
+        grid-auto-rows: 340px;
+    }
+    .sg-lp-photos > .sg-pgrid > .sg-photo-btn:nth-child(n + 4),
+    .sg-lp-photos > .sg-pgrid > .sg-pphoto:nth-child(n + 4) {
+        display: none;
+    }
+    .sg-lp-photos > .sg-pgrid-art {
+        grid-auto-rows: 340px;
+    }
+}
+@media (min-width: 1440px) {
+    .sg-lp-photos > .sg-pgrid:not(.sg-pgrid-art) {
+        grid-auto-rows: 200px;
+    }
+    .sg-lp-photos > .sg-pgrid[data-count='1'],
+    .sg-lp-photos > .sg-pgrid-art {
+        grid-auto-rows: 400px;
+    }
+}
+.sg-lp-wrap > .sg-lp {
+    margin-top: 14px;
+}
+@media (min-width: 960px) {
+    .sg-lp-wrap > .sg-lp {
+        margin-top: 16px;
+        row-gap: 28px;
+    }
+    .sg-lp-photos > .sg-pgrid[data-count='2'] > :nth-child(2) {
+        grid-row: span 2;
+    }
+}

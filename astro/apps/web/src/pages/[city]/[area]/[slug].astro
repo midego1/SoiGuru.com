@@ -25,7 +25,7 @@ import CategoryArt from '../../../components/soiguru/CategoryArt.astro';
 import { getSoiGuru, claimUrl, ownerUrl, reportUrl, type Listing } from '../../../lib/soiguru/data';
 import { breadcrumbJsonLd, localBusinessJsonLd } from '../../../lib/soiguru/jsonld';
 import { priceBand, formatDate } from '../../../lib/soiguru/format';
-import { directionsUrl, distanceMetres } from '../../../lib/soiguru/geo';
+import { directionsUrl, distanceMetres, mapsSearchUrl } from '../../../lib/soiguru/geo';
 
 export async function getStaticPaths() {
     const { listings } = await getSoiGuru();
@@ -75,6 +75,8 @@ const shown = listing.images.slice(0, 5);
 const owner = ownerUrl(config, city);
 const placesApi = owner && listing.images.length === 0 ? `/api/places/photos/${listing.slug}?v=3` : undefined;
 const more = listing.images.length - shown.length;
+// Without coordinates: a Google Maps search for the name and address (no pin to draw).
+const mapsSearch = mapsSearchUrl([listing.name, listing.address, area?.name, city.name]);
 const trail: [string, string][] = [
     [config.company_name, '/'],
     [city.name, `/${city.id}`],
@@ -117,31 +119,33 @@ const trail: [string, string][] = [
             <span aria-current="page">{listing.name}</span>
         </nav>
 
-        {
-            shown.length === 0 && (
-                <div class="sg-pgrid sg-pgrid-art" data-count="1" data-places-photos={placesApi} data-places-name={listing.name}>
-                    <CategoryArt category={category} size="lg" />
-                </div>
-            )
-        }
-        {
-            shown.length > 0 && (
-                <div class="sg-pgrid" data-count={shown.length}>
-                    {shown.map((src, i) => (
-                        <button type="button" class="sg-photo-btn" data-gallery-open={String(i)} aria-label={i === 0 ? 'Open photos' : `Open photo ${i + 1}`}>
-                            <img src={src} alt="" loading={i === 0 ? 'eager' : 'lazy'} decoding="async" width={i === 0 ? 800 : 400} height={i === 0 ? 600 : 300} />
-                        </button>
-                    ))}
-                    <span class="sg-pgrid-count">
-                        <Icon name="camera" class="tkg-i-16" />
-                        {listing.images.length} {listing.images.length === 1 ? 'photo' : 'photos'}
-                        {more > 0 ? ` · +${more}` : ''}
-                    </span>
-                </div>
-            )
-        }
-
         <div class="sg-lp">
+            <div class="sg-lp-photos">
+            {
+                shown.length === 0 && (
+                    <div class="sg-pgrid sg-pgrid-art" data-count="1" data-places-photos={placesApi} data-places-name={listing.name}>
+                        <CategoryArt category={category} size="lg" />
+                    </div>
+                )
+            }
+            {
+                shown.length > 0 && (
+                    <div class="sg-pgrid" data-count={shown.length}>
+                        {shown.map((src, i) => (
+                            <button type="button" class="sg-photo-btn" data-gallery-open={String(i)} aria-label={i === 0 ? 'Open photos' : `Open photo ${i + 1}`}>
+                                <img src={src} alt="" loading={i === 0 ? 'eager' : 'lazy'} decoding="async" width={i === 0 ? 800 : 400} height={i === 0 ? 600 : 300} />
+                            </button>
+                        ))}
+                        <span class="sg-pgrid-count">
+                            <Icon name="camera" class="tkg-i-16" />
+                            {listing.images.length} {listing.images.length === 1 ? 'photo' : 'photos'}
+                            {more > 0 ? ` · +${more}` : ''}
+                        </span>
+                    </div>
+                )
+            }
+            </div>
+
             <div class="sg-lp-head" data-listing={listing.slug} data-lat={listing.geo?.lat} data-lng={listing.geo?.lng} data-boat={area?.boat_only ? '1' : undefined}>
                 <div class="sg-chips">
                     {
@@ -187,7 +191,36 @@ const trail: [string, string][] = [
                 </ContactBar>
             </div>
 
-            <aside class="sg-lp-side" aria-label="Opening hours and claim">
+            <aside class="sg-lp-side" aria-label="Location, opening hours and claim">
+                {
+                    (listing.geo || listing.address) && (
+                        <section class="sg-card sg-where-sec" aria-labelledby="sg-where-h">
+                            <div class="sg-card-head">
+                                <h2 class="sg-card-h" id="sg-where-h" data-th="ที่ตั้ง">
+                                    Location
+                                </h2>
+                            </div>
+                            {listing.geo && <StaticMap point={listing.geo} height={240} width={480} />}
+                            {listing.address && <p class="sg-lp-address">{listing.address}</p>}
+                            {listing.geo && (
+                                <p class="sg-where-dist" data-lat={listing.geo.lat} data-lng={listing.geo.lng} data-boat={area?.boat_only ? '1' : undefined}>
+                                    <span data-distance></span>
+                                </p>
+                            )}
+                            {listing.geo ? (
+                                <a class="sg-btn sg-btn-sea sg-btn-block sg-where-go" href={directionsUrl(listing.geo)} target="_blank" rel="noopener" data-umami-event="contact-directions">
+                                    <Icon name="pin" class="tkg-i-16" />
+                                    <span data-th="เส้นทาง">Directions</span>
+                                </a>
+                            ) : (
+                                <a class="sg-btn sg-btn-secondary sg-btn-block sg-where-go" href={mapsSearch} target="_blank" rel="noopener" data-umami-event="contact-maps-search">
+                                    <Icon name="map" class="tkg-i-16" />
+                                    <span data-th="ค้นหาใน Google Maps">Find on Google Maps</span>
+                                </a>
+                            )}
+                        </section>
+                    )
+                }
                 <HoursTable listing={listing}>
                     {
                         listing.updated_at && (
@@ -197,24 +230,6 @@ const trail: [string, string][] = [
                         )
                     }
                 </HoursTable>
-                {
-                    (listing.geo || listing.address) && (
-                        <section class="sg-card sg-where-sec" aria-labelledby="sg-where-h">
-                            <div class="sg-card-head">
-                                <h2 class="sg-card-h" id="sg-where-h" data-th="ที่ตั้ง">
-                                    Location
-                                </h2>
-                                {listing.geo && (
-                                    <a class="sg-sec-link" href={directionsUrl(listing.geo)} target="_blank" rel="noopener" data-umami-event="contact-directions" data-th="เส้นทาง">
-                                        Directions
-                                    </a>
-                                )}
-                            </div>
-                            {listing.geo && <StaticMap point={listing.geo} height={220} width={480} />}
-                            {listing.address && <p class="sg-lp-address">{listing.address}</p>}
-                        </section>
-                    )
-                }
                 <ClaimBox listing={listing} href={claimUrl(config, city, listing)} />
                 <div class="sg-report">
                     {
