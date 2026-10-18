@@ -9,7 +9,7 @@ sidebar_position: 99
 
 ## 2026-10-18
 
-- `spec-058` `apps/web/app/api/soiguru` `apps/web/app/[locale]/return` `apps/web/app/[locale]/auth` `apps/web/components/soiguru/auth-card.tsx` `apps/web/proxy.ts`: accounts for the public site: who-is-signed-in and saved-places endpoints with credentialed CORS for soiguru.com, `/return?to=` back to the public page after sign-in or sign-out, SoiGuru look for the sign-in, register and sign-out screens (English and Thai), middleware keeps `/auth/signout` and honours safe callbacks for signed-in visitors ([spec 058](spec/058-soiguru-accounts/spec.md)).
+- `spec-058` `apps/web/app/api/soiguru` `apps/web/app/[locale]/return` `apps/web/app/[locale]/auth` `apps/web/components/soiguru/auth-card.tsx` `apps/web/proxy.ts`: accounts for the public site: who-is-signed-in and saved-places endpoints with credentialed CORS for soiguru.com, `/return?to=` back to the public page after sign-in or sign-out, SoiGuru look for the sign-in, register and sign-out screens (English and Thai), middleware keeps `/auth/signout` and honours safe callbacks for signed-in visitors ([spec 058](spec/058-soiguru-accounts/spec.md), PR #14).
 
 ## 2026-10-17
 
