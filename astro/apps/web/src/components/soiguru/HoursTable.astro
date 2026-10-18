@@ -1,7 +1,7 @@
 ---
 /**
  * HoursTable — the "Opening hours" card of the listing page (website mockup): the week as a
- * two-column table, consecutive identical days merged ("Mon–Wed"), 24-hour clock, tabular
+ * two-column table, one row per day (2026-10-18; days were merged before), 24-hour clock, tabular
  * numerals. The browser marks today's row (`body-strong`, day in `sea`, "· today") and moves
  * it first; today is not known at build time. Without hours the card says so. The default
  * slot goes under the table (the "Updated by the owner …" line).
@@ -14,7 +14,8 @@ interface Props {
 }
 
 const { listing } = Astro.props;
-const rows = listing.hours ? hoursRows(listing.hours) : [];
+// Every day on its own row (the listing page shows the whole week, today first).
+const rows = listing.hours ? hoursRows(listing.hours, { merge: false }) : [];
 ---
 
 <section class="sg-card sg-hours-sec" aria-labelledby="sg-hours-h">

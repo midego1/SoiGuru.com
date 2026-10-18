@@ -116,14 +116,15 @@ export interface HoursRow {
  * Today-first ordering is left to the browser (today is not known at build time);
  * it marks the row whose `days` contain today.
  */
-export function hoursRows(hours: WeeklyHours): HoursRow[] {
+export function hoursRows(hours: WeeklyHours, options: { merge?: boolean } = {}): HoursRow[] {
+    const merge = options.merge ?? true;
     const rows: HoursRow[] = [];
     const key = (r: TimeRange[]) => r.map((x) => `${x.open}-${x.close}`).join(',');
     for (const day of DAY_KEYS) {
         const ranges = hours[day];
         const last = rows[rows.length - 1];
         const lastDay = last?.days[last.days.length - 1];
-        if (last && lastDay && key(hours[lastDay]) === key(ranges)) {
+        if (merge && last && lastDay && key(hours[lastDay]) === key(ranges)) {
             last.days.push(day);
             continue;
         }

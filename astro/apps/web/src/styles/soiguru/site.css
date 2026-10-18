@@ -3521,3 +3521,39 @@ html[data-lang='en'] .sg-sf-lang[data-lang-set='en'] {
     border-color: var(--open);
     color: var(--open);
 }
+/* address with a copy icon beside it (replaces the full-width Copy address button) */
+.sg-addr-row {
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+    gap: 8px;
+}
+.sg-copy-btn {
+    flex: none;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 36px;
+    height: 36px;
+    margin: -8px -8px -8px 0;
+    border: 0;
+    border-radius: var(--radius-md);
+    background: transparent;
+    color: var(--sea);
+    cursor: pointer;
+}
+.sg-copy-btn:hover {
+    background: var(--sea-tint);
+}
+.sg-copy-btn:focus-visible {
+    outline: 2px solid var(--sea);
+    outline-offset: 1px;
+}
+.sg-copy-btn .sg-copied-i,
+.sg-copy-btn.is-copied .sg-copy-i {
+    display: none;
+}
+.sg-copy-btn.is-copied .sg-copied-i {
+    display: block;
+    color: var(--open);
+}

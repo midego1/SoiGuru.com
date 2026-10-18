@@ -197,12 +197,7 @@ const trail: [string, string][] = [
             <aside class="sg-lp-side" aria-label="Location, opening hours and claim">
                 {
                     (listing.geo || listing.address) && (
-                        <section class="sg-card sg-where-sec" aria-labelledby="sg-where-h">
-                            <div class="sg-card-head">
-                                <h2 class="sg-card-h" id="sg-where-h" data-th="ที่ตั้ง">
-                                    Location
-                                </h2>
-                            </div>
+                        <section class="sg-card sg-where-sec" aria-label="Location">
                             {listing.geo ? (
                                 <StaticMap point={listing.geo} height={240} width={480} />
                             ) : (
@@ -215,7 +210,16 @@ const trail: [string, string][] = [
                                     height="240"
                                 ></iframe>
                             )}
-                            {listing.address && <p class="sg-lp-address">{listing.address}</p>}
+                            {listing.address && (
+                                <p class="sg-lp-address sg-addr-row">
+                                    <span>{listing.address}</span>
+                                    <button type="button" class="sg-copy-btn" data-copy={listing.address} aria-label="Copy address" title="Copy address" data-umami-event="copy-address">
+                                        <Icon name="copy" class="tkg-i-16 sg-copy-i" />
+                                        <Icon name="check" class="tkg-i-16 sg-copied-i" />
+                                        <span class="sg-visually-hidden" data-copy-label>Copy address</span>
+                                    </button>
+                                </p>
+                            )}
                             {listing.geo && (
                                 <p class="sg-where-dist" data-lat={listing.geo.lat} data-lng={listing.geo.lng} data-boat={area?.boat_only ? '1' : undefined}>
                                     <span data-distance></span>
@@ -231,20 +235,18 @@ const trail: [string, string][] = [
                                     Apple Maps
                                 </a>
                             </div>
-                            {listing.address && (
-                                <button type="button" class="sg-btn sg-btn-secondary sg-btn-block sg-where-copy" data-copy={listing.address} data-umami-event="copy-address">
-                                    <Icon name="copy" class="tkg-i-16" />
-                                    <span data-copy-label data-th="คัดลอกที่อยู่">Copy address</span>
-                                </button>
-                            )}
                         </section>
                     )
                 }
                 <HoursTable listing={listing}>
                     {
-                        listing.updated_at && (
+                        listing.updated_at ? (
                             <p class="sg-card-foot" data-updated-at={listing.updated_at} data-updated-by={listing.updated_by}>
                                 {provenance} on {formatDate(listing.updated_at)}
+                            </p>
+                        ) : (
+                            <p class="sg-card-foot" data-th="ยังไม่ทราบวันที่อัปเดตล่าสุด">
+                                Last update not known
                             </p>
                         )
                     }

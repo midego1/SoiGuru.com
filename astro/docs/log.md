@@ -3,6 +3,10 @@ title: "Change Log"
 sidebar_label: "Change Log"
 ---
 
+## 2026-10-18 — Location card without title; copy icon; hours for every day
+
+The Location card drops its title; "Copy address" is now a copy icon beside the address (a check for two seconds after copying). Opening hours list every day on its own row (today first; `hoursRows(hours, { merge: false })`) and always end with the last-update line, now with the date ("Updated 2 days ago · 16 Oct 2026"), or "Last update not known".
+
 ## 2026-10-18 — Location card: Google Maps, Apple Maps, Copy address
 
 The Location card offers Google Maps and Apple Maps side by side (directions to the point, or a search for name and address without coordinates) and a Copy address button that says "Copied" for two seconds. `appleMapsUrl()` in `lib/soiguru/geo.ts`, `copy` icon, `[data-copy]` handler in `scripts/soiguru/page.ts`.
