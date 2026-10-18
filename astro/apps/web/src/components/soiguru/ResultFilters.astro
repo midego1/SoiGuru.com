@@ -1,13 +1,29 @@
 ---
 /**
- * ResultFilters — the filter groups of a results page: area (with counts), price, "show only"
- * (rated 4+, LINE, WhatsApp, verified owners) and amenities. Rendered twice by
- * CategoryResults: in the Filters sheet (phones) and in the left sidebar (desktop list view).
- * Both copies are plain `[data-f-*]` / `[data-area-set]` buttons that `results.ts` handles at
- * document level, so they stay in sync.
+ * ResultFilters — the filter groups of a results page as collapsible sections, each option
+ * with its count: Area (sidebar only), Contact (phone, LINE, WhatsApp), Rating (a minimum:
+ * any, 3+, 4+, 4.5+), Price, Verified owners and Good to know (amenities). Sections with
+ * nothing to pick from start folded; "Open 24 hours" only appears when a place is.
+ *
+ * Rendered twice by CategoryResults: in the Filters sheet (phones) and in the sidebar card
+ * (desktop list view). Both copies are plain `[data-f-*]` / `[data-area-set]` buttons that
+ * `results.ts` handles at document level, so they stay in sync; the active filters show as
+ * pills above the sections (`[data-f-pills]`, filled by the script).
  */
 import Icon from './Icon.astro';
 import type { City } from '../../lib/soiguru/data';
+
+/** How many places each option would keep (over the page's listings, before other filters). */
+export interface FilterCounts {
+    phone: number;
+    line: number;
+    wa: number;
+    verified: number;
+    allDay: number;
+    /** Places rated at least 3, 4 and 4.5 */
+    rating: { 3: number; 4: number; 4.5: number };
+    rated: number;
+}
 
 interface Props {
     city: City;
@@ -15,16 +31,33 @@ interface Props {
     amenityOptions: [string, { name: string; name_th?: string; count: number }][];
     /** Area filter with counts (sidebar only; phones use the Area sheet) */
     areas?: { id: string; name: string; name_th?: string; count: number }[];
+    counts: FilterCounts;
 }
 
-const { city, priceBands, amenityOptions, areas = [] } = Astro.props;
+const { city, priceBands, amenityOptions, areas = [], counts } = Astro.props;
+const contact = [
+    { key: 'phone', icon: 'phone', label: 'Phone', th: 'โทรศัพท์', n: counts.phone },
+    { key: 'line', icon: 'line', label: 'LINE', th: undefined, n: counts.line },
+    { key: 'wa', icon: 'whatsapp', label: 'WhatsApp', th: undefined, n: counts.wa },
+];
+const ratings: { v: 0 | 3 | 4 | 4.5; label: string; th: string; n: number }[] = [
+    { v: 0, label: 'Any', th: 'ทั้งหมด', n: 0 },
+    { v: 3, label: '3+', th: '3 ขึ้นไป', n: counts.rating[3] },
+    { v: 4, label: '4+', th: '4 ขึ้นไป', n: counts.rating[4] },
+    { v: 4.5, label: '4.5+', th: '4.5 ขึ้นไป', n: counts.rating[4.5] },
+];
 ---
+
+<div class="sg-fpills" data-f-pills hidden></div>
 
 {
     areas.length > 1 && (
-        <fieldset class="sg-fieldset">
-            <legend data-th="พื้นที่">Area</legend>
-            <div class="sg-rf-list">
+        <details class="sg-fsec" open>
+            <summary>
+                <span data-th="พื้นที่">Area</span>
+                <Icon name="chevron-down" class="tkg-i-16" />
+            </summary>
+            <div class="sg-fsec-body sg-rf-list">
                 <button type="button" class="sg-rf-opt" data-area-set="">
                     <span>All of {city.name}</span>
                     <small>{areas.reduce((n, a) => n + a.count, 0)}</small>
@@ -36,43 +69,120 @@ const { city, priceBands, amenityOptions, areas = [] } = Astro.props;
                     </button>
                 ))}
             </div>
-        </fieldset>
+        </details>
     )
 }
+
+<details class="sg-fsec" open={contact.some((c) => c.n > 0)}>
+    <summary>
+        <span data-th="ช่องทางติดต่อ">Contact</span>
+        <Icon name="chevron-down" class="tkg-i-16" />
+    </summary>
+    <div class="sg-fsec-body">
+        {
+            contact.map((c) => (
+                <button type="button" class="sg-fopt" data-f-toggle={c.key} role="checkbox" aria-checked="false" disabled={c.n === 0}>
+                    <span class="sg-fopt-box" aria-hidden="true">
+                        <Icon name="check" class="tkg-i-16" />
+                    </span>
+                    <Icon name={c.icon} class="tkg-i-16" />
+                    <span class="sg-fopt-label" data-th={c.th}>
+                        {c.label}
+                    </span>
+                    <small>{c.n}</small>
+                </button>
+            ))
+        }
+    </div>
+</details>
+
+<details class="sg-fsec" open={counts.rated > 0}>
+    <summary>
+        <span data-th="คะแนน">Rating</span>
+        <Icon name="chevron-down" class="tkg-i-16" />
+    </summary>
+    <div class="sg-fsec-body">
+        <p class="sg-fsec-note" data-th={counts.rated > 0 ? `${counts.rated} แห่งมีคะแนน` : 'ยังไม่มีคะแนน'}>
+            {counts.rated > 0 ? `${counts.rated} rated · minimum` : 'No ratings yet'}
+        </p>
+        <div class="sg-fseg" role="radiogroup" aria-label="Minimum rating">
+            {
+                ratings.map((r) => (
+                    <button type="button" data-f-rating={r.v} role="radio" aria-checked={r.v === 0 ? 'true' : 'false'} disabled={r.v > 0 && r.n === 0} data-label={`${r.label} ★`}>
+                        {r.v > 0 && <Icon name="star" class="tkg-i-16" />}
+                        <span data-th={r.th}>{r.label}</span>
+                    </button>
+                ))
+            }
+        </div>
+    </div>
+</details>
+
 {
     priceBands.length > 1 && (
-        <fieldset class="sg-fieldset">
-            <legend data-th="ราคา">Price</legend>
-            <div class="sg-chip-wrap">
+        <details class="sg-fsec" open>
+            <summary>
+                <span data-th="ราคา">Price</span>
+                <Icon name="chevron-down" class="tkg-i-16" />
+            </summary>
+            <div class="sg-fsec-body sg-chip-wrap">
                 {priceBands.map((p) => (
-                    <button type="button" class="tkg-chip" data-f-price={p} aria-pressed="false">
+                    <button type="button" class="tkg-chip" data-f-price={p} aria-pressed="false" data-label={'฿'.repeat(p)}>
                         {'฿'.repeat(p)}
                     </button>
                 ))}
             </div>
-        </fieldset>
+        </details>
     )
 }
-<fieldset class="sg-fieldset">
-    <legend data-th="ตัวเลือก">Show only</legend>
-    <div class="sg-chip-wrap">
-        <button type="button" class="tkg-chip" data-f-toggle="rating" aria-pressed="false"><Icon name="star" /><span data-th="คะแนน 4 ขึ้นไป">Rated 4+</span></button>
-        <button type="button" class="tkg-chip" data-f-toggle="line" aria-pressed="false"><Icon name="line" />LINE</button>
-        <button type="button" class="tkg-chip" data-f-toggle="wa" aria-pressed="false"><Icon name="whatsapp" />WhatsApp</button>
-        <button type="button" class="tkg-chip" data-f-toggle="verified" aria-pressed="false"><Icon name="shield" /><span data-th="เจ้าของยืนยันแล้ว">Verified owners</span></button>
+
+<details class="sg-fsec" open={counts.verified > 0 || counts.allDay > 0}>
+    <summary>
+        <span data-th="เพิ่มเติม">More</span>
+        <Icon name="chevron-down" class="tkg-i-16" />
+    </summary>
+    <div class="sg-fsec-body">
+        <button type="button" class="sg-fopt" data-f-toggle="verified" role="checkbox" aria-checked="false" disabled={counts.verified === 0}>
+            <span class="sg-fopt-box" aria-hidden="true">
+                <Icon name="check" class="tkg-i-16" />
+            </span>
+            <Icon name="shield" class="tkg-i-16" />
+            <span class="sg-fopt-label" data-th="เจ้าของยืนยันแล้ว">
+                Verified owners
+            </span>
+            <small>{counts.verified}</small>
+        </button>
+        {
+            counts.allDay > 0 && (
+                <button type="button" class="sg-fopt" data-f-toggle="allday" role="checkbox" aria-checked="false">
+                    <span class="sg-fopt-box" aria-hidden="true">
+                        <Icon name="check" class="tkg-i-16" />
+                    </span>
+                    <Icon name="clock" class="tkg-i-16" />
+                    <span class="sg-fopt-label" data-th="เปิด 24 ชั่วโมง">
+                        Open 24 hours
+                    </span>
+                    <small>{counts.allDay}</small>
+                </button>
+            )
+        }
     </div>
-</fieldset>
+</details>
+
 {
     amenityOptions.length > 0 && (
-        <fieldset class="sg-fieldset">
-            <legend data-th="สิ่งอำนวยความสะดวก">Good to know</legend>
-            <div class="sg-chip-wrap">
+        <details class="sg-fsec" open>
+            <summary>
+                <span data-th="สิ่งอำนวยความสะดวก">Good to know</span>
+                <Icon name="chevron-down" class="tkg-i-16" />
+            </summary>
+            <div class="sg-fsec-body sg-chip-wrap">
                 {amenityOptions.map(([id, a]) => (
-                    <button type="button" class="tkg-chip" data-f-amenity={id} aria-pressed="false">
+                    <button type="button" class="tkg-chip" data-f-amenity={id} aria-pressed="false" data-label={a.name}>
                         <span data-th={a.name_th}>{a.name}</span>
                     </button>
                 ))}
             </div>
-        </fieldset>
+        </details>
     )
 }

@@ -18,7 +18,8 @@
 import Icon from './Icon.astro';
 import ListingCard from './ListingCard.astro';
 import Sheet from './Sheet.astro';
-import ResultFilters from './ResultFilters.astro';
+import ResultFilters, { type FilterCounts } from './ResultFilters.astro';
+import { hoursRows } from '../../lib/soiguru/hours';
 import { directionsUrl } from '../../lib/soiguru/geo';
 import { jsonForScript } from '../../lib/soiguru/format';
 import { getSoiGuru, claimUrl, cityListings, type Area, type City, type Listing } from '../../lib/soiguru/data';
@@ -67,6 +68,21 @@ for (const l of listings)
     }
 const amenityOptions = [...amenityCounts.entries()].sort((a, b) => b[1].count - a[1].count).slice(0, 12);
 const priceBands = [1, 2, 3].filter((p) => listings.some((l) => l.price_band === p));
+// Counts behind each filter option, over this page's listings.
+const rated = listings.filter((l) => l.rating !== undefined);
+const counts: FilterCounts = {
+    phone: listings.filter((l) => l.phone).length,
+    line: listings.filter((l) => l.line_id).length,
+    wa: listings.filter((l) => l.whatsapp).length,
+    verified: listings.filter((l) => l.claimed).length,
+    allDay: listings.filter((l) => l.hours && hoursRows(l.hours).every((r) => r.allDay)).length,
+    rating: {
+        3: rated.filter((l) => l.rating! >= 3).length,
+        4: rated.filter((l) => l.rating! >= 4).length,
+        4.5: rated.filter((l) => l.rating! >= 4.5).length,
+    },
+    rated: rated.length,
+};
 const pins = listings
     .filter((l) => l.geo)
     .map((l) => ({
@@ -116,20 +132,21 @@ const center = area?.geo ?? city.geo ?? pins[0] ?? { lat: 13.75, lng: 100.5 };
                 <h2 class="sg-rside-title" id="sg-rside-filters-h" data-th="ตัวกรอง">Filters</h2>
                 <button type="button" class="sg-rside-clear" data-f-clear><span data-th="ล้างทั้งหมด">Clear all</span></button>
             </div>
-            <ResultFilters city={city} priceBands={priceBands} amenityOptions={amenityOptions} areas={areaOptions} />
+            <ResultFilters city={city} priceBands={priceBands} amenityOptions={amenityOptions} areas={areaOptions} counts={counts} />
         </section>
         {
             categoryLinks.length > 0 && (
                 <nav class="sg-card sg-rside-card sg-rside-cats" aria-labelledby="sg-rside-cats-h">
                     <div class="sg-rside-head">
                         <h2 class="sg-rside-title" id="sg-rside-cats-h" data-th="หมวดหมู่">Categories</h2>
-                        <span class="sg-rside-sum" data-th={`${inCity.length} แห่ง`}>
-                            {inCity.length} places
-                        </span>
+                        <div class="sg-rside-sort" role="group" aria-label="Sort categories">
+                            <button type="button" data-cat-sort="count" aria-pressed="true" data-th="ตามจำนวน">By count</button>
+                            <button type="button" data-cat-sort="az" aria-pressed="false">A–Z</button>
+                        </div>
                     </div>
                     <ul class="sg-rside-list">
                         {categoryLinks.map(({ c, n, href }) => (
-                            <li>
+                            <li data-count={n} data-name={c.name} data-order={c.priority ?? 0}>
                                 <a class:list={['sg-rside-link', { 'is-on': here === href }]} href={href} aria-current={here === href ? 'page' : undefined}>
                                     <span class="sg-rside-ico">
                                         <Icon name={c.icon} />
@@ -273,7 +290,7 @@ const center = area?.geo ?? city.geo ?? pins[0] ?? { lat: 13.75, lng: 100.5 };
 }
 
 <Sheet id="filters" title="Filters" titleTh="ตัวกรอง">
-    <ResultFilters city={city} priceBands={priceBands} amenityOptions={amenityOptions} />
+    <ResultFilters city={city} priceBands={priceBands} amenityOptions={amenityOptions} counts={counts} />
     <Fragment slot="footer">
         <button type="button" class="tkg-btn tkg-btn-ghost" data-f-clear><span data-th="ล้าง">Clear</span></button>
         <button type="button" class="tkg-btn" data-sheet-close data-f-apply><span data-th="แสดงสถานที่">Show places</span></button>

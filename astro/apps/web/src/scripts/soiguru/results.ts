@@ -101,7 +101,10 @@ if (root) {
         view: params.get('view') === 'map' ? 'map' : 'list',
         q: (params.get('q') ?? '').trim(),
         price: new Set(csv('price').map(Number)),
-        rating: params.get('rating') === '4',
+        // Minimum rating (0 = any; 3, 4 or 4.5), `?rating=4`.
+        ratingMin: [3, 4, 4.5].includes(Number(params.get('rating'))) ? Number(params.get('rating')) : 0,
+        phone: params.get('phone') === '1',
+        allday: params.get('allday') === '1',
         line: params.get('line') === '1',
         wa: params.get('wa') === '1',
         verified: params.get('verified') === '1',
@@ -125,7 +128,9 @@ if (root) {
         if (state.sort !== 'rating') p.set('sort', state.sort);
         if (state.view === 'map') p.set('view', 'map');
         if (state.price.size) p.set('price', [...state.price].sort().join(','));
-        if (state.rating) p.set('rating', '4');
+        if (state.ratingMin) p.set('rating', String(state.ratingMin));
+        if (state.phone) p.set('phone', '1');
+        if (state.allday) p.set('allday', '1');
         if (state.line) p.set('line', '1');
         if (state.wa) p.set('wa', '1');
         if (state.verified) p.set('verified', '1');
@@ -134,8 +139,10 @@ if (root) {
         history.replaceState(null, '', `${location.pathname}${qs ? `?${qs}` : ''}`);
     };
 
+    const TOGGLES = ['phone', 'line', 'wa', 'verified', 'allday'] as const;
+    type Toggle = (typeof TOGGLES)[number];
     const activeFilters = () =>
-        state.price.size + Number(state.rating) + Number(state.line) + Number(state.wa) + Number(state.verified) + state.amenities.size;
+        state.price.size + Number(state.ratingMin > 0) + TOGGLES.filter((k) => state[k]).length + state.amenities.size;
 
     /** Everything but "open now": the pool the counts are taken from. */
     const matchesWith = (c: HTMLElement, s: typeof state) => {
@@ -147,7 +154,9 @@ if (root) {
             (!s.area || c.dataset['area'] === s.area) &&
             words.every((w) => (c.dataset['search'] ?? '').includes(w)) &&
             (!s.price.size || s.price.has(Number(c.dataset['price']))) &&
-            (!s.rating || Number(c.dataset['rating'] ?? 0) >= 4) &&
+            (!s.ratingMin || Number(c.dataset['rating'] ?? 0) >= s.ratingMin) &&
+            (!s.phone || c.dataset['phone'] === '1') &&
+            (!s.allday || c.dataset['allday'] === '1') &&
             (!s.line || c.dataset['line'] === '1') &&
             (!s.wa || c.dataset['wa'] === '1') &&
             (!s.verified || c.dataset['verified'] === '1') &&
@@ -241,9 +250,12 @@ if (root) {
         for (const b of document.querySelectorAll<HTMLButtonElement>('[data-f-price]'))
             b.setAttribute('aria-pressed', String(state.price.has(Number(b.dataset['fPrice']))));
         for (const b of document.querySelectorAll<HTMLButtonElement>('[data-f-toggle]')) {
-            const key = b.dataset['fToggle'] as 'rating' | 'line' | 'wa' | 'verified';
-            b.setAttribute('aria-pressed', String(state[key]));
+            const key = b.dataset['fToggle'] as Toggle;
+            b.setAttribute(b.getAttribute('role') === 'checkbox' ? 'aria-checked' : 'aria-pressed', String(state[key]));
         }
+        for (const b of document.querySelectorAll<HTMLButtonElement>('[data-f-rating]'))
+            b.setAttribute('aria-checked', String(Number(b.dataset['fRating']) === state.ratingMin));
+        renderPills();
         for (const b of document.querySelectorAll<HTMLButtonElement>('[data-f-amenity]'))
             b.setAttribute('aria-pressed', String(state.amenities.has(b.dataset['fAmenity'] ?? '')));
         if (applyBtn) {
@@ -252,9 +264,67 @@ if (root) {
         }
     };
 
+    /** Pills above the filter sections: one per active filter, each with a remove button. */
+    const renderPills = () => {
+        const label = (sel: string) => document.querySelector<HTMLElement>(sel)?.dataset['label'] ?? document.querySelector<HTMLElement>(`${sel} .sg-fopt-label`)?.textContent?.trim() ?? document.querySelector<HTMLElement>(sel)?.textContent?.trim() ?? '';
+        const pills: { key: string; value: string; text: string }[] = [];
+        for (const k of TOGGLES) if (state[k]) pills.push({ key: 'toggle', value: k, text: label(`[data-f-toggle="${k}"]`) });
+        if (state.ratingMin) pills.push({ key: 'rating', value: String(state.ratingMin), text: label(`[data-f-rating="${state.ratingMin}"]`) });
+        for (const p of state.price) pills.push({ key: 'price', value: String(p), text: '฿'.repeat(p) });
+        for (const a of state.amenities) pills.push({ key: 'amenity', value: a, text: label(`[data-f-amenity="${a}"]`) });
+        for (const box of document.querySelectorAll<HTMLElement>('[data-f-pills]')) {
+            box.hidden = pills.length === 0;
+            box.replaceChildren(
+                ...pills.map((p) => {
+                    const b = document.createElement('button');
+                    b.type = 'button';
+                    b.className = 'sg-fpill';
+                    b.dataset['fRemove'] = p.key;
+                    b.dataset['fValue'] = p.value;
+                    b.setAttribute('aria-label', `Remove filter ${p.text}`);
+                    b.append(p.text, Object.assign(document.createElement('span'), { textContent: '×', ariaHidden: 'true' }));
+                    return b;
+                })
+            );
+        }
+    };
+
+    // Categories card: by count (default) or A–Z, remembered on this device.
+    const catList = document.querySelector<HTMLElement>('.sg-rside-list');
+    const sortCats = (mode: string) => {
+        if (!catList) return;
+        const items = [...catList.children] as HTMLElement[];
+        items.sort((a, b) =>
+            mode === 'az'
+                ? (a.dataset['name'] ?? '').localeCompare(b.dataset['name'] ?? '')
+                : Number(b.dataset['order']) - Number(a.dataset['order']) || Number(b.dataset['count']) - Number(a.dataset['count'])
+        );
+        catList.append(...items);
+        for (const b of document.querySelectorAll<HTMLButtonElement>('[data-cat-sort]')) b.setAttribute('aria-pressed', String(b.dataset['catSort'] === mode));
+    };
+    try {
+        const saved = localStorage.getItem('sg:cat-sort');
+        if (saved === 'az') sortCats('az');
+    } catch {
+        // No storage: by count.
+    }
+
     document.addEventListener('click', (event) => {
         const target = event.target instanceof Element ? event.target : null;
+        const catSort = target?.closest<HTMLElement>('[data-cat-sort]');
+        if (catSort) {
+            const mode = catSort.dataset['catSort'] ?? 'count';
+            sortCats(mode);
+            try {
+                localStorage.setItem('sg:cat-sort', mode);
+            } catch {
+                // Fine without.
+            }
+            return;
+        }
         const price = target?.closest<HTMLElement>('[data-f-price]');
+        const rating = target?.closest<HTMLElement>('[data-f-rating]');
+        const remove = target?.closest<HTMLElement>('[data-f-remove]');
         const toggle = target?.closest<HTMLElement>('[data-f-toggle]');
         const amenity = target?.closest<HTMLElement>('[data-f-amenity]');
         const areaSet = target?.closest<HTMLElement>('[data-area-set]');
@@ -263,8 +333,17 @@ if (root) {
             if (state.price.has(p)) state.price.delete(p);
             else state.price.add(p);
         } else if (toggle) {
-            const key = toggle.dataset['fToggle'] as 'rating' | 'line' | 'wa' | 'verified';
+            const key = toggle.dataset['fToggle'] as Toggle;
             state[key] = !state[key];
+        } else if (rating) {
+            const v = Number(rating.dataset['fRating']);
+            state.ratingMin = state.ratingMin === v ? 0 : v;
+        } else if (remove) {
+            const v = remove.dataset['fValue'] ?? '';
+            if (remove.dataset['fRemove'] === 'toggle') state[v as Toggle] = false;
+            else if (remove.dataset['fRemove'] === 'rating') state.ratingMin = 0;
+            else if (remove.dataset['fRemove'] === 'price') state.price.delete(Number(v));
+            else state.amenities.delete(v);
         } else if (amenity) {
             const a = amenity.dataset['fAmenity'] ?? '';
             if (state.amenities.has(a)) state.amenities.delete(a);
@@ -272,7 +351,8 @@ if (root) {
         } else if (target?.closest('[data-f-clear]')) {
             state.price.clear();
             state.amenities.clear();
-            state.rating = state.line = state.wa = state.verified = false;
+            state.ratingMin = 0;
+            for (const k of TOGGLES) state[k] = false;
         } else if (areaSet) {
             state.area = areaSet.dataset['areaSet'] ?? '';
         } else return;
