@@ -5,7 +5,7 @@ sidebar_label: "Change Log"
 
 ## 2026-10-18 — Filters as collapsible sections with counts; categories A–Z
 
-`ResultFilters` is now collapsible sections, each option with its count over the page's listings: Contact (phone, LINE, WhatsApp), Rating (a minimum: any, 3+, 4+, 4.5+, as a segmented control), Price, More (verified owners, open 24 hours) and Good to know. Sections with nothing to pick from start folded and their options are disabled, so the card never shows an empty filter. Active filters show as removable pills above the sections (`[data-f-pills]`, both in the sidebar and the phone sheet). URL: `?rating=3|4|4.5`, `?phone=1`, `?allday=1` join the existing keys. Cards carry `data-phone` and `data-allday`. The Categories card has a By count / A–Z toggle, remembered on the device. Spec: `.specify/features/soiguru-design.md` § Website layout.
+`ResultFilters` is now collapsible sections, each option with its count over the page's listings: Contact (phone, LINE, WhatsApp), Rating (a minimum: any, 3+, 4+, 4.5+, as a segmented control), Price, More (verified owners, open 24 hours) and Good to know. Sections with nothing to pick from start folded and their options are disabled, so the card never shows an empty filter. Active filters show as removable pills above the sections (`[data-f-pills]`, both in the sidebar and the phone sheet). URL: `?rating=3|4|4.5`, `?phone=1`, `?allday=1` join the existing keys. Cards carry `data-phone` and `data-allday`. The Categories card has a Default / A–Z toggle, remembered on the device. Spec: `.specify/features/soiguru-design.md` § Website layout.
 
 ## 2026-10-17 — Results head tidied; no active bar in the sidebar
 
