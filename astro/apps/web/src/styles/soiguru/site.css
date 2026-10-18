@@ -3501,3 +3501,23 @@ html[data-lang='en'] .sg-sf-lang[data-lang-set='en'] {
 .sg-where-embed + .sg-lp-address {
     margin-top: 12px;
 }
+/* Location card: Google Maps, Apple Maps, Copy address */
+.sg-where-btns {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 8px;
+    margin-top: 12px;
+}
+.sg-page .sg-where-btns .sg-btn,
+.sg-page .sg-where-copy {
+    min-height: 48px;
+    border-radius: var(--radius-md);
+    padding-inline: 12px;
+}
+.sg-page .sg-where-copy {
+    margin-top: 8px;
+}
+.sg-page .sg-where-copy.is-copied {
+    border-color: var(--open);
+    color: var(--open);
+}

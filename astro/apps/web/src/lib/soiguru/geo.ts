@@ -88,3 +88,15 @@ export function mapsEmbedUrl(parts: (string | undefined)[]): string {
     url.searchParams.set('output', 'embed');
     return url.toString();
 }
+
+/** Apple Maps: directions to the point (named), or a search for the place without coordinates. */
+export function appleMapsUrl(point: LatLng | undefined, parts: (string | undefined)[]): string {
+    const url = new URL('https://maps.apple.com/');
+    if (point) {
+        url.searchParams.set('daddr', `${point.lat},${point.lng}`);
+        if (parts[0]) url.searchParams.set('q', parts[0]);
+    } else {
+        url.searchParams.set('q', placeQuery(parts));
+    }
+    return url.toString();
+}

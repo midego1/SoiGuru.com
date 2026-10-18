@@ -25,7 +25,7 @@ import CategoryArt from '../../../components/soiguru/CategoryArt.astro';
 import { getSoiGuru, claimUrl, ownerUrl, reportUrl, type Listing } from '../../../lib/soiguru/data';
 import { breadcrumbJsonLd, localBusinessJsonLd } from '../../../lib/soiguru/jsonld';
 import { priceBand, formatDate } from '../../../lib/soiguru/format';
-import { directionsUrl, distanceMetres, mapsEmbedUrl, mapsSearchUrl } from '../../../lib/soiguru/geo';
+import { appleMapsUrl, directionsUrl, distanceMetres, mapsEmbedUrl, mapsSearchUrl } from '../../../lib/soiguru/geo';
 
 export async function getStaticPaths() {
     const { listings } = await getSoiGuru();
@@ -79,6 +79,7 @@ const more = listing.images.length - shown.length;
 const mapsSearch = mapsSearchUrl([listing.name, listing.address, area?.name, city.name]);
 // Without coordinates: Google's own embedded map for the same search shows the pin (no key needed).
 const mapsEmbed = mapsEmbedUrl([listing.name, listing.address, area?.name, city.name]);
+const appleMaps = appleMapsUrl(listing.geo, [listing.name, listing.address, area?.name, city.name]);
 const trail: [string, string][] = [
     [config.company_name, '/'],
     [city.name, `/${city.id}`],
@@ -220,16 +221,21 @@ const trail: [string, string][] = [
                                     <span data-distance></span>
                                 </p>
                             )}
-                            {listing.geo ? (
-                                <a class="sg-btn sg-btn-sea sg-btn-block sg-where-go" href={directionsUrl(listing.geo)} target="_blank" rel="noopener" data-umami-event="contact-directions">
-                                    <Icon name="pin" class="tkg-i-16" />
-                                    <span data-th="เส้นทาง">Directions</span>
+                            <div class="sg-where-btns">
+                                <a class="sg-btn sg-btn-sea" href={listing.geo ? directionsUrl(listing.geo) : mapsSearch} target="_blank" rel="noopener" data-umami-event="maps-google">
+                                    <Icon name="navigation" class="tkg-i-16" />
+                                    Google Maps
                                 </a>
-                            ) : (
-                                <a class="sg-btn sg-btn-secondary sg-btn-block sg-where-go" href={mapsSearch} target="_blank" rel="noopener" data-umami-event="contact-maps-search">
+                                <a class="sg-btn sg-btn-secondary" href={appleMaps} target="_blank" rel="noopener" data-umami-event="maps-apple">
                                     <Icon name="map" class="tkg-i-16" />
-                                    <span data-th="ค้นหาใน Google Maps">Find on Google Maps</span>
+                                    Apple Maps
                                 </a>
+                            </div>
+                            {listing.address && (
+                                <button type="button" class="sg-btn sg-btn-secondary sg-btn-block sg-where-copy" data-copy={listing.address} data-umami-event="copy-address">
+                                    <Icon name="copy" class="tkg-i-16" />
+                                    <span data-copy-label data-th="คัดลอกที่อยู่">Copy address</span>
+                                </button>
                             )}
                         </section>
                     )
