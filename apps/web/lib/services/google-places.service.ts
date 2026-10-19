@@ -1,4 +1,5 @@
 import { createHmac, timingSafeEqual } from 'node:crypto';
+import { takeMonthly } from '@/lib/soiguru/places-usage';
 
 /**
  * Google Places photos for SoiGuru listings (spec 056).
@@ -105,7 +106,8 @@ function distanceM(aLat: number, aLng: number, bLat: number, bLng: number): numb
 export async function findPlaceId(slug: string, listing: Listing, key: string): Promise<string | null> {
 	if (listing.placeId && /^[\w-]{10,300}$/.test(listing.placeId)) return listing.placeId;
 	if (placeIds.has(slug)) return placeIds.get(slug) ?? null;
-	if (!takeBudget()) return null;
+	// Text Search Pro is billable: only inside the free monthly usage (spec 060).
+	if (!takeBudget() || !(await takeMonthly('search'))) return null;
 	const hasGeo = typeof listing.lat === 'number' && typeof listing.lng === 'number';
 	const where = [listing.area?.replace(/-/g, ' '), listing.city ?? 'Krabi', 'Thailand'].filter(Boolean).join(', ');
 	const body: Record<string, unknown> = { textQuery: `${listing.name}, ${where}`, maxResultCount: 3 };
@@ -177,7 +179,8 @@ export async function listingPlace(
 export async function photoUri(name: string, maxWidth: number): Promise<string | null> {
 	const key = placesKey();
 	if (!key) return null;
-	if (!takeBudget()) return null;
+	// Place Details Photos is billable: only inside the free monthly usage (spec 060).
+	if (!takeBudget() || !(await takeMonthly('photo'))) return null;
 	const res = await fetch(`${API}/${name}/media?maxWidthPx=${maxWidth}&skipHttpRedirect=true`, {
 		headers: { 'X-Goog-Api-Key': key }
 	});

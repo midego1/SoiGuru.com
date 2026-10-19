@@ -309,6 +309,13 @@
       "when": 1792043126046,
       "tag": "0043_soiguru_listing_claims",
       "breakpoints": true
+    },
+    {
+      "idx": 44,
+      "version": "7",
+      "when": 1792416250654,
+      "tag": "0044_soiguru_places_usage",
+      "breakpoints": true
     }
   ]
 }

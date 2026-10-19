@@ -7,6 +7,10 @@ sidebar_position: 99
 
 # Documentation & Specs Change Log
 
+## 2026-10-19
+
+- `spec-060` `apps/web/lib/soiguru/places-usage.ts` `apps/web/lib/services/google-places.service.ts` `apps/web/lib/db/schema.ts` `apps/web/lib/db/migrations/0044_soiguru_places_usage.sql`: Google Places stays inside the free monthly usage: billable calls (photo images, Text Search Pro) are counted per billing month in `soiguru_places_usage` and skipped over 900 photos / 4,000 searches, paced over the month; refused when the count cannot be stored ([spec 060](spec/060-soiguru-places-free/spec.md)).
+
 ## 2026-10-18
 
 - `spec-059` `apps/web/lib/services/google-places.service.ts` `apps/web/app/api/places` `apps/web/lib/soiguru/places-http.ts`: Google photos faster and on listing cards: stored place IDs skip the search, the photos route returns `placeId`, new `/api/places/cards?slugs=` (first photo per card), daily Google budget `PLACES_DAILY_LIMIT` (default 4000) ([spec 059](spec/059-soiguru-places-speed/spec.md)).
