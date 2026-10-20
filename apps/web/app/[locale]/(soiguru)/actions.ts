@@ -15,6 +15,7 @@ import {
 } from '@/lib/soiguru/claims';
 import { getCategories, getCityListings } from '@/lib/soiguru/content';
 import { addSaved, removeSaved } from '@/lib/soiguru/saved';
+import { deletePhotoFile } from '@/lib/soiguru/photos';
 import { WEEKDAYS } from '@/lib/soiguru/types';
 
 /**
@@ -151,6 +152,45 @@ export async function saveDetails(formData: FormData) {
 	);
 	refresh(locale, city, listing.area, slug);
 	redirect(`${prefixOf(locale)}/owner/${city}/${slug}/details?saved=1`);
+}
+
+/* ── Owner photos (spec 061) ────────────────────────────────────────────── */
+
+/** Remove one photo from the listing (and its file, when it is an owner photo). */
+export async function removePhoto(formData: FormData) {
+	const locale = str(formData, 'locale', 5);
+	const city = str(formData, 'city', 40);
+	const slug = str(formData, 'listing', 120);
+	const url = str(formData, 'url', 400);
+	const { listing } = await requireEditor(locale, city, slug);
+	if (listing.images.includes(url)) {
+		await deletePhotoFile(slug, url);
+		await saveListingFields(
+			slug,
+			{ images: listing.images.filter((u) => u !== url) },
+			`Owner photos: ${city}/${slug} (removed one)`
+		);
+		refresh(locale, city, listing.area, slug);
+	}
+	redirect(`${prefixOf(locale)}/owner/${city}/${slug}/photos?saved=1`);
+}
+
+/** Make a photo the first one (the big photo on the listing and the card photo). */
+export async function coverPhoto(formData: FormData) {
+	const locale = str(formData, 'locale', 5);
+	const city = str(formData, 'city', 40);
+	const slug = str(formData, 'listing', 120);
+	const url = str(formData, 'url', 400);
+	const { listing } = await requireEditor(locale, city, slug);
+	if (listing.images.includes(url) && listing.images[0] !== url) {
+		await saveListingFields(
+			slug,
+			{ images: [url, ...listing.images.filter((u) => u !== url)] },
+			`Owner photos: ${city}/${slug} (new cover)`
+		);
+		refresh(locale, city, listing.area, slug);
+	}
+	redirect(`${prefixOf(locale)}/owner/${city}/${slug}/photos?saved=1`);
 }
 
 const TIME = /^([01]\d|2[0-4]):[0-5]\d$/;

@@ -77,6 +77,8 @@ function nudge(ctx: SgContext, l: Listing, base: string): { text: string; href: 
 	if (!l.lineId) return { text: ctx.t('owner.nudgeLine'), href: `${base}/details`, link: ctx.t('owner.addIt') };
 	if (!l.amenities.length)
 		return { text: ctx.t('owner.nudgeAmenities'), href: `${base}/amenities`, link: ctx.t('owner.addIt') };
+	if (!l.images.length)
+		return { text: ctx.t('owner.nudgePhotos'), href: `${base}/photos`, link: ctx.t('owner.addIt') };
 	return null;
 }
 
@@ -334,13 +336,18 @@ function ListingOverview({
 						</span>
 						<Icon name="chevron-right" className="tkg-i-chev" />
 					</Link>
-					<div className="tkg-row sg-row-muted">
+					<Link className="tkg-row" href={ctx.href(`${base}/photos`)}>
 						<Icon name="image" />
 						<span className="tkg-row-main">
 							{ctx.t('owner.photos')}
-							<small>{ctx.t('owner.photosSoon')}</small>
+							<small>
+								{l.images.length
+									? ctx.t('owner.photosSub', { count: l.images.length })
+									: ctx.t('owner.photosNone')}
+							</small>
 						</span>
-					</div>
+						<Icon name="chevron-right" className="tkg-i-chev" />
+					</Link>
 					<Link className="tkg-row" href={ctx.href(`${base}/billing`)}>
 						<Icon name="card" />
 						<span className="tkg-row-main">
