@@ -82,6 +82,7 @@ or architectural change.
 | 058 | [`soiguru-accounts`](058-soiguru-accounts/spec.md) | implemented | Accounts for the public site: `GET /api/soiguru/me` and `POST /api/soiguru/saved` with credentialed CORS for soiguru.com, `/return?to=` back to the public site after sign-in, SoiGuru-styled `/auth` shell, sign-in and register cards, `/auth/signout`; middleware keeps sign-out and honours safe callbacks. |
 | 059 | [`soiguru-places-speed`](059-soiguru-places-speed/spec.md) | implemented | Google photos faster and on cards: stored place IDs (`google_place_id`) skip the search, `/api/places/photos` returns `placeId`, `/api/places/cards?slugs=` gives one photo per card, daily Google budget `PLACES_DAILY_LIMIT`. |
 | 060 | [`soiguru-places-free`](060-soiguru-places-free/spec.md) | implemented | Google Places never billed: persistent monthly counter per billable SKU (`soiguru_places_usage`), caps under the free usage (900 photos, 4,000 searches), paced per day, refused when the count cannot be stored. |
+| 061 | [`soiguru-owner-photos`](061-soiguru-owner-photos/spec.md) | implemented | Owners add, order and remove up to eight photos: shrunk in the browser, stored in the content repo under `data/<slug>/photos/`, served at `soiguru.com/media/…` through the Worker edge cache; the first photo is the listing and card photo. |
 
 > **Status legend:**
 > _proposed_ = spec drafted, not yet planned/approved.

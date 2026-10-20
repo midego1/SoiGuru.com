@@ -652,6 +652,14 @@
 .sg-owner-thumb .sg-thumb, .sg-owner-thumb .sg-thumb-empty { width: 64px; height: 64px; border-radius: var(--radius-md); object-fit: cover; }
 .sg-owner-card { background: var(--surface); border: 1px solid var(--line); border-radius: var(--radius-lg); padding: var(--space-4); display: flex; flex-direction: column; gap: var(--space-2); }
 .sg-row-muted { color: var(--ink-muted); }
+/* Owner photos (spec 061): two-up grid on phones, cover tag on the first. */
+.sg-owner-photos { list-style: none; margin: 0 0 var(--space-4); padding: 0; display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: var(--space-3); }
+.sg-owner-photos li { position: relative; display: flex; flex-direction: column; gap: var(--space-2); }
+.sg-owner-photos img { width: 100%; aspect-ratio: 4 / 3; object-fit: cover; border-radius: var(--radius-md); background: var(--surface-200); }
+.sg-owner-photo-tag { position: absolute; top: var(--space-2); left: var(--space-2); background: var(--sea); color: var(--on-sea); font-size: 12px; font-weight: 600; padding: 2px var(--space-2); border-radius: var(--radius-pill); }
+.sg-owner-photo-actions { display: flex; flex-wrap: wrap; gap: var(--space-2); }
+.sg-owner-photo-actions form { margin: 0; }
+@media (min-width: 720px) { .sg-owner-photos { grid-template-columns: repeat(3, minmax(0, 1fr)); } }
 .sg-facts { display: grid; grid-template-columns: max-content minmax(0, 1fr); gap: 4px var(--space-3); margin: var(--space-2) 0 0; font-size: 14px; line-height: 20px; }
 .sg-facts dt { color: var(--ink-muted); }
 .sg-facts dd { margin: 0; overflow-wrap: anywhere; }

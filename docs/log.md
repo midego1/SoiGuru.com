@@ -7,6 +7,10 @@ sidebar_position: 99
 
 # Documentation & Specs Change Log
 
+## 2026-10-20
+
+- `spec-061` `apps/web/lib/soiguru/photos.ts` `apps/web/app/api/soiguru/owner/photos` `apps/web/app/api/soiguru/media` `apps/web/app/[locale]/(soiguru)/owner` `apps/web/components/soiguru/photo-upload.tsx`: owners add, order and remove up to eight photos of their listing; stored in the content repo and served through `soiguru.com/media/` ([spec 061](spec/061-soiguru-owner-photos/spec.md)).
+
 ## 2026-10-19
 
 - `spec-060` `apps/web/lib/soiguru/places-usage.ts` `apps/web/lib/services/google-places.service.ts` `apps/web/lib/db/schema.ts` `apps/web/lib/db/migrations/0044_soiguru_places_usage.sql`: Google Places stays inside the free monthly usage: billable calls (photo images, Text Search Pro) are counted per billing month in `soiguru_places_usage` and skipped over 900 photos / 4,000 searches, paced over the month; refused when the count cannot be stored ([spec 060](spec/060-soiguru-places-free/spec.md)).
