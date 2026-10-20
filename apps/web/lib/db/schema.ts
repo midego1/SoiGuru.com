@@ -1835,3 +1835,22 @@ export const listingClaims = pgTable(
 
 export type ListingClaim = typeof listingClaims.$inferSelect;
 export type NewListingClaim = typeof listingClaims.$inferInsert;
+
+/**
+ * Billable Google Places calls per month (spec 060). The owner app stays inside Google's free
+ * monthly usage: before each billable call it adds one to the month's count for that SKU and
+ * skips the call when the cap is reached. `month` is the Google billing month (`YYYY-MM`,
+ * Pacific time); `sku` is `photo` (Place Details Photos) or `search` (Text Search Pro).
+ */
+export const soiguruPlacesUsage = pgTable(
+	'soiguru_places_usage',
+	{
+		month: text('month').notNull(),
+		sku: text('sku').notNull(),
+		count: integer('count').notNull().default(0),
+		updatedAt: timestamp('updated_at').notNull().defaultNow()
+	},
+	(table) => ({
+		pk: primaryKey({ columns: [table.month, table.sku] })
+	})
+);
