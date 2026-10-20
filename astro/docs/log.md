@@ -3,6 +3,10 @@ title: "Change Log"
 sidebar_label: "Change Log"
 ---
 
+## 2026-10-20 — Google photos on cards off by default
+
+Google's free allowance is about 30 photos a day (owner app spec 060), and cards would use most of it, so listing cards keep their drawings unless `card_photos: true` is set in works.yml (`body[data-card-photos]`, `scripts/soiguru/places-cards.ts`). Listing pages keep their Google photos.
+
 ## 2026-10-18 — Copy icon also without an address
 
 138 of 169 listings have no address, so their Location card had no copy icon. They now show the area and city ("Ao Nang, Krabi") with the same icon, which copies the name, area and GPS coordinates ("Pad Thai, Ao Nang, Krabi (8.034045, 98.819141)"), handy for a taxi or Grab driver.

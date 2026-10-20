@@ -76,4 +76,7 @@ const observer = new IntersectionObserver(
     { rootMargin: '300px 0px' }
 );
 
-for (const el of document.querySelectorAll<HTMLElement>('[data-places-card]')) observer.observe(el);
+// Only when the site turns card photos on (`card_photos: true` in works.yml, `body[data-card-photos]`).
+if (document.body.dataset['cardPhotos'] === '1') {
+    for (const el of document.querySelectorAll<HTMLElement>('[data-places-card]')) observer.observe(el);
+}
