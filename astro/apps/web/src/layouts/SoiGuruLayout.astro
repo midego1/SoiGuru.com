@@ -62,6 +62,9 @@ const tab = navCity
             : undefined
     : undefined;
 const theme = siteTheme(config);
+// Google photos on listing cards (`card_photos: true` in works.yml). Off by default: Google's free
+// allowance is about 30 photos a day and cards would use most of it (owner app spec 060).
+const cardPhotos = config['card_photos'] === true;
 const siteUrl = (Astro.site?.href ?? 'https://soiguru.com/').replace(/\/$/, '');
 const canonical = `${siteUrl}${path}`;
 const metaTags = generateMetaTags({ title, description, url: canonical, type: 'website' }, {});
@@ -116,7 +119,7 @@ const metaTags = generateMetaTags({ title, description, url: canonical, type: 'w
         <script is:inline defer src="https://umami.midego.net/recorder.js" data-website-id="f0546456-1d42-40ae-9008-6be2c6510eaa"></script>
         <slot name="head" />
     </head>
-    <body data-tz={timeZone}>
+    <body data-tz={timeZone} data-card-photos={cardPhotos ? '1' : undefined}>
         <div class:list={['sg-page', { 'sg-page-wide': wide }]}>
             <slot />
             {footer && <SiteFooter city={city} />}
