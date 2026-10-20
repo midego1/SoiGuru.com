@@ -9,7 +9,7 @@ sidebar_position: 99
 
 ## 2026-10-20
 
-- `spec-061` `apps/web/lib/soiguru/photos.ts` `apps/web/app/api/soiguru/owner/photos` `apps/web/app/api/soiguru/media` `apps/web/app/[locale]/(soiguru)/owner` `apps/web/components/soiguru/photo-upload.tsx`: owners add, order and remove up to eight photos of their listing; stored in the content repo and served through `soiguru.com/media/` ([spec 061](spec/061-soiguru-owner-photos/spec.md)).
+- `spec-061` `apps/web/lib/soiguru/photos.ts` `apps/web/app/api/soiguru/owner/photos` `apps/web/app/api/soiguru/media` `apps/web/app/[locale]/(soiguru)/owner` `apps/web/components/soiguru/photo-upload.tsx`: owners add, order and remove up to eight photos of their listing; stored in the content repo and served through `soiguru.com/media/` ([spec 061](spec/061-soiguru-owner-photos/spec.md), PR #25, site Worker PR #26).
 
 ## 2026-10-19
 
