@@ -79,6 +79,21 @@ async function photo(search: string, owner: string): Promise<Response> {
     return new Response(res.body, { headers: { 'Content-Type': type, 'Cache-Control': 'private, max-age=300' } });
 }
 
+// Owner photos (spec 061) live in the content repo and are served by the owner app. They never
+// change under the same name, so the edge keeps them for a year.
+async function media(request: Request, path: string, owner: string): Promise<Response> {
+    if (!/^[a-z0-9-]{1,120}\/[a-z0-9]{6,40}\.(webp|jpg|png)$/.test(path)) return new Response('Not found', { status: 404 });
+    const cache = (caches as unknown as { default: Cache }).default;
+    const hit = await cache.match(request);
+    if (hit) return hit;
+    const res = await fetch(`${owner}/api/soiguru/media/${path}`);
+    const type = res.headers.get('content-type') ?? '';
+    if (!res.ok || !type.startsWith('image/')) return new Response('Not found', { status: 404 });
+    const out = new Response(res.body, { headers: { 'Content-Type': type, 'Cache-Control': 'public, max-age=31536000, immutable' } });
+    await cache.put(request, out.clone());
+    return out;
+}
+
 export default {
     async fetch(request: Request, env: Env): Promise<Response> {
         const url = new URL(request.url);
@@ -87,6 +102,7 @@ export default {
             if (url.pathname.startsWith('/api/places/photos/')) return await photoList(url.pathname.slice('/api/places/photos/'.length), owner);
             if (url.pathname === '/api/places/photo') return await photo(url.search, owner);
             if (url.pathname === '/api/places/cards') return await cardPhotos(url.search, owner);
+            if (url.pathname.startsWith('/media/') && request.method === 'GET') return await media(request, url.pathname.slice('/media/'.length), owner);
         } catch {
             return json({ photos: [] }, 502);
         }
