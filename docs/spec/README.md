@@ -83,6 +83,7 @@ or architectural change.
 | 059 | [`soiguru-places-speed`](059-soiguru-places-speed/spec.md) | implemented | Google photos faster and on cards: stored place IDs (`google_place_id`) skip the search, `/api/places/photos` returns `placeId`, `/api/places/cards?slugs=` gives one photo per card, daily Google budget `PLACES_DAILY_LIMIT`. |
 | 060 | [`soiguru-places-free`](060-soiguru-places-free/spec.md) | implemented | Google Places never billed: persistent monthly counter per billable SKU (`soiguru_places_usage`), caps under the free usage (900 photos, 4,000 searches), paced per day, refused when the count cannot be stored. |
 | 061 | [`soiguru-owner-photos`](061-soiguru-owner-photos/spec.md) | implemented | Owners add, order and remove up to eight photos: shrunk in the browser, stored in the content repo under `data/<slug>/photos/`, served at `soiguru.com/media/…` through the Worker edge cache; the first photo is the listing and card photo. |
+| 062 | [`soiguru-publish-on-edit`](062-soiguru-publish-on-edit/spec.md) | implemented | soiguru.com rebuilds and deploys on every push to the `data` branch (GitHub Actions + `wrangler deploy`), so owner edits and photos are live within minutes; bursts collapse into one deploy. |
 
 > **Status legend:**
 > _proposed_ = spec drafted, not yet planned/approved.
