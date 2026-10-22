@@ -9,6 +9,7 @@ sidebar_position: 99
 
 ## 2026-10-22
 
+- `spec-064` `apps/web/app/[locale]/(soiguru)/[city]/claim` `apps/web/components/soiguru/claim-photos.tsx` `apps/web/components/soiguru/photo-examples.tsx` `apps/web/lib/soiguru/claim-photos.ts` `apps/web/app/api/soiguru/claim/photos` `apps/web/lib/db/migrations/0045_soiguru_claim_photos.sql`: claim step "Your photos" (shop front required, inside, menu) with tips, example drawings and a camera/upload button; photos stay private with the claim, show on review and become the listing's first photos on approval ([spec 064](spec/064-soiguru-claim-photos/spec.md)).
 - `spec-063` `astro/apps/web/src/pages/for-owners.astro` `astro/apps/web/src/assets/for-owners` `astro/apps/web/src/components/soiguru/SiteFooter.astro` `astro/apps/web/src/components/soiguru/ClaimBox.astro`: "For business owners" page in English and Thai with screenshots of the claim steps and the owner dashboard, linked from the footer and the claim card ([spec 063](spec/063-soiguru-for-owners/spec.md), PR #30).
 - `spec-062` `.github/workflows/publish-site.yml`: soiguru.com republishes on every push to the `data` branch, so owner edits and photos go live within minutes instead of at the next manual deploy ([spec 062](spec/062-soiguru-publish-on-edit/spec.md), PRs #28 #29).
 

@@ -6,6 +6,8 @@ import { auth } from '@/lib/auth';
 import { Icon } from '@/components/soiguru/icon';
 import { Thumb } from '@/components/soiguru/parts';
 import { submitClaim } from '../../actions';
+import { ClaimPhotos } from '@/components/soiguru/claim-photos';
+import { listClaimPhotos } from '@/lib/soiguru/claim-photos';
 import { getClaimedSlugs } from '@/lib/soiguru/claims';
 import { getCity, getCityListings } from '@/lib/soiguru/content';
 import { areaName, categoryName, getSgContext, listingTitle, type SgContext } from '@/lib/soiguru/context';
@@ -14,8 +16,8 @@ import { matchesQuery } from '@/lib/soiguru/query';
 import type { City, Listing } from '@/lib/soiguru/types';
 
 /**
- * ClaimFlow (`/krabi/claim`): find your business → verify it's you → choose
- * a plan. Each step is a page state in the query string (`?listing=&step=`),
+ * ClaimFlow (`/krabi/claim`): find your business → verify it's you → your photos
+ * (spec 064) → choose a plan. Each step is a page state in the query string (`?listing=&step=`),
  * so the flow works without client script; the last step posts one server
  * action that files the claim. Verification (a call to the listing's phone)
  * and payment (PromptPay QR or card link by email) are done by hand for now.
@@ -42,7 +44,7 @@ export default async function ClaimPage({ params, searchParams }: { params: Para
 	const claimedInDb = await getClaimedSlugs(city.id);
 	const isClaimed = (l: Listing) => l.claimed || claimedInDb.has(l.slug);
 	const requested = Number(one(sp.step) ?? (selected ? 2 : 1));
-	const step = !selected || isClaimed(selected) ? 1 : requested === 3 ? 3 : 2;
+	const step = !selected || isClaimed(selected) ? 1 : requested === 3 || requested === 4 ? requested : 2;
 	const base = `/${city.id}/claim`;
 
 	return (
@@ -64,7 +66,7 @@ export default async function ClaimPage({ params, searchParams }: { params: Para
 				</Link>
 			</header>
 			<div className="tkg-steps" aria-hidden="true">
-				{[1, 2, 3].map((n) => (
+				{[1, 2, 3, 4].map((n) => (
 					<span key={n} className={n <= step ? 'tkg-done' : undefined} />
 				))}
 			</div>
@@ -374,6 +376,53 @@ async function VerifyAndPlan({
 					</button>
 				</div>
 			</form>
+		);
+	}
+
+	if (step === 3) {
+		const photos = await listClaimPhotos(session.user.id, city.id, listing.slug);
+		const initial = Object.fromEntries(photos.map((p) => [p.kind, p.id]));
+		const q = new URLSearchParams({ listing: listing.slug, step: '4', verify, phone: contact, note });
+		const slot = (k: 'Front' | 'Inside' | 'Menu') => ({
+			title: ctx.t(`claim.photo${k}`),
+			tip: ctx.t(`claim.photo${k}Tip`),
+			tag: ctx.t(`claim.photo${k}Tag`)
+		});
+		return (
+			<div className="sg-grow sg-flow-form">
+				<section className="tkg-section" style={{ paddingTop: 20, paddingBottom: 16 }}>
+					<div className="tkg-pad">
+						<h1 className="tkg-title" style={{ margin: '0 0 4px' }}>
+							{ctx.t('claim.photosTitle')}
+						</h1>
+						<p className="tkg-body tkg-muted" style={{ margin: '0 0 16px' }}>
+							{ctx.t('claim.photosBody')}
+						</p>
+					</div>
+					<ClaimPhotos
+						city={city.id}
+						listing={listing.slug}
+						initial={initial}
+						slots={{ front: slot('Front'), inside: slot('Inside'), menu: slot('Menu') }}
+						labels={{
+							take: ctx.t('claim.photoTake'),
+							retake: ctx.t('claim.photoRetake'),
+							uploading: ctx.t('claim.photoUploading'),
+							notAnImage: ctx.t('owner.photosNotImage'),
+							tooLarge: ctx.t('owner.photosTooLarge'),
+							failed: ctx.t('owner.photosFailed'),
+							signedOut: ctx.t('owner.signInTitle'),
+							needFront: ctx.t('claim.photoNeedFront'),
+							continueLabel: ctx.t('claim.continue')
+						}}
+						next={ctx.href(`/${city.id}/claim?${q.toString()}`)}
+						summary={{ title, sub: areaName(ctx, city, listing.area) }}
+					/>
+					<p className="tkg-help tkg-pad" style={{ marginTop: 12 }}>
+						{ctx.t('claim.photoNote')}
+					</p>
+				</section>
+			</div>
 		);
 	}
 

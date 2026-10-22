@@ -5,6 +5,8 @@ import { listingClaims, users, type ListingClaim } from '@/lib/db/schema';
 import { isAdmin } from '@/lib/db/roles';
 import { ItemRepository } from '@/lib/repositories/item.repository';
 import { invalidateContentCaches } from '@/lib/cache-invalidation';
+import { deleteClaimPhotos, publishClaimPhotos } from './claim-photos';
+import { getCityListings } from './content';
 
 /**
  * Listing claims (spec 054). Verification and payment are manual for now:
@@ -163,12 +165,22 @@ export async function decideClaim(id: string, adminId: string, approve: boolean,
 		})
 		.where(eq(listingClaims.id, id));
 	if (approve) {
+		// The claimant's photos (spec 064) become the listing's first photos.
+		let photos: string[] = [];
+		try {
+			photos = await publishClaimPhotos(claim.userId, claim.city, claim.listingSlug);
+		} catch (error) {
+			console.warn('[soiguru] claim photos not published:', error);
+		}
+		const current = (await getCityListings(claim.city)).find((l) => l.slug === claim.listingSlug)?.images ?? [];
 		await new ItemRepository().patchFields(
 			claim.listingSlug,
-			{ claimed: true, updated_by: 'owner' },
-			`Claim approved: ${claim.city}/${claim.listingSlug}`
+			{ claimed: true, updated_by: 'owner', ...(photos.length ? { images: [...photos, ...current] } : {}) },
+			`Claim approved: ${claim.city}/${claim.listingSlug}${photos.length ? ` (+${photos.length} photos)` : ''}`
 		);
 		await invalidateContentCaches();
+	} else {
+		await deleteClaimPhotos(claim.userId, claim.city, claim.listingSlug).catch(() => {});
 	}
 }
 
