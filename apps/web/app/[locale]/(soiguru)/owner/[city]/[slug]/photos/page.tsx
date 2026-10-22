@@ -3,6 +3,7 @@ import { notFound } from 'next/navigation';
 import { setRequestLocale } from 'next-intl/server';
 import { EditorBar, OwnerBar, SavedNote, SignInPrompt } from '@/components/soiguru/owner';
 import { PhotoUpload } from '@/components/soiguru/photo-upload';
+import { EXAMPLES } from '@/components/soiguru/photo-examples';
 import { coverPhoto, removePhoto } from '../../../../actions';
 import { getSgContext, listingTitle } from '@/lib/soiguru/context';
 import { getEditAccess } from '@/lib/soiguru/owner-access';
@@ -86,6 +87,32 @@ export default async function PhotosPage({ params, searchParams }: { params: Par
 								</li>
 							))}
 						</ul>
+					) : null}
+					{l.images.length < 3 ? (
+						<div style={{ margin: '0 -16px 16px' }}>
+							<p className="tkg-small tkg-muted tkg-pad" style={{ margin: '0 0 8px' }}>
+								{ctx.t('owner.photosGuide')}
+							</p>
+							<div className="sg-cp-slots">
+								{(['Front', 'Inside', 'Menu'] as const).map((k) => {
+									const Example = EXAMPLES[k.toLowerCase() as 'front' | 'inside' | 'menu'];
+									return (
+										<div key={k} className="sg-cp-slot">
+											<div className="sg-cp-pic">
+												<Example />
+												<span className="sg-cp-tag">{ctx.t(`claim.photo${k}Tag`)}</span>
+											</div>
+											<div>
+												<div className="tkg-strong">{ctx.t(`claim.photo${k}`)}</div>
+												<p className="tkg-help" style={{ margin: '2px 0 0' }}>
+													{ctx.t(`claim.photo${k}Tip`)}
+												</p>
+											</div>
+										</div>
+									);
+								})}
+							</div>
+						</div>
 					) : null}
 					<PhotoUpload
 						city={city.id}

@@ -4868,10 +4868,10 @@
 		"claim": {
 			"metaTitle": "Claim your listing · SoiGuru",
 			"title": "Claim your listing",
-			"step": "Step {n} of 3 · {name}",
+			"step": "Step {n} of 4 · {name}",
 			"step1": "Find your business",
 			"step2": "Verify it's you",
-			"step3": "Choose a plan",
+			"step3": "Your photos",
 			"close": "Close",
 			"findTitle": "Which business is yours?",
 			"findBody": "Most shops in {city} are already listed. Search by name or phone number.",
@@ -4917,7 +4917,24 @@
 			"payManual": "Nothing is charged now. Once we've confirmed it's you, we email you a PromptPay QR or a card payment link. Your Verified badge appears as soon as the payment arrives.",
 			"terms": "Yearly plans are refundable within 14 days. Receipts go to {email}.",
 			"summarySub": "Verified after payment",
-			"send": "Send claim"
+			"send": "Send claim",
+			"step4": "Choose a plan",
+			"photosTitle": "Three photos of your place",
+			"photosBody": "Visitors decide with their eyes. One photo of the shop front is required; inside and the menu make your page much stronger. Take them now with your phone, or pick them from your photos.",
+			"photoFront": "Shop front",
+			"photoFrontTip": "Daylight, straight on, the sign readable, nothing parked in front.",
+			"photoFrontTag": "Required",
+			"photoInside": "Inside",
+			"photoInsideTip": "Stand at the door, lights on, tidy. Show the room, not one table.",
+			"photoInsideTag": "Recommended",
+			"photoMenu": "Menu or services",
+			"photoMenuTip": "The menu board, a price list or what you sell, sharp and readable.",
+			"photoMenuTag": "Optional",
+			"photoTake": "Take a photo or upload",
+			"photoRetake": "Retake",
+			"photoUploading": "Uploading…",
+			"photoNeedFront": "Add the shop front photo to continue",
+			"photoNote": "These appear on your page once your claim is approved; until then only we see them. Only upload photos you took yourself."
 		},
 		"owner": {
 			"metaTitle": "Your listing · SoiGuru",
@@ -5029,7 +5046,10 @@
 			"photosTooLarge": "That photo is too large. Try a smaller one.",
 			"photosFailed": "The upload didn't work. Try again.",
 			"photosTips": "Good photos: daylight, the front of your place, inside, and what you sell. Only upload photos you took yourself.",
-			"photosPublish": "New photos appear on soiguru.com after the next site update."
+			"photosPublish": "New photos appear on soiguru.com after the next site update.",
+			"reviewPhotos": "Photos from the claimant",
+			"reviewPhotosNone": "none sent",
+			"photosGuide": "The three photos that matter most"
 		},
 		"saved": {
 			"title": "Saved",

@@ -7,6 +7,7 @@ import { Icon } from '@/components/soiguru/icon';
 import { OwnerBar, SignInPrompt } from '@/components/soiguru/owner';
 import { reviewClaim } from '../../actions';
 import { getRecentDecisions, getReviewQueue, PLAN_PRICE_THB, userIsAdmin } from '@/lib/soiguru/claims';
+import { listClaimPhotos } from '@/lib/soiguru/claim-photos';
 import { getCityListings } from '@/lib/soiguru/content';
 import { formatDay, getSgContext, listingPath, listingTitle } from '@/lib/soiguru/context';
 import { formatThaiPhone } from '@/lib/soiguru/format';
@@ -52,7 +53,13 @@ export default async function ReviewPage({ params, searchParams }: { params: Par
 		if (!cache.has(city)) cache.set(city, await getCityListings(city));
 		return cache.get(city)!.find((l) => l.slug === slug);
 	};
-	const rows = await Promise.all(queue.map(async (c) => ({ claim: c, listing: await find(c.city, c.listingSlug) })));
+	const rows = await Promise.all(
+		queue.map(async (c) => ({
+			claim: c,
+			listing: await find(c.city, c.listingSlug),
+			photos: await listClaimPhotos(c.userId, c.city, c.listingSlug)
+		}))
+	);
 	const done = Array.isArray(sp.done) ? sp.done[0] : sp.done;
 
 	return (
@@ -79,7 +86,7 @@ export default async function ReviewPage({ params, searchParams }: { params: Par
 			<section className="tkg-section">
 				{rows.length ? (
 					<div className="tkg-stack tkg-pad">
-						{rows.map(({ claim: c, listing: l }) => (
+						{rows.map(({ claim: c, listing: l, photos }) => (
 							<form key={c.id} className="sg-owner-card" action={reviewClaim}>
 								<input type="hidden" name="locale" value={locale} />
 								<input type="hidden" name="id" value={c.id} />
@@ -126,6 +133,24 @@ export default async function ReviewPage({ params, searchParams }: { params: Par
 										</>
 									) : null}
 								</dl>
+								<div className="tkg-small tkg-muted" style={{ marginTop: 8 }}>
+									{ctx.t('owner.reviewPhotos')}
+									{photos.length ? '' : ` · ${ctx.t('owner.reviewPhotosNone')}`}
+								</div>
+								{photos.length ? (
+									<div className="sg-review-photos">
+										{photos.map((p) => (
+											<figure key={p.id}>
+												<img src={`/api/soiguru/claim/photos/${p.id}`} alt="" loading="lazy" />
+												<figcaption>
+													{ctx.t(
+														`claim.photo${p.kind === 'front' ? 'Front' : p.kind === 'inside' ? 'Inside' : 'Menu'}`
+													)}
+												</figcaption>
+											</figure>
+										))}
+									</div>
+								) : null}
 								<div className="tkg-field" style={{ marginTop: 8 }}>
 									<label htmlFor={`n-${c.id}`}>
 										{ctx.t('owner.reviewNote')} <small>· {ctx.t('owner.optional')}</small>

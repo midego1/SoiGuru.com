@@ -11,7 +11,8 @@ import { useRouter } from 'next/navigation';
 
 const MAX_SIDE = 1600;
 
-async function shrink(file: File): Promise<Blob> {
+/** Scale a picked photo to at most 1600px and encode it small (WebP, else JPEG). */
+export async function shrink(file: File): Promise<Blob> {
 	const bitmap = await createImageBitmap(file);
 	const scale = Math.min(1, MAX_SIDE / Math.max(bitmap.width, bitmap.height));
 	const w = Math.round(bitmap.width * scale);

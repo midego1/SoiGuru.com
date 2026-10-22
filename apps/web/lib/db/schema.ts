@@ -11,7 +11,8 @@ import {
 	index,
 	jsonb,
 	check,
-	doublePrecision
+	doublePrecision,
+	customType
 } from 'drizzle-orm/pg-core';
 import { sql } from 'drizzle-orm';
 import type { AdapterAccountType } from 'next-auth/adapters';
@@ -1852,5 +1853,39 @@ export const soiguruPlacesUsage = pgTable(
 	},
 	(table) => ({
 		pk: primaryKey({ columns: [table.month, table.sku] })
+	})
+);
+
+/** Raw image bytes (Postgres `bytea`) for photos kept with a claim until it is approved. */
+const bytea = customType<{ data: Buffer; driverData: Buffer }>({
+	dataType() {
+		return 'bytea';
+	}
+});
+
+/**
+ * Photos a claimant takes while claiming a SoiGuru listing (spec 064): the shop front, the
+ * inside and the menu. Kept here, private, until the admin approves the claim; then written
+ * into the content repo as the listing's first photos and deleted.
+ */
+export const soiguruClaimPhotos = pgTable(
+	'soiguru_claim_photos',
+	{
+		id: text('id')
+			.primaryKey()
+			.$defaultFn(() => crypto.randomUUID()),
+		userId: text('user_id')
+			.notNull()
+			.references(() => users.id, { onDelete: 'cascade' }),
+		city: text('city').notNull(),
+		listingSlug: text('listing_slug').notNull(),
+		/** `front` | `inside` | `menu` */
+		kind: text('kind').notNull(),
+		contentType: text('content_type').notNull(),
+		bytes: bytea('bytes').notNull(),
+		createdAt: timestamp('created_at').notNull().defaultNow()
+	},
+	(table) => ({
+		slot: uniqueIndex('soiguru_claim_photos_slot_idx').on(table.userId, table.city, table.listingSlug, table.kind)
 	})
 );

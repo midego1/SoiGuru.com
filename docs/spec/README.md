@@ -85,6 +85,7 @@ or architectural change.
 | 061 | [`soiguru-owner-photos`](061-soiguru-owner-photos/spec.md) | implemented | Owners add, order and remove up to eight photos: shrunk in the browser, stored in the content repo under `data/<slug>/photos/`, served at `soiguru.com/media/…` through the Worker edge cache; the first photo is the listing and card photo. |
 | 062 | [`soiguru-publish-on-edit`](062-soiguru-publish-on-edit/spec.md) | implemented | soiguru.com rebuilds and deploys on every push to the `data` branch (GitHub Actions + `wrangler deploy`), so owner edits and photos are live within minutes; bursts collapse into one deploy. |
 | 063 | [`soiguru-for-owners`](063-soiguru-for-owners/spec.md) | implemented | `/for-owners` and `/th/for-owners`: what SoiGuru is, what claiming gives an owner, the five claim steps with phone screenshots of the real screens, the dashboard, questions; linked from the footer and the claim card. |
+| 064 | [`soiguru-claim-photos`](064-soiguru-claim-photos/spec.md) | implemented | Claim step "Your photos": shop front (required), inside, menu, with tips, example drawings and a camera/upload button; kept privately with the claim (`soiguru_claim_photos`), shown on review, published as the listing's first photos on approval. |
 
 > **Status legend:**
 > _proposed_ = spec drafted, not yet planned/approved.
