@@ -1,18 +1,36 @@
 ---
 /**
- * Logo — the SoiGuru mark from the website mockup: two limestone karsts on a dark tile, with
- * the accent line of the sea under them. Colours come from the theme tokens.
+ * Logo — the SoiGuru horizontal lockup from the brand asset sheet: the Thai street sign
+ * ("Soi"), map pin and noodle bowl, followed by the "SoiGuru.com" wordmark.
+ *
+ * Raster (WebP) because the master artwork is raster; 1x/2x/3x sources keep it sharp.
+ * `tone="dark"` swaps to the variant with a white wordmark for dark surfaces (footer).
+ * Source files: public/brand/ (transparent PNG masters for other uses sit next to them).
  */
 interface Props {
-    /** Size in px */
-    size?: number;
+    /** `light` for light surfaces (header), `dark` for dark surfaces (footer). */
+    tone?: 'light' | 'dark';
+    /** Accessible name; leave empty when the surrounding link already has an aria-label. */
+    alt?: string;
+    /** Eager-load and raise fetch priority (the header logo is above the fold). */
+    priority?: boolean;
 }
 
-const { size = 34 } = Astro.props;
+const { tone = 'light', alt = '', priority = false } = Astro.props;
+const base = tone === 'dark' ? '/brand/logo-horizontal-on-dark' : '/brand/logo-horizontal';
+// Intrinsic size of the 1x source (191x44). CSS sets the rendered height; width follows.
+const WIDTH = 191;
+const HEIGHT = 44;
 ---
 
-<svg class="sg-logo-mark" width={size} height={size} viewBox="0 0 34 34" aria-hidden="true" focusable="false">
-    <rect width="34" height="34" rx="9" fill="var(--hero-bg)"></rect>
-    <path d="M6 25 L12 12 L16 19 L20 9 L28 25 Z" fill="#ffffff"></path>
-    <path d="M6 27 H28" stroke="var(--accent)" stroke-width="2.5" stroke-linecap="round"></path>
-</svg>
+<img
+    class="sg-logo-img"
+    src={`${base}-88.webp`}
+    srcset={`${base}-44.webp 1x, ${base}-88.webp 2x, ${base}-132.webp 3x`}
+    width={WIDTH}
+    height={HEIGHT}
+    alt={alt}
+    decoding="async"
+    loading={priority ? 'eager' : 'lazy'}
+    fetchpriority={priority ? 'high' : undefined}
+/>
