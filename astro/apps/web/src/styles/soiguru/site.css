@@ -3882,10 +3882,6 @@ html[data-lang='en'] .sg-sf-lang[data-lang-set='en'] {
     .sg-own-shots {
         grid-template-columns: repeat(3, minmax(0, 1fr));
     }
-    /* five steps on three columns: the last two keep their width, centred */
-    .sg-own-step:nth-child(4) {
-        grid-column: 1 / 2;
-    }
 }
 .sg-claim-how {
     margin: var(--space-3) 0 0;
