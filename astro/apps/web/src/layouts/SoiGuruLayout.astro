@@ -67,7 +67,11 @@ const theme = siteTheme(config);
 const cardPhotos = config['card_photos'] === true;
 const siteUrl = (Astro.site?.href ?? 'https://soiguru.com/').replace(/\/$/, '');
 const canonical = `${siteUrl}${path}`;
-const metaTags = generateMetaTags({ title, description, url: canonical, type: 'website' }, {});
+// Share card: the stacked brand logo (public/og-image.png, 1200x630).
+const metaTags = generateMetaTags(
+    { title, description, url: canonical, type: 'website' },
+    { defaultOgImage: `${siteUrl}/og-image.png` },
+);
 ---
 
 <!doctype html>
@@ -93,9 +97,10 @@ const metaTags = generateMetaTags({ title, description, url: canonical, type: 'w
                 <link rel="icon" href={config.logo.favicon} />
             ) : (
                 <>
-                    <link rel="icon" href="/favicon.ico" sizes="48x48" />
-                    <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
-                    <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
+                    <link rel="icon" href="/favicon.ico" sizes="16x16 32x32 48x48" />
+                    <link rel="icon" href="/favicon-32.png" type="image/png" sizes="32x32" />
+                    <link rel="icon" href="/favicon-16.png" type="image/png" sizes="16x16" />
+                    <link rel="apple-touch-icon" href="/apple-touch-icon.png" sizes="180x180" />
                     <link rel="manifest" href="/site.webmanifest" />
                 </>
             )
