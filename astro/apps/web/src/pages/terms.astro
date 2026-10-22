@@ -1,0 +1,81 @@
+---
+/**
+ * Terms of use (`/terms`, spec 065): what SoiGuru is and is not, the rules for owner accounts,
+ * claims, owner content and the paid plan, listings of businesses that did not claim, and
+ * liability. English with Thai on every text (`data-th`), so `/th/terms` is the Thai page.
+ */
+import SoiGuruLayout from '../layouts/SoiGuruLayout.astro';
+import TopBar from '../components/soiguru/TopBar.astro';
+import { getSoiGuru } from '../lib/soiguru/data';
+
+const { config, cities } = await getSoiGuru();
+const city = cities[0];
+const updated = '2026-10-22';
+const support = 'support@soiguru.com';
+---
+
+<SoiGuruLayout
+    title={`Terms of use · ${config.company_name}`}
+    description="The rules for using SoiGuru, for claiming a listing and for the paid owner plan."
+    config={config}
+    path="/terms"
+    city={city}
+>
+    <TopBar city={city} />
+    <main class="sg-wrap sg-doc">
+        <p class="sg-eyebrow" data-th="ข้อกำหนดการใช้งาน">Terms of use</p>
+        <h1 class="sg-h-xl" data-th="กติกาของ SoiGuru">The rules of SoiGuru</h1>
+        <p class="sg-lead" data-th="อ่านง่ายๆ: สำหรับผู้เข้าชม เจ้าของร้าน และธุรกิจที่อยู่ในรายการ">In plain words, for visitors, owners and the businesses listed.</p>
+        <p class="sg-doc-meta"><span data-th="ปรับปรุงล่าสุด">Last updated</span> {updated}</p>
+
+        <h2 class="sg-h-md" data-th="SoiGuru คืออะไร">What SoiGuru is</h2>
+        <p data-th="SoiGuru เป็นคู่มือท้องถิ่นฟรี ที่แสดงร้านค้า ร้านอาหาร และบริการในเมืองไทย พร้อมเวลาเปิด-ปิดและช่องทางติดต่อ เราพยายามให้ข้อมูลถูกต้อง แต่ธุรกิจเปลี่ยนเวลา ย้าย หรือปิดได้ทุกเมื่อ หน้าที่ยังไม่ได้รับการดูแลโดยเจ้าของจะมีข้อความบอกไว้ หากการเดินทางสำคัญสำหรับคุณ โทรไปก่อน">SoiGuru is a free local guide to shops, restaurants and services in Thai towns, with opening hours and contact details. We try to keep it right, but businesses change hours, move or close at any time. Pages not yet managed by their owner say so. If a trip matters, call first.</p>
+        <p data-th="SoiGuru ไม่ใช่คู่สัญญาในสิ่งที่คุณซื้อหรือจองกับธุรกิจ ข้อตกลงนั้นอยู่ระหว่างคุณกับธุรกิจเท่านั้น">SoiGuru is not a party to anything you buy or book with a business. That is between you and the business.</p>
+
+        <h2 class="sg-h-md" data-th="การใช้เว็บไซต์">Using the site</h2>
+        <ul class="sg-doc-list">
+            <li data-th="ใช้ SoiGuru ได้ฟรีเพื่อการส่วนตัวและเพื่อหาสถานที่">You may use SoiGuru freely to find places, for yourself or your guests.</li>
+            <li data-th="ห้ามคัดลอกรายการทั้งหมดไปใช้ในบริการอื่น ส่งคำขออัตโนมัติจำนวนมาก หรือพยายามเจาะระบบ">Do not copy the listings in bulk for another service, hammer the site with automated requests, or try to break into it.</li>
+            <li data-th="แผนที่และข้อมูลบางส่วนมาจาก OpenStreetMap (ODbL) และ Google ตามเงื่อนไขของผู้ให้บริการเหล่านั้น">Maps and some data come from OpenStreetMap (ODbL) and from Google, under their own terms.</li>
+        </ul>
+
+        <h2 class="sg-h-md" data-th="บัญชีเจ้าของร้าน">Owner accounts</h2>
+        <ul class="sg-doc-list">
+            <li data-th="คุณต้องมีอายุ 18 ปีขึ้นไป ให้อีเมลที่ใช้งานได้จริง และรักษารหัสผ่านของคุณไว้ สิ่งที่ทำผ่านบัญชีของคุณถือเป็นการกระทำของคุณ">You must be 18 or older, give a working email address and keep your password to yourself. What happens through your account counts as yours.</li>
+            <li data-th="คุณลบบัญชีได้ทุกเมื่อโดยส่งอีเมลมาหาเรา">You can delete your account at any time by emailing us.</li>
+        </ul>
+
+        <h2 class="sg-h-md" data-th="การเคลมหน้าร้าน">Claiming a listing</h2>
+        <ul class="sg-doc-list">
+            <li data-th="เคลมได้เฉพาะเจ้าของหรือผู้จัดการที่ได้รับมอบอำนาจของธุรกิจนั้น เราตรวจสอบโดยโทรไปที่เบอร์บนหน้าร้าน หรือดูรูปป้ายร้านและบัตรประชาชน">Only the owner, or a manager the owner has authorised, may claim a business. We verify by calling the number on the listing, or from a photo of the shop sign and an ID.</li>
+            <li data-th="เราอาจปฏิเสธหรือยกเลิกการเคลมได้ เช่น เมื่อมีคนอื่นเคลมโดยชอบ หรือเมื่อข้อมูลที่ให้ไม่ถูกต้อง การเคลมเท็จจะถูกลบและบัญชีอาจถูกปิด">We may refuse or withdraw a claim, for example when someone else has a better claim or the details given were false. A false claim is removed and the account may be closed.</li>
+            <li data-th="หากธุรกิจเปลี่ยนเจ้าของ ให้แจ้งเราทางอีเมล เราจะโอนหน้าร้านให้เจ้าของใหม่หลังตรวจสอบ">If the business changes hands, email us; we move the page to the new owner after checking.</li>
+        </ul>
+
+        <h2 class="sg-h-md" data-th="เนื้อหาที่เจ้าของร้านเพิ่ม">What owners add</h2>
+        <ul class="sg-doc-list">
+            <li data-th="รูปและข้อความที่คุณเพิ่มยังเป็นของคุณ คุณอนุญาตให้ SoiGuru แสดง ปรับขนาด และแคชสิ่งเหล่านั้นบน soiguru.com และในผลการค้นหา ตราบที่หน้าร้านของคุณยังอยู่">Photos and texts you add stay yours. You allow SoiGuru to show, resize and cache them on soiguru.com and in search results for as long as your page exists.</li>
+            <li data-th="อัปโหลดเฉพาะรูปที่คุณถ่ายเองหรือมีสิทธิ์ใช้ ห้ามใช้รูปจาก Google หรือจากธุรกิจอื่น">Upload only photos you took yourself or have the right to use. No photos from Google or from other businesses.</li>
+            <li data-th="ข้อมูลต้องเป็นจริง: เวลาเปิด-ปิดจริง ราคาจริง ไม่มีเนื้อหาผิดกฎหมายหรือทำให้เข้าใจผิด เราอาจลบหรือแก้ไขเนื้อหาที่ละเมิดข้อนี้ได้โดยไม่ต้องแจ้งล่วงหน้า">Keep it true: real hours, real prices, nothing illegal or misleading. We may remove or correct content that breaks this without notice.</li>
+        </ul>
+
+        <h2 class="sg-h-md" data-th="แพ็กเกจเจ้าของร้าน">The owner plan</h2>
+        <ul class="sg-doc-list">
+            <li data-th="การอยู่ในรายการฟรีเสมอ แพ็กเกจเจ้าของร้าน (฿100 ต่อเดือน หรือ ฿1,000 ต่อปี) ให้คุณแก้ไขหน้าร้านและได้ป้ายยืนยันเจ้าของร้าน">Being listed is always free. The owner plan (฿100 per month or ฿1,000 per year) lets you manage your page and shows the Verified owner badge.</li>
+            <li data-th="ไม่มีการเรียกเก็บเงินจนกว่าการเคลมจะได้รับการยืนยัน จากนั้นเราส่ง QR พร้อมเพย์หรือลิงก์ชำระด้วยบัตรให้ทางอีเมล ไม่มีการตัดเงินอัตโนมัติ เราส่งลิงก์ชำระเงินล่วงหน้า 14 วันก่อนแพ็กเกจหมดอายุ">Nothing is charged until your claim is confirmed. Then we email a PromptPay QR or a card payment link. Nothing is charged automatically; we email a payment link 14 days before the plan ends.</li>
+            <li data-th="รายเดือน: ยกเลิกได้ทุกเมื่อ มีผลเมื่อสิ้นเดือนที่ชำระแล้ว รายปี: ขอคืนเงินเต็มจำนวนได้ภายใน 14 วันหลังชำระ หลังจากนั้นไม่คืนเงิน">Monthly: cancel any time, effective at the end of the paid month. Yearly: a full refund within 14 days of payment; after that no refund.</li>
+            <li data-th="หากไม่ชำระต่อ ป้ายยืนยันและการแก้ไขจะหยุด แต่หน้าร้านของคุณยังอยู่บน SoiGuru พร้อมข้อมูลล่าสุด">If a plan is not renewed, the badge and editing stop, but your page stays on SoiGuru with its latest details.</li>
+            <li data-th="ราคารวมภาษีมูลค่าเพิ่มหากมี ใบเสร็จส่งทางอีเมล">Prices include VAT where it applies. Receipts go by email.</li>
+        </ul>
+
+        <h2 class="sg-h-md" data-th="ธุรกิจที่ไม่ได้เคลม">Businesses that have not claimed</h2>
+        <p data-th="SoiGuru แสดงข้อมูลธุรกิจสาธารณะของร้านในเมืองที่เราครอบคลุม เพื่อให้คู่มือนี้ใช้ได้จริง ถ้าคุณเป็นเจ้าของและต้องการแก้ไขข้อมูล ให้เคลมหน้าร้าน (ฟรีที่จะมีรายการ) หรือใช้ “รายงานข้อมูลผิด” หากต้องการให้ลบหน้าร้าน ส่งอีเมลจากที่อยู่ของธุรกิจมาหาเรา เราจะดำเนินการภายใน 7 วัน">SoiGuru shows public business information for places in the towns we cover, so the guide is useful. If you own one and want it corrected, claim the page (being listed is free) or use “Report wrong info”. If you want the page removed, email us from a business address; we act within seven days.</p>
+
+        <h2 class="sg-h-md" data-th="ความรับผิด">Liability</h2>
+        <p data-th="SoiGuru ให้บริการตามสภาพที่เป็นอยู่ เราไม่รับประกันว่าข้อมูลทุกอย่างถูกต้องหรือเว็บไซต์ใช้งานได้ตลอดเวลา เท่าที่กฎหมายอนุญาต เราไม่รับผิดต่อความเสียหายจากการใช้ SoiGuru หรือจากธุรกิจที่อยู่ในรายการ สำหรับเจ้าของร้าน ความรับผิดของเราจำกัดอยู่ที่จำนวนเงินที่คุณชำระให้เราในช่วง 12 เดือนที่ผ่านมา">SoiGuru is provided as it is. We do not promise that every detail is right or that the site is always up. As far as the law allows, we are not liable for losses from using SoiGuru or from a business listed on it. For owners, our liability is limited to what you paid us in the past twelve months.</p>
+
+        <h2 class="sg-h-md" data-th="กฎหมายและการติดต่อ">Law and contact</h2>
+        <p data-th={`ข้อกำหนดนี้อยู่ภายใต้กฎหมายไทย เราอาจปรับปรุงข้อกำหนดได้ วันที่ด้านบนจะเปลี่ยน และเจ้าของบัญชีจะได้รับอีเมลแจ้งเมื่อการเปลี่ยนแปลงกระทบพวกเขา ติดต่อ: ${support}`}>These terms are governed by Thai law. We may update them; the date at the top changes, and account holders get an email when a change affects them. Contact: {support}.</p>
+        <p class="sg-doc-meta"><a href="/privacy" data-th="นโยบายความเป็นส่วนตัว">Privacy policy</a></p>
+    </main>
+</SoiGuruLayout>
