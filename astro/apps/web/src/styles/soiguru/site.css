@@ -3677,8 +3677,14 @@ html[data-lang='en'] .sg-sf-lang[data-lang-set='en'] {
     height: 28px;
     color: var(--sea);
 }
+.sg-own-card-h {
+    display: flex;
+    align-items: center;
+    gap: var(--space-2);
+    margin-bottom: 6px;
+}
 .sg-own-card h3 {
-    margin: var(--space-2) 0 4px;
+    margin: 0;
     font-size: 17px;
     line-height: 24px;
     font-weight: 600;
@@ -3750,7 +3756,14 @@ html[data-lang='en'] .sg-sf-lang[data-lang-set='en'] {
 .sg-own-step-text {
     flex: 1 1 auto;
 }
+.sg-own-step-h {
+    display: flex;
+    align-items: center;
+    gap: var(--space-2);
+    margin-bottom: 6px;
+}
 .sg-own-step-num {
+    flex: 0 0 auto;
     display: inline-flex;
     align-items: center;
     justify-content: center;
@@ -3761,10 +3774,9 @@ html[data-lang='en'] .sg-sf-lang[data-lang-set='en'] {
     color: var(--on-sea);
     font-size: 14px;
     font-weight: 700;
-    margin-bottom: var(--space-2);
 }
 .sg-own-step h3 {
-    margin: 0 0 6px;
+    margin: 0;
     font-size: 18px;
     line-height: 1.25;
     font-weight: 700;
