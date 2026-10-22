@@ -3893,3 +3893,34 @@ html[data-lang='th'] .sg-lang-en,
 html:not([data-lang='th']) .sg-lang-th {
     display: none;
 }
+
+/* ---------- legal pages (/privacy, /terms, spec 065) ---------- */
+.sg-doc {
+    max-width: 720px;
+    padding-top: 32px;
+    padding-bottom: 56px;
+}
+.sg-doc .sg-h-md {
+    margin: 32px 0 8px;
+}
+.sg-doc p {
+    margin: 0 0 12px;
+    font-size: 16px;
+    line-height: 1.6;
+}
+.sg-doc-meta {
+    color: var(--ink-muted);
+    font-size: 14px;
+}
+.sg-doc-list {
+    margin: 0 0 12px;
+    padding-left: 20px;
+}
+.sg-doc-list li {
+    margin: 0 0 8px;
+    font-size: 16px;
+    line-height: 1.6;
+}
+.sg-sf-legal a {
+    color: inherit;
+}

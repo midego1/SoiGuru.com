@@ -1,0 +1,73 @@
+---
+/**
+ * Privacy policy (`/privacy`, spec 065): what SoiGuru keeps about visitors and about business
+ * owners, why, for how long, who else sees it, and the rights under Thailand's PDPA. English
+ * with Thai on every text (`data-th`), so `/th/privacy` is the Thai page. Linked from the footer.
+ */
+import SoiGuruLayout from '../layouts/SoiGuruLayout.astro';
+import TopBar from '../components/soiguru/TopBar.astro';
+import { getSoiGuru } from '../lib/soiguru/data';
+
+const { config, cities } = await getSoiGuru();
+const city = cities[0];
+const updated = '2026-10-22';
+const support = 'support@soiguru.com';
+---
+
+<SoiGuruLayout
+    title={`Privacy policy · ${config.company_name}`}
+    description="What SoiGuru keeps about visitors and business owners, why, for how long, and your rights."
+    config={config}
+    path="/privacy"
+    city={city}
+>
+    <TopBar city={city} />
+    <main class="sg-wrap sg-doc">
+        <p class="sg-eyebrow" data-th="นโยบายความเป็นส่วนตัว">Privacy policy</p>
+        <h1 class="sg-h-xl" data-th="สิ่งที่เราเก็บ และเหตุผล">What we keep, and why</h1>
+        <p class="sg-lead" data-th="SoiGuru เป็นคู่มือท้องถิ่นฟรี ผู้เข้าชมใช้ได้โดยไม่ต้องมีบัญชี เจ้าของธุรกิจสร้างบัญชีเพื่อดูแลหน้าร้านของตน นี่คือสิ่งที่เราเก็บในแต่ละกรณี">SoiGuru is a free local guide. Visitors use it without an account; business owners create one to manage their page. This is what we keep in each case.</p>
+        <p class="sg-doc-meta"><span data-th="ปรับปรุงล่าสุด">Last updated</span> {updated}</p>
+
+        <h2 class="sg-h-md" data-th="ผู้ให้บริการ">Who runs SoiGuru</h2>
+        <p data-th={`SoiGuru ดำเนินการโดยทีม SoiGuru ประเทศไทย คำถามเกี่ยวกับข้อมูลของคุณ ส่งอีเมลมาที่ ${support}`}>SoiGuru is run by the SoiGuru team in Thailand. Questions about your data: email {support}.</p>
+
+        <h2 class="sg-h-md" data-th="ผู้เข้าชม">Visitors</h2>
+        <ul class="sg-doc-list">
+            <li data-th="ไม่ต้องมีบัญชี เราไม่ขอชื่อ อีเมล หรือเบอร์โทรของคุณ">No account is needed. We never ask for your name, email or phone number.</li>
+            <li data-th="สถานที่ที่คุณบันทึก (รูปหัวใจ) จะถูกเก็บไว้ในโทรศัพท์หรือเบราว์เซอร์ของคุณเท่านั้น ไม่ถูกส่งมาหาเรา">Places you save (the heart) are kept on your own phone or browser only. They are never sent to us.</li>
+            <li data-th="ตำแหน่งของคุณ (สำหรับระยะทางและ “ใกล้ฉัน”) จะถูกประมวลผลในเบราว์เซอร์ของคุณเท่านั้น หลังจากที่คุณอนุญาต เราไม่ได้รับตำแหน่งของคุณ">Your location, for distances and “near me”, is used inside your browser only, after you allow it. We do not receive it.</li>
+            <li data-th="เราใช้ Umami ซึ่งเป็นระบบสถิติที่เราโฮสต์เอง เพื่อนับจำนวนการเข้าชมหน้า ไม่มีคุกกี้ ไม่เก็บ IP address และไม่สามารถระบุตัวคุณได้">We count page views with Umami, analytics we host ourselves. It uses no cookies, does not store your IP address and cannot identify you.</li>
+            <li data-th="หน้าร้านบางหน้าแสดงรูปและแผนที่จาก Google และแผนที่จาก OpenStreetMap เมื่อโหลดเนื้อหาเหล่านี้ ผู้ให้บริการนั้นจะเห็น IP address ของคุณตามนโยบายของเขา">Some listing pages show photos and a map from Google, and maps from OpenStreetMap. When these load, that provider sees your IP address under its own policy.</li>
+        </ul>
+
+        <h2 class="sg-h-md" data-th="เจ้าของธุรกิจ">Business owners</h2>
+        <p data-th="เมื่อคุณสร้างบัญชีและเคลมร้าน เราเก็บสิ่งต่อไปนี้">When you create an account and claim a listing, we keep:</p>
+        <ul class="sg-doc-list">
+            <li data-th="อีเมลและรหัสผ่านของคุณ (เก็บแบบเข้ารหัสทางเดียว เราไม่เห็นรหัสผ่าน) เพื่อให้คุณเข้าสู่ระบบและรับใบเสร็จ">Your email address and password (stored as a one-way hash; we cannot see it), so you can sign in and receive receipts.</li>
+            <li data-th="รายละเอียดการเคลม: ร้านที่คุณเคลม แพ็กเกจ วิธีชำระเงิน เบอร์โทรที่ติดต่อได้ และข้อความที่คุณฝากไว้ เราโทรไปที่เบอร์นั้นเพื่อยืนยันว่าคุณดูแลธุรกิจนี้จริง">Your claim: the listing, the plan, how you want to pay, a phone number we can reach you on, and any note you leave. We call that number to confirm you run the business.</li>
+            <li data-th="รูปที่คุณถ่าย (หน้าร้าน ในร้าน เมนู) จนกว่าคำขอจะได้รับการอนุมัติ มีเพียงเราที่เห็นรูป เมื่ออนุมัติแล้ว รูปจะเป็นสาธารณะบนหน้าร้านของคุณ หากคำขอถูกปฏิเสธ รูปจะถูกลบ">Photos you take (shop front, inside, menu). Until the claim is approved only we see them. On approval they become public on your page; if the claim is rejected they are deleted.</li>
+            <li data-th="การแก้ไขที่คุณทำกับหน้าร้าน (เวลาเปิด-ปิด ช่องทางติดต่อ ข้อความ รูป) พร้อมวันเวลา ข้อมูลเหล่านี้เป็นสาธารณะ เพราะนั่นคือจุดประสงค์ของหน้าร้าน">The edits you make to your page (hours, contact details, texts, photos) with their date. These are public; that is what the page is for.</li>
+            <li data-th="บันทึกการชำระเงิน: แพ็กเกจ วันที่ชำระ และวิธีชำระ เราไม่เก็บหมายเลขบัตรหรือข้อมูลบัญชีธนาคาร การชำระเงินทำผ่านพร้อมเพย์หรือผู้ให้บริการบัตร">A payment record: plan, date and method. We never store card numbers or bank details; payments go through PromptPay or a card provider.</li>
+        </ul>
+        <p data-th="เราใช้ข้อมูลนี้เพื่อให้บริการบัญชีของคุณ ตรวจสอบการเคลม ติดต่อคุณเรื่องการเคลมและการชำระเงิน และส่งใบเสร็จ เราไม่ส่งจดหมายข่าวหรือโฆษณา">We use this to run your account, verify the claim, contact you about the claim and payment, and send receipts. We send no newsletters or advertising.</p>
+        <p data-th="เราเก็บข้อมูลบัญชีไว้ตราบที่บัญชียังอยู่ และบันทึกการชำระเงินไว้ตามที่กฎหมายภาษีไทยกำหนด (5 ปี) เมื่อคุณลบบัญชี ข้อมูลบัญชีจะถูกลบภายใน 30 วัน">We keep account data while the account exists, and payment records for as long as Thai tax law requires (five years). When you delete your account, its data is removed within 30 days.</p>
+
+        <h2 class="sg-h-md" data-th="ข้อมูลธุรกิจบนหน้าร้าน">Business information on listings</h2>
+        <p data-th="หน้าร้านแสดงข้อมูลธุรกิจสาธารณะ: ชื่อ ที่อยู่ เวลาเปิด-ปิด เบอร์โทร และช่องทางติดต่อที่ธุรกิจเผยแพร่เอง ข้อมูลมาจากแหล่งสาธารณะ จากผู้ที่เพิ่มร้าน และจากเจ้าของร้านเอง หากข้อมูลไม่ถูกต้อง หรือคุณต้องการให้ลบเบอร์โทร ใช้ “รายงานข้อมูลผิด” บนหน้าร้าน หรือส่งอีเมลมาหาเรา เราจะแก้ไขภายใน 7 วัน">Listings show public business information: name, address, opening hours, phone and the contact channels the business itself publishes. It comes from public sources, from people who add places, and from owners. If something is wrong, or you want a phone number removed, use “Report wrong info” on the page or email us; we fix it within seven days.</p>
+
+        <h2 class="sg-h-md" data-th="ใครอีกบ้างที่เห็นข้อมูล">Who else sees data</h2>
+        <ul class="sg-doc-list">
+            <li data-th="ผู้ให้บริการโฮสติ้ง: Cloudflare ให้บริการ soiguru.com และแอปเจ้าของร้านทำงานบนเซิร์ฟเวอร์ที่เราเช่า ผู้ให้บริการเหล่านี้ประมวลผลข้อมูลในนามของเรา">Hosting: Cloudflare serves soiguru.com, and the owner app runs on a server we rent. These providers process data on our behalf.</li>
+            <li data-th="ผู้ให้บริการอีเมล สำหรับอีเมลเข้าสู่ระบบ การเคลม และใบเสร็จ">An email provider, for sign-in, claim and receipt emails.</li>
+            <li data-th="Google และ OpenStreetMap สำหรับรูปและแผนที่ ตามที่กล่าวข้างต้น">Google and OpenStreetMap for photos and maps, as described above.</li>
+            <li data-th="เราไม่ขายข้อมูล และไม่แบ่งปันข้อมูลกับผู้อื่นนอกจากกฎหมายกำหนด">We do not sell data and share it with nobody else, unless the law requires it.</li>
+        </ul>
+
+        <h2 class="sg-h-md" data-th="สิทธิของคุณ">Your rights</h2>
+        <p data-th={`ภายใต้พระราชบัญญัติคุ้มครองข้อมูลส่วนบุคคล (PDPA) คุณมีสิทธิขอดู แก้ไข หรือลบข้อมูลของคุณ ถอนความยินยอม และร้องเรียนต่อสำนักงานคณะกรรมการคุ้มครองข้อมูลส่วนบุคคล ส่งคำขอมาที่ ${support} เราตอบภายใน 30 วัน`}>Under Thailand's Personal Data Protection Act (PDPA) you can ask to see, correct or delete your data, withdraw consent, and complain to the Personal Data Protection Committee. Send requests to {support}; we answer within 30 days.</p>
+
+        <h2 class="sg-h-md" data-th="การเปลี่ยนแปลง">Changes</h2>
+        <p data-th="หากเราเปลี่ยนนโยบายนี้ วันที่ด้านบนจะเปลี่ยน และเจ้าของบัญชีจะได้รับอีเมลแจ้งเมื่อการเปลี่ยนแปลงกระทบพวกเขา">If we change this policy, the date at the top changes, and account holders get an email when a change affects them.</p>
+        <p class="sg-doc-meta"><a href="/terms" data-th="ข้อกำหนดการใช้งาน">Terms of use</a></p>
+    </main>
+</SoiGuruLayout>
