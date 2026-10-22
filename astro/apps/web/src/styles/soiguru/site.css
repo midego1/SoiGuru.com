@@ -3647,3 +3647,206 @@ html[data-lang='en'] .sg-sf-lang[data-lang-set='en'] {
 .sg-tcard-photo .sg-flag {
     z-index: 1;
 }
+
+/* ---------- for business owners (/for-owners, spec 063) ---------- */
+.sg-own-hero {
+    padding: 32px 0 8px;
+}
+.sg-own-hero .sg-lead {
+    max-width: 640px;
+}
+.sg-own-actions {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--space-3);
+    margin-top: var(--space-6);
+}
+.sg-own-cards {
+    display: grid;
+    gap: var(--space-3);
+    margin-top: var(--space-4);
+}
+.sg-own-card {
+    background: var(--surface);
+    border: 1px solid var(--line);
+    border-radius: var(--radius-lg);
+    padding: var(--space-4);
+}
+.sg-own-card .tkg-i {
+    width: 28px;
+    height: 28px;
+    color: var(--sea);
+}
+.sg-own-card h3 {
+    margin: var(--space-2) 0 4px;
+    font-size: 17px;
+    line-height: 24px;
+    font-weight: 600;
+}
+.sg-own-card p {
+    margin: 0;
+    color: var(--ink-muted);
+    line-height: 1.5;
+}
+.sg-own-gives {
+    display: grid;
+    gap: var(--space-4);
+    margin-top: var(--space-4);
+}
+.sg-own-list {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: grid;
+    gap: var(--space-2);
+}
+.sg-own-list li {
+    display: flex;
+    gap: var(--space-3);
+    align-items: flex-start;
+    font-size: 16px;
+    line-height: 1.5;
+}
+.sg-own-list .tkg-i {
+    flex: 0 0 auto;
+    width: 22px;
+    height: 22px;
+    margin-top: 2px;
+    color: var(--open);
+}
+.sg-own-price {
+    align-self: start;
+}
+.sg-own-price .sg-price-num {
+    display: block;
+    font-size: 34px;
+    line-height: 1.1;
+    font-weight: 700;
+    letter-spacing: -0.02em;
+}
+.sg-own-price small {
+    display: block;
+    margin-top: 4px;
+    color: var(--ink-muted);
+}
+.sg-own-steps {
+    counter-reset: step;
+    display: grid;
+    gap: var(--space-6);
+    margin-top: var(--space-4);
+}
+.sg-own-step {
+    display: grid;
+    gap: var(--space-4);
+    align-items: start;
+}
+.sg-own-step-num {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 32px;
+    height: 32px;
+    border-radius: var(--radius-pill);
+    background: var(--sea);
+    color: var(--on-sea);
+    font-weight: 700;
+    margin-bottom: var(--space-2);
+}
+.sg-own-step h3 {
+    margin: 0 0 var(--space-2);
+    font-size: 20px;
+    line-height: 1.25;
+    font-weight: 700;
+    letter-spacing: -0.01em;
+}
+.sg-own-step p {
+    margin: 0;
+    font-size: 16px;
+    line-height: 1.55;
+    color: var(--ink-muted);
+    max-width: 480px;
+}
+/* phone screenshots: a rounded frame, never wider than a phone */
+.sg-own-shot {
+    width: 100%;
+    max-width: 320px;
+    height: auto;
+    border-radius: 20px;
+    border: 1px solid var(--line);
+    box-shadow: var(--shadow-card);
+    background: var(--surface);
+}
+.sg-own-shot-card {
+    max-width: 360px;
+    border-radius: var(--radius-lg);
+}
+.sg-own-shots {
+    display: grid;
+    gap: var(--space-4);
+    margin-top: var(--space-4);
+}
+.sg-own-shots figure {
+    margin: 0;
+}
+.sg-own-shots figcaption {
+    margin-top: var(--space-2);
+    font-size: 14px;
+    line-height: 20px;
+    color: var(--ink-muted);
+}
+.sg-own-faq {
+    margin-top: var(--space-4);
+    display: grid;
+    gap: var(--space-2);
+}
+.sg-own-faq details {
+    background: var(--surface);
+    border: 1px solid var(--line);
+    border-radius: var(--radius-md);
+    padding: 0 var(--space-4);
+}
+.sg-own-faq summary {
+    cursor: pointer;
+    padding: 14px 0;
+    font-weight: 600;
+    line-height: 1.4;
+}
+.sg-own-faq details p {
+    margin: 0 0 14px;
+    color: var(--ink-muted);
+    line-height: 1.55;
+}
+.sg-own-cta {
+    margin: 40px 0 56px;
+    padding: var(--space-6);
+    border-radius: var(--radius-lg);
+    background: var(--sea-tint);
+    text-align: center;
+}
+.sg-own-cta p {
+    margin: 0 0 var(--space-4);
+    font-size: 17px;
+    line-height: 1.5;
+}
+@media (min-width: 720px) {
+    .sg-own-cards {
+        grid-template-columns: repeat(3, minmax(0, 1fr));
+    }
+    .sg-own-gives {
+        grid-template-columns: minmax(0, 1fr) 280px;
+    }
+    .sg-own-step {
+        grid-template-columns: minmax(0, 1fr) 320px;
+    }
+    .sg-own-step:nth-child(even) .sg-own-step-text {
+        order: 2;
+    }
+    .sg-own-shots {
+        grid-template-columns: repeat(3, minmax(0, 1fr));
+    }
+}
+.sg-claim-how {
+    margin: var(--space-3) 0 0;
+    font-size: 14px;
+    text-align: center;
+}

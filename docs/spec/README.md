@@ -84,6 +84,7 @@ or architectural change.
 | 060 | [`soiguru-places-free`](060-soiguru-places-free/spec.md) | implemented | Google Places never billed: persistent monthly counter per billable SKU (`soiguru_places_usage`), caps under the free usage (900 photos, 4,000 searches), paced per day, refused when the count cannot be stored. |
 | 061 | [`soiguru-owner-photos`](061-soiguru-owner-photos/spec.md) | implemented | Owners add, order and remove up to eight photos: shrunk in the browser, stored in the content repo under `data/<slug>/photos/`, served at `soiguru.com/media/…` through the Worker edge cache; the first photo is the listing and card photo. |
 | 062 | [`soiguru-publish-on-edit`](062-soiguru-publish-on-edit/spec.md) | implemented | soiguru.com rebuilds and deploys on every push to the `data` branch (GitHub Actions + `wrangler deploy`), so owner edits and photos are live within minutes; bursts collapse into one deploy. |
+| 063 | [`soiguru-for-owners`](063-soiguru-for-owners/spec.md) | implemented | `/for-owners` and `/th/for-owners`: what SoiGuru is, what claiming gives an owner, the five claim steps with phone screenshots of the real screens, the dashboard, questions; linked from the footer and the claim card. |
 
 > **Status legend:**
 > _proposed_ = spec drafted, not yet planned/approved.
