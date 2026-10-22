@@ -3,7 +3,8 @@
  * For business owners (`/for-owners`, spec 063): what SoiGuru is, what claiming a listing
  * gives an owner, how the claim is verified and paid, and what the owner dashboard looks
  * like, with phone screenshots of the real screens. English with Thai on every text
- * (`data-th`), so `/th/for-owners` is the Thai page. Linked from the footer and the claim
+ * (`data-th`), so `/th/for-owners` is the Thai page. Every screenshot exists in English and Thai
+ * (`sg-lang-en` / `sg-lang-th`); the page language picks one. Linked from the footer and the claim
  * card on listing pages.
  */
 import { Image } from 'astro:assets';
@@ -12,13 +13,21 @@ import TopBar from '../components/soiguru/TopBar.astro';
 import Icon from '../components/soiguru/Icon.astro';
 import { getSoiGuru, claimUrl, ownerUrl } from '../lib/soiguru/data';
 import shotClaim from '../assets/for-owners/listing-claim.png';
+import shotClaimTh from '../assets/for-owners/listing-claim-th.png';
 import shotSearch from '../assets/for-owners/claim-search.png';
+import shotSearchTh from '../assets/for-owners/claim-search-th.png';
 import shotSignIn from '../assets/for-owners/owner-signin.png';
+import shotSignInTh from '../assets/for-owners/owner-signin-th.png';
 import shotVerify from '../assets/for-owners/claim-verify.png';
+import shotVerifyTh from '../assets/for-owners/claim-verify-th.png';
 import shotPlan from '../assets/for-owners/claim-plan.png';
+import shotPlanTh from '../assets/for-owners/claim-plan-th.png';
 import shotDashboard from '../assets/for-owners/owner-dashboard.png';
+import shotDashboardTh from '../assets/for-owners/owner-dashboard-th.png';
 import shotHours from '../assets/for-owners/owner-hours.png';
+import shotHoursTh from '../assets/for-owners/owner-hours-th.png';
 import shotPhotos from '../assets/for-owners/owner-photos.png';
+import shotPhotosTh from '../assets/for-owners/owner-photos-th.png';
 
 const data = await getSoiGuru();
 const { config, cities } = data;
@@ -112,7 +121,7 @@ const browse = city ? `/${city.id}` : '/';
                         <h3 data-th="เปิดหน้าร้านของคุณ">Open your shop's page</h3>
                         <p data-th="ค้นหาร้านของคุณบน soiguru.com แล้วแตะ “เคลมร้านนี้” ใต้เวลาเปิด-ปิด">Find your shop on soiguru.com and tap “Claim this listing” under the opening hours.</p>
                     </div>
-                    <Image class="sg-own-shot sg-own-shot-card" src={shotClaim} alt="The “Is this your business?” card on a listing page, with the Claim this listing button" width={360} densities={[1, 2]} />
+                    <div class="sg-own-step-shot sg-own-step-shot-contain"><Image class="sg-own-shot sg-lang-en" src={shotClaim} alt="The “Is this your business?” card on a listing page, with the Claim this listing button" width={360} densities={[1, 2]} /><Image class="sg-own-shot sg-lang-th" src={shotClaimTh} alt="The “Is this your business?” card on a listing page, with the Claim this listing button" width={360} densities={[1, 2]} /></div>
                 </li>
                 <li class="sg-own-step">
                     <div class="sg-own-step-text">
@@ -120,7 +129,7 @@ const browse = city ? `/${city.id}` : '/';
                         <h3 data-th="เลือกร้านของคุณ">Pick your business</h3>
                         <p data-th="ค้นหาด้วยชื่อร้านหรือเบอร์โทรที่อยู่บนป้ายร้าน ร้านส่วนใหญ่มีอยู่ในระบบแล้ว">Search by name or by the phone number on your sign. Most shops are already listed.</p>
                     </div>
-                    <Image class="sg-own-shot" src={shotSearch} alt="Claim your listing, step 1 of 3: search for your business by name or phone" width={320} densities={[1, 2]} />
+                    <div class="sg-own-step-shot"><Image class="sg-own-shot sg-lang-en" src={shotSearch} alt="Claim your listing, step 1 of 3: search for your business by name or phone" width={320} densities={[1, 2]} /><Image class="sg-own-shot sg-lang-th" src={shotSearchTh} alt="Claim your listing, step 1 of 3: search for your business by name or phone" width={320} densities={[1, 2]} /></div>
                 </li>
                 <li class="sg-own-step">
                     <div class="sg-own-step-text">
@@ -128,7 +137,7 @@ const browse = city ? `/${city.id}` : '/';
                         <h3 data-th="สร้างบัญชี">Create an account</h3>
                         <p data-th="ใช้อีเมลและรหัสผ่าน ใช้เวลาหนึ่งนาที บัญชีนี้ใช้แก้ไขหน้าร้านของคุณในภายหลัง">An email address and a password; it takes a minute. You use this account later to edit your page.</p>
                     </div>
-                    <Image class="sg-own-shot" src={shotSignIn} alt="The owner sign-in screen with Sign in and Create account buttons" width={320} densities={[1, 2]} />
+                    <div class="sg-own-step-shot"><Image class="sg-own-shot sg-lang-en" src={shotSignIn} alt="The owner sign-in screen with Sign in and Create account buttons" width={320} densities={[1, 2]} /><Image class="sg-own-shot sg-lang-th" src={shotSignInTh} alt="The owner sign-in screen with Sign in and Create account buttons" width={320} densities={[1, 2]} /></div>
                 </li>
                 <li class="sg-own-step">
                     <div class="sg-own-step-text">
@@ -136,7 +145,7 @@ const browse = city ? `/${city.id}` : '/';
                         <h3 data-th="เราตรวจสอบว่าเป็นคุณจริง">We check it's you</h3>
                         <p data-th="เราโทรไปที่เบอร์ที่อยู่บนหน้าร้าน ถ้าเบอร์นั้นไม่ใช่ของคุณแล้ว ให้ส่งรูปป้ายร้านและบัตรประชาชนทางอีเมล เราตรวจสอบภายใน 1 วัน">We call the phone number shown on the listing. If that number isn't yours any more, email us a photo of your shop sign and your ID; we review it within a day.</p>
                     </div>
-                    <Image class="sg-own-shot" src={shotVerify} alt="Claim your listing, step 2 of 3: how we verify it's you" width={320} densities={[1, 2]} />
+                    <div class="sg-own-step-shot"><Image class="sg-own-shot sg-lang-en" src={shotVerify} alt="Claim your listing, step 2 of 3: how we verify it's you" width={320} densities={[1, 2]} /><Image class="sg-own-shot sg-lang-th" src={shotVerifyTh} alt="Claim your listing, step 2 of 3: how we verify it's you" width={320} densities={[1, 2]} /></div>
                 </li>
                 <li class="sg-own-step">
                     <div class="sg-own-step-text">
@@ -144,7 +153,7 @@ const browse = city ? `/${city.id}` : '/';
                         <h3 data-th="เลือกแพ็กเกจ">Choose a plan</h3>
                         <p data-th="รายเดือนหรือรายปี ยังไม่มีการเรียกเก็บเงินตอนนี้ เมื่อยืนยันแล้วว่าเป็นคุณ เราจะส่ง QR พร้อมเพย์หรือลิงก์ชำระด้วยบัตรทางอีเมล ป้ายยืนยันเจ้าของร้านจะขึ้นทันทีที่ได้รับเงิน">Monthly or yearly. Nothing is charged now: once we've confirmed it's you, we email a PromptPay QR or a card payment link. The Verified badge appears as soon as the payment arrives.</p>
                     </div>
-                    <Image class="sg-own-shot" src={shotPlan} alt="Claim your listing, step 3 of 3: choose a monthly or yearly plan and how to pay" width={320} densities={[1, 2]} />
+                    <div class="sg-own-step-shot"><Image class="sg-own-shot sg-lang-en" src={shotPlan} alt="Claim your listing, step 3 of 3: choose a monthly or yearly plan and how to pay" width={320} densities={[1, 2]} /><Image class="sg-own-shot sg-lang-th" src={shotPlanTh} alt="Claim your listing, step 3 of 3: choose a monthly or yearly plan and how to pay" width={320} densities={[1, 2]} /></div>
                 </li>
             </ol>
         </section>
@@ -156,15 +165,15 @@ const browse = city ? `/${city.id}` : '/';
             <p class="sg-prose" data-th="เมื่อเคลมได้รับการอนุมัติ หน้าร้านของคุณจะอยู่ที่ owner.soiguru.com เวลาเปิด-ปิด ช่องทางติดต่อ สิ่งที่ลูกค้าควรรู้ และรูปภาพ ทุกอย่างแก้ไขได้ในไม่กี่แตะ">Once your claim is approved, your page lives at owner.soiguru.com. Hours, contact details, what visitors should know and photos: everything is a few taps.</p>
             <div class="sg-own-shots">
                 <figure>
-                    <Image class="sg-own-shot" src={shotDashboard} alt="The owner dashboard: your listing with Details, Hours, Good to know, Photos and Billing" width={320} densities={[1, 2]} />
+                    <div class="sg-own-step-shot"><Image class="sg-own-shot sg-lang-en" src={shotDashboard} alt="The owner dashboard: your listing with Details, Hours, Good to know, Photos and Billing" width={320} densities={[1, 2]} /><Image class="sg-own-shot sg-lang-th" src={shotDashboardTh} alt="The owner dashboard: your listing with Details, Hours, Good to know, Photos and Billing" width={320} densities={[1, 2]} /></div>
                     <figcaption data-th="แดชบอร์ด: ทุกอย่างของร้านคุณอยู่ในที่เดียว พร้อมคำแนะนำว่าควรเติมอะไรต่อ">Your dashboard: everything about your shop in one place, with a tip on what to fill in next.</figcaption>
                 </figure>
                 <figure>
-                    <Image class="sg-own-shot" src={shotHours} alt="The Hours screen: opening and closing times per day, a lunch break and a temporary notice" width={320} densities={[1, 2]} />
+                    <div class="sg-own-step-shot"><Image class="sg-own-shot sg-lang-en" src={shotHours} alt="The Hours screen: opening and closing times per day, a lunch break and a temporary notice" width={320} densities={[1, 2]} /><Image class="sg-own-shot sg-lang-th" src={shotHoursTh} alt="The Hours screen: opening and closing times per day, a lunch break and a temporary notice" width={320} densities={[1, 2]} /></div>
                     <figcaption data-th="เวลาเปิด-ปิด: ทุกวัน พักกลางวันได้ และประกาศชั่วคราว เช่น ปิดช่วงสงกรานต์">Hours: every day, a lunch break if you have one, and a temporary notice such as “Closed for Songkran”.</figcaption>
                 </figure>
                 <figure>
-                    <Image class="sg-own-shot" src={shotPhotos} alt="The Photos screen: add up to eight photos, make one the first, remove one" width={320} densities={[1, 2]} />
+                    <div class="sg-own-step-shot"><Image class="sg-own-shot sg-lang-en" src={shotPhotos} alt="The Photos screen: add up to eight photos, make one the first, remove one" width={320} densities={[1, 2]} /><Image class="sg-own-shot sg-lang-th" src={shotPhotosTh} alt="The Photos screen: add up to eight photos, make one the first, remove one" width={320} densities={[1, 2]} /></div>
                     <figcaption data-th="รูปภาพ: เพิ่มได้สูงสุด 8 รูปจากมือถือของคุณ เลือกรูปแรกหรือลบออกได้ รูปแรกคือรูปใหญ่บนหน้าร้าน แทนรูปจาก Google">Photos: add up to eight from your phone, choose the first one or remove one. The first photo is the big one on your page, in place of Google's.</figcaption>
                 </figure>
             </div>
