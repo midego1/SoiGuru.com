@@ -16,10 +16,11 @@ they can manage afterwards. Owners are mostly Thai; the explanation must exist i
   3. What claiming gives you: hours and holiday notices, own photos (8), LINE/WhatsApp, Thai
      name, amenities, Verified badge, changes live within minutes; price card ฿100 / month
      or ฿1,000 / year, listing itself free.
-  4. How to claim, five steps with phone screenshots of the real screens: the claim card on a
+  4. How to claim, six steps with phone screenshots of the real screens: the claim card on a
      listing, the claim search, the sign-in screen, the verification step (we call the number
-     on the listing, or shop sign + ID by email), the plan step (nothing charged now;
-     PromptPay QR or card link by email after confirmation).
+     on the listing, or shop sign + ID by email), the photo step (shop front, inside, menu;
+     spec 064), the plan step (nothing charged now; PromptPay QR or card link by email after
+     confirmation).
   5. The dashboard: screenshots of the owner dashboard, the hours screen and the photos screen.
   6. Questions: free listing, someone else claimed it, how fast changes show, cancelling,
      personal details, where to sign in.

@@ -22,6 +22,8 @@ import shotVerify from '../assets/for-owners/claim-verify.png';
 import shotVerifyTh from '../assets/for-owners/claim-verify-th.png';
 import shotPlan from '../assets/for-owners/claim-plan.png';
 import shotPlanTh from '../assets/for-owners/claim-plan-th.png';
+import shotPhotosStep from '../assets/for-owners/claim-photos.png';
+import shotPhotosStepTh from '../assets/for-owners/claim-photos-th.png';
 import shotDashboard from '../assets/for-owners/owner-dashboard.png';
 import shotDashboardTh from '../assets/for-owners/owner-dashboard-th.png';
 import shotHours from '../assets/for-owners/owner-hours.png';
@@ -109,7 +111,7 @@ const browse = city ? `/${city.id}` : '/';
 
         <section class="sg-sec" aria-labelledby="sg-own-how">
             <div class="sg-sec-h">
-                <h2 class="sg-h-lg" id="sg-own-how" data-th="วิธีเคลม ทีละขั้นตอน">How to claim, step by step</h2>
+                <h2 class="sg-h-lg" id="sg-own-how" data-th="วิธีเคลม 6 ขั้นตอน">How to claim, in six steps</h2>
             </div>
             <ol class="sg-own-steps">
                 <li class="sg-own-step">
@@ -124,7 +126,7 @@ const browse = city ? `/${city.id}` : '/';
                         <div class="sg-own-step-h"><span class="sg-own-step-num" aria-hidden="true">2</span><h3 data-th="เลือกร้านของคุณ">Pick your business</h3></div>
                         <p data-th="ค้นหาด้วยชื่อร้านหรือเบอร์โทรที่อยู่บนป้ายร้าน ร้านส่วนใหญ่มีอยู่ในระบบแล้ว">Search by name or by the phone number on your sign. Most shops are already listed.</p>
                     </div>
-                    <div class="sg-own-step-shot"><Image class="sg-own-shot sg-lang-en" src={shotSearch} alt="Claim your listing, step 1 of 3: search for your business by name or phone" width={320} densities={[1, 2]} /><Image class="sg-own-shot sg-lang-th" src={shotSearchTh} alt="Claim your listing, step 1 of 3: search for your business by name or phone" width={320} densities={[1, 2]} /></div>
+                    <div class="sg-own-step-shot"><Image class="sg-own-shot sg-lang-en" src={shotSearch} alt="Claim your listing, step 1 of 4: search for your business by name or phone" width={320} densities={[1, 2]} /><Image class="sg-own-shot sg-lang-th" src={shotSearchTh} alt="Claim your listing, step 1 of 4: search for your business by name or phone" width={320} densities={[1, 2]} /></div>
                 </li>
                 <li class="sg-own-step">
                     <div class="sg-own-step-text">
@@ -138,14 +140,21 @@ const browse = city ? `/${city.id}` : '/';
                         <div class="sg-own-step-h"><span class="sg-own-step-num" aria-hidden="true">4</span><h3 data-th="เราตรวจสอบว่าเป็นคุณจริง">We check it's you</h3></div>
                         <p data-th="เราโทรไปที่เบอร์ที่อยู่บนหน้าร้าน ถ้าเบอร์นั้นไม่ใช่ของคุณแล้ว ให้ส่งรูปป้ายร้านและบัตรประชาชนทางอีเมล เราตรวจสอบภายใน 1 วัน">We call the phone number shown on the listing. If that number isn't yours any more, email us a photo of your shop sign and your ID; we review it within a day.</p>
                     </div>
-                    <div class="sg-own-step-shot"><Image class="sg-own-shot sg-lang-en" src={shotVerify} alt="Claim your listing, step 2 of 3: how we verify it's you" width={320} densities={[1, 2]} /><Image class="sg-own-shot sg-lang-th" src={shotVerifyTh} alt="Claim your listing, step 2 of 3: how we verify it's you" width={320} densities={[1, 2]} /></div>
+                    <div class="sg-own-step-shot"><Image class="sg-own-shot sg-lang-en" src={shotVerify} alt="Claim your listing, step 2 of 4: how we verify it's you" width={320} densities={[1, 2]} /><Image class="sg-own-shot sg-lang-th" src={shotVerifyTh} alt="Claim your listing, step 2 of 4: how we verify it's you" width={320} densities={[1, 2]} /></div>
                 </li>
                 <li class="sg-own-step">
                     <div class="sg-own-step-text">
-                        <div class="sg-own-step-h"><span class="sg-own-step-num" aria-hidden="true">5</span><h3 data-th="เลือกแพ็กเกจ">Choose a plan</h3></div>
+                        <div class="sg-own-step-h"><span class="sg-own-step-num" aria-hidden="true">5</span><h3 data-th="ถ่ายรูป 3 รูป">Take three photos</h3></div>
+                        <p data-th="หน้าร้าน (จำเป็น) ในร้าน และเมนูหรือบริการ ถ่ายด้วยมือถือตรงนั้นเลย มีคำแนะนำและตัวอย่างให้ทุกรูป รูปจะขึ้นบนหน้าร้านเมื่อคำขอได้รับการอนุมัติ">The shop front (required), the inside, and your menu or services, straight from your phone. Each slot shows a tip and an example. They go on your page once the claim is approved.</p>
+                    </div>
+                    <div class="sg-own-step-shot"><Image class="sg-own-shot sg-lang-en" src={shotPhotosStep} alt="Claim your listing, step 3 of 4: three photo slots, shop front, inside and menu" width={320} densities={[1, 2]} /><Image class="sg-own-shot sg-lang-th" src={shotPhotosStepTh} alt="Claim your listing, step 3 of 4: three photo slots, shop front, inside and menu" width={320} densities={[1, 2]} /></div>
+                </li>
+                <li class="sg-own-step">
+                    <div class="sg-own-step-text">
+                        <div class="sg-own-step-h"><span class="sg-own-step-num" aria-hidden="true">6</span><h3 data-th="เลือกแพ็กเกจ">Choose a plan</h3></div>
                         <p data-th="รายเดือนหรือรายปี ยังไม่มีการเรียกเก็บเงินตอนนี้ เมื่อยืนยันแล้วว่าเป็นคุณ เราจะส่ง QR พร้อมเพย์หรือลิงก์ชำระด้วยบัตรทางอีเมล ป้ายยืนยันเจ้าของร้านจะขึ้นทันทีที่ได้รับเงิน">Monthly or yearly. Nothing is charged now: once we've confirmed it's you, we email a PromptPay QR or a card payment link. The Verified badge appears as soon as the payment arrives.</p>
                     </div>
-                    <div class="sg-own-step-shot"><Image class="sg-own-shot sg-lang-en" src={shotPlan} alt="Claim your listing, step 3 of 3: choose a monthly or yearly plan and how to pay" width={320} densities={[1, 2]} /><Image class="sg-own-shot sg-lang-th" src={shotPlanTh} alt="Claim your listing, step 3 of 3: choose a monthly or yearly plan and how to pay" width={320} densities={[1, 2]} /></div>
+                    <div class="sg-own-step-shot"><Image class="sg-own-shot sg-lang-en" src={shotPlan} alt="Claim your listing, step 4 of 4: choose a monthly or yearly plan and how to pay" width={320} densities={[1, 2]} /><Image class="sg-own-shot sg-lang-th" src={shotPlanTh} alt="Claim your listing, step 4 of 4: choose a monthly or yearly plan and how to pay" width={320} densities={[1, 2]} /></div>
                 </li>
             </ol>
         </section>
