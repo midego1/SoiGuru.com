@@ -71,18 +71,15 @@ const browse = city ? `/${city.id}` : '/';
             </div>
             <div class="sg-own-cards">
                 <div class="sg-own-card">
-                    <Icon name="search" />
-                    <h3 data-th="Google เจอคุณ">Found on Google</h3>
+                    <div class="sg-own-card-h"><Icon name="search" /><h3 data-th="Google เจอคุณ">Found on Google</h3></div>
                     <p data-th="ทุกร้านมีหน้าของตัวเอง เมื่อมีคนค้นหา “นวดใกล้ฉัน” หรือชื่อร้านของคุณ SoiGuru จะขึ้นมาในผลการค้นหา">Every place has its own page. When someone searches “massage near me” or your shop's name, SoiGuru shows up.</p>
                 </div>
                 <div class="sg-own-card">
-                    <Icon name="clock" />
-                    <h3 data-th="เปิดอยู่ตอนนี้">Open now</h3>
+                    <div class="sg-own-card-h"><Icon name="clock" /><h3 data-th="เปิดอยู่ตอนนี้">Open now</h3></div>
                     <p data-th="ผู้เข้าชมเห็นว่าคุณเปิดอยู่หรือไม่และปิดกี่โมง เวลาที่ถูกต้องพาลูกค้ามาถึงหน้าร้าน ไม่ใช่มาเจอประตูปิด">Visitors see whether you are open at this moment and when you close. Correct hours bring people to your door instead of to a closed one.</p>
                 </div>
                 <div class="sg-own-card">
-                    <Icon name="globe" />
-                    <h3 data-th="สองภาษา">Two languages</h3>
+                    <div class="sg-own-card-h"><Icon name="globe" /><h3 data-th="สองภาษา">Two languages</h3></div>
                     <p data-th="ทุกหน้ามีทั้งภาษาอังกฤษและภาษาไทย นักท่องเที่ยวและคนไทยจึงเข้าใจได้เหมือนกัน">Every page exists in English and in Thai, so tourists and locals understand it the same way.</p>
                 </div>
             </div>
@@ -117,40 +114,35 @@ const browse = city ? `/${city.id}` : '/';
             <ol class="sg-own-steps">
                 <li class="sg-own-step">
                     <div class="sg-own-step-text">
-                        <span class="sg-own-step-num" aria-hidden="true">1</span>
-                        <h3 data-th="เปิดหน้าร้านของคุณ">Open your shop's page</h3>
+                        <div class="sg-own-step-h"><span class="sg-own-step-num" aria-hidden="true">1</span><h3 data-th="เปิดหน้าร้านของคุณ">Open your shop's page</h3></div>
                         <p data-th="ค้นหาร้านของคุณบน soiguru.com แล้วแตะ “เคลมร้านนี้” ใต้เวลาเปิด-ปิด">Find your shop on soiguru.com and tap “Claim this listing” under the opening hours.</p>
                     </div>
                     <div class="sg-own-step-shot sg-own-step-shot-contain"><Image class="sg-own-shot sg-lang-en" src={shotClaim} alt="The “Is this your business?” card on a listing page, with the Claim this listing button" width={360} densities={[1, 2]} /><Image class="sg-own-shot sg-lang-th" src={shotClaimTh} alt="The “Is this your business?” card on a listing page, with the Claim this listing button" width={360} densities={[1, 2]} /></div>
                 </li>
                 <li class="sg-own-step">
                     <div class="sg-own-step-text">
-                        <span class="sg-own-step-num" aria-hidden="true">2</span>
-                        <h3 data-th="เลือกร้านของคุณ">Pick your business</h3>
+                        <div class="sg-own-step-h"><span class="sg-own-step-num" aria-hidden="true">2</span><h3 data-th="เลือกร้านของคุณ">Pick your business</h3></div>
                         <p data-th="ค้นหาด้วยชื่อร้านหรือเบอร์โทรที่อยู่บนป้ายร้าน ร้านส่วนใหญ่มีอยู่ในระบบแล้ว">Search by name or by the phone number on your sign. Most shops are already listed.</p>
                     </div>
                     <div class="sg-own-step-shot"><Image class="sg-own-shot sg-lang-en" src={shotSearch} alt="Claim your listing, step 1 of 3: search for your business by name or phone" width={320} densities={[1, 2]} /><Image class="sg-own-shot sg-lang-th" src={shotSearchTh} alt="Claim your listing, step 1 of 3: search for your business by name or phone" width={320} densities={[1, 2]} /></div>
                 </li>
                 <li class="sg-own-step">
                     <div class="sg-own-step-text">
-                        <span class="sg-own-step-num" aria-hidden="true">3</span>
-                        <h3 data-th="สร้างบัญชี">Create an account</h3>
+                        <div class="sg-own-step-h"><span class="sg-own-step-num" aria-hidden="true">3</span><h3 data-th="สร้างบัญชี">Create an account</h3></div>
                         <p data-th="ใช้อีเมลและรหัสผ่าน ใช้เวลาหนึ่งนาที บัญชีนี้ใช้แก้ไขหน้าร้านของคุณในภายหลัง">An email address and a password; it takes a minute. You use this account later to edit your page.</p>
                     </div>
                     <div class="sg-own-step-shot"><Image class="sg-own-shot sg-lang-en" src={shotSignIn} alt="The owner sign-in screen with Sign in and Create account buttons" width={320} densities={[1, 2]} /><Image class="sg-own-shot sg-lang-th" src={shotSignInTh} alt="The owner sign-in screen with Sign in and Create account buttons" width={320} densities={[1, 2]} /></div>
                 </li>
                 <li class="sg-own-step">
                     <div class="sg-own-step-text">
-                        <span class="sg-own-step-num" aria-hidden="true">4</span>
-                        <h3 data-th="เราตรวจสอบว่าเป็นคุณจริง">We check it's you</h3>
+                        <div class="sg-own-step-h"><span class="sg-own-step-num" aria-hidden="true">4</span><h3 data-th="เราตรวจสอบว่าเป็นคุณจริง">We check it's you</h3></div>
                         <p data-th="เราโทรไปที่เบอร์ที่อยู่บนหน้าร้าน ถ้าเบอร์นั้นไม่ใช่ของคุณแล้ว ให้ส่งรูปป้ายร้านและบัตรประชาชนทางอีเมล เราตรวจสอบภายใน 1 วัน">We call the phone number shown on the listing. If that number isn't yours any more, email us a photo of your shop sign and your ID; we review it within a day.</p>
                     </div>
                     <div class="sg-own-step-shot"><Image class="sg-own-shot sg-lang-en" src={shotVerify} alt="Claim your listing, step 2 of 3: how we verify it's you" width={320} densities={[1, 2]} /><Image class="sg-own-shot sg-lang-th" src={shotVerifyTh} alt="Claim your listing, step 2 of 3: how we verify it's you" width={320} densities={[1, 2]} /></div>
                 </li>
                 <li class="sg-own-step">
                     <div class="sg-own-step-text">
-                        <span class="sg-own-step-num" aria-hidden="true">5</span>
-                        <h3 data-th="เลือกแพ็กเกจ">Choose a plan</h3>
+                        <div class="sg-own-step-h"><span class="sg-own-step-num" aria-hidden="true">5</span><h3 data-th="เลือกแพ็กเกจ">Choose a plan</h3></div>
                         <p data-th="รายเดือนหรือรายปี ยังไม่มีการเรียกเก็บเงินตอนนี้ เมื่อยืนยันแล้วว่าเป็นคุณ เราจะส่ง QR พร้อมเพย์หรือลิงก์ชำระด้วยบัตรทางอีเมล ป้ายยืนยันเจ้าของร้านจะขึ้นทันทีที่ได้รับเงิน">Monthly or yearly. Nothing is charged now: once we've confirmed it's you, we email a PromptPay QR or a card payment link. The Verified badge appears as soon as the payment arrives.</p>
                     </div>
                     <div class="sg-own-step-shot"><Image class="sg-own-shot sg-lang-en" src={shotPlan} alt="Claim your listing, step 3 of 3: choose a monthly or yearly plan and how to pay" width={320} densities={[1, 2]} /><Image class="sg-own-shot sg-lang-th" src={shotPlanTh} alt="Claim your listing, step 3 of 3: choose a monthly or yearly plan and how to pay" width={320} densities={[1, 2]} /></div>
