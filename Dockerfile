@@ -9,7 +9,9 @@ ARG TURBO_VERSION=2.11.7
 
 FROM node:${NODE_VERSION} AS base
 # Node.js 25+ no longer bundles corepack, so the node:26 images ship without it. Install a
-# pinned corepack from npm first; everything after it is unchanged.
+# pinned corepack from npm first; everything after it is unchanged. When corepack's download
+# of pnpm fails (registry.npmjs.org answered 503 twice in a row on 2026-10-22), pnpm is
+# installed with npm instead, so a registry hiccup does not fail the whole build.
 # An ARG declared before the first FROM is only in scope for FROM lines; each stage has to
 # re-declare it to read the value. Without these two lines pnpm@ and turbo@ were EMPTY here,
 # so `npm install -g turbo@` took whatever turbo was newest on the day of the build.
@@ -18,7 +20,7 @@ ARG PNPM_VERSION
 ARG TURBO_VERSION
 RUN npm install -g corepack@${COREPACK_VERSION} && \
     corepack enable && \
-    corepack prepare pnpm@${PNPM_VERSION} --activate && \
+    (corepack prepare pnpm@${PNPM_VERSION} --activate || npm install -g pnpm@${PNPM_VERSION}) && \
     npm install -g turbo@${TURBO_VERSION}
 
 ENV CI=true
