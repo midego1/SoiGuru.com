@@ -1,0 +1,221 @@
+---
+/**
+ * For business owners (`/for-owners`, spec 063): what SoiGuru is, what claiming a listing
+ * gives an owner, how the claim is verified and paid, and what the owner dashboard looks
+ * like, with phone screenshots of the real screens. English with Thai on every text
+ * (`data-th`), so `/th/for-owners` is the Thai page. Linked from the footer and the claim
+ * card on listing pages.
+ */
+import { Image } from 'astro:assets';
+import SoiGuruLayout from '../layouts/SoiGuruLayout.astro';
+import TopBar from '../components/soiguru/TopBar.astro';
+import Icon from '../components/soiguru/Icon.astro';
+import { getSoiGuru, claimUrl, ownerUrl } from '../lib/soiguru/data';
+import shotClaim from '../assets/for-owners/listing-claim.png';
+import shotSearch from '../assets/for-owners/claim-search.png';
+import shotSignIn from '../assets/for-owners/owner-signin.png';
+import shotVerify from '../assets/for-owners/claim-verify.png';
+import shotPlan from '../assets/for-owners/claim-plan.png';
+import shotDashboard from '../assets/for-owners/owner-dashboard.png';
+import shotHours from '../assets/for-owners/owner-hours.png';
+import shotPhotos from '../assets/for-owners/owner-photos.png';
+
+const data = await getSoiGuru();
+const { config, cities } = data;
+const city = cities[0];
+const cityName = city?.name ?? 'Krabi';
+const cityNameTh = city?.name_th ?? cityName;
+const claim = (city ? claimUrl(config, city) : undefined) ?? ownerUrl(config);
+const owner = ownerUrl(config, city);
+const browse = city ? `/${city.id}` : '/';
+---
+
+<SoiGuruLayout
+    title={`For business owners in ${cityName} · ${config.company_name}`}
+    description={`Your shop is already on SoiGuru for free. Claim it to manage hours, photos, LINE and WhatsApp, and get a Verified owner badge. ฿100 / month or ฿1,000 / year.`}
+    config={config}
+    path="/for-owners"
+    city={city}
+>
+    <TopBar city={city} />
+    <main class="sg-wrap">
+        <section class="sg-own-hero">
+            <p class="sg-eyebrow" data-th="สำหรับเจ้าของธุรกิจ">For business owners</p>
+            <h1 class="sg-h-xl" data-th="ร้านของคุณอยู่บน SoiGuru แล้ว">Your shop is already on SoiGuru.</h1>
+            <p class="sg-lead" data-th={`SoiGuru คือคู่มือท้องถิ่นฟรีของ${cityNameTh}: ร้านไหนเปิดอยู่ตอนนี้ เวลาเปิด-ปิด เบอร์โทรและ LINE ทั้งภาษาอังกฤษและไทย นักท่องเที่ยวและคนในพื้นที่เจอเราบน Google เมื่อค้นหาร้านใกล้ตัว`}>
+                SoiGuru is a free local guide for {cityName}: what's open right now, opening hours, phone and LINE, in English and Thai. Visitors and locals find it on Google when they search for a place near them.
+            </p>
+            <div class="sg-own-actions">
+                {claim && (
+                    <a class="sg-btn sg-btn-ink sg-btn-lg" href={claim} data-umami-event="claim-listing">
+                        <Icon name="shield" />
+                        <span data-th="เคลมร้านของคุณ">Claim your listing</span>
+                    </a>
+                )}
+                <a class="tkg-btn tkg-btn-secondary" href={browse} data-th="ดูร้านของคุณบน SoiGuru">See your shop on SoiGuru</a>
+            </div>
+        </section>
+
+        <section class="sg-sec" aria-labelledby="sg-own-why">
+            <div class="sg-sec-h">
+                <h2 class="sg-h-lg" id="sg-own-why" data-th="ทำไมถึงสำคัญ">Why it matters</h2>
+            </div>
+            <div class="sg-own-cards">
+                <div class="sg-own-card">
+                    <Icon name="search" />
+                    <h3 data-th="Google เจอคุณ">Found on Google</h3>
+                    <p data-th="ทุกร้านมีหน้าของตัวเอง เมื่อมีคนค้นหา “นวดใกล้ฉัน” หรือชื่อร้านของคุณ SoiGuru จะขึ้นมาในผลการค้นหา">Every place has its own page. When someone searches “massage near me” or your shop's name, SoiGuru shows up.</p>
+                </div>
+                <div class="sg-own-card">
+                    <Icon name="clock" />
+                    <h3 data-th="เปิดอยู่ตอนนี้">Open now</h3>
+                    <p data-th="ผู้เข้าชมเห็นว่าคุณเปิดอยู่หรือไม่และปิดกี่โมง เวลาที่ถูกต้องพาลูกค้ามาถึงหน้าร้าน ไม่ใช่มาเจอประตูปิด">Visitors see whether you are open at this moment and when you close. Correct hours bring people to your door instead of to a closed one.</p>
+                </div>
+                <div class="sg-own-card">
+                    <Icon name="globe" />
+                    <h3 data-th="สองภาษา">Two languages</h3>
+                    <p data-th="ทุกหน้ามีทั้งภาษาอังกฤษและภาษาไทย นักท่องเที่ยวและคนไทยจึงเข้าใจได้เหมือนกัน">Every page exists in English and in Thai, so tourists and locals understand it the same way.</p>
+                </div>
+            </div>
+        </section>
+
+        <section class="sg-sec" aria-labelledby="sg-own-gives">
+            <div class="sg-sec-h">
+                <h2 class="sg-h-lg" id="sg-own-gives" data-th="เคลมแล้วได้อะไร">What claiming gives you</h2>
+            </div>
+            <div class="sg-own-gives">
+                <ul class="sg-own-list">
+                    <li><Icon name="check" /><span data-th="แก้ไขเวลาเปิด-ปิดได้ตลอดเวลา พร้อมประกาศวันหยุดชั่วคราว">Edit your opening hours any time, with a notice for holidays.</span></li>
+                    <li><Icon name="check" /><span data-th="รูปของคุณเอง สูงสุด 8 รูป แทนรูปจาก Google">Your own photos, up to eight, instead of Google's.</span></li>
+                    <li><Icon name="check" /><span data-th="ปุ่มแชต LINE และ WhatsApp เบอร์โทร และที่อยู่ที่ถูกต้อง">LINE and WhatsApp chat buttons, your phone number and the right address.</span></li>
+                    <li><Icon name="check" /><span data-th="ชื่อและคำอธิบายภาษาไทย สำหรับลูกค้าคนไทย">A Thai name and description for Thai customers.</span></li>
+                    <li><Icon name="check" /><span data-th="บอกลูกค้าเรื่องแอร์ บัตรเครดิต ที่จอดรถ และอื่นๆ">Tell visitors about air-con, card payment, parking and more.</span></li>
+                    <li><Icon name="check" /><span data-th="ป้ายยืนยันเจ้าของร้านบนหน้าร้านของคุณ">A Verified owner badge on your page.</span></li>
+                    <li><Icon name="check" /><span data-th="การแก้ไขขึ้นบน soiguru.com ภายในไม่กี่นาที">Changes are live on soiguru.com within minutes.</span></li>
+                </ul>
+                <div class="sg-card sg-card-tint sg-own-price">
+                    <span class="sg-price-num">฿100 <small data-th="/ เดือน">/ month</small></span>
+                    <small data-th="หรือ ฿1,000 / ปี (ฟรี 2 เดือน)">or ฿1,000 / year (2 months free)</small>
+                    <p class="sg-card-text" data-th="ร้านของคุณอยู่บน SoiGuru ฟรีเสมอ ไม่ว่าจะเคลมหรือไม่ การเคลมมีไว้สำหรับเจ้าของที่อยากจัดการหน้าร้านเอง">Your listing stays on SoiGuru for free whether you claim it or not. Claiming is for the owner who wants to manage the page.</p>
+                </div>
+            </div>
+        </section>
+
+        <section class="sg-sec" aria-labelledby="sg-own-how">
+            <div class="sg-sec-h">
+                <h2 class="sg-h-lg" id="sg-own-how" data-th="วิธีเคลม ทีละขั้นตอน">How to claim, step by step</h2>
+            </div>
+            <ol class="sg-own-steps">
+                <li class="sg-own-step">
+                    <div class="sg-own-step-text">
+                        <span class="sg-own-step-num" aria-hidden="true">1</span>
+                        <h3 data-th="เปิดหน้าร้านของคุณ">Open your shop's page</h3>
+                        <p data-th="ค้นหาร้านของคุณบน soiguru.com แล้วแตะ “เคลมร้านนี้” ใต้เวลาเปิด-ปิด">Find your shop on soiguru.com and tap “Claim this listing” under the opening hours.</p>
+                    </div>
+                    <Image class="sg-own-shot sg-own-shot-card" src={shotClaim} alt="The “Is this your business?” card on a listing page, with the Claim this listing button" width={360} densities={[1, 2]} />
+                </li>
+                <li class="sg-own-step">
+                    <div class="sg-own-step-text">
+                        <span class="sg-own-step-num" aria-hidden="true">2</span>
+                        <h3 data-th="เลือกร้านของคุณ">Pick your business</h3>
+                        <p data-th="ค้นหาด้วยชื่อร้านหรือเบอร์โทรที่อยู่บนป้ายร้าน ร้านส่วนใหญ่มีอยู่ในระบบแล้ว">Search by name or by the phone number on your sign. Most shops are already listed.</p>
+                    </div>
+                    <Image class="sg-own-shot" src={shotSearch} alt="Claim your listing, step 1 of 3: search for your business by name or phone" width={320} densities={[1, 2]} />
+                </li>
+                <li class="sg-own-step">
+                    <div class="sg-own-step-text">
+                        <span class="sg-own-step-num" aria-hidden="true">3</span>
+                        <h3 data-th="สร้างบัญชี">Create an account</h3>
+                        <p data-th="ใช้อีเมลและรหัสผ่าน ใช้เวลาหนึ่งนาที บัญชีนี้ใช้แก้ไขหน้าร้านของคุณในภายหลัง">An email address and a password; it takes a minute. You use this account later to edit your page.</p>
+                    </div>
+                    <Image class="sg-own-shot" src={shotSignIn} alt="The owner sign-in screen with Sign in and Create account buttons" width={320} densities={[1, 2]} />
+                </li>
+                <li class="sg-own-step">
+                    <div class="sg-own-step-text">
+                        <span class="sg-own-step-num" aria-hidden="true">4</span>
+                        <h3 data-th="เราตรวจสอบว่าเป็นคุณจริง">We check it's you</h3>
+                        <p data-th="เราโทรไปที่เบอร์ที่อยู่บนหน้าร้าน ถ้าเบอร์นั้นไม่ใช่ของคุณแล้ว ให้ส่งรูปป้ายร้านและบัตรประชาชนทางอีเมล เราตรวจสอบภายใน 1 วัน">We call the phone number shown on the listing. If that number isn't yours any more, email us a photo of your shop sign and your ID; we review it within a day.</p>
+                    </div>
+                    <Image class="sg-own-shot" src={shotVerify} alt="Claim your listing, step 2 of 3: how we verify it's you" width={320} densities={[1, 2]} />
+                </li>
+                <li class="sg-own-step">
+                    <div class="sg-own-step-text">
+                        <span class="sg-own-step-num" aria-hidden="true">5</span>
+                        <h3 data-th="เลือกแพ็กเกจ">Choose a plan</h3>
+                        <p data-th="รายเดือนหรือรายปี ยังไม่มีการเรียกเก็บเงินตอนนี้ เมื่อยืนยันแล้วว่าเป็นคุณ เราจะส่ง QR พร้อมเพย์หรือลิงก์ชำระด้วยบัตรทางอีเมล ป้ายยืนยันเจ้าของร้านจะขึ้นทันทีที่ได้รับเงิน">Monthly or yearly. Nothing is charged now: once we've confirmed it's you, we email a PromptPay QR or a card payment link. The Verified badge appears as soon as the payment arrives.</p>
+                    </div>
+                    <Image class="sg-own-shot" src={shotPlan} alt="Claim your listing, step 3 of 3: choose a monthly or yearly plan and how to pay" width={320} densities={[1, 2]} />
+                </li>
+            </ol>
+        </section>
+
+        <section class="sg-sec" aria-labelledby="sg-own-dash">
+            <div class="sg-sec-h">
+                <h2 class="sg-h-lg" id="sg-own-dash" data-th="แล้วคุณจัดการเองได้จากมือถือ">Then you manage it from your phone</h2>
+            </div>
+            <p class="sg-prose" data-th="เมื่อเคลมได้รับการอนุมัติ หน้าร้านของคุณจะอยู่ที่ owner.soiguru.com เวลาเปิด-ปิด ช่องทางติดต่อ สิ่งที่ลูกค้าควรรู้ และรูปภาพ ทุกอย่างแก้ไขได้ในไม่กี่แตะ">Once your claim is approved, your page lives at owner.soiguru.com. Hours, contact details, what visitors should know and photos: everything is a few taps.</p>
+            <div class="sg-own-shots">
+                <figure>
+                    <Image class="sg-own-shot" src={shotDashboard} alt="The owner dashboard: your listing with Details, Hours, Good to know, Photos and Billing" width={320} densities={[1, 2]} />
+                    <figcaption data-th="แดชบอร์ด: ทุกอย่างของร้านคุณอยู่ในที่เดียว พร้อมคำแนะนำว่าควรเติมอะไรต่อ">Your dashboard: everything about your shop in one place, with a tip on what to fill in next.</figcaption>
+                </figure>
+                <figure>
+                    <Image class="sg-own-shot" src={shotHours} alt="The Hours screen: opening and closing times per day, a lunch break and a temporary notice" width={320} densities={[1, 2]} />
+                    <figcaption data-th="เวลาเปิด-ปิด: ทุกวัน พักกลางวันได้ และประกาศชั่วคราว เช่น ปิดช่วงสงกรานต์">Hours: every day, a lunch break if you have one, and a temporary notice such as “Closed for Songkran”.</figcaption>
+                </figure>
+                <figure>
+                    <Image class="sg-own-shot" src={shotPhotos} alt="The Photos screen: add up to eight photos, make one the first, remove one" width={320} densities={[1, 2]} />
+                    <figcaption data-th="รูปภาพ: เพิ่มได้สูงสุด 8 รูปจากมือถือของคุณ เลือกรูปแรกหรือลบออกได้ รูปแรกคือรูปใหญ่บนหน้าร้าน แทนรูปจาก Google">Photos: add up to eight from your phone, choose the first one or remove one. The first photo is the big one on your page, in place of Google's.</figcaption>
+                </figure>
+            </div>
+        </section>
+
+        <section class="sg-sec" aria-labelledby="sg-own-faq">
+            <div class="sg-sec-h">
+                <h2 class="sg-h-lg" id="sg-own-faq" data-th="คำถามที่พบบ่อย">Questions</h2>
+            </div>
+            <div class="sg-own-faq">
+                <details>
+                    <summary data-th="หน้าร้านของฉันฟรีไหม?">Is my listing free?</summary>
+                    <p data-th="ฟรี และจะฟรีตลอดไป ทุกร้านในเมืองอยู่บน SoiGuru เพื่อให้คู่มือนี้ใช้ได้จริง การเคลมเป็นทางเลือกสำหรับเจ้าของที่อยากจัดการหน้าร้านเอง">Yes, and it stays free. Every shop in town is on SoiGuru so the guide is useful. Claiming is optional, for owners who want to manage their page.</p>
+                </details>
+                <details>
+                    <summary data-th="มีคนอื่นเคลมร้านของฉันไปแล้ว?">Someone else has claimed my shop?</summary>
+                    <p data-th="ใช้ “รายงานข้อมูลผิด” บนหน้าร้านของคุณ แล้วเราจะติดต่อกลับเพื่อแก้ไขให้">Use “Report wrong info” on your shop's page and we'll get in touch and sort it out.</p>
+                </details>
+                <details>
+                    <summary data-th="การแก้ไขขึ้นเว็บเร็วแค่ไหน?">How fast do changes show?</summary>
+                    <p data-th="ภายในไม่กี่นาที หน้าร้านของคุณบน soiguru.com จะถูกสร้างใหม่ทุกครั้งที่คุณบันทึก">Within a few minutes. Your page on soiguru.com is rebuilt every time you save.</p>
+                </details>
+                <details>
+                    <summary data-th="ยกเลิกได้ไหม?">Can I cancel?</summary>
+                    <p data-th="รายเดือน: ยกเลิกได้ทุกเมื่อ รายปี: คืนเงินได้ภายใน 14 วัน ไม่มีการเรียกเก็บเงินอัตโนมัติ เราส่งลิงก์ชำระเงินทางอีเมลล่วงหน้า 14 วันก่อนหมดอายุ">Monthly: any time. Yearly: refundable within 14 days. Nothing is charged automatically; we email a payment link 14 days before your plan ends.</p>
+                </details>
+                <details>
+                    <summary data-th="ข้อมูลของฉันถูกนำไปใช้อย่างไร?">What happens with my details?</summary>
+                    <p data-th="สิ่งที่อยู่บนหน้าร้านของคุณเท่านั้นที่เป็นสาธารณะ อีเมลของคุณใช้สำหรับเข้าสู่ระบบและใบเสร็จ เราไม่ขายข้อมูล">Only what is on your page is public. Your email is used for your login and receipts. We don't sell data.</p>
+                </details>
+                <details>
+                    <summary data-th="ฉันมีบัญชีแล้ว จะเข้าไปแก้ไขที่ไหน?">I already have an account. Where do I edit?</summary>
+                    <p data-th="เข้าสู่ระบบที่ owner.soiguru.com หรือแตะ “เจ้าของร้าน” ที่ด้านล่างของทุกหน้า">Sign in at owner.soiguru.com, or tap “Owner” at the bottom of any page.</p>
+                </details>
+            </div>
+        </section>
+
+        <section class="sg-own-cta">
+            <h2 class="sg-h-md" data-th="พร้อมแล้วใช่ไหม?">Ready?</h2>
+            <p data-th="เคลมใช้เวลาสองนาที เราโทรหาคุณภายในหนึ่งวัน">Claiming takes two minutes. We call you within a day.</p>
+            {claim && (
+                <a class="sg-btn sg-btn-ink sg-btn-lg" href={claim} data-umami-event="claim-listing">
+                    <Icon name="shield" />
+                    <span data-th="เคลมร้านของคุณ">Claim your listing</span>
+                </a>
+            )}
+            {owner && (
+                <p style="margin:16px 0 0">
+                    <a href={owner} data-th="มีบัญชีแล้ว? เข้าสู่ระบบ">Already have an account? Sign in</a>
+                </p>
+            )}
+        </section>
+    </main>
+</SoiGuruLayout>
