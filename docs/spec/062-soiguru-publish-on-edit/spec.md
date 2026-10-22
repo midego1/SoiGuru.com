@@ -17,6 +17,8 @@ ranks fresher pages better.
   `wrangler deploy`, the same command used for manual deploys.
 - A burst of edits ends in one deploy: a newer run cancels the one still building
   (`concurrency` with `cancel-in-progress`).
+- GitHub runs a push-triggered workflow from the pushed branch, so the same workflow file also
+  lives on the `data` branch (`.github/workflows/publish-site.yml` there, kept identical).
 - Code changes on `develop` keep deploying through Cloudflare Workers Builds; this workflow
   only covers content.
 - Needs two repository secrets: `CLOUDFLARE_API_TOKEN` (Workers Scripts: Edit) and
