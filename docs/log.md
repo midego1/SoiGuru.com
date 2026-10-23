@@ -9,6 +9,7 @@ sidebar_position: 99
 
 ## 2026-10-23
 
+- `spec-069` `astro/apps/web/src/lib/soiguru/menu.ts` `astro/apps/web/src/components/soiguru/MenuCard.astro` `astro/apps/web/src/lib/soiguru/jsonld.ts`: "Menu & prices" on the listing page from the listing's `menu` sections (English and Thai, ranges and "from" prices, note), schema.org Menu/OfferCatalog, item names in the search text ([spec 069](spec/069-soiguru-menu-prices/spec.md), PR #46).
 - `spec-066` `astro/apps/web/src/styles/soiguru/site.css`: the city hero photo keeps its 16:9 size (the `height` attribute no longer stretches it to 900 px), sits beside the text from 1100 px and under it, search-bar wide, below that ([spec 066](spec/066-soiguru-city-covers/spec.md), PR #45).
 - `spec-066` `.github/workflows/city-covers.yml`: the cover workflow starts the publish workflow after its commit, since a push made with the Actions token does not trigger it; Krabi's cover is the Unsplash boats photo by Sumit Chinchane ([spec 066](spec/066-soiguru-city-covers/spec.md), PR #44).
 - `spec-068` `astro/apps/web/src/integrations/soiguru-redirects.ts` `astro/apps/web/astro.config.ts`: with one city the home redirects (302) to the city page and leaves the sitemap; the landing page comes back with a second city ([spec 068](spec/068-soiguru-single-city-home/spec.md)).

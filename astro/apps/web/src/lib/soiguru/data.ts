@@ -12,6 +12,7 @@ import type { ItemData, SiteConfig } from '@ever-works/core';
 import { getContent, readContentYaml } from '../content';
 import { isIconName, type IconName } from './icons';
 import { parseHours, type WeeklyHours } from './hours';
+import { parseMenu, menuSearchText, type MenuSection } from './menu';
 import { isLatLng, type LatLng } from './geo';
 import { updatedAtIso } from './format';
 
@@ -91,6 +92,10 @@ export interface Listing {
     hours_note?: string;
     booking_note?: string;
     price_band?: number;
+    /** Menu & prices (spec 069): sections of priced items; empty when the listing has none. */
+    menu: MenuSection[];
+    menu_note?: string;
+    menu_note_th?: string;
     rating?: number;
     rating_count?: number;
     claimed: boolean;
@@ -202,6 +207,7 @@ function toListing(
     const images = Array.isArray(item.images) ? item.images.filter((i): i is string => typeof i === 'string') : [];
     const name_th = str(item['name_th']);
     const amenities = toAmenities(item['amenities'], amenityLabels);
+    const menu = parseMenu(item['menu']);
     const listing: Listing = {
         slug: item.slug,
         name: item.name,
@@ -221,6 +227,9 @@ function toListing(
         hours_note: str(item['hours_note']),
         booking_note: str(item['booking_note']),
         price_band: num(item['price_band']),
+        menu,
+        menu_note: str(item['menu_note']),
+        menu_note_th: str(item['menu_note_th']),
         rating: num(item['rating']),
         rating_count: num(item['rating_count']),
         claimed: item['claimed'] === true,
@@ -242,6 +251,7 @@ function toListing(
             item.description,
             str(item['description_th']),
             ...amenities.filter((a) => a.available).flatMap((a) => [a.name, a.name_th]),
+            ...menuSearchText(menu),
             ...item.tags
         ]
             .filter(Boolean)
@@ -298,7 +308,10 @@ export function siteTheme(config: SiteConfig): Theme {
 }
 
 /** The header's main links for a city: the busiest categories plus the map. */
-export function headerLinks(data: Pick<SoiGuruData, 'categories'>, city: Pick<City, 'id'>): { href: string; label: string; label_th: string }[] {
+export function headerLinks(
+    data: Pick<SoiGuruData, 'categories'>,
+    city: Pick<City, 'id'>
+): { href: string; label: string; label_th: string }[] {
     const has = (id: string) => data.categories.some((c) => c.id === id);
     const links = [
         has('restaurants') && { href: `/${city.id}/restaurants`, label: 'Eat & drink', label_th: 'ร้านอาหาร' },

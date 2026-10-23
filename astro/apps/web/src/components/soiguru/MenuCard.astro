@@ -1,0 +1,64 @@
+---
+/**
+ * MenuCard — "Menu & prices" on the listing page (spec 069): the listing's `menu` sections as
+ * name/price rows, English with Thai twins via `data-th`, an optional note per item and a
+ * note under the list. Renders nothing when the listing has no menu. Works for every trade:
+ * dishes, treatments, day trips, rental rates.
+ */
+import { formatPrice } from '../../lib/soiguru/menu';
+import type { Listing } from '../../lib/soiguru/data';
+
+interface Props {
+    listing: Listing;
+}
+
+const { listing } = Astro.props;
+const sections = listing.menu;
+---
+
+{
+    sections.length > 0 && (
+        <section class="sg-lp-sec sg-menu-sec" aria-labelledby="sg-menu-h">
+            <h2 class="sg-h-md" id="sg-menu-h" data-th="เมนูและราคา">
+                Menu &amp; prices
+            </h2>
+            {sections.map((s) => (
+                <div class="sg-menu-group">
+                    {s.title && (
+                        <h3 class="sg-menu-title" data-th={s.title_th}>
+                            {s.title}
+                        </h3>
+                    )}
+                    <ul class="sg-menu-list">
+                        {s.items.map((i) => {
+                            const en = formatPrice(i, 'en');
+                            const th = formatPrice(i, 'th');
+                            return (
+                                <li class="sg-menu-item">
+                                    <span class="sg-menu-name">
+                                        <span data-th={i.name_th}>{i.name}</span>
+                                        {i.note && (
+                                            <small class="sg-menu-note" data-th={i.note_th}>
+                                                {i.note}
+                                            </small>
+                                        )}
+                                    </span>
+                                    {en && (
+                                        <span class="sg-menu-price" data-th={th !== en ? th : undefined}>
+                                            {en}
+                                        </span>
+                                    )}
+                                </li>
+                            );
+                        })}
+                    </ul>
+                </div>
+            ))}
+            {listing.menu_note && (
+                <p class="sg-menu-foot" data-th={listing.menu_note_th}>
+                    {listing.menu_note}
+                </p>
+            )}
+        </section>
+    )
+}
