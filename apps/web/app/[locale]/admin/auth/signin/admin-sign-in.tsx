@@ -3,7 +3,7 @@
 import { Building, Globe, User } from 'lucide-react';
 import { useTranslations } from 'next-intl';
 import { CredentialsForm } from '@/app/[locale]/auth/components/credentials-form';
-import { SoiGuruKarstScene, SoiGuruLogo } from '@/components/soiguru/logo-mark';
+import { SoiGuruIcon, SoiGuruLogo } from '@/components/soiguru/logo-mark';
 
 /**
  * SoiGuru admin sign-in (spec 055). Left panel on sea-deep with the logo and a
@@ -28,12 +28,10 @@ export function AdminSignIn({ onSuccess }: { onSuccess: () => void }) {
 				<div className="flex flex-col lg:flex-row">
 					{/* Brand panel */}
 					<div className="relative flex w-full flex-col justify-between gap-6 bg-[#064a50] p-6 text-white lg:w-1/2 lg:p-10">
-						<div className="flex flex-col items-start gap-2">
-							<SoiGuruLogo tone="dark" height={44} alt="SoiGuru" />
-							<p className="text-sm text-white/75">{tShell('SIGNIN_EYEBROW')}</p>
-						</div>
+						<SoiGuruLogo tone="dark" height={44} alt="SoiGuru" />
 
-						<SoiGuruKarstScene className="hidden w-full max-w-sm self-center lg:block" />
+						{/* The brand icon, large, in place of the drawn karst scene (2026-10-23). */}
+						<SoiGuruIcon size={220} className="hidden self-center lg:block" />
 
 						<div className="space-y-3">
 							<h2 className="text-xl font-bold leading-tight tracking-[-0.01em] lg:text-2xl">

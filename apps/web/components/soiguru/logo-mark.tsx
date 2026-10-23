@@ -84,13 +84,17 @@ export function SoiGuruLogo({
 	);
 }
 
-/** The brand icon alone (sign, pin and bowl), for tight spots such as the admin header. */
+/** The brand icon alone (sign, pin and bowl): small in tight spots, large (over 96px) as a panel illustration. */
 export function SoiGuruIcon({ size = 34, className, alt = '' }: { size?: number; className?: string; alt?: string }) {
 	const width = Math.round((size * 512) / 467);
 	return (
 		<img
-			src="/brand/logo-icon-96.webp"
-			srcSet="/brand/logo-icon-48.webp 1x, /brand/logo-icon-96.webp 2x, /brand/logo-icon-144.webp 3x"
+			src={size > 96 ? '/brand/logo-icon-480.webp' : '/brand/logo-icon-96.webp'}
+			srcSet={
+				size > 96
+					? '/brand/logo-icon-240.webp 1x, /brand/logo-icon-480.webp 2x'
+					: '/brand/logo-icon-48.webp 1x, /brand/logo-icon-96.webp 2x, /brand/logo-icon-144.webp 3x'
+			}
 			width={width}
 			height={size}
 			alt={alt}
