@@ -3921,3 +3921,60 @@ html:not([data-lang='th']) .sg-lang-th {
 .sg-sf-legal a {
     color: inherit;
 }
+
+/* ---------- city cover photos (spec 066) ---------- */
+.sg-area-art-photo {
+    height: 120px;
+    opacity: 1;
+    position: relative;
+}
+.sg-area-art-photo img {
+    display: block;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+.sg-area-art-photo::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(180deg, rgba(0, 0, 0, 0) 55%, rgba(6, 74, 80, 0.55) 100%);
+}
+@media (min-width: 720px) {
+    .sg-area-art-photo {
+        height: 150px;
+    }
+}
+.sg-hero-art-photo {
+    display: block;
+    max-width: none;
+    flex-basis: 100%;
+    margin-top: var(--space-4);
+}
+.sg-hero-photo {
+    margin: 0;
+}
+.sg-hero-photo img {
+    display: block;
+    width: 100%;
+    aspect-ratio: 16 / 9;
+    object-fit: cover;
+    border-radius: var(--radius-lg);
+}
+.sg-hero-photo figcaption {
+    margin-top: 6px;
+    font-size: 12px;
+    line-height: 16px;
+    color: var(--ink-muted);
+    text-align: right;
+}
+.sg-hero-photo figcaption a {
+    color: inherit;
+}
+@media (min-width: 960px) {
+    .sg-hero-art-photo {
+        flex: 1 1 300px;
+        max-width: 520px;
+        margin-top: 0;
+    }
+}

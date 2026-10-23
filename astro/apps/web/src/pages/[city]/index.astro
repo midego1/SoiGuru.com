@@ -99,8 +99,19 @@ const trust: [string, string][] = [
                         }
                     </ul>
                 </div>
-                <div class="sg-hero-art">
-                    <KarstScene />
+                <div class={`sg-hero-art${city.cover ? ' sg-hero-art-photo' : ''}`}>
+                    {city.cover ? (
+                        <figure class="sg-hero-photo">
+                            <img src={city.cover.url} alt={`${city.name}`} width="1600" height="900" fetchpriority="high" decoding="async" />
+                            {city.cover.author && (
+                                <figcaption>
+                                    <span data-th="ภาพ">Photo</span>: <a href={city.cover.author_url ?? city.cover.photo_url} rel="noopener" target="_blank">{city.cover.author}</a> / <a href={city.cover.photo_url ?? 'https://unsplash.com/?utm_source=soiguru&utm_medium=referral'} rel="noopener" target="_blank">Unsplash</a>
+                                </figcaption>
+                            )}
+                        </figure>
+                    ) : (
+                        <KarstScene />
+                    )}
                 </div>
             </div>
         </section>
