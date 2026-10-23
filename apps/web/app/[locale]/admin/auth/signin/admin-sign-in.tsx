@@ -31,14 +31,8 @@ export function AdminSignIn({ onSuccess }: { onSuccess: () => void }) {
 						{/* The brand icon alone, large (2026-10-23): the lockup above it was one SoiGuru too many. */}
 						<SoiGuruIcon size={240} className="self-center" alt="SoiGuru" />
 
-						<div className="space-y-3">
-							<h2 className="text-xl font-bold leading-tight tracking-[-0.01em] lg:text-2xl">
-								{tAuth('ADMIN_WELCOME_TITLE')}
-							</h2>
-							<p className="text-sm leading-relaxed text-white/80">
-								{tAuth('ADMIN_WELCOME_DESCRIPTION')}
-							</p>
-						</div>
+						{/* No welcome title (2026-10-23): the icon is the heading; the description stays. */}
+						<p className="text-sm leading-relaxed text-white/80">{tAuth('ADMIN_WELCOME_DESCRIPTION')}</p>
 
 						<ul className="hidden space-y-3 sm:block">
 							{features.map(({ icon: Icon, title, description }) => (
