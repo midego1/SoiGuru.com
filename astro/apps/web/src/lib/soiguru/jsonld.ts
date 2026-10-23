@@ -6,6 +6,7 @@
 import { DAY_KEYS, DAY_SCHEMA, formatMinutes, type DayKey } from './hours';
 import { priceRange } from './format';
 import type { Listing } from './data';
+import type { MenuItem } from './menu';
 
 /** The most specific `LocalBusiness` subtype per category id. Unknown ids use `LocalBusiness`. */
 const SCHEMA_TYPE: Record<string, string> = {
@@ -80,6 +81,56 @@ export function localBusinessJsonLd(listing: Listing, siteUrl: string): Record<s
             reviewCount: listing.rating_count,
             bestRating: 5
         };
+    }
+    if (listing.menu.length > 0) {
+        // Restaurants, cafés and bars get a schema.org Menu; every other trade an OfferCatalog.
+        const food = ['restaurants', 'cafes', 'bars'].includes(listing.category?.id ?? '');
+        const offer = (i: MenuItem): Record<string, unknown> | undefined => {
+            if (i.price === undefined) return undefined;
+            if (i.price_max === undefined && !i.from) return { '@type': 'Offer', price: i.price, priceCurrency: 'THB' };
+            return {
+                '@type': 'Offer',
+                priceCurrency: 'THB',
+                priceSpecification: {
+                    '@type': 'PriceSpecification',
+                    minPrice: i.price,
+                    ...(i.price_max !== undefined ? { maxPrice: i.price_max } : {}),
+                    priceCurrency: 'THB'
+                }
+            };
+        };
+        if (food) {
+            ld['hasMenu'] = {
+                '@type': 'Menu',
+                name: 'Menu',
+                hasMenuSection: listing.menu.map((s) => ({
+                    '@type': 'MenuSection',
+                    name: s.title ?? 'Menu',
+                    hasMenuItem: s.items.map((i) => {
+                        const o = offer(i);
+                        return {
+                            '@type': 'MenuItem',
+                            name: i.name,
+                            ...(i.note ? { description: i.note } : {}),
+                            ...(o ? { offers: o } : {})
+                        };
+                    })
+                }))
+            };
+        } else {
+            ld['hasOfferCatalog'] = {
+                '@type': 'OfferCatalog',
+                name: 'Services & prices',
+                itemListElement: listing.menu.map((s) => ({
+                    '@type': 'OfferCatalog',
+                    name: s.title ?? 'Services',
+                    itemListElement: s.items.map((i) => ({
+                        ...(offer(i) ?? { '@type': 'Offer' }),
+                        itemOffered: { '@type': 'Service', name: i.name, ...(i.note ? { description: i.note } : {}) }
+                    }))
+                }))
+            };
+        }
     }
     if (listing.amenities.length > 0) {
         ld['amenityFeature'] = listing.amenities.map((a) => ({
