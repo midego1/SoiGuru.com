@@ -64,7 +64,6 @@ body {
 .sg-hero-h,
 .sg-lp-title,
 .sg-card-h,
-.sg-logo-word,
 .sg-price-num,
 .sg-area-name,
 .sg-tcard-name {
@@ -214,14 +213,12 @@ html[data-lang='th'] :is(.sg-h-xl, .sg-h-lg, .sg-hero-h, .sg-lp-title) {
     color: var(--ink);
     text-decoration: none;
 }
-.sg-logo-mark {
+/* brand lockup image (Logo.astro): height drives the size, width follows the 191:44 artwork */
+.sg-logo-img {
     flex: none;
     display: block;
-}
-.sg-logo-word {
-    font-weight: 800;
-    font-size: 20px;
-    letter-spacing: -0.02em;
+    height: 40px;
+    width: auto;
 }
 .sg-pill-btn {
     display: inline-flex;
@@ -356,8 +353,8 @@ html[data-lang='th'] :is(.sg-h-xl, .sg-h-lg, .sg-hero-h, .sg-lp-title) {
     .sg-sh-end {
         gap: 4px;
     }
-    .sg-logo-word {
-        font-size: 18px;
+    .sg-logo-img {
+        height: 34px;
     }
     .sg-citypick .sg-pill-btn {
         padding: 0 10px;
@@ -367,8 +364,8 @@ html[data-lang='th'] :is(.sg-h-xl, .sg-h-lg, .sg-hero-h, .sg-lp-title) {
     }
 }
 @media (max-width: 359px) {
-    .sg-logo-word {
-        display: none;
+    .sg-logo-img {
+        height: 28px;
     }
 }
 @media (min-width: 720px) {
@@ -3892,4 +3889,35 @@ html[data-lang='en'] .sg-sf-lang[data-lang-set='en'] {
 html[data-lang='th'] .sg-lang-en,
 html:not([data-lang='th']) .sg-lang-th {
     display: none;
+}
+
+/* ---------- legal pages (/privacy, /terms, spec 065) ---------- */
+.sg-doc {
+    max-width: 720px;
+    padding-top: 32px;
+    padding-bottom: 56px;
+}
+.sg-doc .sg-h-md {
+    margin: 32px 0 8px;
+}
+.sg-doc p {
+    margin: 0 0 12px;
+    font-size: 16px;
+    line-height: 1.6;
+}
+.sg-doc-meta {
+    color: var(--ink-muted);
+    font-size: 14px;
+}
+.sg-doc-list {
+    margin: 0 0 12px;
+    padding-left: 20px;
+}
+.sg-doc-list li {
+    margin: 0 0 8px;
+    font-size: 16px;
+    line-height: 1.6;
+}
+.sg-sf-legal a {
+    color: inherit;
 }
