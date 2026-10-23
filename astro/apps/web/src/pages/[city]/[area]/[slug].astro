@@ -23,6 +23,7 @@ import ListingCard from '../../../components/soiguru/ListingCard.astro';
 import SaveButton from '../../../components/soiguru/SaveButton.astro';
 import CategoryArt from '../../../components/soiguru/CategoryArt.astro';
 import { getSoiGuru, claimUrl, ownerUrl, reportUrl, type Listing } from '../../../lib/soiguru/data';
+import { photoVariant } from '../../../lib/soiguru/media';
 import { breadcrumbJsonLd, localBusinessJsonLd } from '../../../lib/soiguru/jsonld';
 import { priceBand, formatDate } from '../../../lib/soiguru/format';
 import { appleMapsUrl, directionsUrl, distanceMetres, mapsEmbedUrl, mapsSearchUrl } from '../../../lib/soiguru/geo';
@@ -153,7 +154,7 @@ const trail: [string, string][] = [
                     <div class="sg-pgrid" data-count={shown.length}>
                         {shown.map((src, i) => (
                             <button type="button" class="sg-photo-btn" data-gallery-open={String(i)} aria-label={i === 0 ? 'Open photos' : `Open photo ${i + 1}`}>
-                                <img src={src} alt="" loading={i === 0 ? 'eager' : 'lazy'} decoding="async" width={i === 0 ? 800 : 400} height={i === 0 ? 600 : 300} />
+                                <img src={i === 0 ? src : photoVariant(src, 800)} alt="" loading={i === 0 ? 'eager' : 'lazy'} decoding="async" width={i === 0 ? 800 : 400} height={i === 0 ? 600 : 300} />
                             </button>
                         ))}
                         <span class="sg-pgrid-count">

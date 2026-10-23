@@ -69,12 +69,18 @@ const jsonLd = [
                     cities.map((city, i) => {
                         const count = cityListings(data, city).length;
                         return (
-                            <a class="sg-area" href={`/${city.id}`} style={`--area-bg: var(--area-${(i % 5) + 1})`} data-city-hover={city.id}>
+                            <a class={`sg-area${city.cover ? ' sg-area-photo' : ''}`} href={`/${city.id}`} style={`--area-bg: var(--area-${(i % 5) + 1})`} data-city-hover={city.id}>
+                                {city.cover ? (
+                                    <span class="sg-area-art sg-area-art-photo" aria-hidden="true">
+                                        <img src={city.cover.thumb} alt="" width="640" height="360" loading={i === 0 ? 'eager' : 'lazy'} decoding="async" title={city.cover.author ? `Photo: ${city.cover.author} / Unsplash` : undefined} />
+                                    </span>
+                                ) : (
                                 <span class="sg-area-art" aria-hidden="true">
                                     <svg viewBox="0 0 200 80" preserveAspectRatio="none" focusable="false">
                                         <path d={i % 2 ? 'M0 80 C30 40 46 22 62 44 C74 20 96 8 110 40 C122 64 140 56 156 66 C170 40 186 46 200 60 V80 Z' : 'M0 80 C18 54 30 30 48 50 C64 18 84 14 98 46 C112 30 130 34 140 56 C156 36 178 28 200 52 V80 Z'} fill="currentColor" />
                                     </svg>
                                 </span>
+                                )}
                                 <span class="sg-area-body">
                                     <span class="sg-area-name">{city.name}</span>
                                     <span class="sg-area-count">

@@ -10,6 +10,7 @@ sidebar_position: 99
 ## 2026-10-23
 
 - `spec-067` `apps/web/lib/soiguru/photos.ts` `apps/web/package.json`: owner and claim photos are re-encoded with sharp into WebP in three sizes (main up to 1600 px, 800×600 card, 400×300 thumbnail); removing a photo removes all copies ([spec 067](spec/067-soiguru-photo-pipeline/spec.md)).
+- `spec-066` `astro/apps/web/src/lib/soiguru/data.ts` `astro/apps/web/src/pages/index.astro` `astro/apps/web/src/pages/[city]/index.astro` `astro/apps/web/scripts/city-covers.ts` `.github/workflows/city-covers.yml`: city cover photos from Unsplash on the landing card and the city hero, with credit; the site also serves the owner photos' 800 and 400 px copies (`lib/soiguru/media.ts`, Worker `/media/*`) for cards and grids ([spec 066](spec/066-soiguru-city-covers/spec.md), spec 067).
 - ops: outgoing mail for the owner app runs through Amazon SES (eu-central-1, domain soiguru.com verified with Easy DKIM in Cloudflare DNS, production access) over SMTP: `EMAIL_PROVIDER=smtp`, `SMTP_HOST=email-smtp.eu-central-1.amazonaws.com`, `SMTP_PORT=2587` (the host blocks outbound 587; SES's 2587 is the same STARTTLS endpoint). Verified with a password-reset mail delivered with DKIM. Incoming mail for support@/info@ is Cloudflare Email Routing.
 - `apps/web/lib/mail/index.ts`: the mail service counts SMTP (host, user, password) as configured; with `EMAIL_PROVIDER=smtp` and Amazon SES credentials it disabled itself because only API keys were checked.
 
