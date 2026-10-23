@@ -1,0 +1,45 @@
+name: 'The Krabi Barber & Nails'
+description: 'Barbershop and nail salon at Ao Nang Landmark: men''s haircuts, beard trims and shaves, plus manicures and pedicures. Open daily from 13:00 until midnight.'
+description_th: 'ร้านตัดผมชายและทำเล็บที่อ่าวนางแลนด์มาร์ค ตัดผม แต่งหนวดเครา โกนหนวด และทำเล็บมือเล็บเท้า เปิดทุกวัน 13:00 ถึงเที่ยงคืน'
+source_url: 'http://krabibarberandnail.com/'
+category: barbers-salons
+tags: []
+featured: false
+status: approved
+city: krabi
+area: ao-nang
+address: 'Ao Nang Landmark 49/75 Moo 3, Ao Nang, Krabi 81000'
+geo:
+  lat: 8.042201
+  lng: 98.811504
+location:
+  address: 'Ao Nang Landmark 49/75 Moo 3, Ao Nang, Krabi 81000'
+  city: Krabi
+  country: TH
+  latitude: 8.042201
+  longitude: 98.811504
+phone: '+66 81 917 1351'
+hours:
+  mon:
+  - 13:00-24:00
+  tue:
+  - 13:00-24:00
+  wed:
+  - 13:00-24:00
+  thu:
+  - 13:00-24:00
+  fri:
+  - 13:00-24:00
+  sat:
+  - 13:00-24:00
+  sun:
+  - 13:00-24:00
+claimed: false
+submitted_by: SoiGuru team
+updated_by: SoiGuru team
+updated_at: "2026-10-23 02:51"
+markdown: |
+  Barbershop and nail salon at Ao Nang Landmark: men's haircuts, beard trims and shaves, plus manicures and pedicures. Open daily from 13:00 until midnight.
+
+  Website: <http://krabibarberandnail.com/>
+google_place_id: ChIJE5skKSe_UTAR9WAJhHRXf3M
