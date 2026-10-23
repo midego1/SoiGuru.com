@@ -107,3 +107,25 @@ legal pages to `/privacy` and `/terms`, everything else to the site root (302). 
 `lib/soiguru/owner-only.ts` (pure, unit-testable); `SOIGURU_OWNER_APP_ONLY=false` switches it
 off, and it never applies on the canonical host, where the template pages are the site. The
 pages themselves stay in the code (R11).
+
+### Why the rule only reached production on 23 Oct 09:45 (and the deploy rule it leaves behind)
+
+PRs #51 and #52 were merged and built, yet owner.soiguru.com kept answering `/categories` and
+`/krabi` with 200, and neither the `X-Robots-Tag` header (spec 057) nor the new diagnostic header
+ever appeared. The cause was outside the repository: the Dokploy application `SoiGuru.com-web`
+carried a **patch** (Dokploy › Patches, created 2026-10-15 01:35, `apps/web/proxy.ts`, type
+`update`) that overwrote the whole file after every clone and before every build ("Applying 1
+patch(es)…" in the deployment log). Its content was byte-for-byte the proxy of commit `c939823`
+(the secure-cookie hotfix of 15 Oct, which was committed to the repo the same morning), so every
+proxy change since then was built from that stale copy. The tell: a commit touching only
+`proxy.ts` produced a build in which every Docker layer, including `COPY . .`, was `CACHED`.
+
+Fix: the patch (`6JGyPUAgBorGl8IMoRc7f`) is disabled, not deleted, and the app was deployed again
+(a Dokploy *redeploy* reuses the old image; a *deploy* clones and builds). Rule from here on:
+**no Dokploy patches on this app**. A production hotfix goes into the repository on
+`design/soiguru` (and a PR into `develop`) like any other change; if a patch is ever needed to
+survive an outage, it is removed in the same hour the commit lands. When a deploy of a code change
+finishes in seconds with every layer cached, check Dokploy › Patches first.
+
+`/__owner-rule` (answered by the proxy itself, JSON, no secrets) stays as the diagnostic for this
+rule: it shows the host the proxy saw, whether the rule is armed and where `/categories` would go.

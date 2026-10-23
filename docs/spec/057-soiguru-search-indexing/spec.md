@@ -30,3 +30,10 @@ Generic template deployments, reached on their own canonical host, are unchanged
 - `curl https://owner.soiguru.com/robots.txt` → `Disallow: /`, no `Sitemap:` line.
 - `https://owner.soiguru.com/` HTML has `<meta name="robots" content="noindex, nofollow">`.
 - `https://owner.soiguru.com/sitemap.xml` has no `<url>` entries.
+
+## Update 2026-10-23: the proxy headers reached production only today
+
+The `X-Robots-Tag` header was in the repository since 17 Oct but never left a build: a Dokploy
+patch overwrote `apps/web/proxy.ts` with a copy from 15 Oct on every deploy. See spec 058
+("Why the rule only reached production on 23 Oct"). The `<meta name="robots">` tag in the layout
+was never affected, so the owner host was already marked noindex in the HTML.
