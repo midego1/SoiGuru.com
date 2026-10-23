@@ -6,7 +6,10 @@ import tailwindcss from '@tailwindcss/vite';
 import { everWorksIntegration } from '@ever-works/astro-integration';
 import { getPluginRunner, getContent } from './src/lib/content';
 import { soiguruThai } from './src/integrations/soiguru-thai';
-import { soiguruRedirects, GENERIC_PREFIXES } from './src/integrations/soiguru-redirects';
+import { soiguruRedirects, singleCityHome, GENERIC_PREFIXES } from './src/integrations/soiguru-redirects';
+
+// One city: the landing redirects to it (spec 068), so it stays out of the sitemap.
+const homeRedirect = singleCityHome();
 
 /**
  * Astro Configuration
@@ -45,6 +48,7 @@ export default defineConfig({
 		sitemap({
 			filter: (page) => {
 				const path = new URL(page).pathname;
+				if (homeRedirect && (path === '/' || path === '/th/' || path === '/th')) return false;
 				if (/\/(search|saved)\/?$/.test(path)) return false;
 				return !GENERIC_PREFIXES.some((prefix) => path === prefix || path.startsWith(`${prefix}/`));
 			},

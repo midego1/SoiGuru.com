@@ -13,7 +13,9 @@
  */
 
 import { readdir, readFile, writeFile } from 'node:fs/promises';
-import { join } from 'node:path';
+import { existsSync, readFileSync } from 'node:fs';
+import { join, resolve } from 'node:path';
+import YAML from 'yaml';
 import { fileURLToPath } from 'node:url';
 import type { AstroIntegration } from 'astro';
 
@@ -43,9 +45,33 @@ async function htmlFiles(dir: string): Promise<string[]> {
     return out;
 }
 
+/**
+ * With exactly one city in `cities.yml`, the home page is that city's page (spec 068): `/`
+ * and `/th/` redirect there and stay out of the sitemap. Returns the city path (`/krabi`) or
+ * null when there are several cities (or none), so the landing page is used.
+ */
+export function singleCityHome(): string | null {
+    const file = process.env.CONTENT_PATH
+        ? resolve(process.env.CONTENT_PATH, 'cities.yml')
+        : resolve(process.cwd(), '.content', 'cities.yml');
+    if (!existsSync(file)) return null;
+    try {
+        const cities = YAML.parse(readFileSync(file, 'utf8'));
+        if (!Array.isArray(cities) || cities.length !== 1) return null;
+        const id = cities[0]?.id;
+        return typeof id === 'string' && /^[a-z0-9-]+$/.test(id) ? `/${id}` : null;
+    } catch {
+        return null;
+    }
+}
+
 /** The `_redirects` file for the given listing paths (`slug` → `/<city>/<area>/<slug>`). */
-export function buildRedirects(listings: Map<string, string>): string {
+export function buildRedirects(listings: Map<string, string>, home: string | null = null): string {
     const lines: string[] = [];
+    if (home) {
+        // One city: the home is the city page, temporarily (302), until a second city exists.
+        lines.push(`/ ${home} 302`, `/th ${home.replace('/', '/th/')} 302`, `/th/ ${home.replace('/', '/th/')} 302`);
+    }
     for (const [slug, path] of [...listings].sort(([a], [b]) => a.localeCompare(b))) {
         // Target the directory URL (`…/slug/`) that the static assets serve, so there is one hop.
         const target = `${path.replace(/\/+$/, '')}/`;
@@ -82,7 +108,9 @@ export function soiguruRedirects(): AstroIntegration {
                     // Listing pages are `/<city>/<area>/<slug>` (or `/<city>/<slug>` without an area).
                     if (path && slug && segments.length >= 2 && itemSlugs.has(slug)) listings.set(slug, path);
                 }
-                await writeFile(join(root, '_redirects'), buildRedirects(listings));
+                const home = singleCityHome();
+                await writeFile(join(root, '_redirects'), buildRedirects(listings, home));
+                if (home) logger.info(`one city: / and /th/ redirect to ${home}`);
                 const missing = [...itemSlugs].filter((s) => !listings.has(s));
                 if (missing.length) logger.info(`${missing.length} /item pages have no SoiGuru listing and go to /`);
                 logger.info(`wrote _redirects (${listings.size} listings, ${GENERIC_PREFIXES.length} generic routes)`);
