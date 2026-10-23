@@ -90,6 +90,10 @@ jobs:
       COOKIE_SECRET: ci-e2e-fixed-cookie-secret-do-not-use-in-prod-bbbbbbbbbbbbbbbbbbbbbbbb
       COOKIE_DOMAIN: localhost
       COOKIE_SECURE: 'false'
+      # The owner-host rule (spec 058) treats every non-canonical host, localhost
+      # included, as the owner app and redirects the template pages to soiguru.com;
+      # the suite tests those pages, so the rule is off here.
+      SOIGURU_OWNER_APP_ONLY: 'false'
 
       # --- Seed account credentials the e2e suite expects ---
       # global-setup.ts reads these via REQUIRED_ENV_VARS.

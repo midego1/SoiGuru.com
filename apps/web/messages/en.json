@@ -3048,6 +3048,7 @@
 			"SUBTITLE": "Manage platform users and their permissions",
 			"TOTAL_USERS": "total",
 			"ADD_USER": "Add User",
+			"DELETE_USER": "Delete User",
 			"TOTAL_USERS_STAT": "Total Users",
 			"ACTIVE_USERS_STAT": "Active Users",
 			"INACTIVE_USERS_STAT": "Inactive Users",

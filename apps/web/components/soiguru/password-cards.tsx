@@ -49,7 +49,8 @@ export function SoiGuruForgotPasswordCard() {
 						<input
 							className="sg-auth-input"
 							type="email"
-							name="email"
+							id="email"
+	name="email"
 							placeholder={t('emailPlaceholder')}
 							autoComplete="email"
 							inputMode="email"
@@ -184,7 +185,8 @@ export function SoiGuruNewPasswordCard() {
 						<input
 							className="sg-auth-input"
 							type={show ? 'text' : 'password'}
-							name="newPassword"
+							id="password"
+	name="newPassword"
 							value={password}
 							onChange={(e) => setPassword(e.target.value)}
 							autoComplete="new-password"
@@ -212,7 +214,8 @@ export function SoiGuruNewPasswordCard() {
 					<input
 						className="sg-auth-input"
 						type={show ? 'text' : 'password'}
-						name="confirmPassword"
+						id="confirmPassword"
+	name="confirmPassword"
 						value={confirm}
 						onChange={(e) => setConfirm(e.target.value)}
 						autoComplete="new-password"

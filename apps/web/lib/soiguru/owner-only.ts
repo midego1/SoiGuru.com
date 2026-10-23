@@ -25,7 +25,7 @@ const SITE_PATHS: Record<string, string> = {
 
 const CITY_PATH = /^\/[a-z0-9-]+(?:\/[a-z0-9-]+){0,2}\/?$/;
 const TEMPLATE_ROOTS = new Set([
-	'about', 'blog', 'categories', 'collections', 'comparisons', 'docs', 'faq', 'favorites', 'help', 'integration',
+	'about', 'blog', 'categories', 'collections', 'comparisons', 'discover', 'docs', 'faq', 'favorites', 'help', 'integration',
 	'items', 'map', 'newsletter', 'pages', 'pricing', 'sponsor', 'static-md', 'submit', 'surveys', 'tags', 'cities',
 	'saved', 'privacy-policy', 'terms-of-service', 'cookies'
 ]);
