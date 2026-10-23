@@ -22,6 +22,7 @@ import { getToken } from 'next-auth/jwt';
 import { createSafeCallbackUrl, isValidCallbackUrl } from '@/lib/auth/validate-callback-url';
 import { DEFAULT_LOCALE, type Locale } from '@/lib/constants';
 import { isSupportedLocale } from '@/lib/i18n/locale-names';
+import { OWNER_APP_ONLY, PUBLIC_SITE_ORIGIN, ownerAppRoute } from '@/lib/soiguru/owner-only';
 
 const intl = createIntlMiddleware(routing);
 
@@ -408,6 +409,20 @@ async function handle(req: NextRequest) {
 		const blocked = await adminApiEdgeGuard(req);
 		if (blocked) return blocked;
 		return NextResponse.next();
+	}
+
+	// owner.soiguru.com is for accounts, owners and the admin only (lib/soiguru/owner-only.ts):
+	// the template's directory pages and the earlier city pages go to the public site, the
+	// root to the owner dashboard. Not on the canonical host, where the template pages are the site.
+	if (OWNER_APP_ONLY && !isIndexableHost(req.headers.get('x-forwarded-host') ?? hostname)) {
+		const route = ownerAppRoute(originalPathname, routing.locales, PUBLIC_SITE_ORIGIN);
+		if (route.kind === 'site') return NextResponse.redirect(route.url, 302);
+		if (route.kind === 'internal') {
+			const url = req.nextUrl.clone();
+			url.pathname = route.path;
+			url.search = '';
+			return NextResponse.redirect(url, 302);
+		}
 	}
 
 	// Pattern C — server-side Accept-Language redirect.

@@ -95,3 +95,15 @@ five checks, as the template's rules) and clear states for a sent link, an expir
 saved password. They call the template's server actions unchanged, so tokens, e-mail and rate
 limits are the template's. The template's two-column screens remain in
 `app/[locale]/auth/*/*-client.tsx` for the admin side.
+
+## Update 2026-10-23: the owner host serves accounts, owners and the admin only
+
+owner.soiguru.com still carried the template's directory pages (home, categories, items, tags,
+blog, pricing, …) and the earlier SoiGuru city pages, which looked like a second, different
+website. The proxy now keeps only `/owner/*`, `/<city>/claim`, `/auth/*`, `/admin/*`,
+`/client/*`, `/dashboard/*`, `/return` and `/api/*` on that host; the root goes to `/owner`;
+city paths (`/krabi`, `/krabi/ao-nang/<slug>`) redirect to the same path on soiguru.com, the
+legal pages to `/privacy` and `/terms`, everything else to the site root (302). The rule is
+`lib/soiguru/owner-only.ts` (pure, unit-testable); `SOIGURU_OWNER_APP_ONLY=false` switches it
+off, and it never applies on the canonical host, where the template pages are the site. The
+pages themselves stay in the code (R11).
