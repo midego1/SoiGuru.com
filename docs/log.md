@@ -9,6 +9,7 @@ sidebar_position: 99
 
 ## 2026-10-23
 
+- `spec-058` `spec-057` Dokploy `SoiGuru.com-web`: a Dokploy patch from 15 Oct overwrote `apps/web/proxy.ts` on every build, so no proxy change since then (indexing header, owner-host redirects) had reached owner.soiguru.com; the patch is disabled, the app rebuilt from `design/soiguru`, and the rule is now: no Dokploy patches, hotfixes go in the repo; redirect targets now carry the public site's trailing slash (PR #53).
 - `spec-058` `apps/web/proxy.ts` `apps/web/lib/soiguru/owner-only.ts`: owner.soiguru.com serves only accounts, the owner dashboard and the admin; the template's directory pages and the old city pages redirect to soiguru.com, the root to `/owner` (PR #51).
 - `spec-055` `apps/web/app/[locale]/admin/auth/signin/admin-sign-in.tsx`: the admin sign-in panel keeps only the large brand icon; the lockup above it and the "Welcome to the Admin Dashboard" title are gone (PR #50).
 - `spec-055` `apps/web/app/[locale]/admin/auth/signin/admin-sign-in.tsx`: the admin sign-in panel shows the brand icon large in place of the drawn karst scene and drops the "SoiGuru admin" line under the lockup (PR #49).

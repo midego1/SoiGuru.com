@@ -417,6 +417,18 @@ async function handle(req: NextRequest) {
 	// the template's directory pages and the earlier city pages go to the public site, the
 	// root to the owner dashboard. Not on the canonical host, where the template pages are the site.
 	const ownerHost = req.headers.get('x-forwarded-host') ?? hostname;
+	// Diagnostic, answered by the proxy itself (a rewrite drops response headers in the
+	// standalone server): what the rule sees on this host. No secrets.
+	if (originalPathname === '/__owner-rule') {
+		return NextResponse.json({
+			host: hostname,
+			forwardedHost: req.headers.get('x-forwarded-host'),
+			publicSite: PUBLIC_SITE_ORIGIN,
+			ruleOn: OWNER_APP_ONLY,
+			isPublicSiteHost: isPublicSiteHost(ownerHost),
+			route: ownerAppRoute('/categories', routing.locales, PUBLIC_SITE_ORIGIN)
+		});
+	}
 	if (OWNER_APP_ONLY && !isPublicSiteHost(ownerHost)) {
 		const route = ownerAppRoute(originalPathname, routing.locales, PUBLIC_SITE_ORIGIN);
 		if (route.kind === 'site') return NextResponse.redirect(route.url, 302);

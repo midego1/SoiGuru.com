@@ -16,9 +16,9 @@
 const KEPT_PREFIXES = ['/owner', '/auth', '/admin', '/client', '/dashboard', '/return', '/api', '/_next'];
 
 const SITE_PATHS: Record<string, string> = {
-	'/privacy-policy': '/privacy',
-	'/terms-of-service': '/terms',
-	'/cookies': '/privacy',
+	'/privacy-policy': '/privacy/',
+	'/terms-of-service': '/terms/',
+	'/cookies': '/privacy/',
 	'/saved': '/',
 	'/cities': '/'
 };
@@ -52,8 +52,9 @@ export function ownerAppRoute(pathname: string, locales: readonly string[], publ
 	const bare = path.replace(/\/+$/, '') || '/';
 	if (bare in SITE_PATHS) return { kind: 'site', url: `${site}${SITE_PATHS[bare]}` };
 	const root = bare.split('/')[1] ?? '';
-	// A city page of the earlier SoiGuru pages in this app: the public site has the same path.
-	if (!TEMPLATE_ROOTS.has(root) && CITY_PATH.test(bare)) return { kind: 'site', url: `${site}${bare}` };
+	// A city page of the earlier SoiGuru pages in this app: the public site has the same path
+	// (with a trailing slash, which the Astro site redirects to otherwise).
+	if (!TEMPLATE_ROOTS.has(root) && CITY_PATH.test(bare)) return { kind: 'site', url: `${site}${bare}/` };
 	return { kind: 'site', url: `${site}/` };
 }
 
