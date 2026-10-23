@@ -3,7 +3,7 @@
 import { Building, Globe, User } from 'lucide-react';
 import { useTranslations } from 'next-intl';
 import { CredentialsForm } from '@/app/[locale]/auth/components/credentials-form';
-import { SoiGuruIcon, SoiGuruLogo } from '@/components/soiguru/logo-mark';
+import { SoiGuruIcon } from '@/components/soiguru/logo-mark';
 
 /**
  * SoiGuru admin sign-in (spec 055). Left panel on sea-deep with the logo and a
@@ -28,19 +28,11 @@ export function AdminSignIn({ onSuccess }: { onSuccess: () => void }) {
 				<div className="flex flex-col lg:flex-row">
 					{/* Brand panel */}
 					<div className="relative flex w-full flex-col justify-between gap-6 bg-[#064a50] p-6 text-white lg:w-1/2 lg:p-10">
-						<SoiGuruLogo tone="dark" height={44} alt="SoiGuru" />
+						{/* The brand icon alone, large (2026-10-23): the lockup above it was one SoiGuru too many. */}
+						<SoiGuruIcon size={240} className="self-center" alt="SoiGuru" />
 
-						{/* The brand icon, large, in place of the drawn karst scene (2026-10-23). */}
-						<SoiGuruIcon size={220} className="hidden self-center lg:block" />
-
-						<div className="space-y-3">
-							<h2 className="text-xl font-bold leading-tight tracking-[-0.01em] lg:text-2xl">
-								{tAuth('ADMIN_WELCOME_TITLE')}
-							</h2>
-							<p className="text-sm leading-relaxed text-white/80">
-								{tAuth('ADMIN_WELCOME_DESCRIPTION')}
-							</p>
-						</div>
+						{/* No welcome title (2026-10-23): the icon is the heading; the description stays. */}
+						<p className="text-sm leading-relaxed text-white/80">{tAuth('ADMIN_WELCOME_DESCRIPTION')}</p>
 
 						<ul className="hidden space-y-3 sm:block">
 							{features.map(({ icon: Icon, title, description }) => (
