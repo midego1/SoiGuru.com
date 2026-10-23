@@ -62,3 +62,18 @@ export const OWNER_APP_ONLY = process.env.SOIGURU_OWNER_APP_ONLY !== 'false';
 
 /** The public site's origin (`PUBLIC_SITE_ORIGINS`, first entry), read here so the edge proxy needs no `server-only` import. */
 export const PUBLIC_SITE_ORIGIN = (process.env.PUBLIC_SITE_ORIGINS || 'https://soiguru.com').split(',')[0].trim().replace(/\/+$/, '') || 'https://soiguru.com';
+
+/**
+ * True when the request host is the public site itself (soiguru.com, with or without www):
+ * there the template pages are the site and nothing redirects. Any other host (owner.,
+ * admin., a server alias, localhost) is treated as the owner app.
+ */
+export function isPublicSiteHost(host: string | null | undefined, publicSite = PUBLIC_SITE_ORIGIN): boolean {
+	if (!host) return false;
+	const bare = (h: string) => h.toLowerCase().split(',')[0]!.trim().replace(/:\d+$/, '').replace(/^www\./, '');
+	try {
+		return bare(host) === bare(new URL(publicSite).host);
+	} catch {
+		return false;
+	}
+}
