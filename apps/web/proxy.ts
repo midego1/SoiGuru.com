@@ -22,7 +22,7 @@ import { getToken } from 'next-auth/jwt';
 import { createSafeCallbackUrl, isValidCallbackUrl } from '@/lib/auth/validate-callback-url';
 import { DEFAULT_LOCALE, type Locale } from '@/lib/constants';
 import { isSupportedLocale } from '@/lib/i18n/locale-names';
-import { OWNER_APP_ONLY, PUBLIC_SITE_ORIGIN, ownerAppRoute } from '@/lib/soiguru/owner-only';
+import { OWNER_APP_ONLY, PUBLIC_SITE_ORIGIN, isPublicSiteHost, ownerAppRoute } from '@/lib/soiguru/owner-only';
 
 const intl = createIntlMiddleware(routing);
 
@@ -386,6 +386,8 @@ async function supabaseGuard(req: NextRequest, baseRes: NextResponse): Promise<N
 
 export default async function proxy(req: NextRequest) {
 	const res = await handle(req);
+	// Which host the proxy saw and whether the owner-host rule is armed (lib/soiguru/owner-only.ts).
+	res.headers.set('X-SoiGuru-Owner-Host', `${req.headers.get('x-forwarded-host') ?? req.headers.get('host') ?? '-'}; rule=${OWNER_APP_ONLY ? 'on' : 'off'}`);
 	// Pages on a host that is not the canonical site (owner/admin subdomain, server alias)
 	// tell search engines and AI crawlers not to index them (lib/seo/indexing.ts).
 	if (!isIndexableHost(req.headers.get('x-forwarded-host') ?? req.headers.get('host'))) {
@@ -414,7 +416,8 @@ async function handle(req: NextRequest) {
 	// owner.soiguru.com is for accounts, owners and the admin only (lib/soiguru/owner-only.ts):
 	// the template's directory pages and the earlier city pages go to the public site, the
 	// root to the owner dashboard. Not on the canonical host, where the template pages are the site.
-	if (OWNER_APP_ONLY && !isIndexableHost(req.headers.get('x-forwarded-host') ?? hostname)) {
+	const ownerHost = req.headers.get('x-forwarded-host') ?? hostname;
+	if (OWNER_APP_ONLY && !isPublicSiteHost(ownerHost)) {
 		const route = ownerAppRoute(originalPathname, routing.locales, PUBLIC_SITE_ORIGIN);
 		if (route.kind === 'site') return NextResponse.redirect(route.url, 302);
 		if (route.kind === 'internal') {
