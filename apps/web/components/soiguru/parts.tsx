@@ -6,6 +6,7 @@
  */
 import Link from 'next/link';
 import { Icon } from './icon';
+import { SoiGuruLogo } from './logo-mark';
 import {
 	categoryName,
 	listingOtherName,
@@ -70,8 +71,8 @@ export function BrandBar({
 }) {
 	return (
 		<header className="tkg-topbar">
-			<Link className="tkg-brand" href={ctx.href('/')}>
-				SoiGuru
+			<Link className="tkg-brand" href={ctx.href('/')} aria-label="SoiGuru">
+				<SoiGuruLogo height={30} />
 			</Link>
 			{city ? (
 				<Link className="sg-brand-city" href={ctx.href(`/${city.id}`)}>
@@ -109,8 +110,8 @@ export function BackBar({
 }) {
 	return (
 		<header className="tkg-topbar">
-			<Link className="tkg-brand sg-desk-only" href={ctx.href('/')}>
-				SoiGuru
+			<Link className="tkg-brand sg-desk-only" href={ctx.href('/')} aria-label="SoiGuru">
+				<SoiGuruLogo height={30} />
 			</Link>
 			<Link className="tkg-iconbtn" href={backHref} aria-label={ctx.t('results.back')}>
 				<Icon name="chevron-left" />

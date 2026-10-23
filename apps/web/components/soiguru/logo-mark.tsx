@@ -48,3 +48,55 @@ export function SoiGuruKarstScene({ className }: { className?: string }) {
 		</svg>
 	);
 }
+
+/**
+ * The SoiGuru brand lockup (2026-10-23): the Thai street sign, map pin and noodle bowl with
+ * the "SoiGuru.com" wordmark, the same artwork as the public site (`public/brand/`, 1x/2x/3x
+ * WebP). `tone="dark"` is the white-wordmark variant for sea-deep surfaces. Height drives the
+ * size; width follows the 191:44 artwork. The karst `SoiGuruMark` above stays for callers that
+ * want a square tile.
+ */
+export function SoiGuruLogo({
+	height = 36,
+	tone = 'light',
+	className,
+	alt = ''
+}: {
+	height?: number;
+	tone?: 'light' | 'dark';
+	className?: string;
+	/** Accessible name; empty when the surrounding link already has one. */
+	alt?: string;
+}) {
+	const base = tone === 'dark' ? '/brand/logo-horizontal-on-dark' : '/brand/logo-horizontal';
+	const width = Math.round((height * 191) / 44);
+	return (
+		<img
+			src={`${base}-88.webp`}
+			srcSet={`${base}-44.webp 1x, ${base}-88.webp 2x, ${base}-132.webp 3x`}
+			width={width}
+			height={height}
+			alt={alt}
+			className={className}
+			decoding="async"
+			style={{ height, width: 'auto', display: 'block' }}
+		/>
+	);
+}
+
+/** The brand icon alone (sign, pin and bowl), for tight spots such as the admin header. */
+export function SoiGuruIcon({ size = 34, className, alt = '' }: { size?: number; className?: string; alt?: string }) {
+	const width = Math.round((size * 512) / 467);
+	return (
+		<img
+			src="/brand/logo-icon-96.webp"
+			srcSet="/brand/logo-icon-48.webp 1x, /brand/logo-icon-96.webp 2x, /brand/logo-icon-144.webp 3x"
+			width={width}
+			height={size}
+			alt={alt}
+			className={className}
+			decoding="async"
+			style={{ height: size, width: 'auto', display: 'block' }}
+		/>
+	);
+}

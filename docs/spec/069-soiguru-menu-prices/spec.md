@@ -38,3 +38,14 @@ Thai readers and the search box cannot read. The price band (฿–฿฿฿฿)
 - No photo per item, no currency other than baht, no "sold out" state.
 - The menu photo from the claim flow stays a photo; it is not linked to the list.
 - Prices are not validated against each other beyond `price_max > price`.
+
+## Update 2026-10-23: interactive editor
+
+The owner editor (`components/soiguru/menu-editor.tsx`) is now interactive: rows and sections
+are added, removed and reordered with buttons, Enter in a row moves to the next one (and makes
+it when needed), an empty menu starts from the usual sections for the listing's trade
+(`lib/soiguru/menu-templates.ts`, e.g. Manicure / Pedicure / Nail art for a nail salon), "Paste
+a list" turns lines such as "Gel manicure 500", "Island trip from 1500" or "Hair colour
+1200-2500" into rows, and a preview under the editor shows the list as visitors see it. The
+fields keep the same names, so `saveMenu` is unchanged and the saved rows stay editable without
+script.

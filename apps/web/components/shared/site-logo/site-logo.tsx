@@ -6,7 +6,7 @@ import { useEffect, useState } from 'react';
 import Image from 'next/image';
 import { Link } from '@/i18n/navigation';
 import { IconEverworksSimple } from '@/components/icons/Icons';
-import { SoiGuruMark } from '@/components/soiguru/logo-mark';
+import { SoiGuruLogo } from '@/components/soiguru/logo-mark';
 import { isExternalUrl } from '@/lib/utils/custom-navigation';
 
 /**
@@ -124,11 +124,12 @@ export function SiteLogo({ size = 'md', className = '', showText = true, linkToH
 					</div>
 				)}
 				{!logoSettings?.favicon && BRAND_MARK === 'soiguru' && (
-					<div className="relative mr-2.5 shrink-0">
-						<SoiGuruMark size={MARK_SIZES[size]} className="block" />
+					// The brand lockup carries the name, so the text wordmark is left out for SoiGuru.
+					<div className="relative shrink-0">
+						<SoiGuruLogo height={MARK_SIZES[size]} alt={config.company_name || 'SoiGuru'} />
 					</div>
 				)}
-				{showText && (
+				{showText && !(!logoSettings?.favicon && BRAND_MARK === 'soiguru') && (
 					<p
 						className={`sg-wordmark font-bold ${sizeConfig.text} transition-colors duration-200 group-hover:text-theme-primary`}
 					>
