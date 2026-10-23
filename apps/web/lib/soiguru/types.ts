@@ -6,6 +6,8 @@
  * `listings.ts` maps the raw item onto this shape.
  */
 
+import type { MenuSection } from './menu';
+
 export type Weekday = 'mon' | 'tue' | 'wed' | 'thu' | 'fri' | 'sat' | 'sun';
 
 export const WEEKDAYS: readonly Weekday[] = ['mon', 'tue', 'wed', 'thu', 'fri', 'sat', 'sun'] as const;
@@ -76,6 +78,10 @@ export interface Listing {
 	hours: WeeklyHours;
 	hasHours: boolean;
 	priceBand?: number;
+	/** Menu & prices (spec 069): sections of priced items; empty when none. */
+	menu: MenuSection[];
+	menuNote?: string;
+	menuNoteTh?: string;
 	rating?: number;
 	ratingCount?: number;
 	claimed: boolean;

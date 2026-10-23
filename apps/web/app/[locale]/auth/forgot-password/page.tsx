@@ -1,5 +1,6 @@
-import ForgotPasswordPageClient from "./forgot-password-client";
+import { Suspense } from "react";
 import { Metadata } from "next";
+import { SoiGuruForgotPasswordCard } from "@/components/soiguru/password-cards";
 import { getTranslations } from "next-intl/server";
 import { generateHreflangAlternates, getLocalizedUrl } from "@/lib/seo/hreflang";
 import { getSiteName } from '@/lib/seo/site-identity';
@@ -11,11 +12,11 @@ export async function generateMetadata({
   params: Promise<{ locale: string }>;
 }): Promise<Metadata> {
   const { locale } = await params;
-  const t = await getTranslations({ locale, namespace: "common" });
+  const t = await getTranslations({ locale, namespace: "soiguru.account" });
 
   const path = "/auth/forgot-password";
-  const title = `${t("PASSWORD_RECOVERY")} | ${await getSiteName()}`;
-  const description = t("PASSWORD_RECOVERY");
+  const title = t("metaForgot");
+  const description = t("forgotBody");
 
   return {
     title,
@@ -34,6 +35,11 @@ export async function generateMetadata({
   };
 }
 
+/** SoiGuru card (spec 058); the template's two-column screen stays in `forgot-password-client.tsx`. */
 export default function ForgotPasswordPage() {
-  return <ForgotPasswordPageClient />;
+  return (
+    <Suspense fallback={null}>
+      <SoiGuruForgotPasswordCard />
+    </Suspense>
+  );
 }

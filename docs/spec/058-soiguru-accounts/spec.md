@@ -85,3 +85,13 @@ profile button and an Account tab (`AccountPanel.astro`, `scripts/soiguru/accoun
 - Social sign-in needs each provider's client ID and secret in the deployment env; without
   them only e-mail and password show.
 - The forgot / new password and verification cards are not restyled beyond the shell.
+
+## Update 2026-10-23: forgot and new password in the SoiGuru card
+
+The forgot-password and new-password screens now use the same white SoiGuru card as sign in
+(`components/soiguru/password-cards.tsx`): SoiGuru copy in English and Thai
+(`soiguru.account.*`), native fields, the SoiGuru button, a short password checklist (three of
+five checks, as the template's rules) and clear states for a sent link, an expired link and a
+saved password. They call the template's server actions unchanged, so tokens, e-mail and rate
+limits are the template's. The template's two-column screens remain in
+`app/[locale]/auth/*/*-client.tsx` for the admin side.

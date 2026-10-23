@@ -17,6 +17,7 @@ import { getCategories, getCityListings } from '@/lib/soiguru/content';
 import { addSaved, removeSaved } from '@/lib/soiguru/saved';
 import { deletePhotoFile } from '@/lib/soiguru/photos';
 import { WEEKDAYS } from '@/lib/soiguru/types';
+import { menuFromForm } from '@/lib/soiguru/menu';
 
 /**
  * Server actions for the SoiGuru claim flow and owner dashboard (spec 054).
@@ -226,6 +227,31 @@ export async function saveHours(formData: FormData) {
 	);
 	refresh(locale, city, listing.area, slug);
 	redirect(`${prefixOf(locale)}/owner/${city}/${slug}/hours?saved=1`);
+}
+
+/** Menu & prices (spec 069): sections and rows from the form; empty rows are dropped. */
+export async function saveMenu(formData: FormData) {
+	const locale = str(formData, 'locale', 5);
+	const city = str(formData, 'city', 40);
+	const slug = str(formData, 'listing', 120);
+	const { listing } = await requireEditor(locale, city, slug);
+	const get = (key: string) => (formData.has(key) ? str(formData, key, 120) : undefined);
+	const on = (key: string) => formData.get(key) === 'on';
+	const menu = menuFromForm(get, on);
+	// YAML-friendly plain objects without undefined keys.
+	const clean = (o: Record<string, unknown>) => Object.fromEntries(Object.entries(o).filter(([, v]) => v !== undefined));
+	const sections = menu.map((s) => clean({ title: s.title, title_th: s.title_th, items: s.items.map((i) => clean({ ...i })) }));
+	await saveListingFields(
+		slug,
+		{
+			menu: sections.length ? sections : undefined,
+			menu_note: str(formData, 'menu_note', 160) || undefined,
+			menu_note_th: str(formData, 'menu_note_th', 160) || undefined
+		},
+		`Owner edit (menu): ${city}/${slug}`
+	);
+	refresh(locale, city, listing.area, slug);
+	redirect(`${prefixOf(locale)}/owner/${city}/${slug}/menu?saved=1`);
 }
 
 export async function saveAmenities(formData: FormData) {
