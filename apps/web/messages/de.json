@@ -2816,6 +2816,7 @@
 			"SUBTITLE": "Plattformbenutzer und ihre Berechtigungen verwalten",
 			"TOTAL_USERS": "gesamt",
 			"ADD_USER": "Benutzer hinzufügen",
+			"DELETE_USER": "Benutzer löschen",
 			"TOTAL_USERS_STAT": "Benutzer insgesamt",
 			"ACTIVE_USERS_STAT": "Aktive Benutzer",
 			"INACTIVE_USERS_STAT": "Inaktive Benutzer",

@@ -1,5 +1,6 @@
 import type { Metadata } from 'next';
 import Link from 'next/link';
+import { PUBLIC_SITE } from '@/lib/soiguru/public-site';
 import { setRequestLocale } from 'next-intl/server';
 import { auth } from '@/lib/auth';
 import { Icon } from '@/components/soiguru/icon';
@@ -285,10 +286,10 @@ function ListingOverview({
 							<span className={statusClass(status)}>{statusText(ctx, status)}</span>
 						</div>
 					</div>
-					<Link className="tkg-btn tkg-btn-secondary tkg-btn-sm" href={ctx.href(listingPath(l))}>
+					<a className="tkg-btn tkg-btn-secondary tkg-btn-sm" href={`${PUBLIC_SITE}${listingPath(l)}/`}>
 						<Icon name="external" />
 						{ctx.t('owner.view')}
-					</Link>
+					</a>
 				</div>
 				{city ? (
 					<div className="tkg-small tkg-muted" style={{ marginTop: 8 }}>

@@ -131,3 +131,32 @@ finishes in seconds with every layer cached, check Dokploy › Patches first.
 rule: it shows the host the proxy saw, whether the rule is armed and where `/categories` would go.
 Site targets end with a trailing slash (`/krabi/`, `/privacy/`): the Astro site answers on those
 and would otherwise add a 307 of its own to every redirect.
+
+### Follow-up 2026-10-23 (PR #54): verification pass
+
+- **RSC fetches.** A `<Link>` prefetch or client-side navigation to a site-bound path was
+  answered with the cross-origin 302; the browser followed it to soiguru.com, which has no
+  CORS headers for it, and every link in the template chrome (`/submit`, `/tags`, `/pricing`,
+  …) logged a console error on the sign-in and client pages. Next strips the `RSC` header
+  before the proxy runs, so such fetches cannot be told apart from other fetches; the proxy
+  therefore keeps the 302 for browser navigations (`Sec-Fetch-Mode: navigate` or an `Accept`
+  with `text/html`) and rewrites everything else to `/<locale>/site-redirect?p=<path>`
+  (`app/[locale]/(soiguru)/site-redirect/page.tsx`), whose `redirect()` travels inside the
+  flight payload and is performed by Next's router as a full navigation. The target is always
+  recomputed by `ownerAppRoute` from the path, never taken from the request, so it is not an
+  open redirect.
+- The owner dashboard's "View" button links straight to the listing on the public site
+  (`PUBLIC_SITE` + path + `/`) instead of the app's own city page.
+- `discover` (the template's paginated listing) is a template root too, so `/discover/1` goes
+  to the site root instead of a non-existent `/discover/1/`.
+- The switch `SOIGURU_OWNER_APP_ONLY` is read **at build time** (the proxy bundle inlines
+  `process.env`); set it as a build argument, not only in the runtime environment. The e2e
+  workflow and the Playwright `webServer` set it to `false`, because the suite exercises the
+  template pages on localhost.
+- The forgot/new-password cards give their inputs the ids the e2e suite uses (`#email`,
+  `#password`, `#confirmPassword`).
+- Verified locally against a standalone build (the production server): sign-in, owner
+  dashboard, details/hours/amenities/menu/photos/billing, a Menu & prices save and reload,
+  admin sign-in and the admin dashboard, items, users, categories and settings pages; unit
+  suite (`test:unit`, 263 → 265 tests) and the e2e specs for auth, admin sign-in, protected
+  admin pages and the public smoke list.

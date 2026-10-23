@@ -2802,6 +2802,7 @@
 			"SUBTITLE": "إدارة مستخدمي المنصة وصلاحياتهم",
 			"TOTAL_USERS": "إجمالي",
 			"ADD_USER": "إضافة مستخدم",
+			"DELETE_USER": "حذف المستخدم",
 			"TOTAL_USERS_STAT": "إجمالي المستخدمين",
 			"ACTIVE_USERS_STAT": "المستخدمون النشطون",
 			"INACTIVE_USERS_STAT": "المستخدمون غير النشطين",

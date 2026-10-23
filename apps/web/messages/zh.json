@@ -2814,6 +2814,7 @@
 			"SUBTITLE": "管理平台用户及其权限",
 			"TOTAL_USERS": "总计",
 			"ADD_USER": "添加用户",
+			"DELETE_USER": "删除用户",
 			"TOTAL_USERS_STAT": "总用户数",
 			"ACTIVE_USERS_STAT": "活跃用户",
 			"INACTIVE_USERS_STAT": "非活跃用户",

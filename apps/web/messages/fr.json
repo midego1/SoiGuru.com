@@ -2873,6 +2873,7 @@
 			"SUBTITLE": "Gérer les utilisateurs de la plateforme et leurs permissions",
 			"TOTAL_USERS": "total",
 			"ADD_USER": "Ajouter un Utilisateur",
+			"DELETE_USER": "Supprimer l'Utilisateur",
 			"TOTAL_USERS_STAT": "Total des Utilisateurs",
 			"ACTIVE_USERS_STAT": "Utilisateurs Actifs",
 			"INACTIVE_USERS_STAT": "Utilisateurs Inactifs",

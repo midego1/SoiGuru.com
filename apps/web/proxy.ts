@@ -431,7 +431,23 @@ async function handle(req: NextRequest) {
 	}
 	if (OWNER_APP_ONLY && !isPublicSiteHost(ownerHost)) {
 		const route = ownerAppRoute(originalPathname, routing.locales, PUBLIC_SITE_ORIGIN);
-		if (route.kind === 'site') return NextResponse.redirect(route.url, 302);
+		if (route.kind === 'site') {
+			// A browser navigation gets the 302 straight from here. Anything else (a React
+			// Server Components fetch for a <Link> prefetch or client-side navigation; Next
+			// strips the `RSC` header before the proxy runs, so it cannot be told apart from
+			// other fetches) is rewritten to the site-redirect page, whose `redirect()` travels
+			// inside the flight payload: a cross-origin 302 on such a fetch would be followed
+			// by the browser into a CORS error for every link in the template chrome.
+			const accept = req.headers.get('accept') ?? '';
+			const isNavigation = req.headers.get('sec-fetch-mode') === 'navigate' || accept.includes('text/html');
+			if (isNavigation) return NextResponse.redirect(route.url, 302);
+			const url = req.nextUrl.clone();
+			const first = originalPathname.split('/')[1] ?? '';
+			const locale = (routing.locales as readonly string[]).includes(first) ? first : routing.defaultLocale;
+			url.pathname = `/${locale}/site-redirect`;
+			url.search = `?p=${encodeURIComponent(originalPathname)}`;
+			return NextResponse.rewrite(url);
+		}
 		if (route.kind === 'internal') {
 			const url = req.nextUrl.clone();
 			url.pathname = route.path;

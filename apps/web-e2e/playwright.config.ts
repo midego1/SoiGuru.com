@@ -57,6 +57,9 @@ export default defineConfig({
 		cwd: path.resolve(__dirname, '../..'),
 		url: baseURL,
 		reuseExistingServer: !isCI,
+		// The owner-host rule (spec 058) would redirect the template pages on localhost
+		// to the public site; the suite tests those pages. CI sets the same in e2e.yml.
+		env: { ...process.env, SOIGURU_OWNER_APP_ONLY: 'false' },
 		// In CI the command is a full production BUILD followed by `start`, so this
 		// budget has to cover the build, not just server boot. 300_000 did not:
 		// on the 2026-08-21 stage run (32510493419) shard 3 logged
