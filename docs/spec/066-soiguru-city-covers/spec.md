@@ -19,7 +19,9 @@ of the place sells the city better, and the owner picked one on Unsplash.
 - `scripts/city-covers.ts` (run by the manual GitHub workflow **City cover photos**) fills
   `cover` from Unsplash: search "<city> Thailand", landscape, first result, or a pinned photo
   id (`--city krabi --photo <id>`), registers the download with Unsplash, and commits
-  `cities.yml` to the `data` branch, which republishes the site (spec 062). Covers that exist
+  `cities.yml` to the `data` branch and then starts the publish workflow itself (a push made
+  with the workflow's own token never triggers other workflows), so the site republishes
+  (spec 062). Covers that exist
   are kept unless `force` is ticked. The Unsplash Access Key lives only in the GitHub secret
   `UNSPLASH_ACCESS_KEY`; the site build never calls Unsplash, so every deploy shows the same photo.
 - Images are hotlinked from Unsplash's CDN with size and quality parameters (never re-hosted),

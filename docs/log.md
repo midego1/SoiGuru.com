@@ -9,6 +9,7 @@ sidebar_position: 99
 
 ## 2026-10-23
 
+- `spec-066` `.github/workflows/city-covers.yml`: the cover workflow starts the publish workflow after its commit, since a push made with the Actions token does not trigger it; Krabi's cover is the Unsplash boats photo by Sumit Chinchane ([spec 066](spec/066-soiguru-city-covers/spec.md), PR #44).
 - `spec-068` `astro/apps/web/src/integrations/soiguru-redirects.ts` `astro/apps/web/astro.config.ts`: with one city the home redirects (302) to the city page and leaves the sitemap; the landing page comes back with a second city ([spec 068](spec/068-soiguru-single-city-home/spec.md)).
 - `spec-067` `apps/web/lib/soiguru/photos.ts` `apps/web/package.json`: owner and claim photos are re-encoded with sharp into WebP in three sizes (main up to 1600 px, 800×600 card, 400×300 thumbnail); removing a photo removes all copies ([spec 067](spec/067-soiguru-photo-pipeline/spec.md)).
 - `spec-066` `astro/apps/web/src/lib/soiguru/data.ts` `astro/apps/web/src/pages/index.astro` `astro/apps/web/src/pages/[city]/index.astro` `astro/apps/web/scripts/city-covers.ts` `.github/workflows/city-covers.yml`: city cover photos from Unsplash on the landing card and the city hero, with credit; the site also serves the owner photos' 800 and 400 px copies (`lib/soiguru/media.ts`, Worker `/media/*`) for cards and grids ([spec 066](spec/066-soiguru-city-covers/spec.md), spec 067).
