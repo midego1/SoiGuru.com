@@ -9,6 +9,7 @@ sidebar_position: 99
 
 ## 2026-10-23
 
+- ops: outgoing mail for the owner app runs through Amazon SES (eu-central-1, domain soiguru.com verified with Easy DKIM in Cloudflare DNS, production access) over SMTP: `EMAIL_PROVIDER=smtp`, `SMTP_HOST=email-smtp.eu-central-1.amazonaws.com`, `SMTP_PORT=2587` (the host blocks outbound 587; SES's 2587 is the same STARTTLS endpoint). Verified with a password-reset mail delivered with DKIM. Incoming mail for support@/info@ is Cloudflare Email Routing.
 - `apps/web/lib/mail/index.ts`: the mail service counts SMTP (host, user, password) as configured; with `EMAIL_PROVIDER=smtp` and Amazon SES credentials it disabled itself because only API keys were checked.
 
 ## 2026-10-22
