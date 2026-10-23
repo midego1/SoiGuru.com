@@ -3981,3 +3981,53 @@ html:not([data-lang='th']) .sg-lang-th {
         align-self: center;
     }
 }
+
+/* ---------- menu & prices (spec 069) ---------- */
+.sg-menu-group + .sg-menu-group {
+    margin-top: 20px;
+}
+.sg-menu-title {
+    margin: 0 0 4px;
+    font-size: 13px;
+    font-weight: 700;
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
+    color: var(--ink-muted);
+}
+.sg-menu-list {
+    margin: 0;
+    padding: 0;
+    list-style: none;
+}
+.sg-menu-item {
+    display: flex;
+    align-items: baseline;
+    gap: 16px;
+    padding: 10px 0;
+    border-bottom: 1px solid var(--line);
+}
+.sg-menu-item:last-child {
+    border-bottom: 0;
+}
+.sg-menu-name {
+    flex: 1 1 auto;
+    min-width: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+}
+.sg-menu-note {
+    font-size: 13px;
+    color: var(--ink-muted);
+}
+.sg-menu-price {
+    flex: 0 0 auto;
+    font-weight: 600;
+    font-variant-numeric: tabular-nums;
+    white-space: nowrap;
+}
+.sg-menu-foot {
+    margin: 12px 0 0;
+    font-size: 13px;
+    color: var(--ink-muted);
+}

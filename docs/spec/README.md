@@ -90,6 +90,7 @@ or architectural change.
 | 066 | [`soiguru-city-covers`](066-soiguru-city-covers/spec.md) | implemented | A cover photo per city (`cover` in `cities.yml`) on the landing card and the city hero with Unsplash credit; manual GitHub workflow fills it from Unsplash with the key in a secret. |
 | 067 | [`soiguru-photo-pipeline`](067-soiguru-photo-pipeline/spec.md) | implemented | Owner and claim photos are re-encoded with sharp into WebP in three sizes (1600, 800×600, 400×300); the site uses the smaller copies for cards and grids. |
 | 068 | [`soiguru-single-city-home`](068-soiguru-single-city-home/spec.md) | implemented | With one city, `/` and `/th/` redirect (302) to that city's page and leave the sitemap; the landing page returns by itself with a second city. |
+| 069 | [`soiguru-menu-prices`](069-soiguru-menu-prices/spec.md) | implemented | A listing's `menu`: sections of priced items in English and Thai, shown as "Menu & prices" on the listing page with schema.org offers, searchable, edited by owners in the owner app. |
 
 > **Status legend:**
 > _proposed_ = spec drafted, not yet planned/approved.

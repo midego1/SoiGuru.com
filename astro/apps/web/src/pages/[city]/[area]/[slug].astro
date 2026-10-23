@@ -19,6 +19,7 @@ import ContactBar from '../../../components/soiguru/ContactBar.astro';
 import HoursTable from '../../../components/soiguru/HoursTable.astro';
 import StaticMap from '../../../components/soiguru/StaticMap.astro';
 import ClaimBox from '../../../components/soiguru/ClaimBox.astro';
+import MenuCard from '../../../components/soiguru/MenuCard.astro';
 import ListingCard from '../../../components/soiguru/ListingCard.astro';
 import SaveButton from '../../../components/soiguru/SaveButton.astro';
 import CategoryArt from '../../../components/soiguru/CategoryArt.astro';
@@ -283,6 +284,7 @@ const trail: [string, string][] = [
             </aside>
 
             <div class="sg-lp-body">
+                <MenuCard listing={listing} />
                 <section class="sg-lp-sec" aria-labelledby="sg-about-h">
                     <h2 class="sg-h-md" id="sg-about-h" data-th="เกี่ยวกับ">About</h2>
                     <p class="sg-prose">{listing.description}</p>
