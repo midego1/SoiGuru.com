@@ -5,14 +5,15 @@
  */
 import Link from 'next/link';
 import { Icon } from './icon';
+import { SoiGuruLogo } from './logo-mark';
 import { LanguageToggle } from './parts';
 import type { SgContext } from '@/lib/soiguru/context';
 
 export function OwnerBar({ ctx, langPath }: { ctx: SgContext; langPath: string }) {
 	return (
 		<header className="tkg-topbar">
-			<Link className="tkg-brand" href={ctx.href('/')}>
-				SoiGuru
+			<Link className="tkg-brand" href={ctx.href('/')} aria-label="SoiGuru">
+				<SoiGuruLogo height={30} />
 			</Link>
 			<span className="sg-brand-owner">{ctx.t('owner.owner')}</span>
 			<div className="tkg-spacer" />

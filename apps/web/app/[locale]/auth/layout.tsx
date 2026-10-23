@@ -1,6 +1,6 @@
 import { Suspense } from 'react';
 import { getTranslations } from 'next-intl/server';
-import { SoiGuruMark } from '@/components/soiguru/logo-mark';
+import { SoiGuruLogo } from '@/components/soiguru/logo-mark';
 import { AuthBackLink } from '@/components/soiguru/auth-back-link';
 import { soiguruFontVariables } from '@/lib/soiguru/fonts';
 import { PUBLIC_SITE, PUBLIC_SITES } from '@/lib/soiguru/public-site';
@@ -25,9 +25,8 @@ export default async function AuthLayout({
 	return (
 		<div className={`sg-auth ${soiguruFontVariables}`}>
 			<header className="sg-auth-bar">
-				<a className="sg-auth-brand" href={home}>
-					<SoiGuruMark size={32} />
-					<span>SoiGuru</span>
+				<a className="sg-auth-brand" href={home} aria-label="SoiGuru">
+					<SoiGuruLogo height={34} />
 				</a>
 				<Suspense fallback={null}>
 					<AuthBackLink sites={PUBLIC_SITES} fallback={home} label={t('back')} />
