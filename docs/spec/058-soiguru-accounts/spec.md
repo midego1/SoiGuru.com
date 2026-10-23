@@ -129,3 +129,5 @@ finishes in seconds with every layer cached, check Dokploy › Patches first.
 
 `/__owner-rule` (answered by the proxy itself, JSON, no secrets) stays as the diagnostic for this
 rule: it shows the host the proxy saw, whether the rule is armed and where `/categories` would go.
+Site targets end with a trailing slash (`/krabi/`, `/privacy/`): the Astro site answers on those
+and would otherwise add a 307 of its own to every redirect.
