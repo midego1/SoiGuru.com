@@ -9,6 +9,7 @@ sidebar_position: 99
 
 ## 2026-10-23
 
+- `spec-058` `apps/web/proxy.ts` `apps/web/lib/soiguru/owner-only.ts`: owner.soiguru.com serves only accounts, the owner dashboard and the admin; the template's directory pages and the old city pages redirect to soiguru.com, the root to `/owner` (PR #51).
 - `spec-055` `apps/web/app/[locale]/admin/auth/signin/admin-sign-in.tsx`: the admin sign-in panel keeps only the large brand icon; the lockup above it and the "Welcome to the Admin Dashboard" title are gone (PR #50).
 - `spec-055` `apps/web/app/[locale]/admin/auth/signin/admin-sign-in.tsx`: the admin sign-in panel shows the brand icon large in place of the drawn karst scene and drops the "SoiGuru admin" line under the lockup (PR #49).
 - `spec-069` `apps/web/components/soiguru/menu-editor.tsx` `apps/web/lib/soiguru/menu-templates.ts`: the Menu & prices editor is interactive: add, remove and reorder rows and sections, Enter moves to the next row, starter sections per trade, "Paste a list" turns "Gel manicure 500" lines into rows, and a preview shows the list as visitors see it (spec 069, PR #48).
