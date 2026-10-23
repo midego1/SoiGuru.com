@@ -35,6 +35,19 @@ export interface City {
     timezone: string;
     default_area?: string;
     areas: Area[];
+    /** Cover photo (spec 066): hotlinked Unsplash image with the photographer's credit, or a site file. */
+    cover?: CityCover;
+}
+
+/** A city's cover photo: image URLs sized by the source, and the credit Unsplash asks for. */
+export interface CityCover {
+    /** Wide image for the hero (about 1600×900) */
+    url: string;
+    /** Small image for cards (about 640×360) */
+    thumb: string;
+    author?: string;
+    author_url?: string;
+    photo_url?: string;
 }
 
 /** A category shared by every city. */
@@ -134,7 +147,22 @@ function toCity(raw: Record<string, unknown>): City | null {
         default_area: str(raw['default_area']),
         areas: records(raw['areas'])
             .map(toArea)
-            .filter((a): a is Area => a !== null)
+            .filter((a): a is Area => a !== null),
+        cover: toCover(raw['cover'])
+    };
+}
+
+function toCover(raw: unknown): CityCover | undefined {
+    if (!raw || typeof raw !== 'object') return undefined;
+    const r = raw as Record<string, unknown>;
+    const url = str(r['url']);
+    if (!url) return undefined;
+    return {
+        url,
+        thumb: str(r['thumb']) ?? url,
+        author: str(r['author']),
+        author_url: str(r['author_url']),
+        photo_url: str(r['photo_url'])
     };
 }
 

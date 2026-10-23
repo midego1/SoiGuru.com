@@ -1,0 +1,80 @@
+name: City cover photos
+
+# Picks one Unsplash photo per city and writes it into cities.yml on the data branch (spec 066).
+# Run by hand from the Actions tab. The push to `data` republishes the site. Cities that already
+# have a cover are kept unless "force" is ticked; one city can be pinned to a chosen photo.
+#
+# Secret: UNSPLASH_ACCESS_KEY (the Unsplash application's Access Key).
+
+on:
+    workflow_dispatch:
+        inputs:
+            city:
+                description: 'Only this city id (empty = every city without a cover)'
+                required: false
+                default: ''
+            photo:
+                description: 'Unsplash photo id to pin for that city (optional)'
+                required: false
+                default: ''
+            force:
+                description: 'Replace covers that exist'
+                type: boolean
+                default: false
+
+permissions:
+    contents: write
+
+jobs:
+    covers:
+        name: Resolve covers
+        runs-on: ubuntu-latest
+        timeout-minutes: 10
+        steps:
+            - name: Checkout site code (develop)
+              uses: actions/checkout@v7
+              with:
+                  ref: develop
+                  path: site
+
+            - name: Checkout content (data)
+              uses: actions/checkout@v7
+              with:
+                  ref: data
+                  path: content
+
+            - name: Setup pnpm
+              uses: pnpm/action-setup@v6
+              with:
+                  package_json_file: site/astro/package.json
+
+            - name: Setup Node.js
+              uses: actions/setup-node@v7
+              with:
+                  node-version: '22'
+                  cache: pnpm
+                  cache-dependency-path: site/astro/pnpm-lock.yaml
+
+            - name: Install dependencies
+              working-directory: site/astro
+              run: pnpm install --frozen-lockfile
+
+            - name: Resolve covers
+              working-directory: site/astro/apps/web
+              env:
+                  UNSPLASH_ACCESS_KEY: ${{ secrets.UNSPLASH_ACCESS_KEY }}
+              run: >
+                  pnpm exec tsx scripts/city-covers.ts "$GITHUB_WORKSPACE/content/cities.yml"
+                  ${{ inputs.force && '--force' || '' }}
+                  ${{ inputs.city && format('--city {0}', inputs.city) || '' }}
+                  ${{ inputs.photo && format('--photo {0}', inputs.photo) || '' }}
+
+            - name: Commit to the data branch
+              working-directory: content
+              run: |
+                  if git diff --quiet; then echo "no change"; exit 0; fi
+                  git config user.name "SoiGuru bot"
+                  git config user.email "bot@soiguru.com"
+                  git add cities.yml
+                  git commit -m "City cover photos from Unsplash"
+                  git push origin HEAD:data

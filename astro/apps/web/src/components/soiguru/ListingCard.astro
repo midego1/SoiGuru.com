@@ -14,6 +14,7 @@ import OpenStatus from './OpenStatus.astro';
 import { priceBand } from '../../lib/soiguru/format';
 import { formatDistance } from '../../lib/soiguru/geo';
 import type { Listing } from '../../lib/soiguru/data';
+import { photoVariant } from '../../lib/soiguru/media';
 
 interface Props {
     listing: Listing;
@@ -56,7 +57,7 @@ const dataAttrs = {
         <a class="sg-tcard" href={listing.url} hidden={hidden} {...dataAttrs}>
             <div class="sg-tcard-photo" data-places-card={listing.images[0] ? undefined : listing.slug}>
                 {listing.images[0] ? (
-                    <img src={listing.images[0]} alt="" width="400" height="240" loading="lazy" decoding="async" />
+                    <img src={photoVariant(listing.images[0], 800)} alt="" width="400" height="240" loading="lazy" decoding="async" />
                 ) : (
                     <CategoryArt category={listing.category} />
                 )}
