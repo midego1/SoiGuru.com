@@ -88,6 +88,7 @@ or architectural change.
 | 064 | [`soiguru-claim-photos`](064-soiguru-claim-photos/spec.md) | implemented | Claim step "Your photos": shop front (required), inside, menu, with tips, example drawings and a camera/upload button; kept privately with the claim (`soiguru_claim_photos`), shown on review, published as the listing's first photos on approval. |
 | 065 | [`soiguru-legal-pages`](065-soiguru-legal-pages/spec.md) | implemented | `/privacy` and `/terms` (and `/th/…`): PDPA-aware privacy policy and terms of use for visitors, owners and the paid plan, linked from the footer. |
 | 066 | [`soiguru-city-covers`](066-soiguru-city-covers/spec.md) | implemented | A cover photo per city (`cover` in `cities.yml`) on the landing card and the city hero with Unsplash credit; manual GitHub workflow fills it from Unsplash with the key in a secret. |
+| 067 | [`soiguru-photo-pipeline`](067-soiguru-photo-pipeline/spec.md) | implemented | Owner and claim photos are re-encoded with sharp into WebP in three sizes (1600, 800×600, 400×300); the site uses the smaller copies for cards and grids. |
 
 > **Status legend:**
 > _proposed_ = spec drafted, not yet planned/approved.
