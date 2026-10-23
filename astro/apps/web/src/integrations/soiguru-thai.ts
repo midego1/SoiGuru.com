@@ -90,8 +90,11 @@ export function soiguruThai(): AstroIntegration {
                 const sitemapFile = join(root, 'sitemap-0.xml');
                 try {
                     const xml = await readFile(sitemapFile, 'utf8');
+                    // A Thai page is listed only when its English twin is: the sitemap's filters
+                    // (search, saved, the home while it redirects, spec 068) apply to both.
+                    const enLoc = (path: string) => `<loc>${site}${path === '/' ? '/' : path.replace(/\/?$/, '/')}</loc>`;
                     const urls = pages
-                        .filter((p) => !/<meta name="robots" content="noindex"/.test(p.html))
+                        .filter((p) => !/<meta name="robots" content="noindex"/.test(p.html) && xml.includes(enLoc(p.path)))
                         .map((p) => `<url><loc>${site}${thPath(p.path)}</loc></url>`)
                         .join('');
                     // Drop English pages marked noindex (an area with no places yet) from the sitemap.
