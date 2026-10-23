@@ -9,6 +9,7 @@ sidebar_position: 99
 
 ## 2026-10-23
 
+- `spec-066` `astro/apps/web/src/styles/soiguru/site.css`: the city hero photo keeps its 16:9 size (the `height` attribute no longer stretches it to 900 px), sits beside the text from 1100 px and under it, search-bar wide, below that ([spec 066](spec/066-soiguru-city-covers/spec.md), PR #45).
 - `spec-066` `.github/workflows/city-covers.yml`: the cover workflow starts the publish workflow after its commit, since a push made with the Actions token does not trigger it; Krabi's cover is the Unsplash boats photo by Sumit Chinchane ([spec 066](spec/066-soiguru-city-covers/spec.md), PR #44).
 - `spec-068` `astro/apps/web/src/integrations/soiguru-redirects.ts` `astro/apps/web/astro.config.ts`: with one city the home redirects (302) to the city page and leaves the sitemap; the landing page comes back with a second city ([spec 068](spec/068-soiguru-single-city-home/spec.md)).
 - `spec-067` `apps/web/lib/soiguru/photos.ts` `apps/web/package.json`: owner and claim photos are re-encoded with sharp into WebP in three sizes (main up to 1600 px, 800×600 card, 400×300 thumbnail); removing a photo removes all copies ([spec 067](spec/067-soiguru-photo-pipeline/spec.md)).
