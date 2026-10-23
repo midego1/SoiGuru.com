@@ -7,6 +7,10 @@ sidebar_position: 99
 
 # Documentation & Specs Change Log
 
+## 2026-10-23
+
+- `apps/web/lib/mail/index.ts`: the mail service counts SMTP (host, user, password) as configured; with `EMAIL_PROVIDER=smtp` and Amazon SES credentials it disabled itself because only API keys were checked.
+
 ## 2026-10-22
 
 - `spec-065` `astro/apps/web/src/pages/privacy.astro` `astro/apps/web/src/pages/terms.astro` `astro/apps/web/src/components/soiguru/SiteFooter.astro`: privacy policy and terms of use in English and Thai, linked from the footer ([spec 065](spec/065-soiguru-legal-pages/spec.md)).

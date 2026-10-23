@@ -48,8 +48,11 @@ export class EmailService {
       // Providers that generate their own credentials at runtime (no env key needed)
       const selfCredentialedProviders = ['ethereal'];
       const providerName = config.provider.toLowerCase();
+      // SMTP (e.g. Amazon SES) has no API key: it is configured when host, user and password are set.
+      const hasSmtp = providerName === 'smtp' && Boolean(config.smtp?.host && config.smtp?.user && config.smtp?.password);
       const hasApiKey =
         selfCredentialedProviders.includes(providerName) ||
+        hasSmtp ||
         Object.values(config.apiKeys).some(key => key && key.trim() !== '');
 
       if (!hasApiKey) {
