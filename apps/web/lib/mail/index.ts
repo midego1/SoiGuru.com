@@ -115,9 +115,14 @@ export class EmailService {
     });
   }
 
-  async sendPasswordResetEmail(email: string, token: string): Promise<any> {
+  /**
+   * `baseUrl` is the origin that served the request (the host holding the session), so the
+   * link comes back to this app. `this.domain` (`app_url` in the content config) may name the
+   * public site instead (SoiGuru: soiguru.com vs owner.soiguru.com, 2026-10-23).
+   */
+  async sendPasswordResetEmail(email: string, token: string, baseUrl?: string): Promise<any> {
     this.ensureAvailable();
-    const resetLink = `${this.domain}/auth/new-password?token=${token}`;
+    const resetLink = `${baseUrl || this.domain}/auth/new-password?token=${token}`;
     return this.provider!.sendEmail({
       from: this.defaultFrom,
       to: email,
@@ -245,11 +250,13 @@ export class EmailService {
   async sendVerificationEmailWithTemplate(
     email: string,
     token: string,
-    userName?: string
+    userName?: string,
+    baseUrl?: string
   ): Promise<any> {
     this.ensureAvailable();
     const { getEmailVerificationTemplate } = await import("./templates");
-    const verificationLink = `${this.domain}/auth/new-verification?token=${token}`;
+    // Same as the reset link: the origin that served the request, else the configured domain.
+    const verificationLink = `${baseUrl || this.domain}/auth/new-verification?token=${token}`;
     const template = getEmailVerificationTemplate({
       userEmail: email,
       verificationLink,
@@ -378,9 +385,9 @@ export const sendVerificationEmail = async (email: string, token: string) => {
   );
 };
 
-export const sendPasswordResetEmail = async (email: string, token: string) => {
+export const sendPasswordResetEmail = async (email: string, token: string, baseUrl?: string) => {
   return tryEmailOperation(
-    (service) => service.sendPasswordResetEmail(email, token),
+    (service) => service.sendPasswordResetEmail(email, token, baseUrl),
     'sendPasswordResetEmail'
   );
 };
@@ -436,10 +443,11 @@ export const sendAccountCreatedEmail = async (
 export const sendVerificationEmailWithTemplate = async (
   email: string,
   token: string,
-  userName?: string
+  userName?: string,
+  baseUrl?: string
 ) => {
   return tryEmailOperation(
-    (service) => service.sendVerificationEmailWithTemplate(email, token, userName),
+    (service) => service.sendVerificationEmailWithTemplate(email, token, userName, baseUrl),
     'sendVerificationEmailWithTemplate'
   );
 };

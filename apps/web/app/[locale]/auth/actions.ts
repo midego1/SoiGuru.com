@@ -34,6 +34,7 @@ import {
 import { issueTwoFactorCode, verifyTwoFactorCode } from '@/lib/auth/two-factor';
 import { generatePasswordResetToken, generateVerificationToken } from '@/lib/db/tokens';
 import { sendPasswordResetEmail, sendVerificationEmailWithTemplate } from '@/lib/mail';
+import { headers } from 'next/headers';
 import { authServiceFactory } from '@/lib/auth/services';
 import { ratelimit, refundRateLimit } from '@/lib/utils/rate-limit';
 
@@ -59,6 +60,23 @@ const signInSchema = z.object({
 	// Email 2FA second factor (EW-139). Empty/absent on the first submit.
 	code: z.string().max(32).optional()
 });
+
+/**
+ * Origin of the request being handled (`https://owner.soiguru.com`), from the proxy headers,
+ * for links in mail that must come back to this app rather than to `app_url` in the content
+ * config (which names the public site for SoiGuru, 2026-10-23). Undefined outside a request.
+ */
+async function requestOrigin(): Promise<string | undefined> {
+	try {
+		const h = await headers();
+		const host = (h.get('x-forwarded-host') ?? h.get('host') ?? '').split(',')[0].trim();
+		if (!host || !/^[a-z0-9.-]+(:\d+)?$/i.test(host)) return undefined;
+		const proto = (h.get('x-forwarded-proto') ?? (host.startsWith('localhost') ? 'http' : 'https')).split(',')[0].trim();
+		return `${proto === 'http' ? 'http' : 'https'}://${host}`;
+	} catch {
+		return undefined;
+	}
+}
 
 export const signInAction = validatedAction(signInSchema, async (data) => {
 	try {
@@ -407,7 +425,7 @@ export const signUp = validatedAction(signUpSchema, async (data) => {
 		);
 
 		if (verificationToken) {
-			sendVerificationEmailWithTemplate(normalizedEmail, verificationToken.token, name)
+			sendVerificationEmailWithTemplate(normalizedEmail, verificationToken.token, name, await requestOrigin())
 				.then(() => console.log(`[SignUp] Verification email sent to ${normalizedEmail}`))
 				.catch((err) => console.error(`[SignUp] Failed to send verification email:`, err));
 		}
@@ -575,7 +593,7 @@ export const forgotPassword = validatedAction(forgotPasswordSchema, async ({ ema
 
 	if (passwordResetToken) {
 		// Email is optional - won't throw if not configured
-		await sendPasswordResetEmail(passwordResetToken.email, passwordResetToken.token);
+		await sendPasswordResetEmail(passwordResetToken.email, passwordResetToken.token, await requestOrigin());
 	}
 
 	return { success: true, email };
@@ -628,7 +646,7 @@ export const resendVerificationEmailAction = async () => {
 	}
 
 	try {
-		const result = await sendVerificationEmailWithTemplate(user.email, verificationToken.token);
+		const result = await sendVerificationEmailWithTemplate(user.email, verificationToken.token, undefined, await requestOrigin());
 		if (result && 'skipped' in result && result.skipped) {
 			console.warn('[ResendVerification] Email service not configured — token generated but email not sent');
 			return { error: 'Email service is not configured. Please contact support.' };

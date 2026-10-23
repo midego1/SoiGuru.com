@@ -18,6 +18,7 @@ import {
 	type SgContext
 } from '@/lib/soiguru/context';
 import { formatRanges } from '@/lib/soiguru/hours';
+import { menuItemCount } from '@/lib/soiguru/menu';
 import { listingStatus } from '@/lib/soiguru/query';
 import { WEEKDAYS, type City, type Listing, type TimeRange, type Weekday } from '@/lib/soiguru/types';
 import type { ListingClaim } from '@/lib/db/schema';
@@ -79,6 +80,7 @@ function nudge(ctx: SgContext, l: Listing, base: string): { text: string; href: 
 		return { text: ctx.t('owner.nudgeAmenities'), href: `${base}/amenities`, link: ctx.t('owner.addIt') };
 	if (!l.images.length)
 		return { text: ctx.t('owner.nudgePhotos'), href: `${base}/photos`, link: ctx.t('owner.addIt') };
+	if (!l.menu.length) return { text: ctx.t('owner.nudgeMenu'), href: `${base}/menu`, link: ctx.t('owner.addIt') };
 	return null;
 }
 
@@ -264,6 +266,7 @@ function ListingOverview({
 	const status = listingStatus(l);
 	const tip = nudge(ctx, l, ctx.href(base));
 	const set = l.amenities.length;
+	const menuItems = menuItemCount(l.menu);
 	const plan = ctx.t(`claim.${claim.plan === 'monthly' ? 'monthly' : 'yearly'}`);
 	return (
 		<>
@@ -332,6 +335,16 @@ function ListingOverview({
 							{ctx.t('owner.goodToKnow')}
 							<small>
 								{set ? ctx.t('owner.goodToKnowSub', { count: set }) : ctx.t('owner.goodToKnowEmpty')}
+							</small>
+						</span>
+						<Icon name="chevron-right" className="tkg-i-chev" />
+					</Link>
+					<Link className="tkg-row" href={ctx.href(`${base}/menu`)}>
+						<Icon name="list" />
+						<span className="tkg-row-main">
+							{ctx.t('owner.menu')}
+							<small>
+								{menuItems ? ctx.t('owner.menuSub', { count: menuItems }) : ctx.t('owner.menuEmpty')}
 							</small>
 						</span>
 						<Icon name="chevron-right" className="tkg-i-chev" />

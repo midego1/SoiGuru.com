@@ -9,6 +9,8 @@ sidebar_position: 99
 
 ## 2026-10-23
 
+- `spec-069` `apps/web/lib/soiguru/menu.ts` `apps/web/app/[locale]/(soiguru)/owner/[city]/[slug]/menu/page.tsx` `apps/web/app/[locale]/(soiguru)/actions.ts`: owners edit "Menu & prices" (sections of priced items in English and Thai) from the dashboard; saved to the listing's `menu` in the content repo (spec 069, PR #47).
+- `spec-058` `apps/web/components/soiguru/password-cards.tsx` `apps/web/app/[locale]/auth/sg-auth.css`: forgot-password and new-password screens use the SoiGuru card (same as sign in) with SoiGuru copy in English and Thai; the template's two-column screens stay in place (spec 058, PR #47).
 - `spec-069` `astro/apps/web/src/lib/soiguru/menu.ts` `astro/apps/web/src/components/soiguru/MenuCard.astro` `astro/apps/web/src/lib/soiguru/jsonld.ts`: "Menu & prices" on the listing page from the listing's `menu` sections (English and Thai, ranges and "from" prices, note), schema.org Menu/OfferCatalog, item names in the search text ([spec 069](spec/069-soiguru-menu-prices/spec.md), PR #46).
 - `spec-066` `astro/apps/web/src/styles/soiguru/site.css`: the city hero photo keeps its 16:9 size (the `height` attribute no longer stretches it to 900 px), sits beside the text from 1100 px and under it, search-bar wide, below that ([spec 066](spec/066-soiguru-city-covers/spec.md), PR #45).
 - `spec-066` `.github/workflows/city-covers.yml`: the cover workflow starts the publish workflow after its commit, since a push made with the Actions token does not trigger it; Krabi's cover is the Unsplash boats photo by Sumit Chinchane ([spec 066](spec/066-soiguru-city-covers/spec.md), PR #44).

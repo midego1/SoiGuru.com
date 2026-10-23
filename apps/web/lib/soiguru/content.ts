@@ -6,6 +6,7 @@ import yaml from 'yaml';
 import { fetchItems, type ItemData } from '@/lib/content';
 import { getContentPath } from '@/lib/lib';
 import { parseWeeklyHours } from './hours';
+import { parseMenu } from './menu';
 import { WEEKDAYS, type Amenity, type Area, type City, type GeoPoint, type Listing, type ListingCategory } from './types';
 
 /**
@@ -178,6 +179,9 @@ function toListing(item: ItemData, categories: ListingCategory[]): Listing | nul
 		hours,
 		hasHours: WEEKDAYS.some((d) => hours[d] !== null),
 		priceBand: num(raw.price_band),
+		menu: parseMenu(raw.menu),
+		menuNote: str(raw.menu_note),
+		menuNoteTh: str(raw.menu_note_th),
 		rating: num(raw.rating),
 		ratingCount: num(raw.rating_count),
 		claimed: raw.claimed === true,

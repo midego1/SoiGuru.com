@@ -219,3 +219,114 @@
 	border-radius: var(--sg-radius-md, 10px) !important;
 	font-size: 15px !important;
 }
+
+/* Forgot and new password cards (2026-10-23): native fields in the SoiGuru card */
+.sg-auth-fields {
+	display: grid;
+	gap: 14px;
+}
+.sg-auth-field {
+	display: grid;
+	gap: 6px;
+	font-size: 14px;
+	font-weight: 500;
+	color: var(--a-ink);
+}
+.sg-auth-input {
+	width: 100%;
+	min-height: 48px;
+	padding: 0 14px;
+	border: 1px solid var(--sg-line-strong, #9aa6a3);
+	border-radius: var(--sg-radius-md, 10px);
+	background: var(--a-surface);
+	color: var(--a-ink);
+	font: inherit;
+	font-size: 16px;
+}
+.sg-auth-input:focus-visible {
+	outline: 2px solid var(--a-sea);
+	outline-offset: 1px;
+	border-color: var(--a-sea);
+}
+.sg-auth-input-wrap {
+	position: relative;
+	display: block;
+}
+.sg-auth-input-wrap .sg-auth-input {
+	padding-right: 72px;
+}
+.sg-auth-eye {
+	position: absolute;
+	top: 50%;
+	right: 8px;
+	transform: translateY(-50%);
+	min-height: 32px;
+	padding: 0 10px;
+	border: 0;
+	border-radius: 8px;
+	background: transparent;
+	color: var(--a-sea);
+	font: inherit;
+	font-size: 14px;
+	font-weight: 600;
+	cursor: pointer;
+}
+.sg-auth-eye:hover {
+	background: var(--a-sea-tint);
+}
+.sg-auth-hint {
+	margin: -4px 0 0;
+	font-size: 13px;
+	line-height: 1.4;
+	color: var(--a-muted);
+}
+.sg-auth-hint-error {
+	color: #b42318;
+}
+.sg-auth-rules {
+	list-style: none;
+	margin: -4px 0 0;
+	padding: 0;
+	display: flex;
+	flex-wrap: wrap;
+	gap: 6px;
+}
+.sg-auth-rules li {
+	padding: 4px 10px;
+	border-radius: 999px;
+	background: var(--sg-surface-200, #e9ebe6);
+	color: var(--a-muted);
+	font-size: 13px;
+}
+.sg-auth-rules li[data-ok] {
+	background: var(--a-sea-tint);
+	color: var(--a-sea-deep);
+}
+.sg-auth-rules li[data-ok]::before {
+	content: '✓ ';
+}
+.sg-auth-alert {
+	padding: 12px 14px;
+	border-radius: var(--sg-radius-md, 10px);
+	font-size: 14px;
+	line-height: 1.45;
+}
+.sg-auth-alert-error {
+	background: #fdecec;
+	color: #8a1f17;
+	border: 1px solid #f3b9b4;
+}
+.sg-auth-alert-ok {
+	background: var(--a-sea-tint);
+	color: var(--a-sea-deep);
+	border: 1px solid #b9dcdf;
+}
+.sg-auth-alert-info {
+	background: var(--sg-surface-100, #f4f5f2);
+	color: var(--a-ink);
+	border: 1px solid var(--a-line);
+}
+.sg-auth-btn:disabled {
+	opacity: 0.55;
+	cursor: not-allowed;
+}
