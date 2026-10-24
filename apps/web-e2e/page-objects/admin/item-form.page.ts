@@ -1,7 +1,9 @@
 import type { Page, Locator } from '@playwright/test';
 
 /**
- * Page object for the admin multi-step item creation/edit form modal.
+ * Page object for the admin item editor: a full-screen dialog with every section on one
+ * page (spec 070). It replaced the five-step wizard; the field locators are unchanged, and
+ * the Next/Previous buttons no longer exist (kept here so older specs type-check).
  */
 export class AdminItemFormPage {
 	readonly page: Page;
@@ -54,7 +56,7 @@ export class AdminItemFormPage {
 
 		// Last Step: Review
 		this.statusSelect = this.modal.locator('select');
-		this.featuredSwitch = this.modal.locator('[role="switch"]');
+		this.featuredSwitch = this.modal.locator('input[type="checkbox"]').first();
 
 		// Navigation buttons
 		this.cancelButton = this.modal.getByRole('button', { name: /cancel/i });

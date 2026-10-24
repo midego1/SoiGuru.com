@@ -3,7 +3,7 @@
 import { useState, useRef, useEffect, useCallback, useMemo } from "react";
 import { useRouter, useParams } from "next/navigation";
 import { Spinner, Checkbox } from "@heroui/react";
-import { MultiStepItemForm } from "@/components/admin/items/multi-step-item-form";
+import { ItemEditor } from "@/components/admin/items/item-editor";
 import { ItemRejectModal } from "@/components/admin/items/item-reject-modal";
 import { ItemHistoryModal } from "@/components/admin/items/item-history-modal";
 import { BulkActionBar } from "@/components/admin/items/bulk-action-bar";
@@ -933,30 +933,22 @@ export default function AdminItemsPage() {
         )}
       </div>
 
-      {/* Item Form Modal */}
+      {/* Item editor: full screen, every section on one page (spec 070). */}
       {isModalOpen && (
         <div
           role="dialog"
           aria-modal="true"
           aria-labelledby="item-form-modal-title"
           tabIndex={-1}
-          className="fixed inset-0 bg-black/60 backdrop-blur-sm z-50 overflow-y-auto focus:outline-none scrollbar-thin scrollbar-track-transparent scrollbar-thumb-gray-400/40 dark:scrollbar-thumb-gray-500/40 scrollbar-thumb-rounded-full -mr-2 [&::-webkit-scrollbar]:w-1"
-          onClick={(e) => { if (e.target === e.currentTarget) closeModal(); }}
+          className="fixed inset-0 z-50 overflow-y-auto bg-gray-50 focus:outline-none dark:bg-[#0a0a0a]"
         >
-          <div className="flex min-h-full items-center justify-center p-4">
-            <div
-              className="max-w-4xl w-full bg-white dark:bg-[#121212] border border-gray-100 dark:border-white/8 rounded-2xl shadow-2xl shadow-black/30"
-              onClick={(e) => e.stopPropagation()}
-            >
-              <MultiStepItemForm
-                item={selectedItem}
-                mode={formMode}
-                onSubmit={handleFormSubmit}
-                onCancel={closeModal}
-                isLoading={isSubmitting}
-              />
-            </div>
-          </div>
+          <ItemEditor
+            item={selectedItem}
+            mode={formMode}
+            onSubmit={handleFormSubmit}
+            onCancel={closeModal}
+            isLoading={isSubmitting}
+          />
         </div>
       )}
 

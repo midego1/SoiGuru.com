@@ -160,3 +160,11 @@ and would otherwise add a 307 of its own to every redirect.
   admin sign-in and the admin dashboard, items, users, categories and settings pages; unit
   suite (`test:unit`, 263 → 265 tests) and the e2e specs for auth, admin sign-in, protected
   admin pages and the public smoke list.
+
+### Follow-up 2026-10-24 (PR #55): no template links inside the admin
+
+The template header on `/admin/*` showed Home, Favorites, Categories, Tags, Submit and More;
+on the owner host those lead to the public site. `components/header/index.tsx` hides the
+navigation (desktop links, the phone menu and its toggle) when the path is under `/admin`;
+the brand, settings, language, theme, notifications and the account menu stay, and the admin
+keeps its own bar. The client area (`/client/*`) still shows them; say so if they should go too.

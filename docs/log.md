@@ -7,6 +7,12 @@ sidebar_position: 99
 
 # Documentation & Specs Change Log
 
+## 2026-10-24
+
+- `spec-070` `apps/web/components/admin/items/item-editor.tsx` `apps/web/app/[locale]/admin/items/page.tsx`: the admin item form is a full-screen editor with every section on one page and one Save, replacing the five-step modal wizard ([spec 070](spec/070-admin-item-editor/spec.md), PR #55).
+- `spec-058` `apps/web/components/header/index.tsx`: inside the admin the template's directory links (Home, Favorites, Categories, Tags, Submit, More) are hidden; the brand, settings, language, theme and account menu stay (PR #55).
+- `spec-054` `apps/web/app/[locale]/(soiguru)/[city]/claim/page.tsx`: the claim flow carries the owner pages' brand bar (lockup, "Claim" badge, step on the right), its first step has the dashboard's title band and lists the city's unclaimed places when nothing was searched (PR #55).
+
 ## 2026-10-23
 
 - `spec-058` `apps/web/proxy.ts` `apps/web/lib/soiguru/owner-only.ts` `apps/web/components/soiguru/password-cards.tsx` `.github/workflows/e2e.yml`: verification pass on the owner-host rule: non-navigation fetches to site-bound paths are rewritten to a `site-redirect` page whose `redirect()` Next's router performs itself (no cross-origin CORS errors from `<Link>` prefetches), the dashboard's View button links to the public site, `discover` is a template root, the switch is documented as build-time, the e2e suite runs with the rule off, the password cards carry the ids the e2e specs use, and the rule has a unit test in `lib/soiguru/__tests__` (PR #54).

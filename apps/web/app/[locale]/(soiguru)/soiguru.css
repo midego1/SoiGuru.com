@@ -758,3 +758,11 @@
 	.sg-me-row { grid-template-columns: minmax(160px, 1.2fr) minmax(160px, 1.2fr) auto auto auto; grid-template-areas: "name th price flags tools" "note noteth . . ."; row-gap: 6px; }
 	.sg-me-f-price { width: 84px; }
 }
+
+/* Claim flow (2026-10-24): the brand bar of the owner pages, the title band of the dashboard. */
+.sg-claim-bar .sg-brand-owner { margin-right: 0; }
+.sg-claim-step { font-size: 12px; line-height: 14px; color: var(--ink-muted); text-align: right; max-width: 40vw; }
+.sg-claim-find { padding-top: 0; }
+.sg-claim-head { margin-bottom: var(--space-3); }
+.sg-claim-head .tkg-search { margin-top: var(--space-1); }
+@media (max-width: 480px) { .sg-claim-step { display: none; } }
