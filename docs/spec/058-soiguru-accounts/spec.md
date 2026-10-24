@@ -186,7 +186,7 @@ keeps its own bar. The client area (`/client/*`) still shows them; say so if the
   password rule, Terms line and back link add more than the padding saves.)
 - Checked at 320, 375, 390, 414, 768, 1024, 1280 and 1440px: no horizontal overflow.
 
-### Follow-up 2026-10-24 (PR #NN): password reset and change work for owners
+### Follow-up 2026-10-24 (PR #63): password reset and change work for owners
 
 - Bug: "Forgot password" and "Change password" wrote the new hash only to `users.passwordHash`,
   while client (owner/visitor) sign-in checks the credentials row in `accounts`. Owners saw
