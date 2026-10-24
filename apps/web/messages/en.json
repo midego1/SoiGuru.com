@@ -2141,7 +2141,8 @@
 				"USERS": "Users",
 				"COMMENTS": "Comments",
 				"REPORTS": "Reports",
-				"SETTINGS": "Settings"
+				"SETTINGS": "Settings",
+				"EMAILS": "Emails"
 			},
 			"SIGNIN_EYEBROW": "SoiGuru admin",
 			"SIGNIN_FOOTNOTE": "Local places in Thailand, kept up to date."
@@ -4038,6 +4039,39 @@
 			"BY_PLAN": "By plan",
 			"BY_PROVIDER": "By provider",
 			"BY_STATUS": "By status"
+		},
+		"EMAIL_TEMPLATES": {
+			"TITLE": "Emails",
+			"LEAD": "The emails SoiGuru sends. Change the wording, see it as it will arrive and send yourself a test.",
+			"LIST_LABEL": "Email templates",
+			"EDITED": "Edited",
+			"DEFAULT": "Default",
+			"SUBJECT": "Subject",
+			"PREHEADER": "Preview text",
+			"PREHEADER_HINT": "Shown after the subject in most inboxes.",
+			"BODY": "Body (HTML)",
+			"BODY_HINT": "Headings, paragraphs and links are styled for you. '{{button:Label}}' adds the button to the link. The logo, card and footer are added around the body.",
+			"PLACEHOLDERS": "Placeholders",
+			"PLACEHOLDERS_HINT": "Click one to insert it in the body at the cursor.",
+			"UNKNOWN": "Not a placeholder of this email: {list}",
+			"SAVE": "Save",
+			"SAVING": "Saving…",
+			"SAVED": "Saved. New emails use this version.",
+			"SAVE_FAILED": "Could not save: {error}",
+			"RESET": "Reset to default",
+			"RESET_CONFIRM": "Reset this email to the SoiGuru default? Your edits are removed.",
+			"RESET_DONE": "Back to the default.",
+			"TEST": "Send test email to me",
+			"TESTING": "Sending…",
+			"TEST_SENT": "Test sent to {email}.",
+			"TEST_FAILED": "The test could not be sent: {error}",
+			"LOAD_FAILED": "Could not load the saved emails. Showing the defaults.",
+			"PREVIEW": "Preview",
+			"DESKTOP": "Desktop",
+			"PHONE": "Phone",
+			"PLAIN_TEXT": "Plain text",
+			"UNSAVED": "Unsaved changes",
+			"LAST_SAVED": "Last saved {date}"
 		}
 	},
 	"pages": {
@@ -5163,7 +5197,30 @@
 			"metaForgot": "Reset password · SoiGuru",
 			"metaNewPassword": "New password · SoiGuru",
 			"passwordHint": "At least 8 characters.",
-			"termsNote": "By creating an account you agree to the <terms>Terms of use</terms> and the <privacy>Privacy policy</privacy>."
+			"termsNote": "By creating an account you agree to the <terms>Terms of use</terms> and the <privacy>Privacy policy</privacy>.",
+			"magicSend": "Email me a sign-in link",
+			"magicHintLogin": "No password needed. New to SoiGuru? The link creates your free account.",
+			"magicHintSignup": "No password needed: we email you a link that creates your account and signs you in.",
+			"magicOr": "or",
+			"magicUsePassword": "Use a password instead",
+			"magicUseLink": "Email me a sign-in link instead",
+			"magicSentTitle": "Check your inbox",
+			"magicSentBody": "We sent a sign-in link to <b>{email}</b>. Open it on the device where you want to be signed in. It works once, for 20 minutes.",
+			"magicOpenMailbox": "Open {provider}",
+			"magicOpenApp": "Open your email app and look for the email from SoiGuru.",
+			"magicSpamNote": "Not there after a minute? Look in spam or Promotions, or send a new link.",
+			"magicResend": "Send a new link",
+			"magicDifferentEmail": "Use a different email",
+			"magicErrorInvalid": "Enter a valid email address.",
+			"magicErrorThrottled": "You asked for several links just now. Use the newest email, or try again in a few minutes.",
+			"magicErrorThrottledSeconds": "A link is on its way. You can ask for another one in {seconds} seconds.",
+			"magicErrorUnavailable": "Sign-in links are not available right now. Use a password instead.",
+			"magicErrorFailed": "The link could not be sent. Try again in a moment.",
+			"magicCheckingTitle": "Signing you in…",
+			"magicCheckingBody": "One moment while we check your link.",
+			"magicInvalidTitle": "This sign-in link no longer works",
+			"magicInvalidBody": "Sign-in links work once and for 20 minutes, and only the newest one counts. Ask for a new link and open it straight away.",
+			"magicRequestNew": "Get a new sign-in link"
 		}
 	}
 }

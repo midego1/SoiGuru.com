@@ -3,6 +3,7 @@ import GitHubProvider from 'next-auth/providers/github';
 import FacebookProvider from 'next-auth/providers/facebook';
 import TwitterProvider from 'next-auth/providers/twitter';
 import { credentialsProvider } from './credentials';
+import { magicLinkProvider } from './magic-link-provider';
 import { AuthConfig } from './config';
 import { authConfig } from '@/lib/config/config-service';
 
@@ -115,6 +116,8 @@ export function createNextAuthProviders(config: OAuthProvidersConfig = defaultOA
 	// Credentials
 	if (config.credentials?.enabled) {
 		providers.push(credentialsProvider);
+		// Emailed sign-in links (spec 073) go with the email/password sign-in.
+		providers.push(magicLinkProvider);
 	}
 
 	return providers;

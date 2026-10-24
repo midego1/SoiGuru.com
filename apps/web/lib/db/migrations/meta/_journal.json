@@ -323,6 +323,13 @@
       "when": 1792637095505,
       "tag": "0045_soiguru_claim_photos",
       "breakpoints": true
+    },
+    {
+      "idx": 46,
+      "version": "7",
+      "when": 1792822789901,
+      "tag": "0046_soiguru_magic_link_emails",
+      "breakpoints": true
     }
   ]
 }

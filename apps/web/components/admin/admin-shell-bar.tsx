@@ -20,6 +20,7 @@ type NavKey =
 	| 'USERS'
 	| 'COMMENTS'
 	| 'REPORTS'
+	| 'EMAILS'
 	| 'SETTINGS';
 
 const NAV: Array<{ key: NavKey; href: string; exact?: boolean }> = [
@@ -33,6 +34,8 @@ const NAV: Array<{ key: NavKey; href: string; exact?: boolean }> = [
 	{ key: 'USERS', href: '/admin/users' },
 	{ key: 'COMMENTS', href: '/admin/comments' },
 	{ key: 'REPORTS', href: '/admin/reports' },
+	// Transactional email templates (spec 073)
+	{ key: 'EMAILS', href: '/admin/emails' },
 	{ key: 'SETTINGS', href: '/admin/settings' }
 ];
 

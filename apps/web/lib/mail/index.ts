@@ -279,6 +279,16 @@ export class EmailService {
     }
     return this.provider!.getName();
   }
+
+  /** The From address used for every message (`EMAIL_FROM` / content config `mail.default_from`). */
+  getDefaultFrom(): string {
+    return this.defaultFrom;
+  }
+
+  /** The app URL links fall back to when no request origin is known. */
+  getDomain(): string {
+    return this.domain;
+  }
 }
 
 const appUrl = coreConfig.APP_URL || 'https://demo.ever.works';
@@ -378,6 +388,57 @@ async function tryEmailOperation<T>(
   }
 }
 
+/**
+ * SoiGuru branded emails (spec 073): render template `id` (admin override or code default)
+ * in the SoiGuru frame and send it. When rendering fails (never expected: overrides are read
+ * fail-soft) `fallback` sends the template's original email instead, so mail still goes out.
+ * Send errors are not swallowed.
+ */
+async function sendBrandedOr(
+  service: EmailService,
+  id: import('@/lib/soiguru/emails/templates').EmailTemplateId,
+  to: string,
+  vars: Record<string, string>,
+  fallback?: () => Promise<any>
+): Promise<any> {
+  let rendered: { subject: string; html: string; text: string } | null = null;
+  try {
+    const { renderSoiGuruEmail } = await import('@/lib/soiguru/emails/send');
+    rendered = await renderSoiGuruEmail(id, vars);
+  } catch (error) {
+    console.error(`[EMAIL] Branded template "${id}" failed to render:`, error);
+    if (fallback) return fallback();
+    throw error;
+  }
+  return service.sendCustomEmail({ from: service.getDefaultFrom(), to, ...rendered });
+}
+
+/** Send a SoiGuru branded email by template id (magic link, admin test sends). */
+export const sendBrandedEmail = async (
+  id: import('@/lib/soiguru/emails/templates').EmailTemplateId,
+  to: string,
+  vars: Record<string, string>
+) => {
+  return tryEmailOperation((service) => sendBrandedOr(service, id, to, vars), `sendBrandedEmail:${id}`);
+};
+
+/** Send an already rendered message from the configured From address (admin test sends, spec 073). */
+export const sendRenderedEmail = async (message: { to: string; subject: string; html: string; text?: string }) => {
+  return tryEmailOperation(
+    (service) => service.sendCustomEmail({ from: service.getDefaultFrom(), ...message }),
+    'sendRenderedEmail'
+  );
+};
+
+/** The configured From address (for the "search your inbox" link after a sign-in link is sent). */
+export async function getMailSenderAddress(): Promise<string> {
+  try {
+    return (await mailService()).getDefaultFrom();
+  } catch {
+    return emailConfig.defaultFrom;
+  }
+}
+
 export const sendVerificationEmail = async (email: string, token: string) => {
   return tryEmailOperation(
     (service) => service.sendVerificationEmail(email, token),
@@ -386,8 +447,21 @@ export const sendVerificationEmail = async (email: string, token: string) => {
 };
 
 export const sendPasswordResetEmail = async (email: string, token: string, baseUrl?: string) => {
+  // Spec 073: the branded "Reset password" template; the original plain email is the fallback.
   return tryEmailOperation(
-    (service) => service.sendPasswordResetEmail(email, token, baseUrl),
+    (service) =>
+      sendBrandedOr(
+        service,
+        'password-reset',
+        email,
+        {
+          link: `${baseUrl || service.getDomain()}/auth/new-password?token=${encodeURIComponent(token)}`,
+          name: 'there',
+          email,
+          expires: '1 hour'
+        },
+        () => service.sendPasswordResetEmail(email, token, baseUrl)
+      ),
     'sendPasswordResetEmail'
   );
 };
@@ -411,8 +485,24 @@ export const sendTwoFactorTokenEmail = async (
   token: string,
   options?: { expiresInMinutes?: number; userName?: string }
 ) => {
+  // Spec 073: the branded "Sign-in code" template; the template's own 2FA email is the fallback.
   return tryEmailOperation(
-    (service) => service.sendTwoFactorTokenEmail(email, token, options),
+    async (service) => {
+      const { greetingName } = await import('@/lib/soiguru/emails/send');
+      const minutes = options?.expiresInMinutes ?? 10;
+      return sendBrandedOr(
+        service,
+        'two-factor-code',
+        email,
+        {
+          code: token,
+          name: greetingName(options?.userName),
+          email,
+          expires: `${minutes} minute${minutes === 1 ? '' : 's'}`
+        },
+        () => service.sendTwoFactorTokenEmail(email, token, options)
+      );
+    },
     'sendTwoFactorTokenEmail'
   );
 };
@@ -446,8 +536,23 @@ export const sendVerificationEmailWithTemplate = async (
   userName?: string,
   baseUrl?: string
 ) => {
+  // Spec 073: the branded "Confirm email address" template; the template's own email is the fallback.
   return tryEmailOperation(
-    (service) => service.sendVerificationEmailWithTemplate(email, token, userName, baseUrl),
+    async (service) => {
+      const { greetingName } = await import('@/lib/soiguru/emails/send');
+      return sendBrandedOr(
+        service,
+        'verify-email',
+        email,
+        {
+          link: `${baseUrl || service.getDomain()}/auth/new-verification?token=${encodeURIComponent(token)}`,
+          name: greetingName(userName),
+          email,
+          expires: '1 hour'
+        },
+        () => service.sendVerificationEmailWithTemplate(email, token, userName, baseUrl)
+      );
+    },
     'sendVerificationEmailWithTemplate'
   );
 };

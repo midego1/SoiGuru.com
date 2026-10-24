@@ -94,6 +94,7 @@ or architectural change.
 | 070 | [`admin-item-editor`](070-admin-item-editor/spec.md) | implemented | Admin Places: creating or editing an item is a full-screen editor with every section on one page (basic information, media & links, classification, location, publish settings with Featured and Status) and one Save, instead of the five-step modal wizard. |
 | 071 | [`soiguru-featured-places`](071-soiguru-featured-places/spec.md) | implemented | Featured listings (`featured: true`) carry a "Featured" badge on their cards and are pinned to the top of area, category and search results on soiguru.com, whatever the sort. |
 | 072 | [`soiguru-sticky-listing-title`](072-soiguru-sticky-listing-title/spec.md) | implemented | On a business page the breadcrumb and name stay in view in a compact bar under the sticky site header once the title scrolls away; from 600px it adds the open status, on desktop a Call button. |
+| 073 | [`soiguru-magic-link-emails`](073-soiguru-magic-link-emails/spec.md) | implemented | Sign in or create an account with an emailed one-time link (20 min, throttled); "Check your inbox" opens Gmail, Outlook, Yahoo, iCloud or Proton searched for our email. Branded SoiGuru email frame for the sign-in link, email confirmation, password reset and two-step code; Admin → Emails edits, previews, test-sends and resets them. |
 
 > **Status legend:**
 > _proposed_ = spec drafted, not yet planned/approved.
