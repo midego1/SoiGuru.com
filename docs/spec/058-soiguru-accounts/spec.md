@@ -185,3 +185,17 @@ keeps its own bar. The client area (`/client/*`) still shows them; say so if the
   create-account page is still about 985px high, so a 900px-high window scrolls a little: the
   password rule, Terms line and back link add more than the padding saves.)
 - Checked at 320, 375, 390, 414, 768, 1024, 1280 and 1440px: no horizontal overflow.
+
+### Follow-up 2026-10-24 (PR #63): password reset and change work for owners
+
+- Bug: "Forgot password" and "Change password" wrote the new hash only to `users.passwordHash`,
+  while client (owner/visitor) sign-in checks the credentials row in `accounts`. Owners saw
+  "Password saved" and their new password was refused; changing it failed at "current password".
+  Both actions now also write the hash to the client's credentials account
+  (`setClientCredentialsPassword`, which creates that row for accounts made with an emailed
+  sign-in link or Google, so they can add a password). Admin accounts are unchanged
+  (`users.passwordHash`). "Change password" accepts the current password from either place.
+- Forgot password offers "Get a sign-in link instead" (spec 073) under the buttons.
+- An invalid or used reset link always shows the plain sentence ("Reset links work once and
+  for one hour…") instead of the server's "Invalid token!".
+- Wording: "Email address" (was "E-mail address"), "we'll send you", "Check your email".

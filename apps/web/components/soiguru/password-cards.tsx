@@ -67,6 +67,12 @@ export function SoiGuruForgotPasswordCard() {
 							{t('backToSignIn')}
 						</Link>
 					</div>
+					{/* Spec 073: most people here only want to get in; the sign-in card starts with the link form. */}
+					<p className="sg-auth-terms">
+						{t.rich('forgotMagicNote', {
+							link: (chunks) => <Link href="/auth/signin">{chunks}</Link>
+						})}
+					</p>
 				</form>
 			)}
 			<p className="sg-auth-note">{t('ownerNote')}</p>
@@ -165,7 +171,10 @@ export function SoiGuruNewPasswordCard() {
 	} else if (tokenState === 'invalid') {
 		body = (
 			<>
-				<Alert tone="error">{tokenError || t('invalidBody')}</Alert>
+				<Alert tone="error">
+					{/* The server's reason ("Invalid token!") stays out of sight; one plain sentence for everyone. */}
+					<span data-reason={tokenError || undefined}>{t('invalidBody')}</span>
+				</Alert>
 				<div className="sg-auth-actions">
 					<Link className="sg-auth-btn" href="/auth/forgot-password">
 						{t('requestNew')}

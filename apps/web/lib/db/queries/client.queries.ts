@@ -903,6 +903,42 @@ export async function createClientAccount(
 }
 
 /**
+ * Set the password of a client's credentials account (the hash client sign-in checks), or
+ * create that account when the user has none yet (signed up with an emailed link or OAuth).
+ * Password reset and change wrote only `users.passwordHash`, which client sign-in never reads.
+ * @returns True when the account row now carries the hash
+ */
+export async function setClientCredentialsPassword(
+	userId: string,
+	email: string,
+	passwordHash: string
+): Promise<boolean> {
+	try {
+		const normalizedEmail = email.toLowerCase().trim();
+		const tenantId = await getTenantId();
+		if (!tenantId) return false;
+
+		const updated = await db
+			.update(accounts)
+			.set({ passwordHash })
+			.where(
+				and(
+					eq(accounts.provider, 'credentials'),
+					eq(accounts.email, normalizedEmail),
+					eq(accounts.tenantId, tenantId)
+				)
+			)
+			.returning({ userId: accounts.userId });
+		if (updated.length > 0) return true;
+
+		return (await createClientAccount(userId, normalizedEmail, passwordHash)) !== null;
+	} catch (error) {
+		console.error('Error setting client password:', error);
+		return false;
+	}
+}
+
+/**
  * Get client account by email (credentials provider only)
  * @param email - Client email
  * @returns Account or null if not found
