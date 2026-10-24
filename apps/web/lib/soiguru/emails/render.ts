@@ -158,25 +158,37 @@ function inlineStyles(html: string): string {
 	});
 }
 
+/** Apply `pattern` until the string stops changing, so nested or split markup can't survive one pass. */
+function stripRepeatedly(text: string, pattern: RegExp): string {
+	let previous: string;
+	let current = text;
+	do {
+		previous = current;
+		current = current.replace(pattern, '');
+	} while (current !== previous);
+	return current;
+}
+
 /** A readable plain-text version of an HTML body. */
 export function htmlToText(html: string): string {
-	return html
-		.replace(/<!--[\s\S]*?-->/g, '')
+	const marked = stripRepeatedly(html, /<!--[\s\S]*?-->/g)
 		.replace(/<a\s[^>]*href\s*=\s*"([^"]*)"[^>]*>([\s\S]*?)<\/a>/gi, (_w, href: string, inner: string) => {
-			const label = inner.replace(/<[^>]+>/g, '').trim();
+			const label = stripRepeatedly(inner, /<[^>]+>/g).trim();
 			return !label || label === href ? href : `${label} (${href})`;
 		})
 		.replace(/<br\s*\/?>/gi, '\n')
 		.replace(/<li[^>]*>/gi, '- ')
 		.replace(/<\/(li|tr)>/gi, '\n')
-		.replace(/<\/(p|h1|h2|h3|div|ul|ol|table)>/gi, '\n\n')
-		.replace(/<[^>]+>/g, '')
+		.replace(/<\/(p|h1|h2|h3|div|ul|ol|table)>/gi, '\n\n');
+	const decoded = stripRepeatedly(marked, /<[^>]+>/g)
 		.replace(/&nbsp;/g, ' ')
 		.replace(/&lt;/g, '<')
 		.replace(/&gt;/g, '>')
 		.replace(/&quot;/g, '"')
 		.replace(/&#39;/g, "'")
-		.replace(/&amp;/g, '&')
+		.replace(/&amp;/g, '&');
+	// Escaped markup in the source (`&lt;b&gt;`) must not come back as a tag after decoding.
+	return stripRepeatedly(decoded, /<[^>]+>/g)
 		.split('\n')
 		.map((l) => l.replace(/[ \t]+/g, ' ').trim())
 		.join('\n')
