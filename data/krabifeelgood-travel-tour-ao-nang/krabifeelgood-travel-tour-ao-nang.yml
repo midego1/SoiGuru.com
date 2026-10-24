@@ -1,47 +1,52 @@
-name: 'Krabifeelgood Travel & Tour'
-description: 'Travel agency on Khlong Haeng Road in Ao Nang that books boat trips, day tours and transfers around Krabi. Open daily 10:00–22:00.'
-description_th: 'บริษัททัวร์บนถนนคลองแห้ง อ่าวนาง รับจองทริปเรือ ทัวร์วันเดียว และรถรับส่งทั่วกระบี่ เปิดทุกวัน 10:00–22:00'
-source_url: 'http://www.krabifeelgoodtours.com/'
+name: Krabifeelgood Travel & Tour
+description: Travel agency on Khlong Haeng Road in Ao Nang that books boat
+  trips, day tours and transfers around Krabi. Open daily 10:00–22:00.
+description_th: บริษัททัวร์บนถนนคลองแห้ง อ่าวนาง รับจองทริปเรือ ทัวร์วันเดียว
+  และรถรับส่งทั่วกระบี่ เปิดทุกวัน 10:00–22:00
+source_url: http://www.krabifeelgoodtours.com/
 category: tours
 tags: []
 images:
-  - 'https://soiguru.com/media/krabifeelgood-travel-tour-ao-nang/mvlstmdh32088af0dc.jpg'
+  - https://soiguru.com/media/krabifeelgood-travel-tour-ao-nang/mvlstmdh32088af0dc.jpg
+  - https://soiguru.com/media/krabifeelgood-travel-tour-ao-nang/mvluyc0m0ad706ca84.webp
 featured: true
 status: approved
 city: krabi
 area: ao-nang
-address: '225 Khlong Haeng Road, Ao Nang, Krabi 81000'
+address: 225 Khlong Haeng Road, Ao Nang, Krabi 81000
 geo:
   lat: 8.035425
   lng: 98.819064
 location:
-  address: '225 Khlong Haeng Road, Ao Nang, Krabi 81000'
+  address: 225 Khlong Haeng Road, Ao Nang, Krabi 81000
   city: Krabi
   country: TH
   latitude: 8.035425
   longitude: 98.819064
-phone: '+66 93 728 7849'
+phone: +66 93 728 7849
 hours:
   mon:
-  - 10:00-22:00
+    - 10:00-22:00
   tue:
-  - 10:00-22:00
+    - 10:00-22:00
   wed:
-  - 10:00-22:00
+    - 10:00-22:00
   thu:
-  - 10:00-22:00
+    - 10:00-22:00
   fri:
-  - 10:00-22:00
+    - 10:00-22:00
   sat:
-  - 10:00-22:00
+    - 10:00-22:00
   sun:
-  - 10:00-22:00
+    - 10:00-22:00
 claimed: false
 submitted_by: SoiGuru team
-updated_by: editor
-updated_at: "2026-10-24 09:47"
-markdown: |
-  Travel agency on Khlong Haeng Road in Ao Nang that books boat trips, day tours and transfers around Krabi. Open daily 10:00–22:00.
+updated_by: owner
+updated_at: 2026-10-24 03:47
+markdown: >
+  Travel agency on Khlong Haeng Road in Ao Nang that books boat trips, day tours
+  and transfers around Krabi. Open daily 10:00–22:00.
+
 
   Website: <http://www.krabifeelgoodtours.com/>
 google_place_id: ChIJ5-EqxQvAUTARa5Ftblb_yA4
