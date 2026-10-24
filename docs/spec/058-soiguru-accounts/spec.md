@@ -169,7 +169,7 @@ navigation (desktop links, the phone menu and its toggle) when the path is under
 the brand, settings, language, theme, notifications and the account menu stay, and the admin
 keeps its own bar. The client area (`/client/*`) still shows them; say so if they should go too.
 
-### Follow-up 2026-10-24 (PR #NN): create-account card
+### Follow-up 2026-10-24 (PR #60): create-account card
 
 - "Back to SoiGuru" moved from the right end of the bar to just above the card, on its left
   edge (it looked stranded on wide screens and wrapped to two lines at 320px); the logo is
