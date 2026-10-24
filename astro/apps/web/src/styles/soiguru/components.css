@@ -150,6 +150,8 @@ button, input { font: inherit; color: inherit; }
 .tkg-badge .tkg-i { width: 14px; height: 14px; vertical-align: 0; }
 .tkg-badge-outline { background: transparent; color: var(--ink-muted); border: 1px solid var(--line-strong); }
 .tkg-badge-sun { background: var(--sun); color: var(--ink); }
+.tkg-badge-featured { flex-shrink: 0; }
+.tkg-badge-featured .tkg-i svg { fill: currentColor; }
 
 /* photo placeholder (previews) */
 .tkg-photo { background: var(--surface-200); position: relative; overflow: hidden; color: var(--ink-muted); }

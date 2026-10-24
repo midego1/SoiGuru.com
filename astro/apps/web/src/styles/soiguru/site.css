@@ -842,6 +842,15 @@ html[data-lang='th'] .sg-page .sg-tile .sg-tile-th {
     font-size: 12px;
     font-weight: 700;
 }
+.sg-flag-featured {
+    top: auto;
+    bottom: 12px;
+    background: var(--sun);
+    color: var(--ink);
+}
+.sg-flag-featured .tkg-i svg {
+    fill: currentColor;
+}
 .sg-flag-quiet {
     left: auto;
     right: 12px;

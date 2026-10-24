@@ -92,6 +92,7 @@ or architectural change.
 | 068 | [`soiguru-single-city-home`](068-soiguru-single-city-home/spec.md) | implemented | With one city, `/` and `/th/` redirect (302) to that city's page and leave the sitemap; the landing page returns by itself with a second city. |
 | 069 | [`soiguru-menu-prices`](069-soiguru-menu-prices/spec.md) | implemented | A listing's `menu`: sections of priced items in English and Thai, shown as "Menu & prices" on the listing page with schema.org offers, searchable, edited by owners in the owner app. |
 | 070 | [`admin-item-editor`](070-admin-item-editor/spec.md) | implemented | Admin Places: creating or editing an item is a full-screen editor with every section on one page (basic information, media & links, classification, location, publish settings with Featured and Status) and one Save, instead of the five-step modal wizard. |
+| 071 | [`soiguru-featured-places`](071-soiguru-featured-places/spec.md) | implemented | Featured listings (`featured: true`) carry a "Featured" badge on their cards and are pinned to the top of area, category and search results on soiguru.com, whatever the sort. |
 
 > **Status legend:**
 > _proposed_ = spec drafted, not yet planned/approved.
