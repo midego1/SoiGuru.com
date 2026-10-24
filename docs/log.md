@@ -9,7 +9,7 @@ sidebar_position: 99
 
 ## 2026-10-24
 
-- `spec-067` `apps/web/lib/soiguru/photo-sizes.ts` `apps/web/lib/soiguru/photos.ts`: owner and claim photos are now really re-encoded to WebP in three sizes (the spec's first change shipped without the code), and the media route serves `-800`/`-400` copies, made on request for WebP photos uploaded before (PR #NN).
+- `spec-067` `apps/web/lib/soiguru/photo-sizes.ts` `apps/web/lib/soiguru/photos.ts`: owner and claim photos are now really re-encoded to WebP in three sizes (the spec's first change shipped without the code), and the media route serves `-800`/`-400` copies, made on request for WebP photos uploaded before (PR #58).
 - `spec-071` `astro/apps/web/src/components/soiguru/ListingCard.astro` `ListingPhoto.astro`: the "Featured" badge is now a small chip in the top-left corner of the card's photo, so names keep their width (PR #57).
 - `spec-054` `astro/apps/web/src/styles/soiguru/site.css`: a listing with a single photo shows it one grid row high (340/400px on desktop) instead of two rows (up to 800px) (PR #57).
 - `spec-071` `astro/apps/web/src/components/soiguru/ListingCard.astro` `astro/apps/web/src/scripts/soiguru/results.ts`: featured places show a "Featured" badge (แนะนำ) and are pinned to the top of area, category and search results on soiguru.com ([spec 071](spec/071-soiguru-featured-places/spec.md), PR #56).
