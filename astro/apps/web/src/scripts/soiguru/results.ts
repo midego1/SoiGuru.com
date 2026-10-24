@@ -169,7 +169,11 @@ if (root) {
 
     const sorted = (items: HTMLElement[]) => {
         const by = state.sort;
+        // Featured places first, whatever the sort; the chosen sort orders within each group.
+        const featured = (c: HTMLElement) => Number(c.dataset['featured'] === '1');
         return [...items].sort((a, b) => {
+            const pinned = featured(b) - featured(a);
+            if (pinned) return pinned;
             if (by === 'nearest' && visitor)
                 return Number(a.dataset['metres'] ?? 9e9) - Number(b.dataset['metres'] ?? 9e9);
             if (by === 'updated')
