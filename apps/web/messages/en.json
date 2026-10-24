@@ -5161,12 +5161,12 @@
 			"signIn": "Sign in",
 			"cancel": "Cancel",
 			"forgotTitle": "Reset your password",
-			"forgotBody": "Enter the e-mail address of your SoiGuru account and we send you a link to choose a new password.",
-			"email": "E-mail address",
+			"forgotBody": "Enter the email address of your SoiGuru account and we'll send you a link to choose a new password.",
+			"email": "Email address",
 			"emailPlaceholder": "you@example.com",
 			"sendLink": "Send reset link",
 			"sending": "Sending…",
-			"sentTitle": "Check your e-mail",
+			"sentTitle": "Check your email",
 			"sentBody": "If an account exists for {email}, a reset link is on its way. It works for one hour.",
 			"sentNote": "Nothing in your inbox? Look in spam, and check that you typed the address you signed up with.",
 			"backToSignIn": "Back to sign in",
@@ -5220,7 +5220,8 @@
 			"magicCheckingBody": "One moment while we check your link.",
 			"magicInvalidTitle": "This sign-in link no longer works",
 			"magicInvalidBody": "Sign-in links work once and for 20 minutes, and only the newest one counts. Ask for a new link and open it straight away.",
-			"magicRequestNew": "Get a new sign-in link"
+			"magicRequestNew": "Get a new sign-in link",
+			"forgotMagicNote": "Just want to get in? <link>Get a sign-in link instead</link>, no password needed."
 		}
 	}
 }

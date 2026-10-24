@@ -29,7 +29,8 @@ import {
 	getClientProfileByUserId,
 	updateClientProfileName,
 	verifyClientPassword,
-	isUserAdmin
+	isUserAdmin,
+	setClientCredentialsPassword
 } from '@/lib/db/queries';
 import { issueTwoFactorCode, verifyTwoFactorCode } from '@/lib/auth/two-factor';
 import { generatePasswordResetToken, generateVerificationToken } from '@/lib/db/tokens';
@@ -480,7 +481,10 @@ export const updatePassword = validatedActionWithUser(updatePasswordSchema, asyn
 		return { error: 'User not found' };
 	}
 
-	const isPasswordValid = await comparePasswords(currentPassword, dbUser.passwordHash);
+	// Client users keep their hash on the credentials account, admins on users.passwordHash.
+	const isPasswordValid =
+		(await verifyClientPassword(dbUser.email ?? user.email!, currentPassword)) ||
+		(await comparePasswords(currentPassword, dbUser.passwordHash));
 
 	if (!isPasswordValid) {
 		return { error: 'Current password is incorrect.' };
@@ -498,6 +502,9 @@ export const updatePassword = validatedActionWithUser(updatePasswordSchema, asyn
 		updateUserPassword(newPasswordHash, dbUser.id),
 		logActivity(ActivityType.UPDATE_PASSWORD, dbUser.id, 'user')
 	]);
+	if (!(await isUserAdmin(dbUser.id))) {
+		await setClientCredentialsPassword(dbUser.id, dbUser.email ?? user.email!, newPasswordHash);
+	}
 
 	return { success: 'Password updated successfully.' };
 });
@@ -698,6 +705,13 @@ export const newPasswordAction = validatedAction(newPasswordSchema, async (data)
 	const hashedPassword = await hashPassword(data.newPassword);
 
 	await Promise.all([updateUserPassword(hashedPassword, result.userId), deletePasswordResetToken(data.token)]);
+	// Client sign-in reads the credentials account, not users.passwordHash (fix 2026-10-24).
+	if (!(await isUserAdmin(result.userId))) {
+		const resetUser = await getUserById(result.userId);
+		if (!resetUser?.email || !(await setClientCredentialsPassword(result.userId, resetUser.email, hashedPassword))) {
+			return { error: 'Could not save your new password. Please try again.' };
+		}
+	}
 
 	await logActivity(ActivityType.UPDATE_PASSWORD, result.userId, 'user');
 
