@@ -218,7 +218,7 @@ const trail: [string, string][] = [
                     (listing.geo || listing.address) && (
                         <section class="sg-card sg-where-sec" aria-label="Location">
                             {listing.geo ? (
-                                <StaticMap point={listing.geo} height={240} width={480} />
+                                <StaticMap point={listing.geo} height={240} width={480} coverHeight={360} />
                             ) : (
                                 <iframe
                                     class="sg-where-embed"

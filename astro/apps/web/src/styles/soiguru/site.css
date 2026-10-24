@@ -4048,3 +4048,32 @@ html:not([data-lang='th']) .sg-lang-th {
     font-size: 13px;
     color: var(--ink-muted);
 }
+
+/* Desktop listing page: the photo grid and the "Where" card are the same height, so their
+   bottoms line up; the map takes the card's spare height. */
+@media (min-width: 960px) {
+    .sg-lp {
+        --sg-lp-top: 400px;
+        --sg-lp-gap: 10px;
+    }
+    .sg-lp-photos > .sg-pgrid:not(.sg-pgrid-art) {
+        gap: var(--sg-lp-gap);
+        grid-auto-rows: calc((var(--sg-lp-top) - var(--sg-lp-gap)) / 2);
+    }
+    .sg-lp-photos > .sg-pgrid[data-count='1'],
+    .sg-lp-photos > .sg-pgrid-art {
+        grid-auto-rows: var(--sg-lp-top);
+    }
+    .sg-lp-side > .sg-where-sec {
+        display: flex;
+        flex-direction: column;
+        box-sizing: border-box;
+        height: var(--sg-lp-top);
+    }
+    .sg-lp-side > .sg-where-sec > .sg-static-map,
+    .sg-lp-side > .sg-where-sec > .sg-where-embed {
+        flex: 1 1 auto;
+        min-height: 160px;
+        height: auto !important;
+    }
+}
