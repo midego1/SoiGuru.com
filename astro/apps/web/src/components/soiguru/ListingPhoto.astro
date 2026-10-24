@@ -1,7 +1,8 @@
 ---
 /**
  * ListingPhoto — the listing's first photo, or (no photo) the drawn category scene
- * (`CategoryArt`, cropped to the square). Never a stock image.
+ * (`CategoryArt`, cropped to the square). Never a stock image. The default slot is laid over
+ * the photo (the "Featured" chip on list cards).
  */
 import CategoryArt from './CategoryArt.astro';
 import type { Listing } from '../../lib/soiguru/data';
@@ -24,10 +25,12 @@ const src = listing.images[index];
     src ? (
         <div class="tkg-photo">
             <img class="sg-photo-img" src={src} alt="" width={size} height={size} loading={loading} decoding="async" />
+            <slot />
         </div>
     ) : (
         <div class="tkg-photo sg-photo-empty" aria-hidden="true">
             <CategoryArt category={listing.category} />
+            <slot />
         </div>
     )
 }

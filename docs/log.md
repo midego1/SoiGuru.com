@@ -9,6 +9,8 @@ sidebar_position: 99
 
 ## 2026-10-24
 
+- `spec-071` `astro/apps/web/src/components/soiguru/ListingCard.astro` `ListingPhoto.astro`: the "Featured" badge is now a small chip in the top-left corner of the card's photo, so names keep their width (PR #NN).
+- `spec-054` `astro/apps/web/src/styles/soiguru/site.css`: a listing with a single photo shows it one grid row high (340/400px on desktop) instead of two rows (up to 800px) (PR #NN).
 - `spec-071` `astro/apps/web/src/components/soiguru/ListingCard.astro` `astro/apps/web/src/scripts/soiguru/results.ts`: featured places show a "Featured" badge (แนะนำ) and are pinned to the top of area, category and search results on soiguru.com ([spec 071](spec/071-soiguru-featured-places/spec.md), PR #56).
 - `spec-070` `apps/web/components/admin/items/item-editor.tsx` `apps/web/app/[locale]/admin/items/page.tsx`: the admin item form is a full-screen editor with every section on one page and one Save, replacing the five-step modal wizard ([spec 070](spec/070-admin-item-editor/spec.md), PR #55).
 - `spec-058` `apps/web/components/header/index.tsx`: inside the admin the template's directory links (Home, Favorites, Categories, Tags, Submit, More) are hidden; the brand, settings, language, theme and account menu stay (PR #55).

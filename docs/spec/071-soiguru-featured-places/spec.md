@@ -12,9 +12,11 @@ seen first.
 
 ## Behaviour
 
-- **Badge.** A featured listing's card shows a "Featured" badge (Thai: แนะนำ) with a star in
-  the sun colour: next to the name on list cards, and as a flag at the bottom-left of the photo
-  on the photo tiles (city home). "Verified owner" keeps its place; both can show together.
+- **Badge.** A featured listing's card shows a small "Featured" chip (Thai: แนะนำ) with a star
+  in the sun colour, in the top-left corner of the card's photo (10px text), so the name keeps
+  its full width; on the photo tiles (city home) it is a flag at the top-left of the photo, under
+  "Verified owner" when both show. (First version: a badge next to the name, which cut long
+  names on phones.)
 - **Pinned first.** Area, category and search results (`CategoryResults`, `results.ts`) put
   featured places at the top whatever the chosen sort; the sort orders the places inside each
   group (featured, then the rest). Filters still apply: a featured place that does not match

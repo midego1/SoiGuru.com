@@ -5,7 +5,7 @@
  * "Nearby". `tile` is the website's photo card (city home "Open now"): photo or category
  * mark on top, category, name, area and status below. The `data-*` attributes feed the
  * browser scripts (status, distance, filters) in every variant. Featured places carry a
- * "Featured" badge and `data-featured`, which pins them to the top of result lists.
+ * small "Featured" chip on the photo and `data-featured`, which pins them to the top of result lists.
  */
 import Icon from './Icon.astro';
 import { hoursRows } from '../../lib/soiguru/hours';
@@ -125,7 +125,16 @@ const dataAttrs = {
     data-featured={listing.featured ? '1' : undefined}
     data-amenities={listing.amenities.filter((a) => a.available).map((a) => a.id).join(' ') || undefined}
 >
-    <ListingPhoto listing={listing} size={compact ? 64 : 96} />
+    <ListingPhoto listing={listing} size={compact ? 64 : 96}>
+        {
+            listing.featured && (
+                <span class="tkg-photo-chip">
+                    <Icon name="star" />
+                    <span data-th="แนะนำ">Featured</span>
+                </span>
+            )
+        }
+    </ListingPhoto>
     <div class="tkg-card-body">
         <div class="tkg-card-title">
             <span class="tkg-name" data-th={listing.name_th}>{listing.name}</span>
@@ -134,14 +143,6 @@ const dataAttrs = {
                     <span class="tkg-badge" title="Verified owner">
                         <Icon name="shield" />
                         <span class="sg-visually-hidden">Verified owner</span>
-                    </span>
-                )
-            }
-            {
-                listing.featured && (
-                    <span class="tkg-badge tkg-badge-sun tkg-badge-featured">
-                        <Icon name="star" />
-                        <span data-th="แนะนำ">Featured</span>
                     </span>
                 )
             }
