@@ -25,6 +25,10 @@ export type MagicLinkState = {
 	retryAfterSeconds?: number;
 };
 
+/** Hosts a sign-in link may point to; anything else gets the app's own URL. */
+const DEFAULT_LINK_ORIGIN = (process.env.NEXT_PUBLIC_APP_URL || 'https://owner.soiguru.com').replace(/\/+$/, '');
+const LINK_ORIGINS = new Set([DEFAULT_LINK_ORIGIN, 'https://owner.soiguru.com', 'http://localhost:3000']);
+
 const IP_LIMIT = 10;
 const IP_WINDOW_MS = 15 * 60 * 1000;
 
@@ -79,7 +83,9 @@ export async function requestMagicLinkAction(_prev: MagicLinkState, formData: Fo
 		if (parsed.data.callbackUrl && isValidCallbackUrl(parsed.data.callbackUrl)) {
 			params.set('callbackUrl', parsed.data.callbackUrl);
 		}
-		const base = origin ?? process.env.NEXT_PUBLIC_APP_URL ?? 'https://owner.soiguru.com';
+		// The link may only point at a known host: a forged Host / X-Forwarded-Host would otherwise
+		// send the victim a working token on the attacker's domain (link poisoning).
+		const base = origin && LINK_ORIGINS.has(origin) ? origin : DEFAULT_LINK_ORIGIN;
 		const link = `${base}${prefix}/auth/magic-link?${params.toString()}`;
 
 		let name = 'there';

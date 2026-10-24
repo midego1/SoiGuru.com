@@ -181,6 +181,7 @@ keeps its own bar. The client area (`/client/*`) still shows them; say so if the
 - Wording: the submit button says "Create account" (was "Register"; Thai "สร้างบัญชี"), labels
   are sentence case ("Full name", "Email address"), "Sign in" instead of "Sign In". These are
   the template's shared `auth.*` strings, so the admin sign-in follows.
-- Less padding above and below the card on desktop (the create-account card fits a 900px-high
-  window without a scrollbar); tighter perks list under 480px.
+- Less padding above and below the card on desktop; tighter perks list under 480px. (The
+  create-account page is still about 985px high, so a 900px-high window scrolls a little: the
+  password rule, Terms line and back link add more than the padding saves.)
 - Checked at 320, 375, 390, 414, 768, 1024, 1280 and 1440px: no horizontal overflow.

@@ -117,3 +117,11 @@ could see or change them without a deploy. Mail goes out through Amazon SES.
   today).
 - Emails are English only. No postal address in the footer (none is published).
 - Outlook.com has no search deep link; the button opens the inbox.
+
+## Security note (review before deploy, 2026-10-24)
+
+The first version built the link's origin from the request's `Host` / `X-Forwarded-Host`.
+A request with a forged host would have mailed a valid token on someone else's domain to the
+address owner (link poisoning). The link now uses the request's origin only when it is one of
+the known hosts (`NEXT_PUBLIC_APP_URL`, `https://owner.soiguru.com`, `http://localhost:3000`),
+otherwise `NEXT_PUBLIC_APP_URL` (default `https://owner.soiguru.com`).
