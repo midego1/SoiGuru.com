@@ -3,6 +3,7 @@ import { getTranslations } from 'next-intl/server';
 import { CredentialsForm } from '@/app/[locale]/auth/components/credentials-form';
 import { SocialLogin } from '@/app/[locale]/auth/components/social-login';
 import { PUBLIC_SITE } from '@/lib/soiguru/public-site';
+import { MagicLinkSignIn } from '@/components/soiguru/magic-link-sign-in';
 
 /**
  * The SoiGuru sign-in and create-account card (spec 058): SoiGuru's own heading and copy,
@@ -41,9 +42,12 @@ export async function SoiGuruAuthCard({ form, locale }: { form: 'login' | 'signu
 			)}
 			<div className="sg-auth-form">
 				<Suspense fallback={null}>
-					<CredentialsForm type={form} hideHeader passwordHint={isLogin ? undefined : t('passwordHint')}>
-						<SocialLogin />
-					</CredentialsForm>
+					{/* Spec 073: the emailed sign-in link first, the password form behind "Use a password instead". */}
+					<MagicLinkSignIn mode={form}>
+						<CredentialsForm type={form} hideHeader passwordHint={isLogin ? undefined : t('passwordHint')}>
+							<SocialLogin />
+						</CredentialsForm>
+					</MagicLinkSignIn>
 				</Suspense>
 			</div>
 			{!isLogin && (

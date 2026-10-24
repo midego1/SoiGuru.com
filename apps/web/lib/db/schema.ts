@@ -1889,3 +1889,46 @@ export const soiguruClaimPhotos = pgTable(
 		slot: uniqueIndex('soiguru_claim_photos_slot_idx').on(table.userId, table.city, table.listingSlug, table.kind)
 	})
 );
+
+/**
+ * Passwordless sign-in links (spec 073). Only the SHA-256 of the token is stored; the token
+ * itself is in the emailed link. A link works once (`usedAt`) and until `expiresAt`. The rows
+ * also back the per-address send throttle (a few links per quarter hour).
+ */
+export const soiguruMagicLinks = pgTable(
+	'soiguru_magic_links',
+	{
+		id: text('id')
+			.primaryKey()
+			.$defaultFn(() => crypto.randomUUID()),
+		email: text('email').notNull(),
+		tokenHash: text('token_hash').notNull(),
+		expiresAt: timestamp('expires_at').notNull(),
+		usedAt: timestamp('used_at'),
+		requestIp: text('request_ip'),
+		createdAt: timestamp('created_at').notNull().defaultNow()
+	},
+	(table) => ({
+		tokenHashIndex: uniqueIndex('soiguru_magic_links_token_hash_idx').on(table.tokenHash),
+		emailCreatedIndex: index('soiguru_magic_links_email_created_idx').on(table.email, table.createdAt)
+	})
+);
+
+export type SoiguruMagicLink = typeof soiguruMagicLinks.$inferSelect;
+
+/**
+ * Admin edits to the transactional email templates (spec 073). The defaults live in code
+ * (`lib/soiguru/emails/templates.ts`); a row here overrides one template's subject, preview
+ * text and body. Deleting the row ("Reset to default") brings the code default back.
+ */
+export const soiguruEmailTemplates = pgTable('soiguru_email_templates', {
+	/** Template key, e.g. `magic-link`. */
+	id: text('id').primaryKey(),
+	subject: text('subject').notNull(),
+	preheader: text('preheader').notNull().default(''),
+	bodyHtml: text('body_html').notNull(),
+	updatedBy: text('updated_by').references(() => users.id, { onDelete: 'set null' }),
+	updatedAt: timestamp('updated_at').notNull().defaultNow()
+});
+
+export type SoiguruEmailTemplate = typeof soiguruEmailTemplates.$inferSelect;
