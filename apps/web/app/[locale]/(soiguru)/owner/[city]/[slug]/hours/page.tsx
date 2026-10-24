@@ -1,10 +1,12 @@
 import type { Metadata } from 'next';
 import { notFound } from 'next/navigation';
 import { setRequestLocale } from 'next-intl/server';
-import { EditorBar, OwnerBar, SavedNote, SaveBar, SignInPrompt } from '@/components/soiguru/owner';
+import { EditSplit, EditorBar, OwnerBar, SavedNote, SaveBar, SignInPrompt } from '@/components/soiguru/owner';
+import { LivePreview, PreviewOpenButton } from '@/components/soiguru/live-preview';
 import { saveHours } from '../../../../actions';
 import { getSgContext, listingTitle } from '@/lib/soiguru/context';
 import { formatMinutes } from '@/lib/soiguru/hours';
+import { getPreviewBase } from '@/lib/soiguru/live-preview-server';
 import { getEditAccess } from '@/lib/soiguru/owner-access';
 import { WEEKDAYS, type TimeRange } from '@/lib/soiguru/types';
 
@@ -45,6 +47,7 @@ export default async function HoursPage({ params, searchParams }: { params: Para
 	}
 	if (access.kind === 'denied') notFound();
 	const { listing: l, city } = access;
+	const previewBase = await getPreviewBase(l, city, ctx.thai);
 
 	return (
 		<form className="sg-page sg-owner" action={saveHours}>
@@ -53,104 +56,111 @@ export default async function HoursPage({ params, searchParams }: { params: Para
 			<input type="hidden" name="listing" value={l.slug} />
 			{/* First submit button = what Enter does: a plain save, not "Copy Mon to all". */}
 			<button type="submit" className="sr-only" tabIndex={-1} aria-hidden="true" />
-			<EditorBar ctx={ctx} title={ctx.t('owner.hours')} listingName={listingTitle(ctx, l)} />
+			<EditorBar
+				ctx={ctx}
+				title={ctx.t('owner.hours')}
+				listingName={listingTitle(ctx, l)}
+				action={<PreviewOpenButton />}
+			/>
 			{sp.saved ? <SavedNote ctx={ctx} /> : null}
 
-			<section className="tkg-section sg-grow" style={{ paddingTop: 16, paddingBottom: 24 }}>
-				<div className="tkg-section-h">
-					<h2>
-						{ctx.t('owner.hours')}
-						<small>{ctx.t('owner.hoursHelp')}</small>
-					</h2>
-					<button
-						className="tkg-btn tkg-btn-ghost tkg-btn-sm"
-						type="submit"
-						name="copy"
-						value="mon"
-						style={{ paddingRight: 0 }}
-					>
-						{ctx.t('owner.copyMon')}
-					</button>
-				</div>
-				<div className="tkg-rows sg-hours-edit">
-					{WEEKDAYS.map((day) => {
-						const ranges: TimeRange[] = l.hours[day] ?? [];
-						const open = ranges.length > 0;
-						const [a, b] = ranges;
-						return (
-							<div key={day} className="tkg-row">
-								<label className="sg-switch">
-									<input
-										type="checkbox"
-										name={`${day}_open`}
-										defaultChecked={open}
-										aria-label={ctx.t('owner.openOn', { day: ctx.t(`days.${day}`) })}
-									/>
-									<span className="tkg-toggle" aria-hidden="true" />
-								</label>
-								<div className="tkg-row-main">
-									{ctx.t(`days.${day}`)}
-									<small className="sg-closed-label">{ctx.t('owner.closedDay')}</small>
-								</div>
-								<div className="sg-ranges">
-									<span className="sg-range">
-										<input
-											className="tkg-input"
-											type="time"
-											name={`${day}_from1`}
-											defaultValue={t(a?.start) || '09:00'}
-											aria-label={ctx.t('owner.opens')}
-										/>
-										<span className="tkg-muted">–</span>
-										<input
-											className="tkg-input"
-											type="time"
-											name={`${day}_to1`}
-											defaultValue={t(a?.end) || '18:00'}
-											aria-label={ctx.t('owner.closes')}
-										/>
-									</span>
-									<span className="sg-range">
-										<input
-											className="tkg-input"
-											type="time"
-											name={`${day}_from2`}
-											defaultValue={t(b?.start)}
-											aria-label={ctx.t('owner.opens2')}
-										/>
-										<span className="tkg-muted">–</span>
-										<input
-											className="tkg-input"
-											type="time"
-											name={`${day}_to2`}
-											defaultValue={t(b?.end)}
-											aria-label={ctx.t('owner.closes2')}
-										/>
-									</span>
-								</div>
-							</div>
-						);
-					})}
-				</div>
-				<p className="tkg-small tkg-muted tkg-pad" style={{ marginTop: 8 }}>
-					{ctx.t('owner.secondRangeHelp')}
-				</p>
-				<div className="tkg-form" style={{ paddingTop: 12 }}>
-					<div className="tkg-field">
-						<label htmlFor="f-note">
-							{ctx.t('owner.hoursNote')} <small>· {ctx.t('owner.optional')}</small>
-						</label>
-						<input
-							id="f-note"
-							className="tkg-input"
-							name="hours_note"
-							defaultValue={l.hoursNote ?? ''}
-							placeholder={ctx.t('owner.hoursNotePlaceholder')}
-							maxLength={160}
-						/>
+			<EditSplit preview={<LivePreview base={previewBase} focus={['hours']} />}>
+				<section className="tkg-section sg-grow" style={{ paddingTop: 16, paddingBottom: 24 }}>
+					<div className="tkg-section-h">
+						<h2>
+							{ctx.t('owner.hours')}
+							<small>{ctx.t('owner.hoursHelp')}</small>
+						</h2>
+						<button
+							className="tkg-btn tkg-btn-ghost tkg-btn-sm"
+							type="submit"
+							name="copy"
+							value="mon"
+							style={{ paddingRight: 0 }}
+						>
+							{ctx.t('owner.copyMon')}
+						</button>
 					</div>
-				</div>
-			</section>
+					<div className="tkg-rows sg-hours-edit">
+						{WEEKDAYS.map((day) => {
+							const ranges: TimeRange[] = l.hours[day] ?? [];
+							const open = ranges.length > 0;
+							const [a, b] = ranges;
+							return (
+								<div key={day} className="tkg-row">
+									<label className="sg-switch">
+										<input
+											type="checkbox"
+											name={`${day}_open`}
+											defaultChecked={open}
+											aria-label={ctx.t('owner.openOn', { day: ctx.t(`days.${day}`) })}
+										/>
+										<span className="tkg-toggle" aria-hidden="true" />
+									</label>
+									<div className="tkg-row-main">
+										{ctx.t(`days.${day}`)}
+										<small className="sg-closed-label">{ctx.t('owner.closedDay')}</small>
+									</div>
+									<div className="sg-ranges">
+										<span className="sg-range">
+											<input
+												className="tkg-input"
+												type="time"
+												name={`${day}_from1`}
+												defaultValue={t(a?.start) || '09:00'}
+												aria-label={ctx.t('owner.opens')}
+											/>
+											<span className="tkg-muted">–</span>
+											<input
+												className="tkg-input"
+												type="time"
+												name={`${day}_to1`}
+												defaultValue={t(a?.end) || '18:00'}
+												aria-label={ctx.t('owner.closes')}
+											/>
+										</span>
+										<span className="sg-range">
+											<input
+												className="tkg-input"
+												type="time"
+												name={`${day}_from2`}
+												defaultValue={t(b?.start)}
+												aria-label={ctx.t('owner.opens2')}
+											/>
+											<span className="tkg-muted">–</span>
+											<input
+												className="tkg-input"
+												type="time"
+												name={`${day}_to2`}
+												defaultValue={t(b?.end)}
+												aria-label={ctx.t('owner.closes2')}
+											/>
+										</span>
+									</div>
+								</div>
+							);
+						})}
+					</div>
+					<p className="tkg-small tkg-muted tkg-pad" style={{ marginTop: 8 }}>
+						{ctx.t('owner.secondRangeHelp')}
+					</p>
+					<div className="tkg-form" style={{ paddingTop: 12 }}>
+						<div className="tkg-field">
+							<label htmlFor="f-note">
+								{ctx.t('owner.hoursNote')} <small>· {ctx.t('owner.optional')}</small>
+							</label>
+							<input
+								id="f-note"
+								className="tkg-input"
+								name="hours_note"
+								defaultValue={l.hoursNote ?? ''}
+								placeholder={ctx.t('owner.hoursNotePlaceholder')}
+								maxLength={160}
+							/>
+						</div>
+					</div>
+				</section>
+			</EditSplit>
 			<SaveBar ctx={ctx} />
 		</form>
 	);

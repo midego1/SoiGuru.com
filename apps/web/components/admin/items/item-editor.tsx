@@ -2,7 +2,7 @@
 
 import { useCallback, useEffect, useMemo, useState } from 'react';
 import { useTranslations } from 'next-intl';
-import { Loader2, Star, X } from 'lucide-react';
+import { Eye, Loader2, Star, X } from 'lucide-react';
 
 import { Badge } from '@/components/ui/badge';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
@@ -11,6 +11,8 @@ import { Select, SelectItem } from '@/components/ui/select';
 import { Separator } from '@/components/ui/separator';
 import { Switch } from '@/components/ui/switch';
 import { ItemCompanyManager } from '@/components/admin/items/item-company-manager';
+import { ItemLivePreview } from '@/components/admin/items/item-live-preview';
+import { openLivePreview } from '@/components/soiguru/live-preview';
 import { useCompaniesEnabled } from '@/hooks/use-companies-enabled';
 import { useLocationSettings } from '@/hooks/use-location-settings';
 import { ItemData, CreateItemRequest, UpdateItemRequest, ITEM_STATUSES, ItemStatus } from '@/lib/types/item';
@@ -171,6 +173,18 @@ export function ItemEditor({ item, mode, onSubmit, onCancel, isLoading = false }
 		onSubmit(combined);
 	};
 
+	// Live preview (spec 074): the fields this editor changes, as the listing page shows them.
+	const previewFields = useMemo(
+		() => ({
+			name: data.basicInfo.name,
+			description: data.basicInfo.description,
+			category: data.classification.category,
+			address: data.location.address
+		}),
+		[data.basicInfo.name, data.basicInfo.description, data.classification.category, data.location.address]
+	);
+	const tPreview = useTranslations('soiguru.preview');
+
 	const title = mode === 'create' ? t('TITLE_CREATE') : t('TITLE_EDIT');
 	const saveLabel = mode === 'create' ? t('NAVIGATION.CREATE') : t('NAVIGATION.UPDATE');
 
@@ -202,6 +216,15 @@ export function ItemEditor({ item, mode, onSubmit, onCancel, isLoading = false }
 					)}
 					<button
 						type="button"
+						onClick={openLivePreview}
+						className="inline-flex h-10 items-center gap-2 rounded-full border border-gray-300 px-4 text-sm font-semibold text-gray-700 hover:bg-gray-100 dark:border-white/15 dark:text-gray-200 dark:hover:bg-white/10 min-[1100px]:hidden"
+					>
+						<Eye className="h-4 w-4" />
+						<span className="hidden sm:inline">{tPreview('open')}</span>
+						<span className="sr-only sm:hidden">{tPreview('open')}</span>
+					</button>
+					<button
+						type="button"
 						onClick={onCancel}
 						disabled={isLoading}
 						className="hidden h-10 items-center rounded-full border border-gray-300 px-4 text-sm font-semibold text-gray-700 hover:bg-gray-100 disabled:opacity-50 dark:border-white/15 dark:text-gray-200 dark:hover:bg-white/10 sm:inline-flex"
@@ -220,8 +243,10 @@ export function ItemEditor({ item, mode, onSubmit, onCancel, isLoading = false }
 				</div>
 			</div>
 
-			{/* Body: the sections on the left, the publish settings on the right. */}
-			<div className="mx-auto grid w-full max-w-6xl flex-1 gap-6 px-4 py-6 sm:px-6 lg:grid-cols-[minmax(0,1fr)_320px]">
+			{/* From 1100px: the editor (60%) beside the live preview (40%, spec 074). */}
+			<div className="w-full flex-1 min-[1100px]:mx-auto min-[1100px]:grid min-[1100px]:max-w-[1440px] min-[1100px]:grid-cols-[minmax(0,3fr)_minmax(0,2fr)] min-[1100px]:items-start min-[1100px]:gap-2 min-[1100px]:pr-6">
+			{/* Body: the sections on the left, the publish settings on the right (stacked beside the preview). */}
+			<div className="mx-auto grid w-full max-w-6xl flex-1 gap-6 px-4 py-6 sm:px-6 lg:grid-cols-[minmax(0,1fr)_320px] min-[1100px]:grid-cols-1!">
 				<div className="space-y-6">
 					<Card>
 						<CardContent className="pt-6">
@@ -247,7 +272,7 @@ export function ItemEditor({ item, mode, onSubmit, onCancel, isLoading = false }
 					)}
 				</div>
 
-				<aside className="space-y-6 lg:sticky lg:top-20 lg:self-start">
+				<aside className="space-y-6 lg:sticky lg:top-20 lg:self-start min-[1100px]:static!">
 					<Card>
 						<CardHeader>
 							<CardTitle className="text-lg">{t('STEPS.REVIEW.SETTINGS_TITLE')}</CardTitle>
@@ -306,6 +331,10 @@ export function ItemEditor({ item, mode, onSubmit, onCancel, isLoading = false }
 						</Card>
 					)}
 				</aside>
+			</div>
+			<div className="min-w-0 min-[1100px]:sticky min-[1100px]:py-6 min-[1100px]:top-16 [&_.sg-pv-panel]:top-0 [&_.sg-pv-panel]:m-0 [&_.sg-pv-panel]:max-h-[calc(100vh-112px)]">
+				<ItemLivePreview item={item} fields={previewFields} />
+			</div>
 			</div>
 
 			{/* Phone: the save button once more at the bottom, where thumbs are. */}

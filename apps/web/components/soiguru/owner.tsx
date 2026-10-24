@@ -22,8 +22,19 @@ export function OwnerBar({ ctx, langPath }: { ctx: SgContext; langPath: string }
 	);
 }
 
-/** Back bar for an edit screen, with the listing name under the title. */
-export function EditorBar({ ctx, title, listingName }: { ctx: SgContext; title: string; listingName: string }) {
+/** Back bar for an edit screen, with the listing name under the title; `action` goes on the right. */
+export function EditorBar({
+	ctx,
+	title,
+	listingName,
+	action
+}: {
+	ctx: SgContext;
+	title: string;
+	listingName: string;
+	/** E.g. the "Preview" button of the live preview (spec 074). */
+	action?: React.ReactNode;
+}) {
 	return (
 		<header className="tkg-topbar">
 			<Link className="tkg-iconbtn" href={ctx.href('/owner')} aria-label={ctx.t('results.back')}>
@@ -33,6 +44,7 @@ export function EditorBar({ ctx, title, listingName }: { ctx: SgContext; title: 
 				{title}
 				<small>{listingName}</small>
 			</div>
+			{action}
 		</header>
 	);
 }
@@ -98,6 +110,19 @@ export function SaveBar({ ctx }: { ctx: SgContext }) {
 				<Icon name="check" />
 				{ctx.t('owner.save')}
 			</button>
+		</div>
+	);
+}
+
+/**
+ * Split screen of an edit page (spec 074): the form on the left (60%), the live preview on the
+ * right (40%) from 1100px; below that one column and the preview opens from the top bar.
+ */
+export function EditSplit({ preview, children }: { preview: React.ReactNode; children: React.ReactNode }) {
+	return (
+		<div className="sg-split sg-grow">
+			<div className="sg-split-form">{children}</div>
+			{preview}
 		</div>
 	);
 }

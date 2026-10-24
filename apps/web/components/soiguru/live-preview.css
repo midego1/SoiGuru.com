@@ -1,0 +1,679 @@
+/*
+ * Live preview on the edit pages (spec 074). Split screen from 1100px: form 60%, preview 40%.
+ * At 1100px the page column is 1068px, so the preview column is ~418px and holds the 390px
+ * phone at ~100%; the form column (~626px) is wider than the 720px phone-first form needs to
+ * breathe. Below 1100px a 60/40 split would shrink the phone under ~90% and the form under
+ * ~580px, so there the "Preview" button opens the same preview in a full-screen dialog.
+ * Everything is scoped to .sg-pv-* / .sg-split; the preview never relies on viewport media
+ * queries, because it is drawn at phone width inside a wide window.
+ */
+
+/* ── Split layout ───────────────────────────────────────────────────────── */
+.sg-split {
+	min-width: 0;
+}
+.sg-split-form {
+	min-width: 0;
+}
+.sg-pv-host {
+	min-width: 0;
+}
+.sg-pv-open {
+	flex: none;
+	margin-left: auto;
+}
+.sg-pv-open .tkg-i {
+	width: 18px;
+	height: 18px;
+}
+
+@media (min-width: 1100px) {
+	/* Beats the 720px owner column (`.sg-owner > :not(.tkg-topbar)…`) for the split only. */
+	.sg-owner > .sg-split:not(.tkg-topbar):not(.sg-band):not(.tkg-bottombar) {
+		max-width: none;
+		display: grid;
+		grid-template-columns: minmax(0, 3fr) minmax(0, 2fr);
+		gap: var(--space-6);
+		align-items: start;
+	}
+	.sg-pv-open {
+		display: none;
+	}
+}
+
+/* ── Desktop panel ──────────────────────────────────────────────────────── */
+.sg-pv-panel {
+	position: sticky;
+	top: 72px;
+	margin: var(--space-4) 0;
+	/* Under the 56px top bar, above the ~68px save bar. */
+	max-height: calc(100vh - 72px - 96px);
+	display: flex;
+	flex-direction: column;
+	background: var(--surface);
+	border: 1px solid var(--line);
+	border-radius: var(--radius-lg);
+	overflow: hidden;
+}
+.sg-pv-head {
+	display: flex;
+	flex-wrap: wrap;
+	align-items: center;
+	gap: var(--space-2) var(--space-3);
+	padding: var(--space-3) var(--space-4);
+	border-bottom: 1px solid var(--line);
+	background: var(--surface);
+}
+.sg-pv-head h2 {
+	flex: 1 1 auto;
+	min-width: 0;
+	margin: 0;
+	font-size: 15px;
+	line-height: 20px;
+	font-weight: 600;
+}
+.sg-pv-dirty {
+	display: inline-flex;
+	align-items: center;
+	gap: 6px;
+	padding: 2px 10px;
+	border-radius: var(--radius-pill);
+	background: var(--sun-tint);
+	color: var(--soon);
+	font-size: 12px;
+	line-height: 18px;
+	font-weight: 600;
+	white-space: nowrap;
+}
+.sg-pv-dirty::before {
+	content: '';
+	width: 6px;
+	height: 6px;
+	border-radius: 999px;
+	background: var(--sun);
+}
+.sg-pv-clean {
+	font-size: 12px;
+	line-height: 18px;
+	color: var(--ink-muted);
+	white-space: nowrap;
+}
+.sg-pv-modes {
+	display: inline-flex;
+	border: 1px solid var(--line-strong);
+	border-radius: var(--radius-pill);
+	overflow: hidden;
+	flex: none;
+}
+.sg-pv-modes button {
+	border: 0;
+	background: var(--surface);
+	color: var(--ink);
+	cursor: pointer;
+	height: 28px;
+	padding: 0 var(--space-3);
+	font-size: 13px;
+	font-weight: 500;
+}
+.sg-pv-modes button + button {
+	border-left: 1px solid var(--line-strong);
+}
+.sg-pv-modes button[aria-pressed='true'] {
+	background: var(--sea);
+	color: var(--on-sea);
+}
+.sg-pv-scroll {
+	flex: 1 1 auto;
+	min-height: 0;
+	overflow: auto;
+	overscroll-behavior: contain;
+	padding: var(--space-4) var(--space-3);
+	background: var(--surface-100);
+}
+.sg-pv-foot {
+	margin: var(--space-3) 0 0;
+	text-align: center;
+	font-size: 12px;
+	line-height: 16px;
+	color: var(--ink-muted);
+}
+
+/* ── Full-screen dialog (below 1100px) ──────────────────────────────────── */
+.sg-pv-dialog {
+	position: fixed;
+	inset: 0;
+	width: 100%;
+	height: 100%;
+	max-width: none;
+	max-height: none;
+	margin: 0;
+	padding: 0;
+	border: 0;
+	background: var(--surface-100);
+	color: var(--ink);
+	font-family: var(--font-sans);
+}
+.sg-pv-dialog[open] {
+	display: flex;
+	flex-direction: column;
+}
+.sg-pv-dialog::backdrop {
+	background: var(--overlay);
+}
+.sg-pv-dialog .sg-pv-head {
+	padding: var(--space-2) var(--space-2) var(--space-2) var(--space-4);
+}
+.sg-pv-dialog .sg-pv-head h2 {
+	order: 0;
+	flex-basis: calc(100% - 56px);
+}
+.sg-pv-dialog .sg-pv-close {
+	order: 1;
+}
+.sg-pv-dialog .sg-pv-dirty,
+.sg-pv-dialog .sg-pv-clean {
+	order: 2;
+}
+.sg-pv-dialog .sg-pv-modes {
+	order: 3;
+	margin-left: auto;
+	margin-right: var(--space-2);
+}
+.sg-pv-dialog .sg-pv-scroll {
+	padding: var(--space-3) var(--space-2);
+}
+
+/* ── Device frame ───────────────────────────────────────────────────────── */
+.sg-pv-stage {
+	width: 100%;
+	min-width: 0;
+	display: flex;
+	justify-content: center;
+}
+.sg-pv-device {
+	padding: 8px;
+	border: 1px solid var(--line-strong);
+	border-radius: 32px;
+	/* A dark bezel in both themes. */
+	background: #14201f;
+	box-shadow: var(--shadow-card);
+	max-width: 100%;
+}
+.sg-pv-device[data-mode='desktop'] {
+	border-radius: 12px;
+}
+.sg-pv-screen {
+	border-radius: 24px;
+	overflow: hidden;
+	background: var(--surface);
+}
+.sg-pv-device[data-mode='desktop'] .sg-pv-screen {
+	border-radius: 6px;
+}
+
+/* ── The listing page, as on soiguru.com (phone layout) ─────────────────── */
+.sg-pv-page {
+	background: var(--surface);
+	color: var(--ink);
+	font-size: 15px;
+	line-height: 22px;
+	overflow-wrap: anywhere;
+}
+:where(.sg-pv-page) :where(h1, h2, h3, p, ul) {
+	margin: 0;
+}
+.sg-pv-site {
+	display: flex;
+	align-items: center;
+	height: 52px;
+	padding: 0 16px;
+	border-bottom: 1px solid var(--line);
+	background: var(--surface);
+}
+.sg-pv-logo-dark {
+	display: none;
+}
+@media (prefers-color-scheme: dark) {
+	.sg-pv-logo-light {
+		display: none;
+	}
+	.sg-pv-logo-dark {
+		display: block;
+	}
+}
+.sg-pv-wrap {
+	padding: 14px 16px 40px;
+}
+
+.sg-pv-sec {
+	position: relative;
+	min-width: 0;
+}
+.sg-pv-focused {
+	outline: 2px solid var(--sun);
+	outline-offset: 6px;
+	border-radius: 8px;
+}
+.sg-pv-tag {
+	position: absolute;
+	top: -18px;
+	right: -2px;
+	z-index: 1;
+	padding: 1px 8px;
+	border-radius: var(--radius-pill);
+	background: var(--sun);
+	color: #14201f;
+	font-size: 11px;
+	line-height: 16px;
+	font-weight: 600;
+	white-space: nowrap;
+}
+.sg-pv-empty {
+	padding: 14px;
+	border: 1px dashed var(--line-strong);
+	border-radius: var(--radius-md);
+	color: var(--ink-muted);
+	font-size: 14px;
+	line-height: 20px;
+}
+
+/* photos: one big photo, two small under it */
+.sg-pv-pgrid {
+	position: relative;
+	display: grid;
+	grid-template-columns: repeat(2, minmax(0, 1fr));
+	grid-auto-rows: 110px;
+	gap: 6px;
+	border-radius: 22px;
+	overflow: hidden;
+}
+.sg-pv-pgrid img {
+	display: block;
+	width: 100%;
+	height: 100%;
+	object-fit: cover;
+	background: var(--surface-200);
+}
+.sg-pv-pgrid img:first-child {
+	grid-column: span 2;
+	grid-row: span 2;
+}
+.sg-pv-pgrid[data-count='1'] {
+	grid-template-columns: minmax(0, 1fr);
+	grid-auto-rows: 220px;
+}
+.sg-pv-pgrid[data-count='1'] img:first-child {
+	grid-column: auto;
+	grid-row: auto;
+}
+.sg-pv-pcount {
+	position: absolute;
+	right: 10px;
+	bottom: 10px;
+	display: inline-flex;
+	align-items: center;
+	gap: 6px;
+	padding: 4px 10px;
+	border-radius: var(--radius-pill);
+	background: var(--overlay);
+	color: #ffffff;
+	font-size: 13px;
+	font-weight: 600;
+}
+.sg-pv-pcount .tkg-i {
+	width: 14px;
+	height: 14px;
+	vertical-align: 0;
+}
+.sg-pv-nophoto {
+	height: 200px;
+	border-radius: 22px;
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	justify-content: center;
+	gap: 8px;
+	background: linear-gradient(to bottom, var(--sea-tint) 75%, var(--surface-200) 75%);
+	color: var(--ink-muted);
+	font-size: 14px;
+	font-weight: 500;
+}
+
+.sg-pv-grid {
+	margin-top: 20px;
+	display: grid;
+	grid-template-columns: minmax(0, 1fr);
+	grid-template-areas: 'head' 'side' 'body';
+	gap: 24px;
+}
+.sg-pv-headcol {
+	grid-area: head;
+	min-width: 0;
+	display: flex;
+	flex-direction: column;
+	gap: 22px;
+}
+.sg-pv-side {
+	grid-area: side;
+	min-width: 0;
+	display: flex;
+	flex-direction: column;
+	gap: 16px;
+}
+.sg-pv-body {
+	grid-area: body;
+	min-width: 0;
+	display: flex;
+	flex-direction: column;
+	gap: 32px;
+}
+
+.sg-pv-chips {
+	display: flex;
+	flex-wrap: wrap;
+	gap: 8px;
+	margin-bottom: 12px;
+}
+.sg-pv-chip {
+	display: inline-flex;
+	align-items: center;
+	gap: 6px;
+	min-height: 30px;
+	padding: 0 12px;
+	border-radius: var(--radius-pill);
+	border: 1px solid var(--line-strong);
+	color: var(--ink-muted);
+	font-size: 13px;
+	font-weight: 700;
+}
+.sg-pv-chip-sea {
+	background: var(--sea-tint);
+	border-color: transparent;
+	color: var(--sea);
+}
+.sg-pv-chip-ink {
+	background: var(--sea-deep);
+	border-color: transparent;
+	color: var(--on-sea);
+}
+.sg-pv-title {
+	font-size: 32px;
+	line-height: 1.05;
+	font-weight: 800;
+	letter-spacing: -0.035em;
+}
+.sg-pv-th {
+	margin-top: 6px;
+	font-size: 18px;
+	line-height: 26px;
+	color: var(--ink-muted);
+}
+.sg-pv-meta {
+	margin-top: 12px;
+	display: flex;
+	flex-wrap: wrap;
+	align-items: center;
+	gap: 6px 18px;
+	font-size: 16px;
+	color: var(--ink-muted);
+}
+.sg-pv-meta .tkg-status-lg {
+	font-size: 16px;
+	font-weight: 700;
+}
+
+.sg-pv-actions {
+	display: flex;
+	flex-wrap: wrap;
+	gap: 10px;
+}
+.sg-pv-act {
+	display: inline-flex;
+	align-items: center;
+	justify-content: center;
+	gap: 8px;
+	min-height: 48px;
+	padding: 0 18px;
+	flex: 1 1 auto;
+	border-radius: 14px;
+	border: 1px solid var(--line-strong);
+	background: var(--surface);
+	color: var(--ink);
+	font-size: 15px;
+	font-weight: 700;
+	cursor: default;
+}
+.sg-pv-act-primary {
+	background: var(--sun);
+	border-color: transparent;
+	color: #14201f;
+}
+.sg-pv-act-line .tkg-i {
+	color: var(--line-brand);
+}
+.sg-pv-act-wa .tkg-i {
+	color: var(--whatsapp-brand);
+}
+.sg-pv-act-primary .tkg-i {
+	color: inherit;
+}
+.sg-pv-facts {
+	margin-top: 10px;
+	font-size: 14px;
+	color: var(--ink-muted);
+}
+
+.sg-pv-card {
+	padding: 20px;
+	border: 1px solid var(--line);
+	border-radius: 20px;
+	background: var(--surface);
+}
+.sg-pv-card.sg-pv-focused {
+	outline-offset: 3px;
+	border-radius: 20px;
+}
+.sg-pv-card-h {
+	margin-bottom: 12px;
+	font-size: 20px;
+	line-height: 1.25;
+	font-weight: 700;
+}
+.sg-pv-card-note {
+	margin-bottom: 10px;
+	padding: 10px 12px;
+	border-radius: var(--radius-md);
+	background: var(--sea-tint);
+	font-size: 14px;
+}
+.sg-pv-card-text {
+	font-size: 15px;
+	line-height: 1.5;
+	color: var(--ink-muted);
+}
+.sg-pv-card .tkg-hours td {
+	padding: 8px 0;
+}
+.sg-pv-range {
+	display: block;
+}
+.sg-pv-map {
+	height: 120px;
+	margin-bottom: 10px;
+	border-radius: 14px;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	color: var(--sea);
+	background: repeating-linear-gradient(45deg, transparent 0 18px, var(--line) 18px 19px), var(--sea-tint);
+}
+.sg-pv-address {
+	font-size: 15px;
+	color: var(--ink-muted);
+}
+.sg-pv-where-btns {
+	margin-top: 12px;
+	display: flex;
+	flex-wrap: wrap;
+	gap: 8px;
+}
+.sg-pv-btn {
+	display: inline-flex;
+	align-items: center;
+	gap: 6px;
+	min-height: 40px;
+	padding: 0 14px;
+	flex: 1 1 auto;
+	justify-content: center;
+	border-radius: 12px;
+	border: 1px solid var(--line-strong);
+	background: var(--surface);
+	font-size: 14px;
+	font-weight: 600;
+	cursor: default;
+}
+.sg-pv-btn-sea {
+	background: var(--sea);
+	border-color: transparent;
+	color: var(--on-sea);
+}
+
+.sg-pv-h {
+	margin-bottom: 12px;
+	font-size: 22px;
+	line-height: 1.2;
+	font-weight: 700;
+	letter-spacing: -0.02em;
+}
+.sg-pv-prose {
+	font-size: 17px;
+	line-height: 1.65;
+}
+.sg-pv-prose + .sg-pv-prose {
+	margin-top: 8px;
+}
+.sg-pv-pills {
+	padding: 0;
+	list-style: none;
+	display: flex;
+	flex-wrap: wrap;
+	gap: 8px;
+}
+.sg-pv-pills li {
+	display: inline-flex;
+	align-items: center;
+	gap: 6px;
+	padding: 8px 14px;
+	border-radius: var(--radius-md);
+	background: var(--surface-100);
+	border: 1px solid var(--line);
+	font-size: 14px;
+	font-weight: 600;
+}
+.sg-pv-pills .tkg-i {
+	color: var(--open);
+}
+.sg-pv-pills .sg-pv-pill-no {
+	color: var(--ink-muted);
+	font-weight: 500;
+}
+.sg-pv-pills .sg-pv-pill-no .tkg-i {
+	color: var(--ink-muted);
+}
+
+.sg-pv-menu-group + .sg-pv-menu-group {
+	margin-top: 20px;
+}
+.sg-pv-menu-title {
+	margin-bottom: 4px;
+	font-size: 13px;
+	font-weight: 700;
+	letter-spacing: 0.04em;
+	text-transform: uppercase;
+	color: var(--ink-muted);
+}
+.sg-pv-menu-list {
+	padding: 0;
+	list-style: none;
+}
+.sg-pv-menu-item {
+	display: flex;
+	align-items: baseline;
+	gap: 16px;
+	padding: 10px 0;
+	border-bottom: 1px solid var(--line);
+}
+.sg-pv-menu-item:last-child {
+	border-bottom: 0;
+}
+.sg-pv-menu-name {
+	flex: 1 1 auto;
+	min-width: 0;
+	display: flex;
+	flex-direction: column;
+	gap: 2px;
+}
+.sg-pv-menu-name small {
+	font-size: 13px;
+	color: var(--ink-muted);
+}
+.sg-pv-menu-price {
+	flex: 0 0 auto;
+	font-weight: 600;
+	white-space: nowrap;
+}
+.sg-pv-menu-foot {
+	margin-top: 12px;
+	font-size: 13px;
+	color: var(--ink-muted);
+}
+
+/* ── "Desktop": the same page at 1024px, laid out like soiguru.com from 960px ─ */
+.sg-pv-page[data-mode='desktop'] .sg-pv-site {
+	height: 64px;
+	padding: 0 32px;
+}
+.sg-pv-page[data-mode='desktop'] .sg-pv-wrap {
+	padding: 24px 32px 48px;
+}
+.sg-pv-page[data-mode='desktop'] .sg-pv-pgrid {
+	grid-template-columns: repeat(4, minmax(0, 1fr));
+	grid-auto-rows: 170px;
+	gap: 10px;
+}
+.sg-pv-page[data-mode='desktop'] .sg-pv-pgrid[data-count='2'],
+.sg-pv-page[data-mode='desktop'] .sg-pv-pgrid[data-count='3'] {
+	grid-template-columns: repeat(3, minmax(0, 1fr));
+}
+.sg-pv-page[data-mode='desktop'] .sg-pv-pgrid[data-count='1'] {
+	grid-template-columns: minmax(0, 1fr);
+	grid-auto-rows: 340px;
+}
+.sg-pv-page[data-mode='desktop'] .sg-pv-nophoto {
+	height: 340px;
+}
+.sg-pv-page[data-mode='desktop'] .sg-pv-grid {
+	margin-top: 32px;
+	grid-template-columns: minmax(0, 1fr) 320px;
+	grid-template-areas: 'head side' 'body side';
+	grid-template-rows: auto 1fr;
+	gap: 32px 48px;
+}
+.sg-pv-page[data-mode='desktop'] .sg-pv-side {
+	align-self: start;
+}
+.sg-pv-page[data-mode='desktop'] .sg-pv-title {
+	font-size: 48px;
+}
+.sg-pv-page[data-mode='desktop'] .sg-pv-act {
+	flex: 0 0 auto;
+}
+.sg-pv-page[data-mode='desktop'] .sg-pv-h {
+	font-size: 26px;
+}
+
+/* The admin item editor (spec 070) is outside the SoiGuru shell: its preview carries the tokens. */
+.tkg-root.sg-pv-root {
+	min-height: 0;
+	background: transparent;
+}
