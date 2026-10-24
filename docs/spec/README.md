@@ -95,6 +95,7 @@ or architectural change.
 | 071 | [`soiguru-featured-places`](071-soiguru-featured-places/spec.md) | implemented | Featured listings (`featured: true`) carry a "Featured" badge on their cards and are pinned to the top of area, category and search results on soiguru.com, whatever the sort. |
 | 072 | [`soiguru-sticky-listing-title`](072-soiguru-sticky-listing-title/spec.md) | implemented | On a business page the breadcrumb and name stay in view in a compact bar under the sticky site header once the title scrolls away; from 600px it adds the open status, on desktop a Call button. |
 | 073 | [`soiguru-magic-link-emails`](073-soiguru-magic-link-emails/spec.md) | implemented | Sign in or create an account with an emailed one-time link (20 min, throttled); "Check your inbox" opens Gmail, Outlook, Yahoo, iCloud or Proton searched for our email. Branded SoiGuru email frame for the sign-in link, email confirmation, password reset and two-step code; Admin → Emails edits, previews, test-sends and resets them. |
+| 074 | [`soiguru-edit-live-preview`](074-soiguru-edit-live-preview/spec.md) | implemented | The owner edit pages (details, hours, good to know, menu, photos) and the admin item editor show a live preview of the listing page as visitors see it: side by side from 1100px (form 60%, preview 40%, phone frame, Phone/Desktop), a "Preview" dialog below; it updates as you type and says "Not saved yet". |
 
 > **Status legend:**
 > _proposed_ = spec drafted, not yet planned/approved.

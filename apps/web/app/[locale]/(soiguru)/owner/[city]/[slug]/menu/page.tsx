@@ -1,10 +1,12 @@
 import type { Metadata } from 'next';
 import { notFound } from 'next/navigation';
 import { setRequestLocale } from 'next-intl/server';
-import { EditorBar, OwnerBar, SavedNote, SaveBar, SignInPrompt } from '@/components/soiguru/owner';
+import { EditSplit, EditorBar, OwnerBar, SavedNote, SaveBar, SignInPrompt } from '@/components/soiguru/owner';
+import { LivePreview, PreviewOpenButton } from '@/components/soiguru/live-preview';
 import { MenuEditor } from '@/components/soiguru/menu-editor';
 import { saveMenu } from '../../../../actions';
 import { getSgContext, listingTitle } from '@/lib/soiguru/context';
+import { getPreviewBase } from '@/lib/soiguru/live-preview-server';
 import { getEditAccess } from '@/lib/soiguru/owner-access';
 
 /**
@@ -43,6 +45,7 @@ export default async function MenuPage({ params, searchParams }: { params: Param
 	}
 	if (access.kind === 'denied') notFound();
 	const { listing: l, city } = access;
+	const previewBase = await getPreviewBase(l, city, ctx.thai);
 
 	const t = (key: string) => ctx.t(`owner.${key}`);
 	const categoryName = (ctx.thai && l.category.name_th) || l.category.name;
@@ -54,49 +57,56 @@ export default async function MenuPage({ params, searchParams }: { params: Param
 			<input type="hidden" name="listing" value={l.slug} />
 			{/* First submit button = what Enter does outside the editor: a plain save. */}
 			<button type="submit" className="sr-only" tabIndex={-1} aria-hidden="true" />
-			<EditorBar ctx={ctx} title={t('menu')} listingName={listingTitle(ctx, l)} />
+			<EditorBar ctx={ctx} title={t('menu')} listingName={listingTitle(ctx, l)} action={<PreviewOpenButton />} />
 			{sp.saved ? <SavedNote ctx={ctx} /> : null}
 
-			<section className="tkg-section sg-grow" style={{ paddingTop: 16, paddingBottom: 24 }}>
-				<div className="tkg-section-h">
-					<h2>
-						{t('menu')}
-						<small>{t('menuHelp')}</small>
-					</h2>
-				</div>
-				<MenuEditor initial={l.menu} categoryId={l.category.id} categoryName={categoryName} thai={ctx.thai} />
-				<p className="tkg-small tkg-muted tkg-pad" style={{ marginTop: 8 }}>
-					{t('menuRowsHelp')}
-				</p>
-				<div className="tkg-form" style={{ paddingTop: 12 }}>
-					<div className="tkg-field">
-						<label htmlFor="f-menu-note">
-							{t('menuNote')} <small>· {t('optional')}</small>
-						</label>
-						<input
-							id="f-menu-note"
-							className="tkg-input"
-							name="menu_note"
-							defaultValue={l.menuNote ?? ''}
-							placeholder={t('menuNotePlaceholder')}
-							maxLength={160}
-						/>
+			<EditSplit preview={<LivePreview base={previewBase} focus={['menu']} />}>
+				<section className="tkg-section sg-grow" style={{ paddingTop: 16, paddingBottom: 24 }}>
+					<div className="tkg-section-h">
+						<h2>
+							{t('menu')}
+							<small>{t('menuHelp')}</small>
+						</h2>
 					</div>
-					<div className="tkg-field">
-						<label htmlFor="f-menu-note-th">
-							{t('menuNoteTh')} <small>· {t('optional')}</small>
-						</label>
-						<input
-							id="f-menu-note-th"
-							className="tkg-input"
-							name="menu_note_th"
-							defaultValue={l.menuNoteTh ?? ''}
-							maxLength={160}
-							lang="th"
-						/>
+					<MenuEditor
+						initial={l.menu}
+						categoryId={l.category.id}
+						categoryName={categoryName}
+						thai={ctx.thai}
+					/>
+					<p className="tkg-small tkg-muted tkg-pad" style={{ marginTop: 8 }}>
+						{t('menuRowsHelp')}
+					</p>
+					<div className="tkg-form" style={{ paddingTop: 12 }}>
+						<div className="tkg-field">
+							<label htmlFor="f-menu-note">
+								{t('menuNote')} <small>· {t('optional')}</small>
+							</label>
+							<input
+								id="f-menu-note"
+								className="tkg-input"
+								name="menu_note"
+								defaultValue={l.menuNote ?? ''}
+								placeholder={t('menuNotePlaceholder')}
+								maxLength={160}
+							/>
+						</div>
+						<div className="tkg-field">
+							<label htmlFor="f-menu-note-th">
+								{t('menuNoteTh')} <small>· {t('optional')}</small>
+							</label>
+							<input
+								id="f-menu-note-th"
+								className="tkg-input"
+								name="menu_note_th"
+								defaultValue={l.menuNoteTh ?? ''}
+								maxLength={160}
+								lang="th"
+							/>
+						</div>
 					</div>
-				</div>
-			</section>
+				</section>
+			</EditSplit>
 			<SaveBar ctx={ctx} />
 		</form>
 	);

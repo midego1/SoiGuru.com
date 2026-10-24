@@ -5128,6 +5128,25 @@
 			"menuPreviewEmpty": "Add an item with a name to see the preview.",
 			"cancel": "Cancel"
 		},
+		"preview": {
+			"title": "Preview: how visitors see it",
+			"open": "Preview",
+			"close": "Close preview",
+			"notSaved": "Not saved yet",
+			"sameAsLive": "Same as your live page",
+			"showAs": "Show as",
+			"phone": "Phone",
+			"desktop": "Desktop",
+			"editing": "You're editing this",
+			"emptySection": "Nothing here yet. Visitors don't see this part until you fill it in.",
+			"buttonsNote": "Buttons in the preview don't work.",
+			"noPhotos": "No photos yet",
+			"call": "Call",
+			"hoursTitle": "Opening hours",
+			"hoursUnknown": "Opening hours aren't confirmed yet. Call or message before you go.",
+			"menuTitle": "Menu & prices",
+			"noAmenity": "No {name}"
+		},
 		"saved": {
 			"title": "Saved",
 			"save": "Save",
