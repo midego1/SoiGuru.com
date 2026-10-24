@@ -1,45 +1,52 @@
-name: 'Ao Nang Nail Studio'
-description: 'Nail studio in Ao Nang for manicures, pedicures, gel nails and nail art. Open daily 10:00–22:00.'
-description_th: 'ร้านทำเล็บในอ่าวนาง ทำเล็บมือ เล็บเท้า เจล และเพ้นท์เล็บ เปิดทุกวัน 10:00–22:00'
-source_url: 'https://aonangnailsstudio.com/'
+name: Ao Nang Nail Studio
+description: Nail studio in Ao Nang for manicures, pedicures, gel nails and nail
+  art. Open daily 10:00–22:00.
+description_th: ร้านทำเล็บในอ่าวนาง ทำเล็บมือ เล็บเท้า เจล และเพ้นท์เล็บ เปิดทุกวัน 10:00–22:00
+source_url: https://aonangnailsstudio.com/
 category: nail-salons
 tags: []
 featured: false
 status: approved
 city: krabi
 area: ao-nang
-address: '211 Ao Nang, Krabi 81180'
+address: 211 Ao Nang, Krabi 81180
 geo:
   lat: 8.035418
   lng: 98.819088
 location:
-  address: '211 Ao Nang, Krabi 81180'
+  address: 211 Ao Nang, Krabi 81180
   city: Krabi
   country: TH
   latitude: 8.035418
   longitude: 98.819088
-phone: '+66 93 795 3216'
+phone: +66 93 795 3216
 hours:
   mon:
-  - 10:00-22:00
+    - 10:00-22:00
   tue:
-  - 10:00-22:00
+    - 10:00-22:00
   wed:
-  - 10:00-22:00
+    - 10:00-22:00
   thu:
-  - 10:00-22:00
+    - 10:00-22:00
   fri:
-  - 10:00-22:00
+    - 10:00-22:00
   sat:
-  - 10:00-22:00
+    - 10:00-22:00
   sun:
-  - 10:00-22:00
+    - 10:00-22:00
 claimed: false
 submitted_by: SoiGuru team
-updated_by: editor
-updated_at: "2026-10-23 09:56"
-markdown: |
-  Nail studio in Ao Nang for manicures, pedicures, gel nails and nail art. Open daily 10:00–22:00.
+updated_by: owner
+updated_at: 2026-10-24 02:46
+markdown: >
+  Nail studio in Ao Nang for manicures, pedicures, gel nails and nail art. Open
+  daily 10:00–22:00.
+
 
   Website: <https://aonangnailsstudio.com/>
 google_place_id: ChIJg9fmke3BUTARxPjHlPvh2ew
+images:
+  - https://soiguru.com/media/ao-nang-nail-studio/mvlsrtwr166b256ff7.webp
+  - https://soiguru.com/media/ao-nang-nail-studio/mvlsrtwred394f3d5e.webp
+  - https://soiguru.com/media/ao-nang-nail-studio/mvlsrtws62fc937ece.webp
