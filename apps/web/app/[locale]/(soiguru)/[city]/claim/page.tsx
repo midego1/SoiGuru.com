@@ -4,6 +4,7 @@ import { notFound } from 'next/navigation';
 import { setRequestLocale } from 'next-intl/server';
 import { auth } from '@/lib/auth';
 import { Icon } from '@/components/soiguru/icon';
+import { SoiGuruLogo } from '@/components/soiguru/logo-mark';
 import { Thumb } from '@/components/soiguru/parts';
 import { submitClaim } from '../../actions';
 import { ClaimPhotos } from '@/components/soiguru/claim-photos';
@@ -49,19 +50,21 @@ export default async function ClaimPage({ params, searchParams }: { params: Para
 
 	return (
 		<div className="sg-page sg-flow">
-			<header className="tkg-topbar">
+			<header className="tkg-topbar sg-claim-bar">
 				<Link
 					className="tkg-iconbtn"
-					href={ctx.href(step === 1 ? `/${city.id}` : `${base}?listing=${selected?.slug}&step=${step - 1}`)}
+					href={ctx.href(step === 1 ? '/owner' : `${base}?listing=${selected?.slug}&step=${step - 1}`)}
 					aria-label={ctx.t('results.back')}
 				>
 					<Icon name="chevron-left" />
 				</Link>
-				<div className="sg-bar-title">
-					{ctx.t('claim.title')}
-					<small>{ctx.t('claim.step', { n: step, name: ctx.t(`claim.step${step}`) })}</small>
-				</div>
-				<Link className="tkg-iconbtn" href={ctx.href(`/${city.id}`)} aria-label={ctx.t('claim.close')}>
+				<Link className="tkg-brand" href={ctx.href('/owner')} aria-label="SoiGuru">
+					<SoiGuruLogo height={30} />
+				</Link>
+				<span className="sg-brand-owner">{ctx.t('claim.badge')}</span>
+				<div className="tkg-spacer" />
+				<span className="sg-claim-step">{ctx.t('claim.step', { n: step, name: ctx.t(`claim.step${step}`) })}</span>
+				<Link className="tkg-iconbtn" href={ctx.href('/owner')} aria-label={ctx.t('claim.close')}>
 					<Icon name="close" />
 				</Link>
 			</header>
@@ -116,13 +119,28 @@ function FindStep({
 				)
 				.slice(0, 20)
 		: [];
-	const shown = selected && !results.includes(selected) ? [selected, ...results] : results;
+	// Nothing searched yet: the page is not empty, it offers the city's unclaimed places to pick
+	// from, one per name (a chain's branches would otherwise fill the list), alphabetically.
+	const seen = new Set<string>();
+	const browse = !query
+		? listings
+				.filter((l) => !isClaimed(l))
+				.sort((a, b) => listingTitle(ctx, a).localeCompare(listingTitle(ctx, b), ctx.locale))
+				.filter((l) => {
+					const name = listingTitle(ctx, l).toLowerCase();
+					if (seen.has(name)) return false;
+					seen.add(name);
+					return true;
+				})
+				.slice(0, 12)
+		: [];
+	const shown = query ? (selected && !results.includes(selected) ? [selected, ...results] : results) : browse;
 	const pick = selected && !isClaimed(selected) ? selected : undefined;
 
 	return (
 		<>
-			<section className="tkg-section sg-grow" style={{ paddingTop: 20 }}>
-				<div className="tkg-pad">
+			<section className="tkg-section sg-grow sg-claim-find">
+				<div className="sg-owner-head sg-claim-head">
 					<h1 className="tkg-title" style={{ margin: '0 0 4px' }}>
 						{ctx.t('claim.findTitle')}
 					</h1>
@@ -154,8 +172,13 @@ function FindStep({
 						{ctx.t('claim.noResults', { q: query })}
 					</p>
 				) : null}
+				{!query && shown.length ? (
+					<div className="tkg-section-h" style={{ marginTop: 12 }}>
+						<h2>{ctx.t('claim.browseTitle')}</h2>
+					</div>
+				) : null}
 				{shown.length ? (
-					<div className="tkg-rows" style={{ marginTop: 12 }}>
+					<div className="tkg-rows" style={{ marginTop: query ? 12 : 0 }}>
 						{shown.map((l) => {
 							const claimed = isClaimed(l);
 							const body = (

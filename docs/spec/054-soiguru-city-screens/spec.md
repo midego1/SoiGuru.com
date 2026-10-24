@@ -119,3 +119,14 @@ paint before any script runs.
   `/owner/review` and approves it; the owner then edits details, hours and
   good-to-know, and the listing page shows the change.
 - `pnpm tsc --noEmit`, `pnpm lint` and `next build` pass.
+
+## Update 2026-10-24: the claim flow in the owner pages' dress (PR #55)
+
+`/<city>/claim` had a bare back-title-close bar and, before a search, an empty page. It now
+carries the owner pages' brand bar (the lockup linking to `/owner`, a "Claim" badge in the
+owner badge's style, the step counter on the right, back and close going to `/owner`), its
+first step puts the title, the intro and the search in the dashboard's title band
+(`sg-owner-head`), and when nothing was searched it lists the city's unclaimed places
+(alphabetical, twelve at most) under "Or pick from the list", so an owner who does not know
+how the place is spelled can still find it. Steps 2–4 are unchanged. Strings
+`claim.badge`, `claim.browseTitle` (EN/TH).

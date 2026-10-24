@@ -4868,6 +4868,8 @@
 		},
 		"claim": {
 			"metaTitle": "Claim your listing · SoiGuru",
+			"badge": "Claim",
+			"browseTitle": "Or pick from the list",
 			"title": "Claim your listing",
 			"step": "Step {n} of 4 · {name}",
 			"step1": "Find your business",

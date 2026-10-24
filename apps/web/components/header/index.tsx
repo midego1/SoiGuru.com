@@ -219,6 +219,10 @@ export default function Header() {
 	const tGlobal = useTranslations();
 	const config = useConfig();
 	const pathname = usePathname();
+	// Inside the admin the template's directory links (Home, Categories, Tags, Submit, More…)
+	// have no business: on the owner host they lead to the public site. The admin has its own
+	// bar; this header keeps the brand, settings, language, theme and the account menu.
+	const inAdmin = pathname === '/admin' || pathname.startsWith('/admin/');
 
 	// Stable refs for translation functions to avoid defeating useMemo
 	// (translation functions are new references on every render)
@@ -457,7 +461,7 @@ export default function Header() {
 			<Container maxWidth="7xl" padding="default" useGlobalWidth className={STYLES.container}>
 				{/* Mobile: Toggle (Left) */}
 				<NavbarContent className="lg:hidden" justify="start">
-					<NavbarMenuToggle />
+					{!inAdmin && <NavbarMenuToggle />}
 				</NavbarContent>
 
 				{/* Mobile: Brand (Center) */}
@@ -472,7 +476,7 @@ export default function Header() {
 
 					{/* Center: Navigation Links with gap */}
 					<div className="flex flex-1 justify-start min-w-0 gap-6 pl-16">
-						{isNavigationLoading ? <HeaderNavSkeleton /> : renderNavigationItems()}
+						{inAdmin ? null : isNavigationLoading ? <HeaderNavSkeleton /> : renderNavigationItems()}
 					</div>
 
 					{/* Right: Profile, Settings, etc. */}
@@ -502,6 +506,7 @@ export default function Header() {
 				</NavbarContent>
 			</Container>
 
+			{!inAdmin && (
 			<NavbarMenu>
 				<div className={STYLES.mobileMenu}>
 					{navigationItems.map((item) => {
@@ -568,6 +573,7 @@ export default function Header() {
 					</div>
 				</div>
 			</NavbarMenu>
+			)}
 		</Navbar>
 	);
 }
