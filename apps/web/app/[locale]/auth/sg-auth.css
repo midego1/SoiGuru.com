@@ -330,3 +330,54 @@
 	opacity: 0.55;
 	cursor: not-allowed;
 }
+
+/*
+ * 2026-10-24 (spec 058 addendum): the logo is centred in the bar; "Back to SoiGuru" sits above
+ * the card on its left edge; less empty space above and below the card on desktop, so the
+ * create-account card fits a 900px-high window without scrolling; tighter perks on phones.
+ */
+.sg-auth-bar {
+	justify-content: center;
+}
+.sg-auth-main {
+	flex-direction: column;
+	align-items: center;
+	justify-content: flex-start;
+	padding-top: 16px;
+}
+.sg-auth-main > .sg-auth-backrow {
+	width: 100%;
+	max-width: 440px;
+	margin-bottom: 8px;
+}
+.sg-auth-backrow .sg-auth-back {
+	margin-left: -4px;
+	white-space: nowrap;
+}
+@media (min-width: 720px) {
+	.sg-auth-main {
+		padding-top: 24px;
+		padding-bottom: 32px;
+	}
+}
+@media (max-width: 479px) {
+	.sg-auth-perks {
+		gap: 6px;
+		padding: 10px 12px;
+	}
+	.sg-auth-perks li {
+		font-size: 13.5px;
+	}
+}
+.sg-auth-terms {
+	margin: 14px 0 0;
+	font-size: 13px;
+	line-height: 1.45;
+	color: var(--a-muted);
+	text-align: center;
+}
+.sg-auth-terms a {
+	color: var(--a-sea);
+	text-decoration: underline;
+	text-underline-offset: 2px;
+}

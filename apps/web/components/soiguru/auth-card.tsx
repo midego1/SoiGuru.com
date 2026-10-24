@@ -2,11 +2,13 @@ import { Suspense } from 'react';
 import { getTranslations } from 'next-intl/server';
 import { CredentialsForm } from '@/app/[locale]/auth/components/credentials-form';
 import { SocialLogin } from '@/app/[locale]/auth/components/social-login';
+import { PUBLIC_SITE } from '@/lib/soiguru/public-site';
 
 /**
  * The SoiGuru sign-in and create-account card (spec 058): SoiGuru's own heading and copy,
  * then the template's credentials form (without its own heading) and the social buttons.
  * The form keeps every behaviour of the template: callback URL, 2FA, captcha, locale.
+ * Creating an account also shows the password rule and a Terms / Privacy line (PDPA).
  */
 export async function SoiGuruAuthCard({ form, locale }: { form: 'login' | 'signup'; locale: string }) {
 	const t = await getTranslations({ locale, namespace: 'soiguru.account' });
@@ -39,11 +41,19 @@ export async function SoiGuruAuthCard({ form, locale }: { form: 'login' | 'signu
 			)}
 			<div className="sg-auth-form">
 				<Suspense fallback={null}>
-					<CredentialsForm type={form} hideHeader>
+					<CredentialsForm type={form} hideHeader passwordHint={isLogin ? undefined : t('passwordHint')}>
 						<SocialLogin />
 					</CredentialsForm>
 				</Suspense>
 			</div>
+			{!isLogin && (
+				<p className="sg-auth-terms">
+					{t.rich('termsNote', {
+						terms: (chunks) => <a href={`${PUBLIC_SITE}/terms`}>{chunks}</a>,
+						privacy: (chunks) => <a href={`${PUBLIC_SITE}/privacy`}>{chunks}</a>
+					})}
+				</p>
+			)}
 			<p className="sg-auth-note">{t('ownerNote')}</p>
 		</section>
 	);

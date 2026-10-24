@@ -1,12 +1,12 @@
 {
 	"auth": {
-		"FULL_NAME": "Full Name",
-		"EMAIL_ADDRESS": "Email Address",
+		"FULL_NAME": "Full name",
+		"EMAIL_ADDRESS": "Email address",
 		"PASSWORD": "Password",
-		"SIGN_IN": "Sign In",
+		"SIGN_IN": "Sign in",
 		"LOGIN": "Login",
 		"SIGN_UP": "Sign up",
-		"CREATE_ACCOUNT": "Register",
+		"CREATE_ACCOUNT": "Create account",
 		"FORGOT_PASSWORD": "Forgot password?",
 		"REMEMBER_ME": "Remember me",
 		"ENTER_YOUR_FULL_NAME": "Enter your full name",
@@ -5161,7 +5161,9 @@
 			"doneTitle": "Password saved",
 			"doneBody": "Sign in with your new password. Your saved places and your listing are where you left them.",
 			"metaForgot": "Reset password · SoiGuru",
-			"metaNewPassword": "New password · SoiGuru"
+			"metaNewPassword": "New password · SoiGuru",
+			"passwordHint": "At least 8 characters.",
+			"termsNote": "By creating an account you agree to the <terms>Terms of use</terms> and the <privacy>Privacy policy</privacy>."
 		}
 	}
 }

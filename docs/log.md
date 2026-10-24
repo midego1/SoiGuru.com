@@ -9,6 +9,7 @@ sidebar_position: 99
 
 ## 2026-10-24
 
+- `spec-058` `apps/web/app/[locale]/auth/layout.tsx` `apps/web/components/soiguru/auth-card.tsx` `credentials-form.tsx`: create account shows the password rule and a Terms/Privacy line, says "Create account" with sentence-case labels; "Back to SoiGuru" moved above the card, logo centred (PR #NN).
 - `spec-054` `astro/apps/web/src/styles/soiguru/site.css` `StaticMap.astro`: on desktop the listing page's photo grid and the "Where" card are both 400px high, so their bottoms line up; the map fills the card's spare height (PR #59).
 - `spec-067` `apps/web/lib/soiguru/photo-sizes.ts` `apps/web/lib/soiguru/photos.ts`: owner and claim photos are now really re-encoded to WebP in three sizes (the spec's first change shipped without the code), and the media route serves `-800`/`-400` copies, made on request for WebP photos uploaded before (PR #58).
 - `spec-071` `astro/apps/web/src/components/soiguru/ListingCard.astro` `ListingPhoto.astro`: the "Featured" badge is now a small chip in the top-left corner of the card's photo, so names keep their width (PR #57).

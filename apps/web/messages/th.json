@@ -6,7 +6,7 @@
 		"SIGN_IN": "เข้าสู่ระบบ",
 		"LOGIN": "เข้าสู่ระบบ",
 		"SIGN_UP": "ลงทะเบียน",
-		"CREATE_ACCOUNT": "ลงทะเบียน",
+		"CREATE_ACCOUNT": "สร้างบัญชี",
 		"FORGOT_PASSWORD": "ลืมรหัสผ่าน?",
 		"REMEMBER_ME": "จดจำฉัน",
 		"ENTER_YOUR_FULL_NAME": "กรอกชื่อ-นามสกุล",
@@ -4357,7 +4357,9 @@
 			"doneTitle": "บันทึกรหัสผ่านแล้ว",
 			"doneBody": "เข้าสู่ระบบด้วยรหัสผ่านใหม่ได้เลย ที่บันทึกไว้และร้านของคุณยังอยู่ครบ",
 			"metaForgot": "รีเซ็ตรหัสผ่าน · SoiGuru",
-			"metaNewPassword": "รหัสผ่านใหม่ · SoiGuru"
+			"metaNewPassword": "รหัสผ่านใหม่ · SoiGuru",
+			"passwordHint": "อย่างน้อย 8 ตัวอักษร",
+			"termsNote": "เมื่อสร้างบัญชี ถือว่าคุณยอมรับ<terms>ข้อกำหนดการใช้งาน</terms>และ<privacy>นโยบายความเป็นส่วนตัว</privacy>"
 		}
 	}
 }

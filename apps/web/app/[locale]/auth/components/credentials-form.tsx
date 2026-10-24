@@ -27,7 +27,8 @@ export function CredentialsForm({
 	onSuccess,
 	clientMode = false,
 	callbackUrl: callbackUrlProp,
-	hideHeader = false
+	hideHeader = false,
+	passwordHint
 }: PropsWithChildren<{
 	type: 'login' | 'signup';
 	hideSwitchButton?: boolean;
@@ -36,6 +37,8 @@ export function CredentialsForm({
 	callbackUrl?: string;
 	/** Leave out the "Sign in / Welcome back" heading when the page draws its own (SoiGuru, spec 058). */
 	hideHeader?: boolean;
+	/** Short password rule under the field on sign-up, shown while the focus tips are closed (SoiGuru). */
+	passwordHint?: string;
 }>) {
 	const isLogin = type === 'login';
 	const t = useTranslations('auth');
@@ -656,6 +659,11 @@ export function CredentialsForm({
 								{showPassword ? <EyeOff className="h-4 w-4" /> : <Eye className="h-4 w-4" />}
 							</button>
 						</div>
+						{!isLogin && passwordHint && !showPasswordTips && (
+							<p id="password-hint" className="mt-1 text-xs text-gray-500 dark:text-gray-400">
+								{passwordHint}
+							</p>
+						)}
 						{/* Password tips for signup */}
 						{!isLogin && showPasswordTips && (
 							<div
