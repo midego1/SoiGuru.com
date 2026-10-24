@@ -168,3 +168,19 @@ on the owner host those lead to the public site. `components/header/index.tsx` h
 navigation (desktop links, the phone menu and its toggle) when the path is under `/admin`;
 the brand, settings, language, theme, notifications and the account menu stay, and the admin
 keeps its own bar. The client area (`/client/*`) still shows them; say so if they should go too.
+
+### Follow-up 2026-10-24 (PR #60): create-account card
+
+- "Back to SoiGuru" moved from the right end of the bar to just above the card, on its left
+  edge (it looked stranded on wide screens and wrapped to two lines at 320px); the logo is
+  centred in the bar. Applies to every `/auth` screen.
+- Create account shows the password rule under the field ("At least 8 characters", the
+  server's `PASSWORD_MIN_LENGTH`) while the focus tips are closed (`passwordHint` prop on the
+  template `CredentialsForm`, used only by the SoiGuru card) and a Terms of use / Privacy
+  policy line (PDPA) linking to soiguru.com.
+- Wording: the submit button says "Create account" (was "Register"; Thai "สร้างบัญชี"), labels
+  are sentence case ("Full name", "Email address"), "Sign in" instead of "Sign In". These are
+  the template's shared `auth.*` strings, so the admin sign-in follows.
+- Less padding above and below the card on desktop (the create-account card fits a 900px-high
+  window without a scrollbar); tighter perks list under 480px.
+- Checked at 320, 375, 390, 414, 768, 1024, 1280 and 1440px: no horizontal overflow.

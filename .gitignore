@@ -69,3 +69,6 @@ public/openapi.backup.json
 
 # claude
 .claude
+
+# Agent tool state (local only)
+.omc/
