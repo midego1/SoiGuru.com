@@ -4077,3 +4077,139 @@ html:not([data-lang='th']) .sg-lang-th {
         height: auto !important;
     }
 }
+
+/* ---------- listing page: sticky title bar (spec 072) ----------
+   Lives inside the sticky header (`.sg-sh`), hangs right under it, and shows once the h1 has
+   scrolled away (`data-stuck`, set by scripts/soiguru/lpbar.ts). Absolutely placed, so it never
+   moves the page. z-index -1 keeps it under the header's own pop-up panels. */
+.sg-lpbar {
+    position: absolute;
+    /* below the header's 1px bottom border, which stays visible as the divider */
+    top: calc(100% + 1px);
+    left: 0;
+    right: 0;
+    z-index: -1;
+    background: var(--surface);
+    border-bottom: 1px solid var(--line);
+    box-shadow: 0 6px 16px -12px #14201f40;
+    visibility: hidden;
+    opacity: 0;
+    transform: translateY(-6px);
+    pointer-events: none;
+    transition:
+        opacity 0.16s ease,
+        transform 0.16s ease,
+        visibility 0s linear 0.16s;
+}
+.sg-lpbar[data-stuck] {
+    visibility: visible;
+    opacity: 1;
+    transform: none;
+    pointer-events: auto;
+    transition:
+        opacity 0.16s ease,
+        transform 0.16s ease;
+}
+@media (prefers-reduced-motion: reduce) {
+    .sg-lpbar,
+    .sg-lpbar[data-stuck] {
+        transform: none;
+        transition: none;
+    }
+}
+.sg-lpbar-row {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding-block: 7px;
+}
+.sg-lpbar-text {
+    flex: 1 1 auto;
+    min-width: 0;
+}
+.sg-lpbar-crumbs {
+    margin: 0;
+    font-size: 12px;
+    line-height: 16px;
+    color: var(--ink-muted);
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+.sg-page .sg-lpbar-crumbs a {
+    color: inherit;
+    text-decoration: none;
+}
+.sg-page .sg-lpbar-crumbs a:hover {
+    color: var(--sea);
+    text-decoration: underline;
+}
+.sg-lpbar-sep {
+    margin-inline: 6px;
+}
+.sg-lpbar-name {
+    margin: 2px 0 0;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    min-width: 0;
+}
+.sg-lpbar-title {
+    flex: 0 1 auto;
+    min-width: 0;
+    font-size: 17px;
+    line-height: 22px;
+    font-weight: 600;
+    letter-spacing: -0.01em;
+    color: var(--ink);
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+.sg-lpbar-name > .tkg-status {
+    flex: none;
+}
+.sg-lpbar-call {
+    display: none;
+}
+/* phones: name and crumbs only (status and Directions are in the bottom bar) */
+@media (max-width: 599px) {
+    .sg-lpbar-name > .tkg-status {
+        display: none;
+    }
+}
+@media (min-width: 720px) {
+    .sg-lpbar-row {
+        padding-block: 8px;
+    }
+    .sg-lpbar-title {
+        font-size: 18px;
+        line-height: 24px;
+    }
+}
+/* desktop: a small Call button on the right */
+@media (min-width: 960px) {
+    .sg-page a.sg-lpbar-call {
+        flex: none;
+        display: inline-flex;
+        align-items: center;
+        gap: 6px;
+        min-height: 36px;
+        padding: 0 14px;
+        border-radius: var(--radius-pill);
+        background: var(--accent);
+        color: var(--on-accent);
+        font-size: 14px;
+        font-weight: 600;
+        text-decoration: none;
+    }
+    .sg-page a.sg-lpbar-call:hover {
+        background: var(--accent-hover);
+    }
+}
+/* the sticky side column stays clear of the bar */
+@media (min-width: 960px) and (min-height: 1040px) {
+    .sg-page:has([data-lpbar]) .sg-lp-side {
+        top: calc(var(--sg-header-h) + 24px + 58px);
+    }
+}
