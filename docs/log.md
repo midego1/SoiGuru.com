@@ -9,6 +9,7 @@ sidebar_position: 99
 
 ## 2026-10-24
 
+- `spec-072` `astro/apps/web/src/pages/[city]/[area]/[slug].astro` `astro/apps/web/src/scripts/soiguru/lpbar.ts` `SiteHeader.astro`: on a business page the breadcrumb and name stay in view in a compact bar under the sticky header once the title scrolls away; from 600px it adds the open status, on desktop a Call button ([spec 072](spec/072-soiguru-sticky-listing-title/spec.md), PR #NN).
 - `spec-058` `apps/web/app/[locale]/auth/layout.tsx` `apps/web/components/soiguru/auth-card.tsx` `credentials-form.tsx`: create account shows the password rule and a Terms/Privacy line, says "Create account" with sentence-case labels; "Back to SoiGuru" moved above the card, logo centred (PR #60).
 - `spec-054` `astro/apps/web/src/styles/soiguru/site.css` `StaticMap.astro`: on desktop the listing page's photo grid and the "Where" card are both 400px high, so their bottoms line up; the map fills the card's spare height (PR #59).
 - `spec-067` `apps/web/lib/soiguru/photo-sizes.ts` `apps/web/lib/soiguru/photos.ts`: owner and claim photos are now really re-encoded to WebP in three sizes (the spec's first change shipped without the code), and the media route serves `-800`/`-400` copies, made on request for WebP photos uploaded before (PR #58).

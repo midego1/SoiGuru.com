@@ -26,7 +26,7 @@ import CategoryArt from '../../../components/soiguru/CategoryArt.astro';
 import { getSoiGuru, claimUrl, ownerUrl, reportUrl, type Listing } from '../../../lib/soiguru/data';
 import { photoVariant } from '../../../lib/soiguru/media';
 import { breadcrumbJsonLd, localBusinessJsonLd } from '../../../lib/soiguru/jsonld';
-import { priceBand, formatDate } from '../../../lib/soiguru/format';
+import { priceBand, formatDate, telUrl } from '../../../lib/soiguru/format';
 import { appleMapsUrl, directionsUrl, distanceMetres, mapsEmbedUrl, mapsSearchUrl } from '../../../lib/soiguru/geo';
 
 export async function getStaticPaths() {
@@ -106,7 +106,47 @@ const trail: [string, string][] = [
     jsonLd={[localBusinessJsonLd(listing, siteUrl), breadcrumbJsonLd(siteUrl, trail)]}
 >
     {placesApi && <link slot="head" rel="preload" as="fetch" href={placesApi} crossorigin="anonymous" />}
-    <SiteHeader city={city} search />
+    <SiteHeader city={city} search>
+        {/* Sticky title bar (spec 072): a copy of the crumbs and name that shows under the header
+            once the h1 scrolls away. Hidden from assistive tech; the real crumbs and h1 stay. */}
+        <div class="sg-lpbar" data-lpbar aria-hidden="true">
+            <div class="sg-wrap sg-lpbar-row">
+                <div class="sg-lpbar-text">
+                    <p class="sg-lpbar-crumbs">
+                        <a href={`/${city.id}`} tabindex="-1" data-th={city.name_th}>{city.name}</a>
+                        {
+                            area && (
+                                <>
+                                    <span class="sg-lpbar-sep">/</span>
+                                    <a href={`/${city.id}/${area.id}`} tabindex="-1">{area.name}</a>
+                                </>
+                            )
+                        }
+                        {
+                            category && (
+                                <>
+                                    <span class="sg-lpbar-sep">/</span>
+                                    <a href={`/${city.id}/${category.id}`} tabindex="-1" data-th={category.name_th}>{category.name}</a>
+                                </>
+                            )
+                        }
+                    </p>
+                    <p class="sg-lpbar-name">
+                        <span class="sg-lpbar-title">{listing.name}</span>
+                        <OpenStatus listing={listing} />
+                    </p>
+                </div>
+                {
+                    listing.phone && (
+                        <a class="sg-lpbar-call" href={telUrl(listing.phone)} tabindex="-1" data-umami-event="contact-call-bar">
+                            <Icon name="phone" class="tkg-i-16" />
+                            <span data-th="โทร">Call</span>
+                        </a>
+                    )
+                }
+            </div>
+        </div>
+    </SiteHeader>
 
     <main class="sg-wrap sg-lp-wrap">
         <nav class="sg-crumbs" aria-label="Breadcrumb">
@@ -410,6 +450,7 @@ const trail: [string, string][] = [
 <script>
     import '../../../scripts/soiguru/gallery';
     import '../../../scripts/soiguru/places';
+    import '../../../scripts/soiguru/lpbar';
     // Share sheet with the clean URL; falls back to copying it.
     for (const btn of document.querySelectorAll<HTMLButtonElement>('[data-share]')) {
         btn.addEventListener('click', async () => {
