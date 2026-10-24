@@ -5,7 +5,7 @@ description_th: ร้านทำเล็บในอ่าวนาง ทำ
 source_url: https://aonangnailsstudio.com/
 category: nail-salons
 tags: []
-featured: false
+featured: true
 status: approved
 city: krabi
 area: ao-nang
@@ -37,7 +37,7 @@ hours:
     - 10:00-22:00
 claimed: false
 submitted_by: SoiGuru team
-updated_by: owner
+updated_by: editor
 updated_at: 2026-10-24 02:46
 markdown: >
   Nail studio in Ao Nang for manicures, pedicures, gel nails and nail art. Open
@@ -47,6 +47,6 @@ markdown: >
   Website: <https://aonangnailsstudio.com/>
 google_place_id: ChIJg9fmke3BUTARxPjHlPvh2ew
 images:
-  - https://soiguru.com/media/ao-nang-nail-studio/mvlsrtwr166b256ff7.webp
-  - https://soiguru.com/media/ao-nang-nail-studio/mvlsrtwred394f3d5e.webp
-  - https://soiguru.com/media/ao-nang-nail-studio/mvlsrtws62fc937ece.webp
+  - https://soiguru.com/media/ao-nang-nail-studio/mvlstlfzd8b6e061c1.jpg
+  - https://soiguru.com/media/ao-nang-nail-studio/mvlstljnfa5a19cc07.jpg
+  - https://soiguru.com/media/ao-nang-nail-studio/mvlstlo2ee92a70255.jpg

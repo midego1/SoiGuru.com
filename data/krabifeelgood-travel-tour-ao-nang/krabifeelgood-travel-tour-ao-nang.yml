@@ -4,7 +4,9 @@ description_th: 'บริษัททัวร์บนถนนคลองแ
 source_url: 'http://www.krabifeelgoodtours.com/'
 category: tours
 tags: []
-featured: false
+images:
+  - 'https://soiguru.com/media/krabifeelgood-travel-tour-ao-nang/mvlstmdh32088af0dc.jpg'
+featured: true
 status: approved
 city: krabi
 area: ao-nang
@@ -37,7 +39,7 @@ hours:
 claimed: false
 submitted_by: SoiGuru team
 updated_by: editor
-updated_at: "2026-10-23 09:56"
+updated_at: "2026-10-24 09:47"
 markdown: |
   Travel agency on Khlong Haeng Road in Ao Nang that books boat trips, day tours and transfers around Krabi. Open daily 10:00–22:00.
 

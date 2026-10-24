@@ -4,7 +4,14 @@ description_th: 'ร้านตัดผมชายและทำเล็บ
 source_url: 'http://krabibarberandnail.com/'
 category: barbers-salons
 tags: []
-featured: false
+images:
+  - 'https://soiguru.com/media/the-krabi-barber-and-nails-ao-nang/mvlstlry52133409dc.jpg'
+  - 'https://soiguru.com/media/the-krabi-barber-and-nails-ao-nang/mvlstlvie579783f13.jpg'
+  - 'https://soiguru.com/media/the-krabi-barber-and-nails-ao-nang/mvlstlz067e2177239.jpg'
+  - 'https://soiguru.com/media/the-krabi-barber-and-nails-ao-nang/mvlstm2lc91f1612ad.jpg'
+  - 'https://soiguru.com/media/the-krabi-barber-and-nails-ao-nang/mvlstm622b87e8c4f8.jpg'
+  - 'https://soiguru.com/media/the-krabi-barber-and-nails-ao-nang/mvlstm9u4e70d858ea.jpg'
+featured: true
 status: approved
 city: krabi
 area: ao-nang
@@ -37,7 +44,7 @@ hours:
 claimed: false
 submitted_by: SoiGuru team
 updated_by: editor
-updated_at: "2026-10-23 09:56"
+updated_at: "2026-10-24 09:47"
 markdown: |
   Barbershop and nail salon at Ao Nang Landmark: men's haircuts, beard trims and shaves, plus manicures and pedicures. Open daily from 13:00 until midnight.
 
