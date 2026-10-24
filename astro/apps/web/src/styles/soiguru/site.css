@@ -843,10 +843,16 @@ html[data-lang='th'] .sg-page .sg-tile .sg-tile-th {
     font-weight: 700;
 }
 .sg-flag-featured {
-    top: auto;
-    bottom: 12px;
+    top: 10px;
+    left: 10px;
+    padding: 3px 8px;
+    font-size: 11px;
     background: var(--sun);
     color: var(--ink);
+}
+/* Under "Verified owner" when both show */
+.sg-flag:not(.sg-flag-quiet):not(.sg-flag-featured) ~ .sg-flag-featured {
+    top: 40px;
 }
 .sg-flag-featured .tkg-i svg {
     fill: currentColor;
@@ -1199,6 +1205,8 @@ html[data-lang='en'] .sg-sf-lang[data-lang-set='en'] {
 }
 .sg-pgrid[data-count='1'] > .sg-photo-btn:first-child {
     grid-column: auto;
+    /* one row: spanning two made a single photo twice the grid's height */
+    grid-row: auto;
 }
 .sg-pgrid > .sg-photo-btn:nth-child(n + 4) {
     display: none;
